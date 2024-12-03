@@ -1,12 +1,13 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
-import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
-import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.MultiHurtByTargetGoal;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
@@ -46,6 +48,7 @@ public class RumiaEntity extends YoukaiEntity {
 	protected void registerGoals() {
 		goalSelector.addGoal(3, new RumiaParalyzeGoal(this));
 		goalSelector.addGoal(4, new RumiaAttackGoal(this));
+		goalSelector.addGoal(5, new RumiaTemptGoal(this, Ingredient.of(YHTagGen.DANGO)));//TODO
 		goalSelector.addGoal(6, new FloatGoal(this));
 		goalSelector.addGoal(6, new MoveAroundNestGoal(this, 1));
 		goalSelector.addGoal(7, new MoveRandomlyGoal(this, 0.8));
@@ -115,7 +118,7 @@ public class RumiaEntity extends YoukaiEntity {
 		boolean isVoid = source.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
 		if (!isVoid && !isEx() && amount >= getMaxHealth()) {
 			//TODO if (YHModConfig.COMMON.exRumiaConversion.get())
-				setEx(true);
+			setEx(true);
 		}
 		if (source.getEntity() instanceof LivingEntity le) {
 			state.onHurt(le, amount);

@@ -42,7 +42,7 @@ public class RumiaTemptGoal extends Goal {
 	}
 
 	private boolean shouldFollow(LivingEntity le) {
-		return mob.targetKind(le) == TargetKind.WORTHY &&
+		return
 				(items.test(le.getMainHandItem()) || items.test(le.getOffhandItem()));
 	}
 

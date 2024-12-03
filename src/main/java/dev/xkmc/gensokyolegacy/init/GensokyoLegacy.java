@@ -18,6 +18,7 @@ public class GensokyoLegacy {
 	public static final L2Registrate REGISTRATE = new L2Registrate(MODID);
 
 	public GensokyoLegacy() {
+		GLEntities.register();
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
