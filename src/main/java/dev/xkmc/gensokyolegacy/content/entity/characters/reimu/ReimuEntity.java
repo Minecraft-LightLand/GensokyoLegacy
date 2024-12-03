@@ -3,6 +3,7 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.reimu;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
@@ -47,13 +48,13 @@ public class ReimuEntity extends MaidenEntity {
 	protected void customServerAiStep() {
 		super.customServerAiStep();
 		if (feedCD > 0) feedCD--;
-		setFlag(16, feedCD > 0);
+		setFlag(YoukaiFlags.FED, feedCD > 0);
 	}
 
 	@Override
 	protected void tickEffects() {
 		super.tickEffects();
-		if (getFlag(16)) {
+		if (getFlag(YoukaiFlags.FED)) {
 			if (isInvisible() ? random.nextInt(15) == 0 : random.nextBoolean()) {
 				level().addParticle(ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, MobEffects.SATURATION.value().getColor()),
 						getRandomX(0.5D), getRandomY(), getRandomZ(0.5D), 0, 0, 0);

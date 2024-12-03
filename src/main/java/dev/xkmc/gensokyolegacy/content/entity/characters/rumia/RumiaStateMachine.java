@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.TargetKind;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
@@ -151,11 +152,11 @@ public class RumiaStateMachine {
 	}
 
 	public boolean isCharged() {
-		return rumia.getFlag(1);
+		return rumia.getFlag(YoukaiFlags.CHARGING);
 	}
 
 	public boolean isBlocked() {
-		return rumia.getFlag(2);
+		return rumia.getFlag(YoukaiFlags.FAINTED);
 	}
 
 	private void setCharged(boolean charged) {
@@ -166,11 +167,11 @@ public class RumiaStateMachine {
 		} else {
 			attr.removeModifier(ATK);
 		}
-		rumia.setFlag(1, charged);
+		rumia.setFlag(YoukaiFlags.CHARGING, charged);
 	}
 
 	private void setBlocked(boolean blocked) {
-		rumia.setFlag(2, blocked);
+		rumia.setFlag(YoukaiFlags.FAINTED, blocked);
 		rumia.refreshDimensions();
 	}
 

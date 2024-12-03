@@ -4,6 +4,7 @@ import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.MultiHurtByTargetG
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
@@ -89,7 +90,7 @@ public class RumiaEntity extends YoukaiEntity {
 	}
 
 	public boolean isEx() {
-		return getFlag(4);
+		return getFlag(YoukaiFlags.POWERED);
 	}
 
 	public void setEx(boolean ex) {
@@ -104,7 +105,7 @@ public class RumiaEntity extends YoukaiEntity {
 			atk.removeModifier(EXRUMIA);
 		}
 		setHealth(getMaxHealth());
-		setFlag(4, ex);
+		setFlag(YoukaiFlags.POWERED, ex);
 	}
 
 	@Override

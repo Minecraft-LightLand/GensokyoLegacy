@@ -8,7 +8,10 @@ import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleHolder;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiFlightControl;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.TargetKind;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiFightEvent;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiTargetContainer;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
@@ -30,9 +33,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.FlyingMoveControl;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
@@ -63,9 +64,6 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 				.add(Attributes.FOLLOW_RANGE, 48);
 	}
 
-	public final MoveControl walkCtrl, flyCtrl;
-	public final PathNavigation walkNav, fltNav;
-
 	@SerialField
 	public final YoukaiTargetContainer targets;
 
@@ -78,7 +76,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	protected final YoukaiSourceOverride sources = new YoukaiSourceOverride(level().registryAccess());
 	protected final YoukaiCardHolder cardHolder = new YoukaiCardHolder(this);
 	protected final YoukaiCombatManager combatManager = createCombatManager();
-	protected final YoukaiFlightControl flightControl = new YoukaiFlightControl(this);
+	protected final YoukaiNavigationControl navCtrl = new YoukaiNavigationControl(this);
 
 	public YoukaiEntity(EntityType<? extends YoukaiEntity> pEntityType, Level pLevel) {
 		this(pEntityType, pLevel, 10);
@@ -86,10 +84,6 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 
 	public YoukaiEntity(EntityType<? extends YoukaiEntity> pEntityType, Level pLevel, int maxSize) {
 		super(pEntityType, pLevel);
-		this.walkCtrl = moveControl;
-		this.walkNav = navigation;
-		this.flyCtrl = new FlyingMoveControl(this, 10, false);
-		this.fltNav = new FlyingPathNavigation(this, level());
 		this.targets = new YoukaiTargetContainer(this, maxSize);
 	}
 
@@ -149,12 +143,14 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		}
 	}
 
-	public boolean getFlag(int flag) {
+	public boolean getFlag(YoukaiFlags val) {
+		int flag = 1 << val.ordinal();
 		return (this.entityData.get(DATA_FLAGS_ID) & flag) != 0;
 	}
 
-	public void setFlag(int flag, boolean enable) {
+	public void setFlag(YoukaiFlags val, boolean enable) {
 		int b0 = this.entityData.get(DATA_FLAGS_ID);
+		int flag = 1 << val.ordinal();
 		if (enable) {
 			b0 = (byte) (b0 | flag);
 		} else {
@@ -177,33 +173,27 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		targets.tick();
 		tickTargeting();
 		tickSpell();
-		flightControl.serverAiStep();
+		navCtrl.tickMove();
 		super.customServerAiStep();
 	}
 
 	// flying
 
 	public final void setFlying() {
-		setNoGravity(true);
-		if (moveControl == flyCtrl) return;
-		getNavigation().stop();
-		moveControl = flyCtrl;
-		navigation = fltNav;
+		navCtrl.setFlying();
 	}
 
 	public final void setWalking() {
-		setNoGravity(false);
-		if (moveControl == walkCtrl) return;
-		getNavigation().stop();
-		setYya(0);
-		setXxa(0);
-		setZza(0);
-		moveControl = walkCtrl;
-		navigation = walkNav;
+		navCtrl.setWalking();
+	}
+
+	public void setControl(MoveControl ctrl, PathNavigation nav) {
+		moveControl = ctrl;
+		navigation = nav;
 	}
 
 	public final boolean isFlying() {
-		return moveControl == flyCtrl;
+		return navCtrl.isFlying();
 	}
 
 	// features

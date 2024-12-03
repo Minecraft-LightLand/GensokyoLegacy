@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
-import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.TargetKind;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
