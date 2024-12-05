@@ -51,8 +51,7 @@ public class CirnoEntity extends FairyEntity {
 		var aabb = AABB.ofSize(pos.getCenter(), 48, 24, 48);
 		if (!level.getEntitiesOfClass(CirnoEntity.class, aabb).isEmpty()) return false;
 		var player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 128, false);
-		if (player == null) return false;
-		return true;//EffectEventHandlers.isCharacter(player);
+		return player != null;//EffectEventHandlers.isCharacter(player);
 	}
 
 }

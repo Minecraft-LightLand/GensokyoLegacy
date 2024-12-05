@@ -8,11 +8,12 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.UUID;
 
-public record CharDataToClient(EntityType<?> target, UUID player, CharacterData data) implements SerialPacketBase<CharDataToClient> {
+public record CharDataToClient(EntityType<?> target, UUID player,
+							   CharacterData data) implements SerialPacketBase<CharDataToClient> {
 
-    public void handle(Player player) {
-        GLMisc.CHAR.type().getOrCreate(player).replace(target, data);
-    }
+	public void handle(Player player) {
+		GLMisc.CHAR.type().getOrCreate(player).replace(target, data);
+	}
 
 
 }

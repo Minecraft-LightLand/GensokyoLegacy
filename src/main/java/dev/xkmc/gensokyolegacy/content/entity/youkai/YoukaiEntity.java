@@ -180,14 +180,12 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		this.entityData.set(DATA_FLAGS_ID, b0);
 	}
 
+	// features
+
 	@Override
 	public void tick() {
 		super.tick();
 		combatManager.tick();
-	}
-
-	public void aiStep() {
-		super.aiStep();
 	}
 
 	protected void customServerAiStep() {
@@ -200,8 +198,6 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		}
 		super.customServerAiStep();
 	}
-
-	// features
 
 	public void setControl(MoveControl ctrl, PathNavigation nav) {
 		moveControl = ctrl;

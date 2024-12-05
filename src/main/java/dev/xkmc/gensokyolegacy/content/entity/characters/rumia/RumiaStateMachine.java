@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.TargetKind;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;

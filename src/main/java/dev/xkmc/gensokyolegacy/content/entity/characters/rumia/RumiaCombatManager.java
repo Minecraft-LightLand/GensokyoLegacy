@@ -4,7 +4,6 @@ import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManager;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.TargetKind;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;

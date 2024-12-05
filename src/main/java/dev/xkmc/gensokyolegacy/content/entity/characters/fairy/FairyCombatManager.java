@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.fairy;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManager;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.TargetKind;
 import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
