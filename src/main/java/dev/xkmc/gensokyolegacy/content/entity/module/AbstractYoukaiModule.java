@@ -6,30 +6,34 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 
-public class IYoukaiModules {
+public class AbstractYoukaiModule {
 
 	private final ResourceLocation id;
 	protected final YoukaiEntity self;
 
-	public IYoukaiModules(ResourceLocation id, YoukaiEntity self) {
+	public AbstractYoukaiModule(ResourceLocation id, YoukaiEntity self) {
 		this.id = id;
 		this.self = self;
 	}
 
-	public ResourceLocation getId(){
+	public ResourceLocation getId() {
 		return id;
 	}
 
-	public InteractionResult interact(Player player, InteractionHand hand, YoukaiEntity e) {
+	public InteractionResult interact(Player player, InteractionHand hand) {
 		return InteractionResult.PASS;
 	}
 
-	public void tickClient(YoukaiEntity e) {
+	public void tickClient() {
 
 	}
 
-	public void tickServer(YoukaiEntity e) {
+	public void tickServer() {
 
+	}
+
+	public boolean handleEntityEvent(byte pId) {
+		return false;
 	}
 
 }

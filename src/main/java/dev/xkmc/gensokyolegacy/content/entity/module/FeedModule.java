@@ -18,7 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 
 @SerialClass
-public class FeedModule extends IYoukaiModules {
+public class FeedModule extends AbstractYoukaiModule {
 
 	private static final ResourceLocation ID = GensokyoLegacy.loc("feed");
 
@@ -57,10 +57,10 @@ public class FeedModule extends IYoukaiModules {
 	}
 
 	@Override
-	public InteractionResult interact(Player player, InteractionHand hand, YoukaiEntity e) {
-		if (e.isHostileTo(player)) return InteractionResult.PASS;
+	public InteractionResult interact(Player player, InteractionHand hand) {
+		if (self.isHostileTo(player)) return InteractionResult.PASS;
 		ItemStack stack = player.getItemInHand(hand);
-		var food = stack.getFoodProperties(e);
+		var food = stack.getFoodProperties(self);
 		if (food == null) return InteractionResult.PASS;
 		if (feedCoolDown > 0) return InteractionResult.PASS;
 		int favor = getFavor(stack, food);
@@ -70,28 +70,42 @@ public class FeedModule extends IYoukaiModules {
 		stack.shrink(1);
 		feedCoolDown += food.nutrition() * 100;
 		if (stack.getUseAnimation() == UseAnim.DRINK)
-			e.playSound(stack.getDrinkingSound());
-		else e.playSound(stack.getEatingSound());
+			self.playSound(stack.getDrinkingSound());
+		else self.playSound(stack.getEatingSound());
 		if (!remain.isEmpty())
 			player.getInventory().placeItemBackInInventory(remain);
 		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public void tickServer(YoukaiEntity e) {
+	public void tickServer() {
 		if (feedCoolDown > 0) feedCoolDown--;
-		e.setFlag(YoukaiFlags.FED, feedCoolDown > 0);
+		self.setFlag(YoukaiFlags.FED, feedCoolDown > 0);
 	}
 
 	@Override
-	public void tickClient(YoukaiEntity e) {
-		if (!e.getFlag(YoukaiFlags.FED)) return;
-		int chance = e.isInvisible() ? 15 : 2;
-		if (e.getRandom().nextInt(chance) != 0) return;
-		e.level().addParticle(
+	public void tickClient() {
+		if (!self.getFlag(YoukaiFlags.FED)) return;
+		int chance = self.isInvisible() ? 15 : 2;
+		if (self.getRandom().nextInt(chance) != 0) return;
+		self.level().addParticle(
 				ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, MobEffects.SATURATION.value().getColor()),
-				e.getRandomX(0.5D), e.getRandomY(), e.getRandomZ(0.5D), 0, 0, 0
+				self.getRandomX(0.5D), self.getRandomY(), self.getRandomZ(0.5D), 0, 0, 0
 		);
 	}
 
+	@Override
+	public boolean handleEntityEvent(byte pId) {
+		if (pId == EntityEvent.IN_LOVE_HEARTS) {
+			for (int i = 0; i < 7; ++i) {
+				double d0 = self.getRandom().nextGaussian() * 0.02D;
+				double d1 = self.getRandom().nextGaussian() * 0.02D;
+				double d2 = self.getRandom().nextGaussian() * 0.02D;
+				self.level().addParticle(ParticleTypes.HEART,
+						self.getRandomX(1.0D), self.getRandomY() + 0.5D, self.getRandomZ(1.0D), d0, d1, d2);
+			}
+			return true;
+		}
+		return false;
+	}
 }

@@ -10,7 +10,7 @@ import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.CharDataHolder;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
-import dev.xkmc.gensokyolegacy.content.entity.module.IYoukaiModules;
+import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
@@ -18,7 +18,6 @@ import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import dev.xkmc.l2serial.util.Wrappers;
 import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
@@ -32,7 +31,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -80,7 +78,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 
 	protected final YoukaiSourceOverride sources = new YoukaiSourceOverride(level().registryAccess());
 	protected final YoukaiCardHolder cardHolder = new YoukaiCardHolder(this);
-	protected final List<IYoukaiModules> modules = createModules();
+	protected final List<AbstractYoukaiModule> modules = createModules();
 
 	public final YoukaiCombatManager combatManager = createCombatManager();
 	public final YoukaiNavigationControl navCtrl = new YoukaiNavigationControl(this);
@@ -198,7 +196,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		tickSpell();
 		navCtrl.tickMove();
 		for (var e : modules) {
-			e.tickServer(this);
+			e.tickServer();
 		}
 		super.customServerAiStep();
 	}
@@ -210,14 +208,14 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		navigation = nav;
 	}
 
-	protected List<IYoukaiModules> createModules() {
+	protected List<AbstractYoukaiModule> createModules() {
 		return List.of();
 	}
 
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		for (var e : modules) {
-			InteractionResult result = e.interact(player, hand, this);
+			InteractionResult result = e.interact(player, hand);
 			if (result != InteractionResult.PASS)
 				return result;
 		}
@@ -226,21 +224,18 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 
 	@Override
 	public void handleEntityEvent(byte pId) {
-		if (pId == EntityEvent.IN_LOVE_HEARTS) {
-			for (int i = 0; i < 7; ++i) {
-				double d0 = this.random.nextGaussian() * 0.02D;
-				double d1 = this.random.nextGaussian() * 0.02D;
-				double d2 = this.random.nextGaussian() * 0.02D;
-				this.level().addParticle(ParticleTypes.HEART, this.getRandomX(1.0D), this.getRandomY() + 0.5D, this.getRandomZ(1.0D), d0, d1, d2);
-			}
-		} else super.handleEntityEvent(pId);
+		for (var e : modules) {
+			if (e.handleEntityEvent(pId))
+				return;
+		}
+		super.handleEntityEvent(pId);
 	}
 
 	@Override
 	protected void tickEffects() {
 		super.tickEffects();
 		for (var e : modules) {
-			e.tickClient(this);
+			e.tickClient();
 		}
 	}
 
