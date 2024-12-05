@@ -30,7 +30,21 @@ public class FeedModule extends IYoukaiModules {
 	}
 
 	public int getFavor(ItemStack food, FoodProperties prop) {
-		return 10;
+		int ans = 3 + prop.nutrition() / 4;
+		if (prop.nutrition() == 0)
+			ans = 1;
+		boolean good = false;
+		for (var e : prop.effects()) {
+			if (e.effect().is(MobEffects.POISON))
+				return -1;
+			if (e.effect().is(MobEffects.WITHER))
+				return -1;
+			if (e.effect().getEffect().value().isBeneficial())
+				good = true;
+		}
+		if (good)
+			ans += ans / 2;
+		return Math.min(ans, 10);
 	}
 
 	public void onFeed(ItemStack food, FoodProperties prop, Player player, int favor) {
@@ -44,6 +58,7 @@ public class FeedModule extends IYoukaiModules {
 
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand, YoukaiEntity e) {
+		if (e.isHostileTo(player)) return InteractionResult.PASS;
 		ItemStack stack = player.getItemInHand(hand);
 		var food = stack.getFoodProperties(e);
 		if (food == null) return InteractionResult.PASS;

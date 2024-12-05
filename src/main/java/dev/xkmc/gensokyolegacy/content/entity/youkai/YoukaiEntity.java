@@ -351,13 +351,17 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		return pSource.is(DamageTypeTags.IS_FALL) || combatManager.isInvulnerableTo(pSource);
 	}
 
-	protected final boolean wouldAttack(LivingEntity entity) {
+	public final boolean wouldInitiateAttack(LivingEntity entity) {
 		if (shouldIgnore(entity)) return false;
 		return combatManager.targetKind(entity).initiateAttack();
 	}
 
+	public final boolean isHostileTo(LivingEntity le) {
+		return targets.contains(le) || wouldInitiateAttack(le);
+	}
+
 	public final boolean shouldHurt(LivingEntity le) {
-		return targets.contains(le) || wouldAttack(le) || combatManager.shouldHurtInnocent(le);
+		return isHostileTo(le) || combatManager.shouldHurtInnocent(le);
 	}
 
 	public final void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku) {

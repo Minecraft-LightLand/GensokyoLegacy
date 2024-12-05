@@ -56,7 +56,7 @@ public class RumiaEntity extends YoukaiEntity {
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 24));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new MultiHurtByTargetGoal(this, RumiaEntity.class));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, this::wouldAttack));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, this::wouldInitiateAttack));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

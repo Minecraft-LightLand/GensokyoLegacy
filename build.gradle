@@ -1,5 +1,3 @@
-import net.darkhax.curseforgegradle.TaskPublishCurseForge
-
 plugins {
     id 'java-library'
     id 'eclipse'
@@ -137,6 +135,17 @@ repositories {
         name = "OctoStudios"
         url = uri("https://maven.octo-studios.com/releases")
     }
+    maven {
+        name = "SmartBrainLib (SBL) Maven Repo"
+        url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
+    }
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {
+            includeGroup("software.bernie.geckolib")
+        }
+    }
     mavenLocal();
 }
 
@@ -163,9 +172,10 @@ dependencies {
 
     implementation jarJar(group: 'dev.xkmc', name: 'l2core', version: "[${l2core_ver},)")
     implementation jarJar(group: 'dev.xkmc', name: 'fast_projectile_api', version: "[${fast_projectile_api_ver},)")
+    implementation jarJar(group: 'dev.xkmc', name: 'danmaku_api', version: "[${danmaku_api_ver},)")
     implementation jarJar(group: 'dev.xkmc', name: 'l2damagetracker', version: "[${l2damagetracker_ver},)")
-
-    implementation "dev.xkmc:danmaku_api:${danmaku_api_ver}"
+    implementation jarJar(group: 'net.tslat.smartbrainlib', name: 'SmartBrainLib-neoforge-1.21.1', version: "[1.16.1,)")
+    implementation jarJar(group: 'software.bernie.geckolib', name: 'geckolib-neoforge-1.21.1', version: "[4.6.6,)")
 
     implementation "mezz.jei:jei-${jei_minecraft_version}:${jei_version}"
 

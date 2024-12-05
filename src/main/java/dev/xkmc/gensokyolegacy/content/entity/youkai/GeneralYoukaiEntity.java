@@ -66,7 +66,7 @@ public class GeneralYoukaiEntity extends YoukaiEntity {
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 24));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new MultiHurtByTargetGoal(this, GeneralYoukaiEntity.class));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true, this::wouldAttack));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, true, this::wouldInitiateAttack));
 	}
 
 	@Override
