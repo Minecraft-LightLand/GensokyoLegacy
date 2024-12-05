@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.characters.reimu;
+package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManager;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.TargetKind;
@@ -10,19 +10,16 @@ import net.minecraft.world.entity.npc.Villager;
 
 class MaidenCombatManager extends DefaultCombatManager {
 
-	private final MaidenEntity maidenEntity;
-
-	public MaidenCombatManager(MaidenEntity maidenEntity) {
-		super(maidenEntity, GeneralYoukaiEntity.SPELL);
-		this.maidenEntity = maidenEntity;
+	public MaidenCombatManager(MaidenEntity e) {
+		super(e, GeneralYoukaiEntity.SPELL);
 	}
 
 	@Override
 	public TargetKind targetKind(LivingEntity le) {
 		if (le.getType().is(EntityTypeTags.RAIDERS))
-			return TargetKind.FIGHT;
+			return TargetKind.PRAY;
 		if (le instanceof Mob mob && (mob.getTarget() instanceof Villager || mob.getLastHurtMob() instanceof Villager))
-			return TargetKind.FIGHT;
+			return TargetKind.PRAY;
 		return super.targetKind(le);
 	}
 

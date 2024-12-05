@@ -23,4 +23,6 @@ public interface YoukaiCombatManager {
 
 	void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku);
 
+	void onDanmakuImmune(LivingEntity e, IDanmakuEntity danmaku, DamageSource source);
+
 }

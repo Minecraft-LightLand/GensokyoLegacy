@@ -1,12 +1,19 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.move;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.network.PathDataToClient;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.ArrayList;
+
 public class NavigationDebugger {
+
+	public static boolean hasDebugGlass(ServerPlayer sp) {
+		return false;//TODO
+	}
 
 	private final YoukaiEntity self;
 	private Path cache;
@@ -26,18 +33,15 @@ public class NavigationDebugger {
 				return;
 		}
 		cache = path;
-		Vec3 current = self.position();
+		ArrayList<Vec3> list = new ArrayList<>();
+		list.add(self.position());
 		for (var i = path.getNextNodeIndex(); i < path.getNodeCount(); i++) {
-			var pos = Vec3.atCenterOf(path.getNodePos(i));
-			var len = pos.distanceTo(current);
-			int n = (int) ((len + 1) * 4);
-			for (int j = 0; j < n; j++) {
-				double p = (j + 1d) / n;
-				Vec3 c = current.lerp(pos, p);
-				((ServerLevel) self.level()).sendParticles(ParticleTypes.SMALL_FLAME,
-						c.x, c.y, c.z, 0, 0, 0, 0, 0);
-			}
-			current = pos;
+			list.add(Vec3.atCenterOf(path.getNodePos(i)));
+		}
+		var packet = new PathDataToClient(self.getId(), list);
+		for (var e : self.getPlayers()) {
+			if (hasDebugGlass(e))
+				GensokyoLegacy.HANDLER.toClientPlayer(packet, e);
 		}
 	}
 

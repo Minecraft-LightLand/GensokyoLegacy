@@ -94,7 +94,7 @@ public class RumiaStateMachine {
 	public void startChargeAttack(LivingEntity target) {
 		if (stage != RumiaStage.NONE) return;
 		if (ballDelay > 0) return;
-		if (rumia.targetKind(target) == TargetKind.WORTHY) return;
+		if (rumia.combatManager.targetKind(target).noAdditionalEffect()) return;
 		rumia.getNavigation().stop();
 		stage = RumiaStage.PREPARE;
 		time = PREPARE_TIME;

@@ -30,12 +30,12 @@ public class YoukaiAttackGoal<T extends YoukaiEntity> extends Goal {
 		meleeTime = 10;
 		shootTime = 20;
 		youkai.setAggressive(true);
-		youkai.setFlying();
+		youkai.navCtrl.setFlying();
 	}
 
 	public void stop() {
 		youkai.setAggressive(false);
-		youkai.setWalking();
+		youkai.navCtrl.setWalking();
 	}
 
 	public boolean requiresUpdateEveryTick() {

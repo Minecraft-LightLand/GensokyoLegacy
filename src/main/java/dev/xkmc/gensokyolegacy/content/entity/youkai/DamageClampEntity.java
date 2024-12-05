@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.youkai;
 
+import com.google.common.collect.Sets;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -19,12 +20,16 @@ import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.Set;
+
 public class DamageClampEntity extends DamageRefactorEntity {
 
 	protected final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
 
 	private int hurtCD = 0;
 	private boolean hurtCall = false;
+	private final Set<ServerPlayer> players = Sets.newHashSet();
 
 	protected DamageClampEntity(EntityType<? extends DamageRefactorEntity> entityType, Level level) {
 		super(entityType, level);
@@ -79,7 +84,7 @@ public class DamageClampEntity extends DamageRefactorEntity {
 			return 10;
 		if (source.getEntity() instanceof Player pl && pl.getAbilities().instabuild)
 			return 10;
-		if (source.is(DanmakuDamageTypes.DANMAKU))
+		if (source.is(DanmakuDamageTypes.DANMAKU_TYPE))
 			return 20;
 		if (source.is(DamageTypeTags.BYPASSES_COOLDOWN))
 			return 40;
@@ -195,12 +200,18 @@ public class DamageClampEntity extends DamageRefactorEntity {
 
 	public void startSeenByPlayer(ServerPlayer pPlayer) {
 		super.startSeenByPlayer(pPlayer);
+		players.add(pPlayer);
 		this.bossEvent.addPlayer(pPlayer);
 	}
 
 	public void stopSeenByPlayer(ServerPlayer pPlayer) {
 		super.stopSeenByPlayer(pPlayer);
+		players.remove(pPlayer);
 		this.bossEvent.removePlayer(pPlayer);
+	}
+
+	public Collection<ServerPlayer> getPlayers() {
+		return players;
 	}
 
 }

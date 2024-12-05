@@ -10,21 +10,30 @@ package dev.xkmc.gensokyolegacy.content.entity.youkai;
  */
 public record YoukaiFeatureSet(
 		boolean effectImmune, boolean damageFilter, boolean damageCoolDown,
-		boolean noTargetHealing, boolean hasBossBar,
+		boolean noTargetHealing, boolean trueDamageOnImmune, boolean hasBossBar,
 		int limiter, int nonDanmakuProtection, int noPlayerDiscardTime) {
 
 	public static final YoukaiFeatureSet NONE = YoukaiFeatureSet.builder()
-			.limit(5, 1).build();
+			.limit(5, 1)
+			.build();
 
 	public static final YoukaiFeatureSet BOSS = YoukaiFeatureSet.builder()
-			.markBoss().limit(20, 1).build();
+			.markBoss().limit(20, 1)
+			.build();
 
 	public static final YoukaiFeatureSet FULL = YoukaiFeatureSet.builder()
-			.markBoss().limit(20, 5).damageFilter().damageCoolDown().build();
+			.markBoss().limit(20, 5).damageFilter().damageCoolDown()
+			.build();
+
+	public static final YoukaiFeatureSet SAGE = YoukaiFeatureSet.builder()
+			.markBoss().limit(20, 5).damageFilter().damageCoolDown()
+			.trueDamageOnImmune()
+			.build();
 
 	public static final YoukaiFeatureSet MAIDEN = YoukaiFeatureSet.builder()
 			.markBoss().limit(20, 5).damageFilter().damageCoolDown()
-			.noPlayerTime(30).build();
+			.trueDamageOnImmune().noPlayerTime(30)
+			.build();
 
 	public static Builder builder() {
 		return new Builder();
@@ -37,6 +46,7 @@ public record YoukaiFeatureSet(
 		private boolean damageCoolDown = false;
 		private boolean noTargetHealing = false;
 		private boolean hasBossBar = false;
+		private boolean trueDamageOnImmune = false;
 		private int limiter = 1;
 		private int nonDanmakuProtection = 1;
 		private int noPlayerDiscardTime = -1;
@@ -58,6 +68,11 @@ public record YoukaiFeatureSet(
 			return this;
 		}
 
+		public Builder trueDamageOnImmune() {
+			trueDamageOnImmune = true;
+			return this;
+		}
+
 		public Builder limit(int limit, int protection) {
 			limiter = limit;
 			nonDanmakuProtection = protection;
@@ -72,7 +87,7 @@ public record YoukaiFeatureSet(
 		public YoukaiFeatureSet build() {
 			return new YoukaiFeatureSet(
 					effectImmune, damageFilter, damageCoolDown,
-					noTargetHealing, hasBossBar,
+					noTargetHealing, trueDamageOnImmune, hasBossBar,
 					limiter, nonDanmakuProtection,
 					noPlayerDiscardTime
 			);

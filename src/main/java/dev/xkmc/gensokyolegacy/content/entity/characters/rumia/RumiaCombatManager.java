@@ -52,7 +52,7 @@ class RumiaCombatManager extends DefaultCombatManager {
 
 	@Override
 	public void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku) {
-		if (targetKind(e) == TargetKind.WORTHY) return;
+		if (targetKind(e).noAdditionalEffect()) return;
 		if (danmaku instanceof ItemBulletEntity d && d.getItem().getItem() instanceof DanmakuItem item) {
 			if (item.color == DyeColor.BLACK) {
 				e.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 100, 1));

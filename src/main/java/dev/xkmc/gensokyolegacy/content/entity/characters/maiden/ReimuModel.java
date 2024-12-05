@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.characters.reimu;// Made with Blockbench 4.10.3
+package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;// Made with Blockbench 4.10.3
 // Exported for Minecraft version 1.17 or later with Mojang mappings
 // Paste this class into your mod and generate all required imports
 

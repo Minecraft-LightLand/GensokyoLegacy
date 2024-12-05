@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.characters.reimu;
+package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleLayer;

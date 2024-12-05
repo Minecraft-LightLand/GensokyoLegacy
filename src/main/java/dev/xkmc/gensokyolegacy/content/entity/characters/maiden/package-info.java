@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.entity.characters.reimu;
+package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

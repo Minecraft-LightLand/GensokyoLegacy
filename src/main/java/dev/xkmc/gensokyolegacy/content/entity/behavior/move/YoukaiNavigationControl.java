@@ -67,7 +67,7 @@ public class YoukaiNavigationControl {
 			combat.tickCombatFlying(target);
 		}
 		if (target == null && isFlying && !flyNav.isDone()) {
-			//debugger.debugPath();
+			debugger.debugPath();
 		}
 	}
 
@@ -99,7 +99,7 @@ public class YoukaiNavigationControl {
 			boolean ans = super.moveTo(x, y, z, accuracy, speed);
 			if (ans) return true;
 			if (!(isDone() || isStuck())) return false;
-			self.setFlying();
+			setFlying();
 			flyNav.tempFly = true;
 			return flyNav.moveTo(x, y, z, accuracy, speed);
 		}
@@ -109,7 +109,7 @@ public class YoukaiNavigationControl {
 			boolean ans = super.moveTo(entity, speed);
 			if (ans) return true;
 			if (!(isDone() || isStuck())) return false;
-			self.setFlying();
+			setFlying();
 			flyNav.tempFly = true;
 			return flyNav.moveTo(entity, speed);
 		}

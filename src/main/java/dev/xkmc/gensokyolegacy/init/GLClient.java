@@ -2,7 +2,8 @@ package dev.xkmc.gensokyolegacy.init;
 
 import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TLMRenderHandler;
-import dev.xkmc.gensokyolegacy.content.entity.characters.reimu.ReimuModel;
+import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoModel;
+import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.BlackBallModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaModel;
 import dev.xkmc.youkaishomecoming.content.entity.lampery.LampreyModel;
@@ -15,7 +16,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
 @EventBusSubscriber(value = Dist.CLIENT, modid = GensokyoLegacy.MODID, bus = EventBusSubscriber.Bus.MOD)
-public class YHClient {
+public class GLClient {
 
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
@@ -32,6 +33,7 @@ public class YHClient {
 		event.registerLayerDefinition(BlackBallModel.LAYER_LOCATION, BlackBallModel::createBodyLayer);
 		event.registerLayerDefinition(ReimuModel.LAYER_LOCATION, ReimuModel::createBodyLayer);
 		event.registerLayerDefinition(ReimuModel.HAT_LOCATION, ReimuModel::createHatLayer);
+		event.registerLayerDefinition(CirnoModel.LAYER_LOCATION, CirnoModel::createBodyLayer);
 	}
 
 

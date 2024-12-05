@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.entity.behavior.interaction;
+package dev.xkmc.gensokyolegacy.content.attachment;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

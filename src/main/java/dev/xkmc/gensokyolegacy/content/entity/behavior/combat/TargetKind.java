@@ -1,5 +1,10 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 
-public enum TargetKind {
-	NONE, FIGHT, WORTHY
+public record TargetKind(boolean initiateAttack, boolean noAdditionalEffect) {
+
+	public static final TargetKind NONE = new TargetKind(false, false);
+	public static final TargetKind PRAY = new TargetKind(true, false);
+	public static final TargetKind WORTHY = new TargetKind(false, true);
+	public static final TargetKind ENEMY = new TargetKind(true, true);
+
 }
