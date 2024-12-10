@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.attachment;
+package dev.xkmc.gensokyolegacy.content.attachment.index;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

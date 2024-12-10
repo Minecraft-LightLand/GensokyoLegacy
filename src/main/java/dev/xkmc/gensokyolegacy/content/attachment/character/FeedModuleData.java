@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.attachment;
+package dev.xkmc.gensokyolegacy.content.attachment.character;
 
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;

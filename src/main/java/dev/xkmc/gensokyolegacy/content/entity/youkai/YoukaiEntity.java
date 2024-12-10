@@ -7,7 +7,7 @@ import dev.xkmc.danmakuapi.content.spell.spellcard.SpellCardWrapper;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleHolder;
-import dev.xkmc.gensokyolegacy.content.attachment.CharDataHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataHolder;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
 import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
@@ -255,6 +255,9 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	public void die(DamageSource source) {
 		boolean prev = dead;
 		super.die(source);
+		for (var module : modules) {
+			module.onKilled();
+		}
 		var e = source.getEntity();
 		if (!prev && dead && e instanceof LivingEntity le) {
 			if (!e.isAlive() || !e.isAddedToLevel() || e.isRemoved())

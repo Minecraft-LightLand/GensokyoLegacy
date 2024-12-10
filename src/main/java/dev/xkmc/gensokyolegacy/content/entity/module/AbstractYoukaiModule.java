@@ -36,4 +36,6 @@ public class AbstractYoukaiModule {
 		return false;
 	}
 
+	public void onKilled() {
+	}
 }
