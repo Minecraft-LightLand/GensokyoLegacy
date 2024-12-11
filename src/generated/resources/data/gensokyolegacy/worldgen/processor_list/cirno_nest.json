@@ -1,0 +1,33 @@
+{
+  "processors": [
+    {
+      "processor_type": "minecraft:protected_blocks",
+      "value": "#minecraft:features_cannot_replace"
+    },
+    {
+      "processor_type": "minecraft:rule",
+      "rules": [
+        {
+          "block_entity_modifier": {
+            "type": "minecraft:append_loot",
+            "loot_table": "gensokyolegacy:chests/cirno_nest/cabinet"
+          },
+          "input_predicate": {
+            "block": "farmersdelight:spruce_cabinet",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "farmersdelight:spruce_cabinet",
+            "Properties": {
+              "facing": "north",
+              "open": "false"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.block;
+package dev.xkmc.gensokyolegacy.content.block.bed;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

@@ -1,0 +1,9 @@
+{
+  "values": {
+    "gensokyolegacy:cirno": {
+      "discardTime": 12000,
+      "respawnTime": 24000,
+      "structure": "gensokyolegacy:cirno_nest"
+    }
+  }
+}

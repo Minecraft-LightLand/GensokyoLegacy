@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.block;
+package dev.xkmc.gensokyolegacy.content.block.bed;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

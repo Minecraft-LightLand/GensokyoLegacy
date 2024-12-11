@@ -11,7 +11,7 @@ public class TLMClientCompat {
 	private static final boolean LOADED = ModList.get().isLoaded(TouhouLittleMaid.MOD_ID);
 
 	public static boolean delegateRender(GeneralYoukaiEntity e, float yaw, float pTick, PoseStack pose, MultiBufferSource buffer, int light) {
-		if (!LOADED || e.getModelId() == null) return false;
+		if (!LOADED || e.getModelId().isEmpty()) return false;
 		return TLMRenderHandler.render(e, yaw, pTick, pose, buffer, light);
 	}
 

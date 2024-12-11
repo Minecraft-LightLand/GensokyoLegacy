@@ -1,7 +1,16 @@
 {
+  "block.gensokyolegacy.cirno_bed": "pǝᗺ ouɹıƆ",
+  "entity.gensokyolegacy.cirno": "ouɹıƆ",
+  "entity.gensokyolegacy.kochiya_sanae": "ǝɐuɐS ɐʎıɥɔoʞ",
+  "entity.gensokyolegacy.komeiji_koishi": "ıɥsıoʞ ıظıǝɯoʞ",
+  "entity.gensokyolegacy.reimu": "nɯıǝᴚ",
   "entity.gensokyolegacy.rumia": "ɐıɯnᴚ",
-  "entity.gensokyolegacy.shrine_maiden": "uǝpıɐW ǝuıɹɥS",
+  "entity.gensokyolegacy.yukari": "ıɹɐʞnʎ",
   "gensokyolegacy.title": "ʎɔɐbǝꞀ oʎʞosuǝ⅁",
+  "item.gensokyolegacy.cirno_spawn_egg": "bbƎ uʍɐdS ouɹıƆ",
+  "item.gensokyolegacy.kochiya_sanae_spawn_egg": "bbƎ uʍɐdS ǝɐuɐS ɐʎıɥɔoʞ",
+  "item.gensokyolegacy.komeiji_koishi_spawn_egg": "bbƎ uʍɐdS ıɥsıoʞ ıظıǝɯoʞ",
+  "item.gensokyolegacy.reimu_spawn_egg": "bbƎ uʍɐdS nɯıǝᴚ",
   "item.gensokyolegacy.rumia_spawn_egg": "bbƎ uʍɐdS ɐıɯnᴚ",
-  "item.gensokyolegacy.shrine_maiden_spawn_egg": "bbƎ uʍɐdS uǝpıɐW ǝuıɹɥS"
+  "item.gensokyolegacy.yukari_spawn_egg": "bbƎ uʍɐdS ıɹɐʞnʎ"
 }

@@ -2,7 +2,7 @@ package dev.xkmc.gensokyolegacy.content.attachment.index;
 
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
-import dev.xkmc.gensokyolegacy.content.block.YoukaiBedBlockEntity;
+import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.server.level.ServerLevel;

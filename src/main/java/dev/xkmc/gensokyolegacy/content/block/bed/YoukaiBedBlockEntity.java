@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.block;
+package dev.xkmc.gensokyolegacy.content.block.bed;
 
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
@@ -60,7 +60,7 @@ public class YoukaiBedBlockEntity extends BaseBlockEntity implements TickableBlo
 	}
 
 	public ResourceLocation getTexture() {
-		return BuiltInRegistries.BLOCK.getKey(getBlockState().getBlock());
+		return BuiltInRegistries.BLOCK.getKey(getBlockState().getBlock()).withPrefix("entity/bed/");
 	}
 
 }

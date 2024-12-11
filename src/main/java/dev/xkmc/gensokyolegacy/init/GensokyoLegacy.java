@@ -1,8 +1,14 @@
 package dev.xkmc.gensokyolegacy.init;
 
+import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.danmakuapi.init.DanmakuAPI;
+import dev.xkmc.gensokyolegacy.init.data.GLStructureGen;
+import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.gensokyolegacy.init.network.CharDataToClient;
 import dev.xkmc.gensokyolegacy.init.network.PathDataToClient;
+import dev.xkmc.gensokyolegacy.init.registrate.GLBlocks;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.simple.Reg;
 import dev.xkmc.l2serial.network.PacketHandler;
@@ -26,11 +32,18 @@ public class GensokyoLegacy {
 	);
 
 	public GensokyoLegacy() {
+		REGISTRATE.defaultCreativeTab(DanmakuAPI.TAB.key());
+		GLMisc.register();
+		GLBlocks.register();
 		GLEntities.register();
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void gatherData(GatherDataEvent event) {
+		REGISTRATE.addDataGenerator(GLTagGen.BIOME_TAG, GLTagGen::genBiomeTag);
+		REGISTRATE.addDataGenerator(ProviderType.DATA_MAP, GLStructureGen::dataMap);
+		var init = REGISTRATE.getDataGenInitializer();
+		GLStructureGen.init(init);
 	}
 
 	public static ResourceLocation loc(String id) {

@@ -1,7 +1,16 @@
 {
+  "block.gensokyolegacy.cirno_bed": "Cirno Bed",
+  "entity.gensokyolegacy.cirno": "Cirno",
+  "entity.gensokyolegacy.kochiya_sanae": "Kochiya Sanae",
+  "entity.gensokyolegacy.komeiji_koishi": "Komeiji Koishi",
+  "entity.gensokyolegacy.reimu": "Reimu",
   "entity.gensokyolegacy.rumia": "Rumia",
-  "entity.gensokyolegacy.shrine_maiden": "Shrine Maiden",
+  "entity.gensokyolegacy.yukari": "Yukari",
   "gensokyolegacy.title": "Gensokyo Legacy",
+  "item.gensokyolegacy.cirno_spawn_egg": "Cirno Spawn Egg",
+  "item.gensokyolegacy.kochiya_sanae_spawn_egg": "Kochiya Sanae Spawn Egg",
+  "item.gensokyolegacy.komeiji_koishi_spawn_egg": "Komeiji Koishi Spawn Egg",
+  "item.gensokyolegacy.reimu_spawn_egg": "Reimu Spawn Egg",
   "item.gensokyolegacy.rumia_spawn_egg": "Rumia Spawn Egg",
-  "item.gensokyolegacy.shrine_maiden_spawn_egg": "Shrine Maiden Spawn Egg"
+  "item.gensokyolegacy.yukari_spawn_egg": "Yukari Spawn Egg"
 }
