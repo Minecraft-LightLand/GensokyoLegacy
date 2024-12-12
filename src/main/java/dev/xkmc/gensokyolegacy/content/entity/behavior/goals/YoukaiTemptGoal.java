@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
+package dev.xkmc.gensokyolegacy.content.entity.behavior.goals;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,7 +10,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 
-public class RumiaTemptGoal extends Goal {
+public class YoukaiTemptGoal extends Goal {
 
 	private static final TargetingConditions TEMP_TARGETING = TargetingConditions.forNonCombat().range(10.0D).ignoreLineOfSight();
 
@@ -22,7 +22,7 @@ public class RumiaTemptGoal extends Goal {
 	private int calmDown;
 	private final Ingredient items;
 
-	public RumiaTemptGoal(YoukaiEntity pMob, Ingredient pItems) {
+	public YoukaiTemptGoal(YoukaiEntity pMob, Ingredient pItems) {
 		mob = pMob;
 		speedModifier = 1;
 		items = pItems;

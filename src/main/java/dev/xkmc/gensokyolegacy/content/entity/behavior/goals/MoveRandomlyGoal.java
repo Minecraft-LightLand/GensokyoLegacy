@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
+package dev.xkmc.gensokyolegacy.content.entity.behavior.goals;
 
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;

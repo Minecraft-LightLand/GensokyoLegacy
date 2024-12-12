@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
 
 public record CharacterConfig(
 		ResourceLocation structure,
-		int discardTime, int respawnTime
+		int discardTime, int respawnTime, int wanderRadius
 ) {
 
 	@Nullable
@@ -28,6 +28,7 @@ public record CharacterConfig(
 		youkai.setPos(pos.getCenter());
 		youkai.getModule(HomeModule.class).ifPresent(e -> e.setHome(key));
 		youkai.initSpellCard();
+		youkai.restrictTo(pos, wanderRadius);
 		return youkai;
 	}
 

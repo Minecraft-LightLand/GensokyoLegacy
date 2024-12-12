@@ -1,9 +1,11 @@
 package dev.xkmc.gensokyolegacy.content.entity.youkai;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManager;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.MultiHurtByTargetGoal;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiAttackGoal;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.MoveAroundNestGoal;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.MoveRandomlyGoal;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.MultiHurtByTargetGoal;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.YoukaiAttackGoal;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
@@ -16,7 +18,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -60,7 +61,8 @@ public class GeneralYoukaiEntity extends YoukaiEntity {
 	protected void registerGoals() {
 		goalSelector.addGoal(4, new YoukaiAttackGoal<>(this, 16));
 		goalSelector.addGoal(6, new FloatGoal(this));
-		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 0.8));
+		goalSelector.addGoal(6, new MoveAroundNestGoal(this, 1));
+		goalSelector.addGoal(7, new MoveRandomlyGoal(this, 0.8));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 24));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new MultiHurtByTargetGoal(this, GeneralYoukaiEntity.class));

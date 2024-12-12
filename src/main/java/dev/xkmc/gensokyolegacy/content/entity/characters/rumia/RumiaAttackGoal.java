@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiAttackGoal;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.YoukaiAttackGoal;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.DyeColor;

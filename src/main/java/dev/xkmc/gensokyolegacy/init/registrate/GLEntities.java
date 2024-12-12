@@ -33,11 +33,9 @@ public class GLEntities {
 		RUMIA = GensokyoLegacy.REGISTRATE
 				.entity("rumia", RumiaEntity::new, MobCategory.MONSTER)
 				.properties(e -> e.sized(0.4F, 1.7f).clientTrackingRange(10))
-				.spawnPlacement(SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-						RumiaEntity::checkRumiaSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE)
 				.attributes(RumiaEntity::createAttributes)
 				.renderer(() -> RumiaRenderer::new)
-				.spawnEgg(0x000000, 0x000000).build()
+				.spawnEgg(0x413734, 0xA55064).build()
 				.loot(EntityLootGen::noLoot)
 				.register();
 
@@ -54,8 +52,6 @@ public class GLEntities {
 		CIRNO = GensokyoLegacy.REGISTRATE
 				.entity("cirno", CirnoEntity::new, MobCategory.MONSTER)
 				.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
-				.spawnPlacement(SpawnPlacementTypes.ON_GROUND, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-						CirnoEntity::checkCirnoSpawnRules, RegisterSpawnPlacementsEvent.Operation.REPLACE)
 				.attributes(CirnoEntity::createAttributes)
 				.renderer(() -> CirnoRenderer::new)
 				.spawnEgg(0x5676af, 0xb6ecf1).build()

@@ -54,20 +54,4 @@ public class CirnoEntity extends FairyEntity {
 		TouhouSpellCards.setCirno(this);
 	}
 
-	@Nullable
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
-		//TouhouSpellCards.setCirno(this);
-		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
-	}
-
-	public static boolean checkCirnoSpawnRules(EntityType<CirnoEntity> e, ServerLevelAccessor level, MobSpawnType type, BlockPos pos, RandomSource rand) {
-		if (!checkMobSpawnRules(e, level, type, pos, rand)) return false;
-		//if (!YHModConfig.COMMON.cirnoSpawn.get()) return false;
-		var aabb = AABB.ofSize(pos.getCenter(), 48, 24, 48);
-		if (!level.getEntitiesOfClass(CirnoEntity.class, aabb).isEmpty()) return false;
-		var player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 128, false);
-		return player != null;//EffectEventHandlers.isCharacter(player);
-	}
-
 }
