@@ -66,7 +66,7 @@ public class YoukaiNavigationControl {
 		if (target != null && self.canAttack(target) && isFlying) {
 			combat.tickCombatFlying(target);
 		}
-		if (target == null && isFlying && !flyNav.isDone()) {
+		if (target == null && !self.getNavigation().isDone()) {
 			debugger.debugPath();
 		}
 	}

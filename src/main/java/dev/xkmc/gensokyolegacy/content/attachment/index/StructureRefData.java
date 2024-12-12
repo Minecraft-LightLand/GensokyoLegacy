@@ -22,7 +22,7 @@ public class StructureRefData {
 	@SerialField
 	private final Map<EntityType<?>, BedRefData> entities = new LinkedHashMap<>();
 
-	public void blockTick(ServerLevel sl, BedData data, YoukaiBedBlockEntity be) {
+	public void blockTick(ServerLevel sl, BedData data, YoukaiBedBlockEntity be, StructureKey key) {
 		long time = sl.getGameTime();
 		if (time != lastBlockTickedTime) {
 			structureTick++;
@@ -31,7 +31,7 @@ public class StructureRefData {
 		var config = CharacterConfig.of(data.type());
 		if (config != null) {
 			var ref = entities.computeIfAbsent(data.type(), k -> new BedRefData());
-			ref.blockTick(config, sl, be);
+			ref.blockTick(data, config, sl, be, key);
 		}
 	}
 

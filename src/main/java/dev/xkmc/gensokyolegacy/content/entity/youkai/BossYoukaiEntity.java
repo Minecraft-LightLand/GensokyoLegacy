@@ -30,14 +30,4 @@ public class BossYoukaiEntity extends GeneralYoukaiEntity {
 		return YoukaiFeatureSet.BOSS;
 	}
 
-	@Nullable
-	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
-		initSpellCard();
-		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
-	}
-
-	public void initSpellCard() {
-	}
-
 }

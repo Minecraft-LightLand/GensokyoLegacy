@@ -1,13 +1,18 @@
 package dev.xkmc.gensokyolegacy.content.attachment.index;
 
+import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
+import dev.xkmc.gensokyolegacy.content.client.debug.BedInfoToClient;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -19,11 +24,16 @@ public class BedRefData {
 	@SerialField
 	private BlockPos bedPos = null;
 	@SerialField
-	private long lastEntityTickedTime = 0;
+	private long lastEntityTickedTime = -1000000;
 	@SerialField
 	private long lostEntityTick = 0;
 
-	void blockTick(CharacterConfig config, ServerLevel sl, YoukaiBedBlockEntity be) {
+	@Nullable
+	public BlockPos getBedPos() {
+		return bedPos;
+	}
+
+	void blockTick(BedData bed, CharacterConfig config, ServerLevel sl, YoukaiBedBlockEntity be, StructureKey key) {
 		if (bedPos == null) {
 			bedPos = be.getBlockPos();
 		} else {
@@ -48,7 +58,7 @@ public class BedRefData {
 			entityId = Util.NIL_UUID;
 		}
 		if (entityId.equals(Util.NIL_UUID) && time - lastEntityTickedTime > config.respawnTime()) {
-			var entity = config.create(sl, bedPos);
+			var entity = config.create(bed.type(), sl, bedPos, key);
 			if (entity != null) {
 				sl.addFreshEntity(entity);
 				entityId = entity.getUUID();
@@ -68,6 +78,22 @@ public class BedRefData {
 
 	public void onEntityDie(ServerLevel sl, YoukaiEntity self) {
 		entityId = Util.NIL_UUID;
+	}
+
+	public void onDebugClick(ServerPlayer sp, CharacterConfig config) {
+		entityId = Util.NIL_UUID;
+		lastEntityTickedTime = sp.level().getGameTime() - config.respawnTime();
+		sp.sendSystemMessage(GLLang.MSG_RESET.get());
+	}
+
+	public BedInfoToClient getDebugPacket(ServerLevel sl, CharacterConfig config, StructureKey key) {
+		if (entityId.equals(Util.NIL_UUID)) {
+			return new BedInfoToClient(key, null, 0, lastEntityTickedTime + config.respawnTime());
+		}
+		if (!(sl.getEntity(entityId) instanceof YoukaiEntity youkai)) {
+			return new BedInfoToClient(key, null, lastEntityTickedTime, 0);
+		}
+		return new BedInfoToClient(key, youkai.blockPosition(), 0, 0);
 	}
 
 }

@@ -8,9 +8,13 @@ import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
+import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
+import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
 import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
+import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
@@ -24,15 +28,15 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -41,6 +45,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.Nullable;
@@ -244,6 +249,10 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		return Optional.empty();
 	}
 
+	public <T> Optional<T> getModule(Class<T> cls) {
+		return Wrappers.cast(modules.stream().filter(cls::isInstance).findFirst());
+	}
+
 	@Override
 	protected void actuallyHurt(DamageSource source, float amount) {
 		if (spellCard != null) spellCard.hurt(cardHolder, source, amount);
@@ -274,6 +283,14 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 
 	protected void onKilledBy(LivingEntity le, DamageSource source) {
 		getData(le).ifPresent(CharDataHolder::onKillCharacter);
+	}
+
+	public Optional<CharacterInfoToClient> getDebugPacket(ServerPlayer sp) {
+		var key = getModule(HomeModule.class).map(HomeModule::home);
+		var ref = key
+				.map(k -> IndexStorage.get(sp.serverLevel()).getOrCreate(k).bedOf(getType()))
+				.map(BedRefData::getBedPos);
+		return getData(sp).map(e -> e.getDebugPacket(key.orElse(null), ref.orElse(null)));
 	}
 
 	// combat
@@ -392,6 +409,18 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		danmaku.setItem(DanmakuItems.Bullet.CIRCLE.get(color).asStack());
 		danmaku.setup(dmg, life, true, true, vec);
 		level().addFreshEntity(danmaku);
+	}
+
+	// spawn
+
+	@Nullable
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
+		initSpellCard();
+		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
+	}
+
+	public void initSpellCard() {
 	}
 
 }

@@ -23,6 +23,15 @@ public class HomeModule extends AbstractYoukaiModule {
 		super(ID, self);
 	}
 
+	@Nullable
+	public StructureKey home(){
+		return home;
+	}
+
+	public void setHome(StructureKey key) {
+		this.home = key;
+	}
+
 	@Override
 	public void tickServer() {
 		if (home == null) return;

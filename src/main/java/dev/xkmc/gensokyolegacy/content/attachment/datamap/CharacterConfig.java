@@ -1,5 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.attachment.datamap;
 
+import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
+import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import net.minecraft.core.BlockPos;
@@ -20,8 +22,13 @@ public record CharacterConfig(
 	}
 
 	@Nullable
-	public YoukaiEntity create(ServerLevel sl, BlockPos pos) {
-		return null;//TODO
+	public YoukaiEntity create(EntityType<?> type, ServerLevel sl, BlockPos pos, StructureKey key) {
+		var ans = type.create(sl);
+		if (!(ans instanceof YoukaiEntity youkai)) return null;
+		youkai.setPos(pos.getCenter());
+		youkai.getModule(HomeModule.class).ifPresent(e -> e.setHome(key));
+		youkai.initSpellCard();
+		return youkai;
 	}
 
 }

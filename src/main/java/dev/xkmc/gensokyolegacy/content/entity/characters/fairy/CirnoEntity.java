@@ -1,6 +1,10 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.fairy;
 
+import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
+import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
+import dev.xkmc.gensokyolegacy.content.entity.module.FeedModule;
+import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -14,6 +18,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @SerialClass
 public class CirnoEntity extends FairyEntity {
@@ -36,6 +42,16 @@ public class CirnoEntity extends FairyEntity {
 	@Override
 	protected YoukaiCombatManager createCombatManager() {
 		return new CirnoCombatManager(this);
+	}
+
+	@Override
+	protected List<AbstractYoukaiModule> createModules() {
+		return List.of(new HomeModule(this), new FeedModule(this));
+	}
+
+	@Override
+	public void initSpellCard() {
+		TouhouSpellCards.setCirno(this);
 	}
 
 	@Nullable

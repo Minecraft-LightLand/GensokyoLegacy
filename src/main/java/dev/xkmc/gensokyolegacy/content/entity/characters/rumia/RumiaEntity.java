@@ -2,6 +2,9 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.MultiHurtByTargetGoal;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
+import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
+import dev.xkmc.gensokyolegacy.content.entity.module.FeedModule;
+import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
@@ -30,6 +33,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @SerialClass
 public class RumiaEntity extends YoukaiEntity {
@@ -73,6 +78,11 @@ public class RumiaEntity extends YoukaiEntity {
 	@Override
 	protected YoukaiCombatManager createCombatManager() {
 		return new RumiaCombatManager(this);
+	}
+
+	@Override
+	protected List<AbstractYoukaiModule> createModules() {
+		return List.of(new HomeModule(this), new FeedModule(this));
 	}
 
 	@Override

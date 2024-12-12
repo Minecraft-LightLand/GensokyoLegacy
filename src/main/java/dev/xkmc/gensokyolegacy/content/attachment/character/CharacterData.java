@@ -11,6 +11,16 @@ import net.minecraft.world.entity.player.Player;
 @SerialClass
 public class CharacterData {
 
+	public static ReputationState getState(int reputation) {
+		if (reputation >= 150)
+			return ReputationState.FRIEND;
+		if (reputation >= -50)
+			return ReputationState.STRANGER;
+		if (reputation >= -150)
+			return ReputationState.JERK;
+		return ReputationState.ENEMY;
+	}
+
 	@SerialField
 	protected final FeedModuleData foodData = new FeedModuleData();
 
@@ -25,17 +35,11 @@ public class CharacterData {
 	}
 
 	public ReputationState getState() {
-		if (reputation >= 150)
-			return ReputationState.FRIEND;
-		if (reputation >= -50)
-			return ReputationState.STRANGER;
-		if (reputation >= -150)
-			return ReputationState.JERK;
-		return ReputationState.ENEMY;
+		return getState(reputation);
 	}
 
 	protected void onKilledByCharacter() {
-		if (reputation <= 50) {
+		if (reputation <= 0) {
 			reputation += 20;
 		}
 	}
