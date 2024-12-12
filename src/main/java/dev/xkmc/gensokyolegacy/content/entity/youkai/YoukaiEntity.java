@@ -8,13 +8,9 @@ import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataHolder;
-import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
-import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
-import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
 import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
@@ -28,7 +24,6 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
@@ -283,14 +278,6 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 
 	protected void onKilledBy(LivingEntity le, DamageSource source) {
 		getData(le).ifPresent(CharDataHolder::onKillCharacter);
-	}
-
-	public Optional<CharacterInfoToClient> getDebugPacket(ServerPlayer sp) {
-		var key = getModule(HomeModule.class).map(HomeModule::home);
-		var ref = key
-				.map(k -> IndexStorage.get(sp.serverLevel()).getOrCreate(k).bedOf(getType()))
-				.map(BedRefData::getBedPos);
-		return getData(sp).map(e -> e.getDebugPacket(key.orElse(null), ref.orElse(null)));
 	}
 
 	// combat

@@ -41,7 +41,7 @@ public class DebugOverlay implements LayeredDraw.Layer {
 		if (lines.isEmpty()) return;
 		int sw = g.guiWidth();
 		int sh = g.guiHeight();
-		new OverlayUtil(g, (int) (sw * 0.7), (int) (sh * 0.5), -1)
+		new OverlayUtil(g, (int) (sw * 0.6), (int) (sh * 0.5), (int) (sw * 0.3))
 				.renderLongText(Minecraft.getInstance().font, lines);
 	}
 

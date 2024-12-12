@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.module;
 
+import dev.xkmc.gensokyolegacy.content.client.debug.InfoUpdateClientManager;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -27,6 +28,10 @@ public class FeedModule extends AbstractYoukaiModule {
 
 	public FeedModule(YoukaiEntity self) {
 		super(ID, self);
+	}
+
+	public int getCoolDown() {
+		return feedCoolDown;
 	}
 
 	public int getFavor(ItemStack food, FoodProperties prop) {
@@ -65,6 +70,10 @@ public class FeedModule extends AbstractYoukaiModule {
 		if (feedCoolDown > 0) return InteractionResult.PASS;
 		int favor = getFavor(stack, food);
 		if (favor < 0) return InteractionResult.PASS;
+		if (player.level().isClientSide()) {
+			InfoUpdateClientManager.clearCache();
+			return InteractionResult.SUCCESS;
+		}
 		onFeed(stack, food, player, favor);
 		ItemStack remain = stack.getCraftingRemainingItem();
 		stack.shrink(1);
@@ -89,7 +98,7 @@ public class FeedModule extends AbstractYoukaiModule {
 		int chance = self.isInvisible() ? 15 : 2;
 		if (self.getRandom().nextInt(chance) != 0) return;
 		self.level().addParticle(
-				ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, MobEffects.SATURATION.value().getColor()),
+				ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 0xff000000 | MobEffects.SATURATION.value().getColor()),
 				self.getRandomX(0.5D), self.getRandomY(), self.getRandomZ(0.5D), 0, 0, 0
 		);
 	}
@@ -108,4 +117,5 @@ public class FeedModule extends AbstractYoukaiModule {
 		}
 		return false;
 	}
+
 }

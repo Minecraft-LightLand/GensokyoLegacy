@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -11,8 +11,8 @@ import net.minecraft.util.Mth;
 
 public class RumiaModel<T extends RumiaEntity> extends HierarchicalModel<T> {
 
-	public static final ModelLayerLocation HAIRBAND = new ModelLayerLocation(YoukaisHomecoming.loc("rumia_hairband"), "main");
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(YoukaisHomecoming.loc("rumia"), "main");
+	public static final ModelLayerLocation HAIRBAND = new ModelLayerLocation(GensokyoLegacy.loc("rumia_hairband"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("rumia"), "main");
 
 	public static LayerDefinition createHairbandLayer() {
 		MeshDefinition meshdefinition = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F);

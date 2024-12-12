@@ -13,7 +13,7 @@ import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.BossYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.GeneralYoukaiRenderer;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import dev.xkmc.youkaishomecoming.init.loot.EntityLootGen;
+import dev.xkmc.gensokyolegacy.init.data.EntityLootGen;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacementTypes;
 import net.minecraft.world.level.levelgen.Heightmap;

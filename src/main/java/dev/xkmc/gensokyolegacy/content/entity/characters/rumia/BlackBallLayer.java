@@ -2,7 +2,7 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BlackBallLayer<T extends RumiaEntity> extends RenderLayer<T, RumiaModel<T>> {
 
-	public static final ResourceLocation TEX = YoukaisHomecoming.loc("textures/entities/black_ball.png");
+	public static final ResourceLocation TEX = GensokyoLegacy.loc("textures/entity/black_ball.png");
 
 	private final BlackBallModel<T> model;
 

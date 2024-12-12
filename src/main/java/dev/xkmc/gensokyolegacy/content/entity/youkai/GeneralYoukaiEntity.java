@@ -4,9 +4,9 @@ import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManag
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.MultiHurtByTargetGoal;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiAttackGoal;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,12 +20,11 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 @SerialClass
 public class GeneralYoukaiEntity extends YoukaiEntity {
 
-	public static final ResourceLocation SPELL = YoukaisHomecoming.loc("ex_rumia");
+	public static final ResourceLocation SPELL = GensokyoLegacy.loc("ex_rumia");
 
 	private static <T> EntityDataAccessor<T> defineId(EntityDataSerializer<T> ser) {
 		return SynchedEntityData.defineId(GeneralYoukaiEntity.class, ser);

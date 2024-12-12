@@ -19,8 +19,10 @@ public enum GLLang {
 	INFO_ENTITY_UNBOUND("This character is not linked to a bed"),
 	INFO_ENTITY_BED("Character's bed is at (%s, %s, %s)", 3),
 	INFO_ENTITY_REPUTATION("Your reputation: %s", 1),
+	INFO_ENTITY_FEED("Feed cool down: %s", 1),
 
 	ITEM_WAND_BED("Click bed to reset character"),
+	ITEM_WAND_CHARACTER("Click character to reset global character data for you"),
 	ITEM_GLASS_PATH("Display character path finding"),
 	ITEM_GLASS_CHARACTER("Display character info"),
 	ITEM_GLASS_BED("Display bed info");
@@ -45,10 +47,18 @@ public enum GLLang {
 		return Component.translatable(key, args);
 	}
 
+	public MutableComponent time(long diff) {
+		if (diff < 0) diff = 0;
+		int sec = (int) ((diff / 20) % 60);
+		int min = (int) ((diff / 1200) % 60);
+		int hrs = (int) (diff / 72000);
+		var str = hrs == 0 ? "%d:%02d".formatted(min, sec) : "%d:%02d:%02d".formatted(hrs, min, sec);
+		return get(str);
+	}
+
 	public static void genLang(RegistrateLangProvider pvd) {
 		for (var e : values()) {
 			pvd.add(e.key, e.def);
 		}
 	}
-
 }

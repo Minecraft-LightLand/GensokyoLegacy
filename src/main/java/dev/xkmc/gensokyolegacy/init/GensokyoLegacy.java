@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.init;
 
 import com.tterrag.registrate.providers.ProviderType;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
+import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.client.debug.BedInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.BedRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
@@ -47,6 +48,7 @@ public class GensokyoLegacy {
 		GLMisc.register();
 		GLBlocks.register();
 		GLEntities.register();
+		TouhouSpellCards.registerSpells();
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)

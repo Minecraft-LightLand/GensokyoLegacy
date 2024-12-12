@@ -10,8 +10,8 @@ import java.util.List;
 
 public class CharacterInfoClientManager {
 
-	private static long lastTime = 0;
-	private static YoukaiEntity lastEntity = null;
+	static long lastTime = 0;
+	static YoukaiEntity lastEntity = null;
 	static CharacterInfoToClient data;
 
 	public static void tooltip(List<Component> lines, long gameTime, YoukaiEntity youkai) {
@@ -42,5 +42,8 @@ public class CharacterInfoClientManager {
 					case ENEMY -> ChatFormatting.RED;
 				}
 		));
+		if (data.feedCD() > 0) {
+			lines.add(GLLang.INFO_ENTITY_FEED.time(data.feedCD()).withStyle(ChatFormatting.GRAY));
+		}
 	}
 }

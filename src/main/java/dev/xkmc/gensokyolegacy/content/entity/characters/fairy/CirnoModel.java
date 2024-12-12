@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.fairy;
 
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -11,9 +11,9 @@ import net.minecraft.util.Mth;
 
 public class CirnoModel<T extends CirnoEntity> extends HierarchicalModel<T> {
 
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(YoukaisHomecoming.loc("cirno"), "main");
-	public static final ModelLayerLocation HAT_LOCATION = new ModelLayerLocation(YoukaisHomecoming.loc("cirno_hat"), "main");
-	public static final ModelLayerLocation WINGS_LOCATION = new ModelLayerLocation(YoukaisHomecoming.loc("cirno_wings"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("cirno"), "main");
+	public static final ModelLayerLocation HAT_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("cirno_hat"), "main");
+	public static final ModelLayerLocation WINGS_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("cirno_wings"), "main");
 
 	private final ModelPart head;
 	private final ModelPart root;

@@ -7,7 +7,6 @@ import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.BlackBallModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaModel;
-import dev.xkmc.youkaishomecoming.content.entity.lampery.LampreyModel;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
@@ -35,7 +34,6 @@ public class GLClient {
 
 	@SubscribeEvent
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(LampreyModel.LAYER_LOCATION, LampreyModel::createBodyLayer);
 		event.registerLayerDefinition(RumiaModel.LAYER_LOCATION, RumiaModel::createBodyLayer);
 		event.registerLayerDefinition(RumiaModel.HAIRBAND, RumiaModel::createHairbandLayer);
 		event.registerLayerDefinition(BlackBallModel.LAYER_LOCATION, BlackBallModel::createBodyLayer);

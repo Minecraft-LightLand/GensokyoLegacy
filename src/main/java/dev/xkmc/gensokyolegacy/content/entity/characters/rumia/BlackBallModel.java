@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;// Made with Blo
 // Paste this class into your mod and generate all required imports
 
 
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,7 +12,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 public class BlackBallModel<T extends RumiaEntity> extends HierarchicalModel<T> {
 
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(YoukaisHomecoming.loc("black_ball"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("black_ball"), "main");
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();

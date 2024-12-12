@@ -23,4 +23,8 @@ public class InfoUpdateClientManager {
 		CharacterInfoClientManager.data = bed;
 	}
 
+	public static void clearCache() {
+		BedInfoClientManager.lastTime = 0;
+		CharacterInfoClientManager.lastTime = 0;
+	}
 }

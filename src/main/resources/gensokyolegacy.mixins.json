@@ -1,19 +1,11 @@
 {
   "required": true,
   "priority": 1000,
-  "package": "dev.xkmc.youkaishomecoming.mixin",
+  "package": "dev.xkmc.gensokyolegacy.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-	"AddItemModifierAccessor",
-	"AddLootTableModifierAccessor",
-	"CookingPotRecipeAccessor",
-	"EntityMixin",
-	"ItemAccessor",
-	"VillagerMixin"
   ],
   "client": [
-	"GameRendererMixin",
-	"CriterionGridMixin"
   ],
   "injectors": {
 	"defaultRequire": 1

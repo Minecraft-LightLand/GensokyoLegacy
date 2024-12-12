@@ -1,14 +1,14 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.fairy;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManager;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 
 class FairyCombatManager extends DefaultCombatManager {
 
-	private static final ResourceLocation SPELL_RUMIA = YoukaisHomecoming.loc("rumia");
+	private static final ResourceLocation SPELL_RUMIA = GensokyoLegacy.loc("rumia");
 
 	private final FairyEntity fairyEntity;
 

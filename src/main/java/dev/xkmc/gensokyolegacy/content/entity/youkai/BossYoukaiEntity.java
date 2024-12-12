@@ -1,15 +1,10 @@
 package dev.xkmc.gensokyolegacy.content.entity.youkai;
 
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import org.jetbrains.annotations.Nullable;
 
 @SerialClass
 public class BossYoukaiEntity extends GeneralYoukaiEntity {

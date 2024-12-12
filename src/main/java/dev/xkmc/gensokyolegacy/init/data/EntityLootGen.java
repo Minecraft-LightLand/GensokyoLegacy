@@ -6,7 +6,6 @@ import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaEntity;
-import dev.xkmc.l2core.serial.loot.LootHelper;
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
 import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;

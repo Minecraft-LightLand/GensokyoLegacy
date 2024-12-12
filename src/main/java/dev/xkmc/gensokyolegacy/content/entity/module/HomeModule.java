@@ -24,7 +24,7 @@ public class HomeModule extends AbstractYoukaiModule {
 	}
 
 	@Nullable
-	public StructureKey home(){
+	public StructureKey home() {
 		return home;
 	}
 

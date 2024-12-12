@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;// Made with Bl
 // Paste this class into your mod and generate all required imports
 
 
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -14,8 +14,8 @@ import net.minecraft.util.Mth;
 
 public class ReimuModel<T extends MaidenEntity> extends HierarchicalModel<T> {
 
-	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(YoukaisHomecoming.loc("hakurei_reimu"), "main");
-	public static final ModelLayerLocation HAT_LOCATION = new ModelLayerLocation(YoukaisHomecoming.loc("reimu_hat"), "main");
+	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("hakurei_reimu"), "main");
+	public static final ModelLayerLocation HAT_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("reimu_hat"), "main");
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();

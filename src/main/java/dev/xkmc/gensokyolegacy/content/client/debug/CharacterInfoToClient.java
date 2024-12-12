@@ -9,7 +9,8 @@ import org.jetbrains.annotations.Nullable;
 public record CharacterInfoToClient(
 		@Nullable StructureKey home,
 		@Nullable BlockPos bed,
-		int reputation
+		int reputation,
+		int feedCD
 ) implements SerialPacketBase<CharacterInfoToClient> {
 
 	@Override

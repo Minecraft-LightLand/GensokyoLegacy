@@ -9,8 +9,8 @@ import java.util.List;
 
 public class BedInfoClientManager {
 
-	private static long lastTime = 0;
-	private static YoukaiBedBlockEntity lastBed = null;
+	static long lastTime = 0;
+	static YoukaiBedBlockEntity lastBed = null;
 	static BedInfoToClient data;
 
 	public static void tooltip(List<Component> lines, long gameTime, YoukaiBedBlockEntity bed) {
@@ -32,20 +32,10 @@ public class BedInfoClientManager {
 			lines.add(GLLang.INFO_BED_PRESENT.get(p.getX(), p.getY(), p.getZ()).withStyle(ChatFormatting.GRAY));
 		} else if (data.respawnTime() > 0) {
 			long diff = data.respawnTime() - gameTime;
-			if (diff < 0) diff = 0;
-			int sec = (int) ((diff / 20) % 60);
-			int min = (int) ((diff / 1200) % 60);
-			int hrs = (int) (diff / 72000);
-			var str = "%d:%02d:%02d".formatted(hrs, min, sec);
-			lines.add(GLLang.INFO_BED_RESPAWN.get(str).withStyle(ChatFormatting.GRAY));
+			lines.add(GLLang.INFO_BED_RESPAWN.time(diff).withStyle(ChatFormatting.GRAY));
 		} else {
 			long diff = gameTime - data.lastEntityTime();
-			if (diff < 0) diff = 0;
-			int sec = (int) ((diff / 20) % 60);
-			int min = (int) ((diff / 1200) % 60);
-			int hrs = (int) (diff / 72000);
-			var str = "%d:%02d:%02d".formatted(hrs, sec, min);
-			lines.add(GLLang.INFO_BED_MISSING.get(str).withStyle(ChatFormatting.GRAY));
+			lines.add(GLLang.INFO_BED_MISSING.time(diff).withStyle(ChatFormatting.GRAY));
 		}
 
 	}

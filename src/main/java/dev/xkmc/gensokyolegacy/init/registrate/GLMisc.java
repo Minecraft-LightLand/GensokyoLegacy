@@ -24,7 +24,7 @@ public class GLMisc {
 	public static final DataMapReg<EntityType<?>, CharacterConfig> ENTITY_DATA =
 			GensokyoLegacy.REG.dataMap("character_config", Registries.ENTITY_TYPE, CharacterConfig.class);
 
-	public static void register(){
+	public static void register() {
 
 	}
 

@@ -81,6 +81,9 @@ public class BedRefData {
 	}
 
 	public void onDebugClick(ServerPlayer sp, CharacterConfig config) {
+		if (sp.serverLevel().getEntity(entityId) instanceof YoukaiEntity e) {
+			e.discard();
+		}
 		entityId = Util.NIL_UUID;
 		lastEntityTickedTime = sp.level().getGameTime() - config.respawnTime();
 		sp.sendSystemMessage(GLLang.MSG_RESET.get());

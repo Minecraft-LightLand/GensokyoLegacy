@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleLayer;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class RumiaRenderer extends MobRenderer<RumiaEntity, RumiaModel<RumiaEntity>> {
 
-	public static final ResourceLocation TEX = YoukaisHomecoming.loc("textures/entities/rumia.png");
+	public static final ResourceLocation TEX = GensokyoLegacy.loc("textures/entity/rumia.png");
 
 	public RumiaRenderer(EntityRendererProvider.Context context) {
 		super(context, new RumiaModel<>(context.bakeLayer(RumiaModel.LAYER_LOCATION)), 0.2F);
