@@ -15,9 +15,6 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.GeneralYoukaiRenderer;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.EntityLootGen;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 
 public class GLEntities {
 

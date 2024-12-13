@@ -45,5 +45,8 @@ public class CharacterInfoClientManager {
 		if (data.feedCD() > 0) {
 			lines.add(GLLang.INFO_ENTITY_FEED.time(data.feedCD()).withStyle(ChatFormatting.GRAY));
 		}
+		if (!data.activity().isEmpty()) {
+			lines.add(Component.literal(data.activity()).withStyle(ChatFormatting.DARK_GRAY));
+		}
 	}
 }

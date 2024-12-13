@@ -17,7 +17,7 @@ import dev.xkmc.l2serial.serialization.codec.TagCodec;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import dev.xkmc.l2serial.util.Wrappers;
-import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
@@ -333,9 +333,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	}
 
 	public boolean shouldIgnore(LivingEntity e) {
-		if (e.getType().is(YHTagGen.YOUKAI_IGNORE))
-			return true;
-		if (!e.isAddedToLevel())
+		if (!targets.isValidTarget(e))
 			return true;
 		var event = new YoukaiFightEvent(this, e);
 		return NeoForge.EVENT_BUS.post(event).isCanceled();
@@ -398,7 +396,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		level().addFreshEntity(danmaku);
 	}
 
-	// spawn
+	// misc
 
 	@Nullable
 	@Override
@@ -408,6 +406,17 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	}
 
 	public void initSpellCard() {
+	}
+
+	public void startSleeping(BlockPos pos) {
+		if (this.isPassenger()) {
+			this.stopRiding();
+		}
+		this.setPose(Pose.SLEEPING);
+		this.setPos(pos.getX() + 0.5, pos.getY() + 0.6875, pos.getZ() + 0.5);
+		this.setSleepingPos(pos);
+		this.setDeltaMovement(Vec3.ZERO);
+		this.hasImpulse = true;
 	}
 
 }

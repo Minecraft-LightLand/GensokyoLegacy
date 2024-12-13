@@ -12,10 +12,7 @@ import dev.xkmc.gensokyolegacy.init.data.GLStructureGen;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.gensokyolegacy.init.network.CharDataToClient;
 import dev.xkmc.gensokyolegacy.init.network.PathDataToClient;
-import dev.xkmc.gensokyolegacy.init.registrate.GLBlocks;
-import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
-import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
+import dev.xkmc.gensokyolegacy.init.registrate.*;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.simple.Reg;
 import dev.xkmc.l2serial.network.PacketHandler;
@@ -47,6 +44,7 @@ public class GensokyoLegacy {
 		GLItems.register();
 		GLMisc.register();
 		GLBlocks.register();
+		GLBrains.register();
 		GLEntities.register();
 		TouhouSpellCards.registerSpells();
 	}

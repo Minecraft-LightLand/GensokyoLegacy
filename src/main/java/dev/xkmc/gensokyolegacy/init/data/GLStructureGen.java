@@ -72,7 +72,8 @@ public class GLStructureGen {
 						),
 						List.of(
 								new GLBeds(GLEntities.CIRNO, GLBlocks.Beds.CIRNO.holder(),
-										new CharacterConfig(cirno, 12000, 24000, 8))
+										new CharacterConfig(cirno, 12000, 24000,
+												16, 1, 1, 600))
 						),
 						Map.of())
 		);

@@ -13,7 +13,8 @@ import org.jetbrains.annotations.Nullable;
 
 public record CharacterConfig(
 		ResourceLocation structure,
-		int discardTime, int respawnTime, int wanderRadius
+		int discardTime, int respawnTime, int wanderRadius,
+		int xzRadius, int yRadius, int noPlayerVanishTime
 ) {
 
 	@Nullable

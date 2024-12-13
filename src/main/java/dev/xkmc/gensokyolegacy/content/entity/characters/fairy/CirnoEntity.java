@@ -2,22 +2,20 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.fairy;
 
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.task.TaskBoard;
 import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
 import dev.xkmc.gensokyolegacy.content.entity.module.FeedModule;
 import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
+import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import net.minecraft.core.BlockPos;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.DifficultyInstance;
+import dev.xkmc.youkaishomecoming.init.food.YHFood;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.AABB;
-import org.jetbrains.annotations.Nullable;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
 
 import java.util.List;
 
@@ -47,6 +45,14 @@ public class CirnoEntity extends FairyEntity {
 	@Override
 	protected List<AbstractYoukaiModule> createModules() {
 		return List.of(new HomeModule(this), new FeedModule(this));
+	}
+
+	@Override
+	protected void constructTaskBoard(TaskBoard board) {
+		super.constructTaskBoard(board);
+		board.addFirst(500, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addSensor(new ItemTemptingSensor<CirnoEntity>().setRadius(16, 8)
+				.temptedWith((self, stack) -> stack.is(YHFood.MILK_POPSICLE.item)));
 	}
 
 	@Override

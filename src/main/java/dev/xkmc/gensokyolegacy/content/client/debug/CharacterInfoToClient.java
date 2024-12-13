@@ -10,7 +10,8 @@ public record CharacterInfoToClient(
 		@Nullable StructureKey home,
 		@Nullable BlockPos bed,
 		int reputation,
-		int feedCD
+		int feedCD,
+		String activity
 ) implements SerialPacketBase<CharacterInfoToClient> {
 
 	@Override

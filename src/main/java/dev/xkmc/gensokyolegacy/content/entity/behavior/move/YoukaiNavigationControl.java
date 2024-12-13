@@ -9,6 +9,7 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 public class YoukaiNavigationControl {
 
@@ -21,6 +22,7 @@ public class YoukaiNavigationControl {
 	private final Flying flyNav;
 
 	private boolean isFlying = false;
+	private int leaveGroundTick = 0;
 
 	public YoukaiNavigationControl(YoukaiEntity self) {
 		this.self = self;
@@ -52,6 +54,7 @@ public class YoukaiNavigationControl {
 		self.setZza(0);
 		self.setControl(walkCtrl, walkNav);
 		isFlying = false;
+		leaveGroundTick = 0;
 	}
 
 	public final boolean isFlying() {
@@ -59,6 +62,10 @@ public class YoukaiNavigationControl {
 	}
 
 	public void tickMove() {
+		if (!isFlying) {
+			if (self.onGround()) leaveGroundTick = 0;
+			else leaveGroundTick++;
+		}
 		if (!self.onGround() && self.getDeltaMovement().y < 0.0D) {
 			tickFalling();
 		}
@@ -88,6 +95,31 @@ public class YoukaiNavigationControl {
 		flyNav.setCanFloat(true);
 	}
 
+	public boolean moveTo(CompoundPath path, float speedModifier) {
+		if (path.flying()) {
+			if (!isFlying()) {
+				setFlying();
+				flyNav.tempFly = true;
+			}
+			flyNav.moveTo(path.path(), speedModifier);
+			return true;
+		} else {
+			if (!isFlying()) {
+				walkNav.moveTo(path.path(), speedModifier);
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	@Nullable
+	public CompoundPath getPath() {
+		var path = self.getNavigation().getPath();
+		if (path == null) return null;
+		return new CompoundPath(isFlying(), path);
+	}
+
 	public class Ground extends GroundPathNavigation {
 
 		public Ground(Mob mob, Level level) {
@@ -98,7 +130,10 @@ public class YoukaiNavigationControl {
 		public boolean moveTo(double x, double y, double z, int accuracy, double speed) {
 			boolean ans = super.moveTo(x, y, z, accuracy, speed);
 			if (ans) return true;
-			if (!(isDone() || isStuck())) return false;
+			if (path != null && path.canReach()) {
+				if (!(isDone() || isStuck())) return false;
+				if (!self.onGround() && leaveGroundTick < 20) return false;
+			}
 			setFlying();
 			flyNav.tempFly = true;
 			return flyNav.moveTo(x, y, z, accuracy, speed);
@@ -108,7 +143,10 @@ public class YoukaiNavigationControl {
 		public boolean moveTo(Entity entity, double speed) {
 			boolean ans = super.moveTo(entity, speed);
 			if (ans) return true;
-			if (!(isDone() || isStuck())) return false;
+			if (path != null && path.canReach()) {
+				if (!(isDone() || isStuck())) return false;
+				if (entity.onGround() && !self.onGround() && leaveGroundTick < 20) return false;
+			}
 			setFlying();
 			flyNav.tempFly = true;
 			return flyNav.moveTo(entity, speed);

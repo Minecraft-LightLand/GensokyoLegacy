@@ -11,11 +11,8 @@ import net.minecraft.world.entity.animal.frog.Frog;
 
 class CirnoCombatManager extends FairyCombatManager {
 
-	private final CirnoEntity cirnoEntity;
-
 	public CirnoCombatManager(CirnoEntity cirnoEntity) {
 		super(cirnoEntity);
-		this.cirnoEntity = cirnoEntity;
 	}
 
 	@Override

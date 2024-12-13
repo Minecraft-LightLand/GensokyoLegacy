@@ -3,9 +3,11 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
+import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -14,6 +16,7 @@ import java.util.UUID;
 
 @SerialClass
 public class YoukaiTargetContainer {
+
 
 	private final YoukaiEntity youkai;
 	private final int maxSize;
@@ -29,11 +32,11 @@ public class YoukaiTargetContainer {
 	public void tick() {
 		if (youkai.level().isClientSide()) return;
 		LivingEntity le = youkai.getLastHurtByMob();
-		if (le != null && le.isAlive() && le.canBeSeenAsEnemy() && !list.contains(le.getUUID())) {
+		if (le != null && isValidTarget(le) && !list.contains(le.getUUID())) {
 			list.add(le.getUUID());
 		} else {
 			le = youkai.getTarget();
-			if (le != null && le.isAlive() && le.canBeSeenAsEnemy()) {
+			if (le != null && isValidTarget(le)) {
 				list.add(le.getUUID());
 			}
 		}
@@ -43,10 +46,16 @@ public class YoukaiTargetContainer {
 		}
 	}
 
+	public boolean isValidTarget(LivingEntity e) {
+		return e.level() == youkai.level() && e.isAddedToLevel() &&
+				!e.isRemoved() && e.isAlive() &&
+				e.canBeSeenAsEnemy() && !e.getType().is(YHTagGen.YOUKAI_IGNORE);
+	}
+
 	private boolean isValid(UUID id) {
 		Entity e = ((ServerLevel) youkai.level()).getEntity(id);
-		if (e instanceof LivingEntity le && le.isAlive()) {
-			return le.canBeSeenAsEnemy();
+		if (e instanceof LivingEntity le) {
+			return isValidTarget(le);
 		}
 		return false;
 	}
@@ -55,25 +64,35 @@ public class YoukaiTargetContainer {
 		return youkai.getTarget() == e || list.contains(e.getUUID());
 	}
 
-	public void checkTarget() {
-		if (!(youkai.level() instanceof ServerLevel sl)) return;
-		var last = youkai.getLastHurtByMob();
-		if ((last == null || !last.isAlive() || !last.canBeSeenAsEnemy()) && !list.isEmpty()) {
+	@Nullable
+	public LivingEntity checkTarget(@Nullable LivingEntity last) {
+		if (!(youkai.level() instanceof ServerLevel sl)) return null;
+		if ((last == null || !isValidTarget(last)) && !list.isEmpty()) {
 			var id = list.getLast();
 			Entity e = sl.getEntity(id);
-			if (e instanceof LivingEntity le && le.isAlive() && le.canBeSeenAsEnemy())
-				youkai.setLastHurtByMob(le);
+			if (e instanceof LivingEntity le && isValidTarget(le))
+				return le;
 		}
+		return last;
+	}
+
+	@Nullable
+	public LivingEntity getPrimaryTarget() {
+		if (!(youkai.level() instanceof ServerLevel sl)) return null;
+		for (var id : list)
+			if (sl.getEntity(id) instanceof LivingEntity le && isValidTarget(le))
+				return le;
+		return null;
 	}
 
 	public List<LivingEntity> getTargets() {
 		List<LivingEntity> ans = new ArrayList<>();
 		if (!(youkai.level() instanceof ServerLevel sl)) return ans;
 		for (var id : list) {
-			Entity e = sl.getEntity(id);
-			if (e instanceof LivingEntity le && le.isAlive() && le.canBeSeenAsEnemy())
+			if (sl.getEntity(id) instanceof LivingEntity le && isValidTarget(le))
 				ans.add(le);
 		}
 		return ans;
 	}
+
 }

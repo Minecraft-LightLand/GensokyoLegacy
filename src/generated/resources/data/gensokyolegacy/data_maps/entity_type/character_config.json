@@ -2,9 +2,12 @@
   "values": {
     "gensokyolegacy:cirno": {
       "discardTime": 12000,
+      "noPlayerVanishTime": 600,
       "respawnTime": 24000,
       "structure": "gensokyolegacy:cirno_nest",
-      "wanderRadius": 8
+      "wanderRadius": 16,
+      "xzRadius": 1,
+      "yRadius": 1
     }
   }
 }

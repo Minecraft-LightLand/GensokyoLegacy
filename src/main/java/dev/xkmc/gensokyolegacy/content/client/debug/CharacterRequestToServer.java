@@ -4,6 +4,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
 import dev.xkmc.gensokyolegacy.content.entity.module.FeedModule;
 import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.network.SerialPacketBase;
@@ -23,11 +24,12 @@ public record CharacterRequestToServer(UUID id) implements SerialPacketBase<Char
 				.map(k -> IndexStorage.get(sp.serverLevel()).getOrCreate(k).bedOf(e.getType()))
 				.map(BedRefData::getBedPos);
 		int feedCD = e.getModule(FeedModule.class).map(FeedModule::getCoolDown).orElse(0);
+		String activity = e instanceof SmartYoukaiEntity smart ? smart.getBrainDebugInfo() : "";
 		e.getData(sp).ifPresent(data -> GensokyoLegacy.HANDLER.toClientPlayer(new CharacterInfoToClient(
 				home.orElse(null),
 				bed.orElse(null),
 				data.data().reputation,
-				feedCD
+				feedCD, activity
 		), sp));
 	}
 

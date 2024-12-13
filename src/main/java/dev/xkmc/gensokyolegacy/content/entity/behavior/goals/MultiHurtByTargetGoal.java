@@ -14,7 +14,8 @@ public class MultiHurtByTargetGoal extends HurtByTargetGoal {
 
 	@Override
 	public void start() {
-		youkai.targets.checkTarget();
+		youkai.setLastHurtByMob(youkai.targets.checkTarget(youkai.getLastHurtByMob()));
 		super.start();
 	}
+
 }
