@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.entity.behavior.task;
+package dev.xkmc.gensokyolegacy.content.entity.misc;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

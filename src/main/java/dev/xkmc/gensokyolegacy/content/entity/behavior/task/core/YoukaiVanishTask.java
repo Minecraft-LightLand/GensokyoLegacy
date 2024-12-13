@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.behavior.task;
+package dev.xkmc.gensokyolegacy.content.entity.behavior.task.core;
 
 import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;

@@ -25,7 +25,11 @@ public enum GLLang {
 	ITEM_WAND_CHARACTER("Click character to reset global character data for you"),
 	ITEM_GLASS_PATH("Display character path finding"),
 	ITEM_GLASS_CHARACTER("Display character info"),
-	ITEM_GLASS_BED("Display bed info");
+	ITEM_GLASS_BED("Display bed info"),
+	ITEM_FAIRY_ICE_USAGE("Throw to deal damage and freeze target.", 0),
+	ITEM_FROZEN_FROG_OBTAIN("Dropped when Cirno freezes a frog."),
+	ITEM_FROZEN_FROG_USAGE("Throw toward target to summon a frog."),
+	;
 
 	private final String def;
 	private final int argn;

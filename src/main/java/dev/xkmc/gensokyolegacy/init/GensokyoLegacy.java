@@ -1,12 +1,12 @@
 package dev.xkmc.gensokyolegacy.init;
 
 import com.tterrag.registrate.providers.ProviderType;
-import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.client.debug.BedInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.BedRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterRequestToServer;
+import dev.xkmc.gensokyolegacy.init.data.GLGLMProvider;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.data.GLStructureGen;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
@@ -40,7 +40,6 @@ public class GensokyoLegacy {
 	);
 
 	public GensokyoLegacy() {
-		REGISTRATE.defaultCreativeTab(DanmakuAPI.TAB.key());
 		GLItems.register();
 		GLMisc.register();
 		GLBlocks.register();
@@ -56,6 +55,8 @@ public class GensokyoLegacy {
 		REGISTRATE.addDataGenerator(ProviderType.LANG, GLLang::genLang);
 		var init = REGISTRATE.getDataGenInitializer();
 		GLStructureGen.init(init);
+		var gen = event.getGenerator();
+		gen.addProvider(event.includeServer(), new GLGLMProvider(gen.getPackOutput(), event.getLookupProvider()));
 	}
 
 	public static ResourceLocation loc(String id) {

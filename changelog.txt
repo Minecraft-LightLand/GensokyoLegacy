@@ -1,0 +1,4 @@
+TODO
+- debug path particle not showing
+- test hunting method
+- Add frozen frog & fairy ice drop

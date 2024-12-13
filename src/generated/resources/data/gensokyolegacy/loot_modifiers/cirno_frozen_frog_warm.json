@@ -1,0 +1,24 @@
+{
+  "type": "farmersdelight:add_item",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "attacker",
+      "predicate": {
+        "type": "gensokyolegacy:cirno"
+      }
+    },
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "minecraft:frog",
+        "type_specific": {
+          "type": "minecraft:frog",
+          "variant": "minecraft:warm"
+        }
+      }
+    }
+  ],
+  "item": "gensokyolegacy:frozen_frog_warm"
+}

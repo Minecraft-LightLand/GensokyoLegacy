@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.behavior.task;
+package dev.xkmc.gensokyolegacy.content.entity.behavior.task.core;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import net.minecraft.world.entity.ai.behavior.Behavior;

@@ -1,13 +1,13 @@
 package dev.xkmc.gensokyolegacy.content.entity.youkai;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.sensor.YoukaiUpdateHomeSensor;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.task.TaskBoard;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.task.YoukaiMoveTask;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.task.YoukaiVanishTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiAttackTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiFetchTargetTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiSearchTargetTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiUpdateTargetTask;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.TaskBoard;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.YoukaiMoveTask;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.YoukaiVanishTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.YoukaiGoHomeTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.YoukaiSleepTask;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
@@ -51,6 +51,10 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 				.map(List::size).orElse(0) > 0;
 	}
 
+	public Activity getActivity() {
+		return getBrain().getActiveNonCoreActivity().orElse(Activity.IDLE);
+	}
+
 	@Override
 	protected void customServerAiStep() {
 		super.customServerAiStep();
@@ -76,7 +80,7 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 
 		board.addSensor(new NearbyPlayersSensor<SmartYoukaiEntity>().setRadius(32).setScanRate(e -> 5));
 		board.addSensor(new NearbyLivingEntitySensor<SmartYoukaiEntity>().setRadius(32)
-				.setScanRate(self -> self.isAggressive() || self.hasPlayerNearby() ? 10 : 40));
+				.setScanRate(self -> self.isAggressive() || self.hasPlayerNearby() ? 10 : 20));
 		board.addSensor(new YoukaiUpdateHomeSensor<SmartYoukaiEntity>().setScanRate(e -> 80));
 	}
 

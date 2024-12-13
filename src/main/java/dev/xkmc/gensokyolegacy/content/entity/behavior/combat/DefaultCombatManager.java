@@ -92,4 +92,9 @@ public class DefaultCombatManager implements YoukaiCombatManager {
 		return tickAggressive == 0 ? 0 : Math.min(1, (tickAggressive + pTick) / 20f);
 	}
 
+	@Override
+	public int doPreyAttack(LivingEntity target) {
+		return 20;
+	}
+
 }

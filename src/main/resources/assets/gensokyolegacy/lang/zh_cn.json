@@ -1,11 +1,15 @@
 {
-	"block.gensokyolegacy.cirno_bed": "琪露诺的床",
+	"gensokyolegacy.title": "幻想乡风土记",
+	"itemGroup.gensokyolegacy.ingredients": "幻想乡风土记",
+	"entity.gensokyolegacy.fairy_ice_crystal": "妖精冰晶",
+	"entity.gensokyolegacy.frozen_frog": "冻青蛙",
 	"entity.gensokyolegacy.cirno": "琪露诺",
 	"entity.gensokyolegacy.kochiya_sanae": "东风谷早苗",
 	"entity.gensokyolegacy.komeiji_koishi": "古明地恋",
 	"entity.gensokyolegacy.reimu": "博丽灵梦",
 	"entity.gensokyolegacy.rumia": "露米娅",
 	"entity.gensokyolegacy.yukari": "八云紫",
+	"block.gensokyolegacy.cirno_bed": "琪露诺的床",
 	"item.gensokyolegacy.debug_glasses": "调试眼镜",
 	"item.gensokyolegacy.debug_wand": "调试手杖",
 	"item.gensokyolegacy.cirno_spawn_egg": "琪露诺刷怪蛋",
@@ -14,7 +18,10 @@
 	"item.gensokyolegacy.reimu_spawn_egg": "博丽灵梦刷怪蛋",
 	"item.gensokyolegacy.rumia_spawn_egg": "露米娅刷怪蛋",
 	"item.gensokyolegacy.yukari_spawn_egg": "八云紫刷怪蛋",
-	"gensokyolegacy.title": "Gensokyo Legacy",
+	"item.gensokyolegacy.frozen_frog_cold": "冻青蛙",
+	"item.gensokyolegacy.frozen_frog_warm": "冻青蛙",
+	"item.gensokyolegacy.frozen_frog_temperate": "冻青蛙",
+	"item.gensokyolegacy.fairy_ice_crystal": "妖精冰晶",
 	"gensokyolegacy.tooltip.info_bed_missing": "角色失联：%s",
 	"gensokyolegacy.tooltip.info_bed_present": "角色在 (%s, %s, %s)",
 	"gensokyolegacy.tooltip.info_bed_respawn": "角色重生中：%s",
@@ -29,5 +36,8 @@
 	"gensokyolegacy.tooltip.item_glass_path": "显示角色寻路",
 	"gensokyolegacy.tooltip.item_wand_bed": "右键床重置角色",
 	"gensokyolegacy.tooltip.item_wand_character": "右键角色重置角色对玩家全局数据",
-	"gensokyolegacy.tooltip.msg_reset": "角色已重置"
+	"gensokyolegacy.tooltip.msg_reset": "角色已重置",
+	"gensokyolegacy.tooltip.item_fairy_ice_usage": "可以朝目标扔出。造成范围伤害并冻结。",
+	"gensokyolegacy.tooltip.item_frozen_frog_obtain": "琪露诺冻结青蛙时掉落。",
+	"gensokyolegacy.tooltip.item_frozen_frog_usage": "可以朝目标扔出。落地后生成一只青蛙。"
 }
