@@ -27,11 +27,21 @@ public class CharacterData {
 	@SerialField
 	public int reputation;
 
+	public void gainReputation(int val, int max) {
+		if (reputation < max) {
+			reputation = Math.min(reputation + val, max);
+		}
+	}
+
+	public void loseReputation(int val, int min) {
+		if (reputation > min) {
+			reputation = Math.max(reputation - val, min);
+		}
+	}
+
 	protected void dailyUpdate() {
-		if (reputation > 150)
-			reputation--;
-		if (reputation < -150)
-			reputation++;
+		loseReputation(1, 150);
+		gainReputation(1, -150);
 	}
 
 	public ReputationState getState() {
@@ -39,9 +49,7 @@ public class CharacterData {
 	}
 
 	protected void onKilledByCharacter() {
-		if (reputation <= 0) {
-			reputation += 20;
-		}
+		gainReputation(100, -50);
 	}
 
 	protected void onHurtCharacter(Player player, YoukaiEntity e, float damage, DamageSource source) {
@@ -50,21 +58,21 @@ public class CharacterData {
 		boolean first = !e.targets.contains(player) && e.getLastHurtByMob() != player;
 		if (first && damage <= 4) {
 			if (reputation >= 100)
-				reputation -= 1;
+				loseReputation(1, 0);
 			else if (reputation >= 0)
-				reputation -= 5;
-			else reputation -= 10;
+				loseReputation(5, -100);
+			else loseReputation(10, -100);
 		} else {
 			if (first && reputation >= 100)
-				reputation -= 5;
+				loseReputation(5, 0);
 			else if (reputation >= 0)
-				reputation -= 10;
-			else reputation -= 20;
+				loseReputation(10, -150);
+			else loseReputation(20, -150);
 		}
 	}
 
 	protected void onKillCharacter() {
-		reputation = Math.min(0, reputation - 200);
+		loseReputation(200, -300);
 	}
 
 }

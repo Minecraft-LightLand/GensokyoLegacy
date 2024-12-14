@@ -17,9 +17,9 @@ import java.util.List;
 
 public class YoukaiAttackTask<T extends YoukaiEntity> extends ExtendedBehaviour<T> {
 
-	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(2)
+	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(3)
 			.hasMemory(MemoryModuleType.ATTACK_TARGET)
-			.usesMemory(MemoryModuleType.WALK_TARGET);
+			.usesMemories(MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET);
 
 	private final int range;
 	private int meleeTime;
@@ -62,7 +62,7 @@ public class YoukaiAttackTask<T extends YoukaiEntity> extends ExtendedBehaviour<
 		if (meleeTime > 0) {
 			meleeTime--;
 		}
-		if (specialAction()) {
+		if (specialAction(youkai)) {
 			return;
 		}
 		LivingEntity target = youkai.getTarget();
@@ -89,8 +89,8 @@ public class YoukaiAttackTask<T extends YoukaiEntity> extends ExtendedBehaviour<
 		}
 	}
 
-	protected void attack(YoukaiEntity youkai, LivingEntity target, double dist, boolean sight) {
-		double melee = getMeleeRange();
+	protected void attack(T youkai, LivingEntity target, double dist, boolean sight) {
+		double melee = getMeleeRange(youkai);
 		if (sight && dist < melee * melee) {
 			if (meleeTime <= 0) {
 				meleeTime = 20;
@@ -98,27 +98,27 @@ public class YoukaiAttackTask<T extends YoukaiEntity> extends ExtendedBehaviour<
 			}
 		}
 		if (shootTime <= 0) {
-			shootTime = shoot(target, youkai.targets.getTargets());
+			shootTime = shoot(youkai, target, youkai.targets.getTargets());
 		}
 	}
 
-	protected void meleeAttack(YoukaiEntity youkai, LivingEntity target) {
+	protected void meleeAttack(T youkai, LivingEntity target) {
 		youkai.doHurtTarget(target);
 	}
 
-	protected boolean specialAction() {
+	protected boolean specialAction(T youkai) {
 		return false;
 	}
 
-	protected int shoot(LivingEntity target, List<LivingEntity> all) {
+	protected int shoot(T youkai, LivingEntity target, List<LivingEntity> all) {
 		return 20;
 	}
 
-	protected double getMeleeRange() {
+	protected double getMeleeRange(T youkai) {
 		return 2;
 	}
 
-	public double getShootRange(YoukaiEntity youkai) {
+	public double getShootRange(T youkai) {
 		return youkai.getAttributeValue(Attributes.FOLLOW_RANGE);
 	}
 

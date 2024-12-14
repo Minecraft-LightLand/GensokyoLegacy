@@ -3,14 +3,18 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.smartbrainlib.util.BrainUtils;
 
 @SerialClass
 public class RumiaStateMachine {
@@ -162,6 +166,7 @@ public class RumiaStateMachine {
 		var attr = rumia.getAttribute(Attributes.ATTACK_DAMAGE);
 		assert attr != null;
 		if (charged) {
+			BrainUtils.clearMemory(rumia, MemoryModuleType.WALK_TARGET);
 			attr.addPermanentModifier(new AttributeModifier(ATK, 34, AttributeModifier.Operation.ADD_VALUE));
 		} else {
 			attr.removeModifier(ATK);
@@ -172,6 +177,11 @@ public class RumiaStateMachine {
 	private void setBlocked(boolean blocked) {
 		rumia.setFlag(YoukaiFlags.FAINTED, blocked);
 		rumia.refreshDimensions();
+		if (blocked) {
+			BrainUtils.setMemory(rumia, GLBrains.MEM_DOWN.get(), Unit.INSTANCE);
+		} else {
+			BrainUtils.clearMemory(rumia, GLBrains.MEM_DOWN.get());
+		}
 	}
 
 }

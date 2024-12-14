@@ -101,9 +101,17 @@ public class DamageClampEntity extends DamageRefactorEntity {
 		return getFeatures().effectImmune();
 	}
 
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return getFeatures().damageFilter() &&
+				!source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) &&
+				!(source.getEntity() instanceof LivingEntity) ||
+				super.isInvulnerableTo(source);
+	}
+
 	protected float clampDamage(DamageSource source, float amount) {
 		if (!hurtCall) return 0;
-		if (!getFeatures().damageFilter()) return amount;
+		var filter = getFeatures().damageFilter();
 		if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
 			if (source.getEntity() instanceof LivingEntity le) {
 				if (le instanceof ServerPlayer sp) {
@@ -112,11 +120,11 @@ public class DamageClampEntity extends DamageRefactorEntity {
 					}
 				}
 			} else {
-				if (source.is(DamageTypes.FELL_OUT_OF_WORLD))
-					return Math.min(4, amount);
 				if (source.is(DamageTypes.GENERIC_KILL)) {
 					return amount;
 				}
+				if (filter && source.is(DamageTypes.FELL_OUT_OF_WORLD))
+					return Math.min(4, amount);
 			}
 		}
 		amount = Math.min(getMaxHealth() / getFeatures().limiter(), amount);

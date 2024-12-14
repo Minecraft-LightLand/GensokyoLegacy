@@ -1,17 +1,17 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.MoveAroundNestGoal;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.MoveRandomlyGoal;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.MultiHurtByTargetGoal;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.goals.YoukaiTemptGoal;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiUpdateTargetTask;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.TaskBoard;
 import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
 import dev.xkmc.gensokyolegacy.content.entity.module.FeedModule;
 import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
@@ -26,18 +26,19 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
+import net.tslat.smartbrainlib.object.MemoryTest;
 
 import java.util.List;
 
 @SerialClass
-public class RumiaEntity extends YoukaiEntity {
+public class RumiaEntity extends SmartYoukaiEntity {
 
 	private static final EntityDimensions FALL = EntityDimensions.scalable(1.7f, 0.4f);
 	private static final ResourceLocation EXRUMIA = GensokyoLegacy.loc("ex_rumia");
@@ -46,22 +47,30 @@ public class RumiaEntity extends YoukaiEntity {
 	public final RumiaStateMachine state = new RumiaStateMachine(this);
 
 	public RumiaEntity(EntityType<? extends RumiaEntity> pEntityType, Level pLevel) {
-		super(pEntityType, pLevel);
+		super(pEntityType, pLevel, 8);
 		setPersistenceRequired();
 		sources.mobAttack = e -> level().damageSources().mobAttack(e);//TODO
 	}
 
-	protected void registerGoals() {
-		goalSelector.addGoal(3, new RumiaParalyzeGoal(this));
-		goalSelector.addGoal(4, new RumiaAttackGoal(this));
-		goalSelector.addGoal(5, new YoukaiTemptGoal(this, Ingredient.of(YHTagGen.DANGO)));//TODO
-		goalSelector.addGoal(6, new FloatGoal(this));
-		goalSelector.addGoal(6, new MoveAroundNestGoal(this, 1));
-		goalSelector.addGoal(7, new MoveRandomlyGoal(this, 0.8));
-		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 24));
-		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-		targetSelector.addGoal(1, new MultiHurtByTargetGoal(this, RumiaEntity.class));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, this::wouldInitiateAttack));
+	@Override
+	protected void constructTaskBoard(TaskBoard board) {
+		super.constructTaskBoard(board);
+		board.addFirst(250, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addFirst(0, new RumiaParalyzeGoal(), GLBrains.DOWN.get());
+
+		board.addSensor(new ItemTemptingSensor<RumiaEntity>().setRadius(16, 8)
+				.temptedWith((self, stack) -> stack.is(YHTagGen.DANGO)).setScanRate(e -> 20));//TODO
+
+		board.addPrioritizedActivity(GLBrains.DOWN.get(), MemoryTest.builder(1).hasMemory(GLBrains.MEM_DOWN.get()), -100);
+	}
+
+	@SuppressWarnings({"rawtypes", "unchecked", "unsafe"})
+	@Override
+	public BrainActivityGroup<? extends SmartYoukaiEntity> getFightTasks() {
+		return new BrainActivityGroup(Activity.FIGHT).priority(10).behaviours(
+				new YoukaiUpdateTargetTask(),
+				new RumiaAttackTask()
+		).onlyStartWithMemoryStatus(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -139,7 +148,7 @@ public class RumiaEntity extends YoukaiEntity {
 
 	@Override
 	public EntityDimensions getDefaultDimensions(Pose pPose) {
-		return isBlocked() ? FALL.scale(getScale()) : super.getDimensions(pPose);
+		return isBlocked() ? FALL.scale(getScale()) : super.getDefaultDimensions(pPose);
 	}
 
 	public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {

@@ -28,7 +28,7 @@ public record CharDataHolder(CharacterData data, Player player, YoukaiEntity e) 
 	public int feed(ItemStack food, int favor) {
 		double rate = data.foodData.feed(food);
 		int v = (int) Math.round(rate * favor);
-		data.reputation += v;
+		data.gainReputation(v, 300);
 		sync();
 		return v;
 	}

@@ -6,8 +6,6 @@ import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManager;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,16 +22,6 @@ class RumiaCombatManager extends DefaultCombatManager {
 	public RumiaCombatManager(RumiaEntity rumia) {
 		super(rumia, null);
 		this.rumia = rumia;
-	}
-
-	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		if (rumia.isEx()) {
-			if (!source.is(DamageTypeTags.BYPASSES_INVULNERABILITY) &&
-					!(source.getEntity() instanceof LivingEntity))
-				return true;
-		}
-		return source.getEntity() instanceof RumiaEntity;
 	}
 
 	@Override

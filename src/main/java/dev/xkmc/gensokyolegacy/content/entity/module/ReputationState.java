@@ -10,7 +10,7 @@ public enum ReputationState {
 		return switch (this) {
 			case FRIEND -> TargetKind.WORTHY;
 			case STRANGER -> TargetKind.NONE;
-			default -> TargetKind.PRAY;
+			default -> TargetKind.ENEMY;
 		};
 	}
 }

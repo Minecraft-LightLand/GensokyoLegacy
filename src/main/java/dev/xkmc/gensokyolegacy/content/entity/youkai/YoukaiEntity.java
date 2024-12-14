@@ -369,6 +369,8 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	}
 
 	public boolean shouldIgnore(LivingEntity e) {
+		if (e instanceof Player player && player.getAbilities().instabuild)
+			return false;
 		if (!targets.isValidTarget(e))
 			return true;
 		var event = new YoukaiFightEvent(this, e);
@@ -380,10 +382,13 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		if (pSource.getEntity() instanceof LivingEntity le && shouldIgnore(le)) {
 			return true;
 		}
-		return pSource.is(DamageTypeTags.IS_FALL) || combatManager.isInvulnerableTo(pSource);
+		return pSource.is(DamageTypeTags.IS_FALL) ||
+				combatManager.isInvulnerableTo(pSource) ||
+				super.isInvulnerableTo(pSource);
 	}
 
 	public final boolean wouldInitiateAttack(LivingEntity entity) {
+		if (!targets.isValidTarget(entity)) return false;
 		if (shouldIgnore(entity)) return false;
 		return combatManager.targetKind(entity).initiateAttack();
 	}
