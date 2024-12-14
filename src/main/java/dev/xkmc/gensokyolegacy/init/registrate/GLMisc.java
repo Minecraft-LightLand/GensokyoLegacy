@@ -4,6 +4,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.StructureAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
+import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.capability.player.PlayerCapabilityNetworkHandler;
 import dev.xkmc.l2core.init.reg.datapack.DataMapReg;
@@ -13,6 +14,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.levelgen.structure.Structure;
 
 public class GLMisc {
 
@@ -27,6 +29,8 @@ public class GLMisc {
 			GensokyoLegacy.REG.dataMap("bed_data", Registries.BLOCK, BedData.class);
 	public static final DataMapReg<EntityType<?>, CharacterConfig> ENTITY_DATA =
 			GensokyoLegacy.REG.dataMap("character_config", Registries.ENTITY_TYPE, CharacterConfig.class);
+	public static final DataMapReg<Structure, StructureConfig> STRUCTURE_DATA =
+			GensokyoLegacy.REG.dataMap("structure_config", Registries.STRUCTURE, StructureConfig.class);
 
 	public static void register() {
 

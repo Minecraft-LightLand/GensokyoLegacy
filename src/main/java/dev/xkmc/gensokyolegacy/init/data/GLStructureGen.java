@@ -6,6 +6,7 @@ import com.tterrag.registrate.providers.DataProviderInitializer;
 import com.tterrag.registrate.providers.RegistrateDataMapProvider;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
+import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBlocks;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
@@ -39,6 +40,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.common.util.Lazy;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -84,11 +86,15 @@ public class GLStructureGen {
 	public static void dataMap(RegistrateDataMapProvider pvd) {
 		var bed = pvd.builder(GLMisc.BED_DATA.reg());
 		var entity = pvd.builder(GLMisc.ENTITY_DATA.reg());
+		var structure = pvd.builder(GLMisc.STRUCTURE_DATA.reg());
 		for (var e : STRUCTURES.get()) {
+			StructureConfig config = new StructureConfig(new LinkedHashSet<>());
 			for (var beds : e.beds) {
 				bed.add(beds.bed(), new BedData(beds.entity.value()), false);
 				entity.add(beds.entity(), beds.data, false);
+				config.entities().add(beds.entity.value());
 			}
+			structure.add(e.id(), config, false);
 		}
 	}
 

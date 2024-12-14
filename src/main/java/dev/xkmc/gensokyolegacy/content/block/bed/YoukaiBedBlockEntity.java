@@ -5,6 +5,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.client.debug.BedInfoToClient;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.base.tile.BaseBlockEntity;
 import dev.xkmc.l2modularblock.tile_api.TickableBlockEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
@@ -48,7 +49,10 @@ public class YoukaiBedBlockEntity extends BaseBlockEntity implements TickableBlo
 					if (id.isEmpty()) continue;
 					if (start.getPieces().isEmpty()) continue;
 					var root = start.getPieces().getFirst().getLocatorPosition();
-					key = new StructureKey(id.get().key(), sl.dimension(), root);
+					var data = id.get().getData(GLMisc.STRUCTURE_DATA.reg());
+					var bed = BedData.of(getBlockState().getBlock());
+					if (data != null && bed != null && data.entities().contains(bed.type()))
+						key = new StructureKey(id.get().key(), sl.dimension(), root);
 				}
 			}
 			if (key != null && getBlockState().getValue(BedBlock.PART) == BedPart.HEAD) {

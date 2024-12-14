@@ -52,7 +52,7 @@ public class GLDecoBlocks {
 			ResourceLocation side = GensokyoLegacy.loc("block/" + id + "_bricks");
 			block = GensokyoLegacy.REGISTRATE.block(id + "_bricks", p -> new Block(prop))
 					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
-					.tag(BlockTags.MINEABLE_WITH_SHOVEL)
+					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 					.simpleItem().register();
 			stairs = GensokyoLegacy.REGISTRATE.block(id + "_brick_stairs", p ->
 							new StairBlock(block.get().defaultBlockState(), prop))
