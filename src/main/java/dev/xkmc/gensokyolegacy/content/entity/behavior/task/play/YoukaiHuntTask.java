@@ -29,6 +29,7 @@ public class YoukaiHuntTask extends ExtendedBehaviour<SmartYoukaiEntity> {
 
 	public YoukaiHuntTask(int distance) {
 		this.distance = distance;
+		noTimeout();
 	}
 
 	@Override
@@ -38,7 +39,11 @@ public class YoukaiHuntTask extends ExtendedBehaviour<SmartYoukaiEntity> {
 
 	@Override
 	protected boolean shouldKeepRunning(SmartYoukaiEntity entity) {
-		return target != null && entity.targets.isValidTarget(target);
+		if (target != null && entity.targets.isValidTarget(target)) {
+			return true;
+		}
+		BrainUtils.clearMemory(entity, GLBrains.MEM_PREY.get());
+		return false;
 	}
 
 	@Override

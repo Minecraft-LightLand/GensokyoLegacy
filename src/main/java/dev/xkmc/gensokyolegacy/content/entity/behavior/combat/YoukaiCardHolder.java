@@ -9,7 +9,9 @@ import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.fastprojectileapi.entity.SimplifiedProjectile;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.smartbrainlib.util.BrainUtils;
 import org.jetbrains.annotations.Nullable;
 
 public record YoukaiCardHolder(YoukaiEntity self) implements CardHolder {
@@ -27,7 +30,16 @@ public record YoukaiCardHolder(YoukaiEntity self) implements CardHolder {
 
 	@Nullable
 	private LivingEntity getTarget() {
-		return self.getTarget();
+		var target = self.getTarget();
+		if (target == null || !self.targets.isValidTarget(target)) {
+			if (self instanceof SmartYoukaiEntity smart) {
+				if (BrainUtils.hasMemory(smart, GLBrains.MEM_PREY.get())) {
+					return BrainUtils.getMemory(smart, GLBrains.MEM_PREY.get());
+				}
+			}
+			return null;
+		}
+		return target;
 	}
 
 	private Level level() {

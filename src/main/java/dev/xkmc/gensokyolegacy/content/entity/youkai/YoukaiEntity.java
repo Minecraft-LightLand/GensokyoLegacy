@@ -11,6 +11,8 @@ import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataHolder;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
 import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
+import dev.xkmc.gensokyolegacy.content.entity.module.IPickupModule;
+import dev.xkmc.gensokyolegacy.content.entity.module.YoukaiModuleHolder;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
@@ -36,9 +38,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
@@ -77,9 +81,9 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	protected int noTargetTime, noPlayerTime;
 
 	protected final YoukaiSourceOverride sources = new YoukaiSourceOverride(level().registryAccess());
-	protected final YoukaiCardHolder cardHolder = new YoukaiCardHolder(this);
-	protected final List<AbstractYoukaiModule> modules = createModules();
+	protected final YoukaiModuleHolder modules = new YoukaiModuleHolder(createModules());
 
+	public final YoukaiCardHolder cardHolder = new YoukaiCardHolder(this);
 	public final YoukaiCombatManager combatManager = createCombatManager();
 	public final YoukaiNavigationControl navCtrl = new YoukaiNavigationControl(this);
 
@@ -235,6 +239,38 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		}
 	}
 
+	@Override
+	public boolean canPickUpLoot() {
+		return tickCount % 10 == 0 && modules.hasPickup();
+	}
+
+	@Override
+	public boolean wantsToPickUp(ItemStack stack) {
+		for (var e : modules) {
+			if (e instanceof IPickupModule pick) {
+				if (pick.canPickup(stack)) {
+					return true;
+				}
+			}
+		}
+		return super.wantsToPickUp(stack);
+	}
+
+	@Override
+	protected void pickUpItem(ItemEntity item) {
+		for (var e : modules) {
+			if (e instanceof IPickupModule pick) {
+				if (pick.canPickup(item.getItem())) {
+					pick.onPickup(item);
+					if (item.isRemoved()) {
+						return;
+					}
+				}
+			}
+		}
+		super.pickUpItem(item);
+	}
+
 	// data
 
 	public Optional<CharDataHolder> getData(@Nullable Entity e) {
@@ -245,7 +281,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	}
 
 	public <T> Optional<T> getModule(Class<T> cls) {
-		return Wrappers.cast(modules.stream().filter(cls::isInstance).findFirst());
+		return modules.getModule(cls);
 	}
 
 	@Override
@@ -357,7 +393,8 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	}
 
 	public final boolean shouldHurt(LivingEntity le) {
-		return isHostileTo(le) || combatManager.shouldHurtInnocent(le);
+		if (shouldIgnore(le)) return false;
+		return isHostileTo(le) || combatManager.targetKind(le).isPrey() || combatManager.shouldHurtInnocent(le);
 	}
 
 	public final void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku) {

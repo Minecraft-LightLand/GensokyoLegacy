@@ -27,6 +27,7 @@ public class YoukaiAttackTask<T extends YoukaiEntity> extends ExtendedBehaviour<
 
 	public YoukaiAttackTask(int range) {
 		this.range = range;
+		noTimeout();
 	}
 
 	@Override
@@ -87,7 +88,6 @@ public class YoukaiAttackTask<T extends YoukaiEntity> extends ExtendedBehaviour<
 			brain.setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(target, true));
 		}
 	}
-
 
 	protected void attack(YoukaiEntity youkai, LivingEntity target, double dist, boolean sight) {
 		double melee = getMeleeRange();

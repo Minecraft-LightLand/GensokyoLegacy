@@ -46,7 +46,10 @@ public class YoukaiUpdateTargetTask<E extends YoukaiEntity> extends ExtendedBeha
 		if (!entity.targets.isValidTarget(target) || isTiredOfPathing(entity)) {
 			target = getNewTarget(entity);
 			if (target != null) BrainUtils.setTargetOfEntity(entity, target);
-			else BrainUtils.clearMemory(entity, MemoryModuleType.ATTACK_TARGET);
+			else {
+				entity.setTarget(null);
+				BrainUtils.clearMemory(entity, MemoryModuleType.ATTACK_TARGET);
+			}
 		}
 	}
 

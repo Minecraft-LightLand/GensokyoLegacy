@@ -10,7 +10,9 @@ import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.YoukaiMoveTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.YoukaiVanishTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.YoukaiGoHomeTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.YoukaiSleepTask;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.YoukaiStayHomeTask;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
+import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
@@ -38,6 +40,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
+@SerialClass
 public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<SmartYoukaiEntity> {
 
 	private TaskBoard board;
@@ -68,7 +71,7 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 
 	protected void constructTaskBoard(TaskBoard board) {
 		board.addFirst(100, new YoukaiFetchTargetTask<>(), GLBrains.AT_HOME.get(), Activity.REST);
-		board.addFirst(101, new YoukaiSearchTargetTask<>(), Activity.IDLE, Activity.PLAY);
+		board.addFirst(101, new YoukaiSearchTargetTask<>(), Activity.IDLE, Activity.PLAY, GLBrains.HUNT.get());
 		board.addFirst(150, new YoukaiVanishTask(), Activity.IDLE, Activity.PLAY);
 		board.addFirst(200, new YoukaiSleepTask(), Activity.REST);
 		board.addFirst(300, new YoukaiGoHomeTask<>(), Activity.IDLE, GLBrains.AT_HOME.get());
@@ -76,6 +79,7 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 		board.addFirst(1200, new SetRandomLookTarget<>(), Activity.IDLE, Activity.PLAY);
 
 		board.addRandom(new SetRandomWalkTarget<>().speedModifier(0.8f), Activity.IDLE, Activity.PLAY);
+		board.addRandom(new YoukaiStayHomeTask<>().speedModifier(0.8f), GLBrains.AT_HOME.get());
 		board.addRandom(new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60)), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
 
 		board.addSensor(new NearbyPlayersSensor<SmartYoukaiEntity>().setRadius(32).setScanRate(e -> 5));
@@ -150,16 +154,24 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 		).onlyStartWithMemoryStatus(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT);
 	}
 
+	protected BrainActivityGroup<SmartYoukaiEntity> getHuntTasks() {
+		return new BrainActivityGroup<SmartYoukaiEntity>(GLBrains.HUNT.get()).priority(10).behaviours(
+						buildBehaviors(GLBrains.HUNT.get())
+				).onlyStartWithMemoryStatus(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT)
+				.onlyStartWithMemoryStatus(GLBrains.MEM_PREY.get(), MemoryStatus.VALUE_PRESENT);
+	}
+
 	@Override
 	public Map<Activity, BrainActivityGroup<? extends SmartYoukaiEntity>> getAdditionalTasks() {
 		return Map.of(Activity.REST, getRestTasks(),
 				GLBrains.AT_HOME.get(), getAtHomeTasks(),
-				Activity.PLAY, getPlayTasks());
+				Activity.PLAY, getPlayTasks(),
+				GLBrains.HUNT.get(), getHuntTasks());
 	}
 
 	@Override
 	public List<Activity> getActivityPriorities() {
-		return List.of(Activity.FIGHT);
+		return List.of(Activity.FIGHT, GLBrains.HUNT.get());
 	}
 
 	@Override

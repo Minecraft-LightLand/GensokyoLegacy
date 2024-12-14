@@ -129,8 +129,8 @@ public class YoukaiNavigationControl {
 		@Override
 		public boolean moveTo(double x, double y, double z, int accuracy, double speed) {
 			boolean ans = super.moveTo(x, y, z, accuracy, speed);
-			if (ans) return true;
 			if (path != null && path.canReach()) {
+				if (ans) return true;
 				if (!(isDone() || isStuck())) return false;
 				if (!self.onGround() && leaveGroundTick < 20) return false;
 			}
@@ -142,8 +142,8 @@ public class YoukaiNavigationControl {
 		@Override
 		public boolean moveTo(Entity entity, double speed) {
 			boolean ans = super.moveTo(entity, speed);
-			if (ans) return true;
 			if (path != null && path.canReach()) {
+				if (ans) return true;
 				if (!(isDone() || isStuck())) return false;
 				if (entity.onGround() && !self.onGround() && leaveGroundTick < 20) return false;
 			}
