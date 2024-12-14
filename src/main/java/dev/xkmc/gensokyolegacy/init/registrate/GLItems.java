@@ -21,7 +21,8 @@ public class GLItems {
 	public static final ItemEntry<DebugWand> DEBUG_WAND;
 
 	static {
-		TAB = GensokyoLegacy.REGISTRATE.buildModCreativeTab("ingredients", "Gensokyo Legacy", e -> e.icon(GLItems.FAIRY_ICE_CRYSTAL::asStack));
+		TAB = GensokyoLegacy.REGISTRATE.buildModCreativeTab("ingredients", "Gensokyo Legacy - Ingredients",
+				e -> e.icon(GLItems.FAIRY_ICE_CRYSTAL::asStack));
 
 		FAIRY_ICE_CRYSTAL = GensokyoLegacy.REGISTRATE.item("fairy_ice_crystal",
 				FairyIceItem::new).register();

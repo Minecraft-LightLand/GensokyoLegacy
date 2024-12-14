@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "gensokyolegacy:snow_bricks"
+  },
+  "result": {
+    "count": 2,
+    "id": "gensokyolegacy:snow_brick_vertical_slab"
+  }
+}

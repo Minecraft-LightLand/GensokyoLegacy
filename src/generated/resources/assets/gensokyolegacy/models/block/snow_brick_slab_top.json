@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "bottom": "gensokyolegacy:block/snow_bricks",
+    "side": "gensokyolegacy:block/snow_bricks",
+    "top": "gensokyolegacy:block/snow_bricks"
+  }
+}

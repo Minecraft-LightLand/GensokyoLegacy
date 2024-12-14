@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "gensokyolegacy:block/snow_brick_slab"
+    },
+    "type=double": {
+      "model": "gensokyolegacy:block/snow_bricks"
+    },
+    "type=top": {
+      "model": "gensokyolegacy:block/snow_brick_slab_top"
+    }
+  }
+}

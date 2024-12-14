@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "gensokyolegacy:ice_bricks"
+  },
+  "result": {
+    "count": 1,
+    "id": "gensokyolegacy:ice_brick_stairs"
+  }
+}

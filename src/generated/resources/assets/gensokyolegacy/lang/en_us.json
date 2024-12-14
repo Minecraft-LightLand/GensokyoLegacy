@@ -1,5 +1,13 @@
 {
   "block.gensokyolegacy.cirno_bed": "Cirno Bed",
+  "block.gensokyolegacy.ice_brick_slab": "Ice Brick Slab",
+  "block.gensokyolegacy.ice_brick_stairs": "Ice Brick Stairs",
+  "block.gensokyolegacy.ice_brick_vertical_slab": "Ice Brick Vertical Slab",
+  "block.gensokyolegacy.ice_bricks": "Ice Bricks",
+  "block.gensokyolegacy.snow_brick_slab": "Snow Brick Slab",
+  "block.gensokyolegacy.snow_brick_stairs": "Snow Brick Stairs",
+  "block.gensokyolegacy.snow_brick_vertical_slab": "Snow Brick Vertical Slab",
+  "block.gensokyolegacy.snow_bricks": "Snow Bricks",
   "entity.gensokyolegacy.cirno": "Cirno",
   "entity.gensokyolegacy.fairy_ice_crystal": "Fairy Ice Crystal",
   "entity.gensokyolegacy.frozen_frog": "Frozen Frog",
@@ -39,5 +47,6 @@
   "item.gensokyolegacy.reimu_spawn_egg": "Reimu Spawn Egg",
   "item.gensokyolegacy.rumia_spawn_egg": "Rumia Spawn Egg",
   "item.gensokyolegacy.yukari_spawn_egg": "Yukari Spawn Egg",
-  "itemGroup.gensokyolegacy.ingredients": "Gensokyo Legacy"
+  "itemGroup.gensokyolegacy.building_blocks": "Gensokyo Legacy - Building Blocks",
+  "itemGroup.gensokyolegacy.ingredients": "Gensokyo Legacy - Ingredients"
 }

@@ -1,5 +1,13 @@
 {
   "block.gensokyolegacy.cirno_bed": "pǝᗺ ouɹıƆ",
+  "block.gensokyolegacy.ice_brick_slab": "qɐןS ʞɔıɹᗺ ǝɔI",
+  "block.gensokyolegacy.ice_brick_stairs": "sɹıɐʇS ʞɔıɹᗺ ǝɔI",
+  "block.gensokyolegacy.ice_brick_vertical_slab": "qɐןS ןɐɔıʇɹǝΛ ʞɔıɹᗺ ǝɔI",
+  "block.gensokyolegacy.ice_bricks": "sʞɔıɹᗺ ǝɔI",
+  "block.gensokyolegacy.snow_brick_slab": "qɐןS ʞɔıɹᗺ ʍouS",
+  "block.gensokyolegacy.snow_brick_stairs": "sɹıɐʇS ʞɔıɹᗺ ʍouS",
+  "block.gensokyolegacy.snow_brick_vertical_slab": "qɐןS ןɐɔıʇɹǝΛ ʞɔıɹᗺ ʍouS",
+  "block.gensokyolegacy.snow_bricks": "sʞɔıɹᗺ ʍouS",
   "entity.gensokyolegacy.cirno": "ouɹıƆ",
   "entity.gensokyolegacy.fairy_ice_crystal": "ןɐʇsʎɹƆ ǝɔI ʎɹıɐℲ",
   "entity.gensokyolegacy.frozen_frog": "boɹℲ uǝzoɹℲ",
@@ -39,5 +47,6 @@
   "item.gensokyolegacy.reimu_spawn_egg": "bbƎ uʍɐdS nɯıǝᴚ",
   "item.gensokyolegacy.rumia_spawn_egg": "bbƎ uʍɐdS ɐıɯnᴚ",
   "item.gensokyolegacy.yukari_spawn_egg": "bbƎ uʍɐdS ıɹɐʞnʎ",
-  "itemGroup.gensokyolegacy.ingredients": "ʎɔɐbǝꞀ oʎʞosuǝ⅁"
+  "itemGroup.gensokyolegacy.building_blocks": "sʞɔoןᗺ buıpןınᗺ - ʎɔɐbǝꞀ oʎʞosuǝ⅁",
+  "itemGroup.gensokyolegacy.ingredients": "sʇuǝıpǝɹbuI - ʎɔɐbǝꞀ oʎʞosuǝ⅁"
 }
