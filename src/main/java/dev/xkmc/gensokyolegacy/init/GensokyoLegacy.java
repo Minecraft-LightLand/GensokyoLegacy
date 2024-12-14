@@ -52,6 +52,7 @@ public class GensokyoLegacy {
 		REGISTRATE.addDataGenerator(ProviderType.DATA_MAP, GLStructureGen::dataMap);
 		REGISTRATE.addDataGenerator(ProviderType.LANG, GLLang::genLang);
 		REGISTRATE.addDataGenerator(ProviderType.RECIPE, GLRecipeGen::genRecipe);
+		REGISTRATE.addDataGenerator(ProviderType.LOOT, GLLootGen::genLoot);
 		var init = REGISTRATE.getDataGenInitializer();
 		GLStructureGen.init(init);
 		var gen = event.getGenerator();

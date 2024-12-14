@@ -26,7 +26,8 @@ public enum GLLang {
 	ITEM_GLASS_PATH("Display character path finding"),
 	ITEM_GLASS_CHARACTER("Display character info"),
 	ITEM_GLASS_BED("Display bed info"),
-	ITEM_FAIRY_ICE_USAGE("Throw to deal damage and freeze target.", 0),
+	ITEM_FAIRY_ICE_OBTAIN("Crafted by Cirno."),
+	ITEM_FAIRY_ICE_USAGE("Throw to deal damage and freeze target."),
 	ITEM_FROZEN_FROG_OBTAIN("Dropped when Cirno freezes a frog."),
 	ITEM_FROZEN_FROG_USAGE("Throw toward target to summon a frog."),
 	;

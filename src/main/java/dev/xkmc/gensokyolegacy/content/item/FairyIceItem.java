@@ -44,6 +44,7 @@ public class FairyIceItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag flag) {
+		list.add(YHLangData.OBTAIN.get().append(GLLang.ITEM_FAIRY_ICE_OBTAIN.get().withStyle(ChatFormatting.GRAY)));
 		list.add(YHLangData.USAGE.get().append(GLLang.ITEM_FAIRY_ICE_USAGE.get().withStyle(ChatFormatting.GRAY)));
 	}
 
