@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.init.data;
+package dev.xkmc.gensokyolegacy.init.data.loot;
 
 import com.tterrag.registrate.providers.loot.RegistrateEntityLootTables;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;

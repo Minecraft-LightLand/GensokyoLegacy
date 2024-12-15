@@ -20,7 +20,8 @@ public class GLBlocks {
 
 	public enum Beds {
 		CIRNO(Blocks.BLUE_BED),
-		RUMIA(Blocks.BLUE_BED);
+		RUMIA(Blocks.BLUE_BED),
+		REIMU(Blocks.RED_BED);
 
 		private final BedBlock template;
 		private final DyeColor wool;

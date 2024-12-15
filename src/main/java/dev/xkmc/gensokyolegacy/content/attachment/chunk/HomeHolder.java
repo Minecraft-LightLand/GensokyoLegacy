@@ -48,4 +48,17 @@ public record HomeHolder(
 		return data.getChairAround(this, pos, 3, 3, 12);
 	}
 
+	@Nullable
+	public BlockPos bottomCenter() {
+		if (!data.checkInit(this)) return null;
+		var box = data.getRoomBound(config);
+		return box.getCenter();
+	}
+
+	public int getRadius() {
+		if (!data.checkInit(this)) return 0;
+		var box = data.getRoomBound(config);
+		return Math.min(box.getXSpan() / 2, box.getZSpan() / 2);
+
+	}
 }

@@ -2,6 +2,9 @@
   "values": {
     "gensokyolegacy:cirno_bed": {
       "type": "gensokyolegacy:cirno"
+    },
+    "gensokyolegacy:reimu_bed": {
+      "type": "gensokyolegacy:reimu"
     }
   }
 }

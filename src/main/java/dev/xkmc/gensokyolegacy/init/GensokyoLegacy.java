@@ -7,6 +7,10 @@ import dev.xkmc.gensokyolegacy.content.client.debug.BedRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterRequestToServer;
 import dev.xkmc.gensokyolegacy.init.data.*;
+import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
+import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
+import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureLootGen;
+import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureTagGen;
 import dev.xkmc.gensokyolegacy.init.network.CharDataToClient;
 import dev.xkmc.gensokyolegacy.init.network.PathDataToClient;
 import dev.xkmc.gensokyolegacy.init.registrate.*;
@@ -48,11 +52,11 @@ public class GensokyoLegacy {
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void gatherData(GatherDataEvent event) {
-		REGISTRATE.addDataGenerator(GLTagGen.BIOME_TAG, GLTagGen::genBiomeTag);
+		REGISTRATE.addDataGenerator(GLStructureTagGen.BIOME_TAG, GLStructureTagGen::genBiomeTag);
 		REGISTRATE.addDataGenerator(ProviderType.DATA_MAP, GLStructureGen::dataMap);
 		REGISTRATE.addDataGenerator(ProviderType.LANG, GLLang::genLang);
 		REGISTRATE.addDataGenerator(ProviderType.RECIPE, GLRecipeGen::genRecipe);
-		REGISTRATE.addDataGenerator(ProviderType.LOOT, GLLootGen::genLoot);
+		REGISTRATE.addDataGenerator(ProviderType.LOOT, GLStructureLootGen::genLoot);
 		var init = REGISTRATE.getDataGenInitializer();
 		GLStructureGen.init(init);
 		var gen = event.getGenerator();

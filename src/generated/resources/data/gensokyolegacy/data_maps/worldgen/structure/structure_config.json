@@ -10,6 +10,17 @@
       "topRoomShrink": 1,
       "xzHouseShrink": 0,
       "xzRoomShrink": 1
+    },
+    "gensokyolegacy:hakurei_shrine": {
+      "entities": [
+        "gensokyolegacy:reimu"
+      ],
+      "floorHouseShrink": 0,
+      "floorRoomShrink": 3,
+      "topHouseShrink": 0,
+      "topRoomShrink": 5,
+      "xzHouseShrink": 0,
+      "xzRoomShrink": 7
     }
   }
 }

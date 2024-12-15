@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.init.data;
+package dev.xkmc.gensokyolegacy.init.data.loot;
 
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;

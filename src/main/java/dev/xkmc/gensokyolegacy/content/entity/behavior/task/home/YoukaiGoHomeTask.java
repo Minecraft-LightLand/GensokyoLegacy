@@ -1,13 +1,13 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
 import com.mojang.datafixers.util.Pair;
-import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
-import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import net.tslat.smartbrainlib.object.MemoryTest;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class YoukaiGoHomeTask<E extends PathfinderMob> extends ExtendedBehaviour<E> {
+public class YoukaiGoHomeTask<E extends SmartYoukaiEntity> extends ExtendedBehaviour<E> {
 
 	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(3)
 			.noMemory(MemoryModuleType.WALK_TARGET)
@@ -37,8 +37,9 @@ public class YoukaiGoHomeTask<E extends PathfinderMob> extends ExtendedBehaviour
 		return !entity.isWithinRestriction();
 	}
 
-	protected void start(E entity) {
-		Vec3 targetPos = this.getTargetPos(entity);
+	@Override
+	protected void start(ServerLevel level, E entity, long gameTime) {
+		Vec3 targetPos = this.getTargetPos(level, entity);
 		if (targetPos == null) {
 			BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
 		} else {
@@ -47,17 +48,13 @@ public class YoukaiGoHomeTask<E extends PathfinderMob> extends ExtendedBehaviour
 		}
 	}
 
-	protected @Nullable Vec3 getTargetPos(E entity) {
+	protected @Nullable Vec3 getTargetPos(ServerLevel sl, E entity) {
 		if (entity.isWithinRestriction()) return null;
-		var data = CharacterConfig.of(entity.getType());
-		int xz = 3, y = 3;
-		if (data != null) {
-			xz = data.xzRadius();
-			y = data.yRadius();
-		}
-		return LandRandomPos.getPosTowards(entity, xz, y,
-				Vec3.atBottomCenterOf(entity.getRestrictCenter())
-		);
+		var key = StructureKey.of(entity);
+		if (key.isEmpty()) return null;
+		HomeHolder home = HomeHolder.of(sl, key.get());
+		if (home == null) return null;
+		return home.getRandomPosInRoom(entity);
 	}
 
 }
