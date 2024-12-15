@@ -2,8 +2,10 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
 import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
@@ -53,7 +55,10 @@ public class YoukaiGoHomeTask<E extends SmartYoukaiEntity> extends ExtendedBehav
 		var key = StructureKey.of(entity);
 		if (key.isEmpty()) return null;
 		HomeHolder home = HomeHolder.of(sl, key.get());
-		if (home == null) return null;
+		if (home == null) {
+			return BedRefData.of(sl, entity).map(BedRefData::getBedPos)
+					.map(BlockPos::getCenter).orElse(null);
+		}
 		return home.getRandomPosInRoom(entity);
 	}
 

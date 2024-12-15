@@ -37,12 +37,12 @@ public record CharacterConfig(
 		if (!(ans instanceof YoukaiEntity youkai)) return null;
 		var home = HomeHolder.of(sl, key);
 		if (home == null) return null;
-		var center = home.bottomCenter();
+		var center = home.getWanderCenter();
 		if (center == null) return null;
 		youkai.setPos(pos.getCenter());
 		youkai.getModule(HomeModule.class).ifPresent(e -> e.setHome(key));
 		youkai.initSpellCard();
-		youkai.restrictTo(center, home.getRadius() + wanderRadius);
+		youkai.restrictTo(center, home.getWanderBaseRadius() + wanderRadius);
 		return youkai;
 	}
 

@@ -12,14 +12,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class YoukaiStayHomeTask<E extends SmartYoukaiEntity> extends AbstractHomeHolderTask<E> {
+public abstract class AbstractStayTask<E extends SmartYoukaiEntity> extends AbstractHomeHolderTask<E> {
 
 	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(3)
 			.noMemory(MemoryModuleType.WALK_TARGET)
 			.hasMemory(MemoryModuleType.HOME)
 			.noMemory(MemoryModuleType.ATTACK_TARGET);
 
-	public YoukaiStayHomeTask() {
+	public AbstractStayTask() {
 	}
 
 	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
@@ -36,10 +36,6 @@ public class YoukaiStayHomeTask<E extends SmartYoukaiEntity> extends AbstractHom
 		}
 	}
 
-	protected @Nullable Vec3 getTargetPos(E entity) {
-		if (entity.isWithinRestriction()) return null;
-		if (home == null || !home.isValid()) return null;
-		return home.getRandomPosInRoom(entity);
-	}
+	protected abstract @Nullable Vec3 getTargetPos(E entity);
 
 }

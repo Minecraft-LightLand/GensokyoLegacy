@@ -1,0 +1,15 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "gensokyolegacy:hakurei_shrine/storage",
+        "override_liquid_settings": "ignore_waterlogging",
+        "processors": "gensokyolegacy:hakurei_shrine/storage",
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

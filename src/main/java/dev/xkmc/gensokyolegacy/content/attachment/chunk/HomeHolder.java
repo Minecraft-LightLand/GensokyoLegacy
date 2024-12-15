@@ -33,7 +33,13 @@ public record HomeHolder(
 	@Nullable
 	public Vec3 getRandomPosInRoom(YoukaiEntity e) {
 		if (!data.checkInit(this)) return null;
-		return HomeSearchUtil.getRandomPosInRoom(config, data.getRoomBound(config), e);
+		return HomeSearchUtil.getRandomPos(data.getRoomBound(config), e, ans -> !config.isOutside(e.level(), ans));
+	}
+
+	@Nullable
+	public Vec3 getRandomPosInBound(YoukaiEntity e) {
+		if (!data.checkInit(this)) return null;
+		return HomeSearchUtil.getRandomPos(data.getTotalBound(), e, ans -> true);
 	}
 
 	@Nullable
@@ -49,16 +55,16 @@ public record HomeHolder(
 	}
 
 	@Nullable
-	public BlockPos bottomCenter() {
+	public BlockPos getWanderCenter() {
 		if (!data.checkInit(this)) return null;
-		var box = data.getRoomBound(config);
+		var box = data.getTotalBound();
 		return box.getCenter();
 	}
 
-	public int getRadius() {
+	public int getWanderBaseRadius() {
 		if (!data.checkInit(this)) return 0;
-		var box = data.getRoomBound(config);
+		var box = data.getTotalBound();
 		return Math.min(box.getXSpan() / 2, box.getZSpan() / 2);
-
 	}
+
 }

@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
-import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.youkaishomecoming.content.block.furniture.ChairEntity;
@@ -29,6 +28,7 @@ import vectorwing.farmersdelight.common.block.entity.CabinetBlockEntity;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class HomeSearchUtil {
 
@@ -105,7 +105,7 @@ public class HomeSearchUtil {
 	}
 
 	@Nullable
-	public static Vec3 getRandomPosInRoom(StructureConfig config, BoundingBox bound, YoukaiEntity e) {
+	public static Vec3 getRandomPos(BoundingBox bound, YoukaiEntity e, Predicate<BlockPos> pred) {
 		var rand = e.getRandom();
 		return RandomPos.generateRandomPos(e, () -> {
 			int x = rand.nextInt(bound.minX(), bound.maxX() + 1);
@@ -114,7 +114,7 @@ public class HomeSearchUtil {
 			var ans = new BlockPos(x, y, z);
 			if (!e.getNavigation().isStableDestination(ans)) return null;
 			ans = LandRandomPos.movePosUpOutOfSolid(e, ans);
-			if (ans == null || !bound.isInside(ans) || config.isOutside(e.level(), ans)) return null;
+			if (ans == null || !bound.isInside(ans) || !pred.test(ans)) return null;
 			return ans;
 		});
 	}

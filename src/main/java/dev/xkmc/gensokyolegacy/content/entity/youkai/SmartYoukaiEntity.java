@@ -74,7 +74,9 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 		board.addFirst(1200, new SetRandomLookTarget<>(), Activity.IDLE, Activity.PLAY);
 
 		board.addRandom(new SetRandomWalkTarget<>().speedModifier(0.8f), Activity.IDLE, Activity.PLAY);
-		board.addRandom(new YoukaiStayHomeTask<>().speedModifier(0.8f), GLBrains.AT_HOME.get());
+		board.addRandom(new YoukaiStayInRoomTask<>().speedModifier(0.8f), GLBrains.AT_HOME.get());
+		board.addRandom(new YoukaiStayNearHouseTask<>().speedModifier(0.8f)
+				.cooldownFor(e -> e.getRandom().nextInt(200, 400)), Activity.IDLE);
 		board.addRandom(new YoukaiSitTask<>().speedModifier(0.8f)
 				.cooldownFor(e -> e.getRandom().nextInt(200, 400))
 				.runFor(e -> e.getRandom().nextInt(100, 200)), GLBrains.AT_HOME.get());

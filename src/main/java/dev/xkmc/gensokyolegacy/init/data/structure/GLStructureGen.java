@@ -60,14 +60,20 @@ public class GLStructureGen {
 								new StructBed(GLEntities.REIMU, GLBlocks.Beds.REIMU.holder(),
 										CharacterConfig.forStructure(12000, 24000, 8, 600))
 						),
-						new StructJigsawBuilding(List.of(
+						new StructJigsawBuilding(2, List.of(
 								new StructJigsawBuilding.Part("shrine", false, List.of(
 										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE),
 										new RuleProcessor(List.of(
 												injectData(Blocks.CHEST, GLStructureLootGen.SHRINE_CHEST),
 												injectData(Blocks.BARREL, GLStructureLootGen.SHRINE_BARREL),
 												injectData(ModBlocks.SPRUCE_CABINET.get(), GLStructureLootGen.SHRINE_CABINET)
-										))))
+										)))),
+								new StructJigsawBuilding.Part("storage", false, List.of(
+										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE))),
+								new StructJigsawBuilding.Part("path", false, List.of(
+										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE))),
+								new StructJigsawBuilding.Part("gate", false, List.of(
+										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE)))
 						), Map.of())
 				)
 		);

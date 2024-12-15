@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 public record StructJigsawBuilding(
+		int maxDepth,
 		List<StructJigsawBuilding.Part> parts,
 		Map<MobCategory, StructureSpawnOverride> spawns
 ) implements StructBuilding {
@@ -67,7 +68,7 @@ public record StructJigsawBuilding(
 				.getOrThrow(ResourceKey.create(Registries.TEMPLATE_POOL, id.withSuffix("/" + parts().getFirst().id())));
 		ctx.register(ResourceKey.create(Registries.STRUCTURE, id), new JigsawStructure(
 				new Structure.StructureSettings(biome, spawns(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.BEARD_THIN),
-				pool, 1, ConstantHeight.of(VerticalAnchor.absolute(0)), false, Heightmap.Types.WORLD_SURFACE_WG)
+				pool, maxDepth(), ConstantHeight.of(VerticalAnchor.absolute(0)), false, Heightmap.Types.WORLD_SURFACE_WG)
 		);
 	}
 }

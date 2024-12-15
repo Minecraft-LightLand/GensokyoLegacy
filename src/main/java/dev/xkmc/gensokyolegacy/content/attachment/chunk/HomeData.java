@@ -6,6 +6,7 @@ import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 @SerialClass
 public class HomeData {
 
+	private StructureStart start;
 	private StructurePiece piece;
 
 	@SerialField
@@ -28,6 +30,7 @@ public class HomeData {
 			var start = holder.level().structureManager().getStructureWithPieceAt(holder.key().pos(), structure);
 			if (start.getStructure() != structure) return false;
 			if (start.getPieces().isEmpty()) return false;
+			this.start = start;
 			piece = start.getPieces().getFirst();
 		}
 		return true;
@@ -61,6 +64,10 @@ public class HomeData {
 		);
 	}
 
+	public BoundingBox getTotalBound() {
+		return start.getBoundingBox();
+	}
+
 	@Nullable
 	public BlockPos getContainerAround(HomeHolder holder, BlockPos center, int rxz, int ry, int trail) {
 		return HomeSearchUtil.searchBlock(containers, HomeSearchUtil::isValidChest,
@@ -76,5 +83,4 @@ public class HomeData {
 	private void verifyStructureIntegrity() {
 
 	}
-
 }
