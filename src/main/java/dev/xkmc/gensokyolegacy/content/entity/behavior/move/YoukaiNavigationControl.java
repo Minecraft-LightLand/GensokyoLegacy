@@ -33,6 +33,7 @@ public class YoukaiNavigationControl {
 		this.flyCtrl = new FlyingMoveControl(self, 10, false);
 		this.flyNav = new Flying(self, self.level());
 		self.setControl(walkCtrl, walkNav);
+		markHuman();
 	}
 
 	public final void setFlying() {
@@ -90,8 +91,6 @@ public class YoukaiNavigationControl {
 		walkNav.setCanOpenDoors(true);
 		walkNav.setCanFloat(true);
 
-		flyNav.setCanPassDoors(true);
-		flyNav.setCanOpenDoors(true);
 		flyNav.setCanFloat(true);
 	}
 

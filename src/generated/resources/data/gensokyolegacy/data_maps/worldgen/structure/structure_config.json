@@ -3,7 +3,13 @@
     "gensokyolegacy:cirno_nest": {
       "entities": [
         "gensokyolegacy:cirno"
-      ]
+      ],
+      "floorHouseShrink": 0,
+      "floorRoomShrink": 1,
+      "topHouseShrink": 0,
+      "topRoomShrink": 1,
+      "xzHouseShrink": 0,
+      "xzRoomShrink": 1
     }
   }
 }

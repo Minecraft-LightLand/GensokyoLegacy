@@ -19,7 +19,8 @@ import java.util.Locale;
 public class GLBlocks {
 
 	public enum Beds {
-		CIRNO(Blocks.BLUE_BED);
+		CIRNO(Blocks.BLUE_BED),
+		RUMIA(Blocks.BLUE_BED);
 
 		private final BedBlock template;
 		private final DyeColor wool;

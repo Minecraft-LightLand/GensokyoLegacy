@@ -14,4 +14,5 @@ public class DefaultedSmartBrainSchedule extends SmartBrainSchedule {
 		}
 		return ans;
 	}
+
 }

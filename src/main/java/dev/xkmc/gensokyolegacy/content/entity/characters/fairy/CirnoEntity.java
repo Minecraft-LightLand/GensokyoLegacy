@@ -110,7 +110,7 @@ public class CirnoEntity extends GeneralYoukaiEntity {
 		int frogPickup = getModule(CountPickupModule.class)
 				.map(CountPickupModule::getCount).orElse(0);
 		if (frogPickup == 0) return super.getBrainDebugInfo();
-		return super.getBrainDebugInfo() + ", " + frogPickup + " frogs";
+		return super.getBrainDebugInfo() + "\n" + frogPickup + " frogs";
 	}
 
 }

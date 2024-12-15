@@ -1,9 +1,9 @@
 package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
+import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +18,9 @@ public class HomeData {
 
 	@SerialField
 	private final List<BlockPos> containers = new ArrayList<>();
+
+	@SerialField
+	private final List<BlockPos> chairs = new ArrayList<>();
 
 	public boolean checkInit(HomeHolder holder) {
 		if (piece == null) {
@@ -34,42 +37,44 @@ public class HomeData {
 		return piece.getLocatorPosition();
 	}
 
-	public BoundingBox getBound() {
-		return piece.getBoundingBox();
+	public BoundingBox getRoomBound(StructureConfig config) {
+		var bound = piece.getBoundingBox();
+		return new BoundingBox(
+				bound.minX() + config.xzRoomShrink(),
+				bound.minY() + config.floorRoomShrink(),
+				bound.minZ() + config.xzRoomShrink(),
+				bound.maxX() - config.xzRoomShrink(),
+				bound.maxY() - config.topRoomShrink(),
+				bound.maxZ() - config.xzRoomShrink()
+		);
+	}
+
+	public BoundingBox getHouseBound(StructureConfig config) {
+		var bound = piece.getBoundingBox();
+		return new BoundingBox(
+				bound.minX() + config.xzHouseShrink(),
+				bound.minY() + config.floorHouseShrink(),
+				bound.minZ() + config.xzHouseShrink(),
+				bound.maxX() - config.xzHouseShrink(),
+				bound.maxY() - config.topHouseShrink(),
+				bound.maxZ() - config.xzHouseShrink()
+		);
 	}
 
 	@Nullable
-	public BlockPos getContainerAround(ServerLevel sl, BlockPos center, int rxz, int ry, int trail) {
-		BoundingBox box = BoundingBox.fromCorners(center.offset(-rxz, -ry, -rxz), center.offset(rxz, ry, rxz));
-		BoundingBox room = piece.getBoundingBox();
-		int x0 = Math.max(box.minX(), room.minX());
-		int y0 = Math.max(box.minY(), room.minY());
-		int z0 = Math.max(box.minZ(), room.minZ());
-		int x1 = Math.min(box.maxX(), room.maxX());
-		int y1 = Math.min(box.maxY(), room.maxY());
-		int z1 = Math.min(box.maxZ(), room.maxZ());
-		if (x0 > x1 || y0 > y1 || z0 > z1) return null;
-		containers.removeIf(e -> sl.isLoaded(e) && !HomeChestUtil.isValid(sl.getBlockEntity(e)));
-		for (var e : containers) {
-			if (!sl.isLoaded(e)) continue;
-			if (box.isInside(e)) {
-				return e;
-			}
-		}
-		var rand = sl.getRandom();
-		var pos = new BlockPos.MutableBlockPos();
-		for (int i = 0; i < trail; i++) {
-			int x = rand.nextInt(x0, x1 + 1);
-			int y = rand.nextInt(y0, y1 + 1);
-			int z = rand.nextInt(z0, z1 + 1);
-			pos.set(x, y, z);
-			if (HomeChestUtil.isValid(sl.getBlockEntity(pos))) {
-				var ans = pos.immutable();
-				containers.add(ans);
-				return ans;
-			}
-		}
-		return null;
+	public BlockPos getContainerAround(HomeHolder holder, BlockPos center, int rxz, int ry, int trail) {
+		return HomeSearchUtil.searchBlock(containers, HomeSearchUtil::isValidChest,
+				getRoomBound(holder.config()), holder.level(), center, rxz, ry, trail);
+	}
+
+	@Nullable
+	public BlockPos getChairAround(HomeHolder holder, BlockPos center, int rxz, int ry, int trail) {
+		return HomeSearchUtil.searchBlock(chairs, HomeSearchUtil::isValidChair,
+				getRoomBound(holder.config()), holder.level(), center, rxz, ry, trail);
+	}
+
+	private void verifyStructureIntegrity() {
+
 	}
 
 }

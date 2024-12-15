@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.module;
 
-import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
+import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -36,7 +36,7 @@ public class HomeModule extends AbstractYoukaiModule {
 	public void tickServer() {
 		if (home == null) return;
 		if (!(self.level() instanceof ServerLevel sl)) return;
-		var ref = IndexStorage.get(sl).getOrCreate(home).bedOf(self.getType());
+		var ref = BedRefData.of(sl, home, self.getType());
 		if (ref == null) return;
 		ref.entityTick(sl, self);
 	}
@@ -45,7 +45,7 @@ public class HomeModule extends AbstractYoukaiModule {
 	public void onKilled() {
 		if (home == null) return;
 		if (!(self.level() instanceof ServerLevel sl)) return;
-		var ref = IndexStorage.get(sl).getOrCreate(home).bedOf(self.getType());
+		var ref = BedRefData.of(sl, home, self.getType());
 		if (ref == null) return;
 		ref.onEntityDie(sl, self);
 	}

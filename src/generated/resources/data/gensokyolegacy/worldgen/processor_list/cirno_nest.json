@@ -10,6 +10,27 @@
         {
           "block_entity_modifier": {
             "type": "minecraft:append_loot",
+            "loot_table": "gensokyolegacy:chests/cirno_nest/pot"
+          },
+          "input_predicate": {
+            "block": "minecraft:decorated_pot",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:decorated_pot",
+            "Properties": {
+              "cracked": "false",
+              "facing": "north",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "block_entity_modifier": {
+            "type": "minecraft:append_loot",
             "loot_table": "gensokyolegacy:chests/cirno_nest/cabinet"
           },
           "input_predicate": {
@@ -21,6 +42,47 @@
           },
           "output_state": {
             "Name": "farmersdelight:spruce_cabinet",
+            "Properties": {
+              "facing": "north",
+              "open": "false"
+            }
+          }
+        },
+        {
+          "block_entity_modifier": {
+            "type": "minecraft:append_loot",
+            "loot_table": "gensokyolegacy:chests/cirno_nest/basket"
+          },
+          "input_predicate": {
+            "block": "farmersdelight:basket",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "farmersdelight:basket",
+            "Properties": {
+              "enabled": "true",
+              "facing": "up",
+              "waterlogged": "false"
+            }
+          }
+        },
+        {
+          "block_entity_modifier": {
+            "type": "minecraft:append_loot",
+            "loot_table": "gensokyolegacy:chests/cirno_nest/barrel"
+          },
+          "input_predicate": {
+            "block": "minecraft:barrel",
+            "predicate_type": "minecraft:block_match"
+          },
+          "location_predicate": {
+            "predicate_type": "minecraft:always_true"
+          },
+          "output_state": {
+            "Name": "minecraft:barrel",
             "Properties": {
               "facing": "north",
               "open": "false"

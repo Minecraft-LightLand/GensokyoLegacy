@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.block.bed;
 
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
+import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.client.debug.BedInfoToClient;
@@ -59,7 +60,7 @@ public class YoukaiBedBlockEntity extends BaseBlockEntity implements TickableBlo
 				var data = BedData.of(getBlockState().getBlock());
 				if (data != null) {
 					var config = CharacterConfig.of(data.type());
-					if (config != null && config.structure().equals(key.getStructure().location())) {
+					if (config != null && config.structure().equals(key.structure())) {
 						IndexStorage.get(sl).getOrCreate(key).data().blockTick(sl, data, this, key);
 					}
 				}
@@ -78,7 +79,7 @@ public class YoukaiBedBlockEntity extends BaseBlockEntity implements TickableBlo
 		var sl = sp.serverLevel();
 		var config = CharacterConfig.of(data.type());
 		if (config == null || !config.structure().equals(key.getStructure().location())) return;
-		var bed = IndexStorage.get(sl).getOrCreate(key).bedOf(data.type());
+		var bed = BedRefData.of(sl, key, data.type());
 		if (bed == null) return;
 		bed.onDebugClick(sp, config);
 	}
@@ -91,7 +92,7 @@ public class YoukaiBedBlockEntity extends BaseBlockEntity implements TickableBlo
 		if (data != null) {
 			var config = CharacterConfig.of(data.type());
 			if (config != null && config.structure().equals(key.getStructure().location())) {
-				var bed = IndexStorage.get(sl).getOrCreate(key).bedOf(data.type());
+				var bed = BedRefData.of(sl, key, data.type());
 				if (bed != null) {
 					return bed.getDebugPacket(sl, config, key);
 				}

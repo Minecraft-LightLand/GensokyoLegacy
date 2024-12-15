@@ -11,7 +11,6 @@ import net.tslat.smartbrainlib.util.BrainUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.function.BiFunction;
 
 public class YoukaiStayHomeTask<E extends SmartYoukaiEntity> extends AbstractHomeHolderTask<E> {
 
@@ -20,23 +19,11 @@ public class YoukaiStayHomeTask<E extends SmartYoukaiEntity> extends AbstractHom
 			.hasMemory(MemoryModuleType.HOME)
 			.noMemory(MemoryModuleType.ATTACK_TARGET);
 
-	protected BiFunction<E, Vec3, Float> speedModifier = (entity, targetPos) -> 1f;
-
-
 	public YoukaiStayHomeTask() {
 	}
 
 	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
 		return MEMORY_REQUIREMENTS;
-	}
-
-	public YoukaiStayHomeTask<E> speedModifier(float modifier) {
-		return speedModifier((entity, targetPos) -> modifier);
-	}
-
-	public YoukaiStayHomeTask<E> speedModifier(BiFunction<E, Vec3, Float> function) {
-		this.speedModifier = function;
-		return this;
 	}
 
 	protected void start(E entity) {

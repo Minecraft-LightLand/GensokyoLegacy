@@ -2,12 +2,14 @@ package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.loot.RegistrateLootTableProvider;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.registrate.GLDecoBlocks;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.youkaishomecoming.init.food.YHFood;
 import dev.xkmc.youkaishomecoming.init.registrate.YHItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -22,6 +24,8 @@ public class GLLootGen {
 
 	public static final ResourceKey<LootTable> CIRNO_POT = key("chests/cirno_nest/pot");
 	public static final ResourceKey<LootTable> CIRNO_CABINET = key("chests/cirno_nest/cabinet");
+	public static final ResourceKey<LootTable> CIRNO_BARREL = key("chests/cirno_nest/barrel");
+	public static final ResourceKey<LootTable> CIRNO_BASKET = key("chests/cirno_nest/basket");
 
 	private static ResourceKey<LootTable> key(String id) {
 		return ResourceKey.create(Registries.LOOT_TABLE, GensokyoLegacy.loc(id));
@@ -52,11 +56,24 @@ public class GLLootGen {
 
 			pvd.addLootAction(LootContextParamSets.CHEST, cons -> cons.accept(CIRNO_CABINET, LootTable.lootTable()
 					.withPool(popsicle).withPool(mochi).withPool(dango)
+			));
+
+			pvd.addLootAction(LootContextParamSets.CHEST, cons -> cons.accept(CIRNO_BASKET, LootTable.lootTable()
 					.withPool(getPool(3, 1)
 							.add(getItem(GLItems.FROZEN_FROG_COLD.get(), 1, 1))
 							.add(getItem(GLItems.FROZEN_FROG_TEMPERATE.get(), 1, 1))
 							.add(getItem(GLItems.FROZEN_FROG_WARM.get(), 1, 1))
 							.add(getItem(GLItems.FAIRY_ICE_CRYSTAL.get(), 1, 1)))
+			));
+
+			pvd.addLootAction(LootContextParamSets.CHEST, cons -> cons.accept(CIRNO_BARREL, LootTable.lootTable()
+					.withPool(getPool(5, 1)
+							.add(getItem(GLDecoBlocks.ICE_SET.block.asItem(), 4, 8))
+							.add(getItem(GLDecoBlocks.ICE_SET.slab.asItem(), 2, 4))
+							.add(getItem(GLDecoBlocks.ICE_SET.vertical.asItem(), 2, 4))
+							.add(getItem(GLDecoBlocks.ICE_SET.stairs.asItem(), 1, 2))
+							.add(getItem(ModItems.CANVAS_RUG.get(), 2, 4))
+							.add(getItem(Items.BRICK, 3, 6)))
 			));
 		}
 	}

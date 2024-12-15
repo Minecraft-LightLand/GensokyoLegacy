@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.sensor;
 
-import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
-import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
+import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
+import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import net.minecraft.core.GlobalPos;
@@ -34,11 +34,9 @@ public class YoukaiUpdateHomeSensor<E extends YoukaiEntity> extends ExtendedSens
 	}
 
 	private Optional<GlobalPos> get(ServerLevel level, E entity) {
-		var opt = entity.getModule(HomeModule.class);
-		if (opt.isEmpty()) return Optional.empty();
-		var home = opt.get().home();
+		var home = StructureKey.of(entity).orElse(null);
 		if (home == null || !level.dimension().location().equals(home.dim())) return Optional.empty();
-		var bed = IndexStorage.get(level).getOrCreate(home).bedOf(entity.getType());
+		var bed = BedRefData.of(level, home, entity.getType());
 		if (bed == null) return Optional.empty();
 		var pos = bed.getBedPos();
 		if (pos == null) return Optional.empty();

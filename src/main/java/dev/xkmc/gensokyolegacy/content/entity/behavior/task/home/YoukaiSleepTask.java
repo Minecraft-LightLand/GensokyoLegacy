@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
 import com.mojang.datafixers.util.Pair;
+import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
@@ -26,6 +27,7 @@ public class YoukaiSleepTask extends ExtendedBehaviour<YoukaiEntity> {
 
 	@Nullable
 	private GlobalPos pos = null;
+	private long desperateSleepyTime = 0;
 	private long nextOkStartTime = 0;
 
 	@Override
@@ -43,6 +45,7 @@ public class YoukaiSleepTask extends ExtendedBehaviour<YoukaiEntity> {
 		if (gameTime < nextOkStartTime) return;
 		pos = BrainUtils.getMemory(entity, MemoryModuleType.HOME);
 		if (pos == null || !level.dimension().equals(pos.dimension())) return;
+		desperateSleepyTime = gameTime + 1200;
 		if (entity.distanceToSqr(pos.pos().getCenter()) > 2) {
 			BrainUtils.setMemory(entity, MemoryModuleType.WALK_TARGET, new WalkTarget(pos.pos(), 1, 1));
 		}
@@ -53,12 +56,21 @@ public class YoukaiSleepTask extends ExtendedBehaviour<YoukaiEntity> {
 		if (!entity.isSleeping()) return;
 		entity.stopSleeping();
 		this.nextOkStartTime = gameTime + 40L;
+		this.desperateSleepyTime = 0;
 	}
 
 	@Override
-	protected void tick(YoukaiEntity entity) {
+	protected void tick(ServerLevel level, YoukaiEntity entity, long gameTime) {
 		if (pos == null) return;
 		if (entity.isSleeping()) return;
+		if (desperateSleepyTime > 0 && gameTime > desperateSleepyTime) {
+			if (level.isLoaded(pos.pos())) {
+				entity.moveTo(pos.pos().getCenter());
+			} else {
+				BedRefData.of(level, entity);//TODO
+			}
+			desperateSleepyTime = 0;
+		}
 		if (entity.distanceToSqr(pos.pos().getCenter()) < 2) {
 			BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
 			entity.getNavigation().stop();

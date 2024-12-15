@@ -12,12 +12,23 @@ import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @SerialClass
 public class BedRefData {
+
+	@Nullable
+	public static BedRefData of(ServerLevel sl, StructureKey key, EntityType<?> type) {
+		return IndexStorage.get(sl).getOrCreate(key).bedOf(type);
+	}
+
+	public static Optional<BedRefData> of(ServerLevel sl, YoukaiEntity e) {
+		return StructureKey.of(e).map(k -> of(sl, k, e.getType()));
+	}
 
 	@SerialField
 	private UUID entityId = Util.NIL_UUID;

@@ -1,9 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.client.debug;
 
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
-import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
+import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.module.FeedModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -19,9 +18,8 @@ public record CharacterRequestToServer(UUID id) implements SerialPacketBase<Char
 	public void handle(Player player) {
 		if (!(player instanceof ServerPlayer sp)) return;
 		if (!(sp.serverLevel().getEntity(id) instanceof YoukaiEntity e)) return;
-		var home = e.getModule(HomeModule.class).map(HomeModule::home);
-		var bed = home
-				.map(k -> IndexStorage.get(sp.serverLevel()).getOrCreate(k).bedOf(e.getType()))
+		var home = StructureKey.of(e);
+		var bed = home.map(k -> BedRefData.of(sp.serverLevel(), k, e.getType()))
 				.map(BedRefData::getBedPos);
 		int feedCD = e.getModule(FeedModule.class).map(FeedModule::getCoolDown).orElse(0);
 		String activity = e instanceof SmartYoukaiEntity smart ? smart.getBrainDebugInfo() : "";

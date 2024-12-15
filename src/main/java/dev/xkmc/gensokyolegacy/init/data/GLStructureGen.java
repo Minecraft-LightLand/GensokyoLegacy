@@ -21,6 +21,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -40,7 +41,6 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.common.util.Lazy;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,6 +50,7 @@ public class GLStructureGen {
 
 	private record GLStructure(
 			ResourceLocation id, TagKey<Biome> biomes, int spacing, int separation,
+			StructureConfig.Builder config,
 			List<StructureProcessor> processors,
 			List<GLBeds> beds,
 			Map<MobCategory, StructureSpawnOverride> spawns) {
@@ -66,10 +67,14 @@ public class GLStructureGen {
 		var cirno = GensokyoLegacy.loc("cirno_nest");
 		return List.of(
 				new GLStructure(cirno, GLTagGen.CIRNO_NEST, 24, 8,
+						StructureConfig.builder().room(1, 1, 1),
 						List.of(
 								new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE),
 								new RuleProcessor(List.of(
-										injectData(ModBlocks.SPRUCE_CABINET.get(), GLLootGen.CIRNO_CABINET)
+										injectData(Blocks.DECORATED_POT, GLLootGen.CIRNO_POT),
+										injectData(ModBlocks.SPRUCE_CABINET.get(), GLLootGen.CIRNO_CABINET),
+										injectData(ModBlocks.BASKET.get(), GLLootGen.CIRNO_BASKET),
+										injectData(Blocks.BARREL, GLLootGen.CIRNO_BARREL)
 								))
 						),
 						List.of(
@@ -88,13 +93,13 @@ public class GLStructureGen {
 		var entity = pvd.builder(GLMisc.ENTITY_DATA.reg());
 		var structure = pvd.builder(GLMisc.STRUCTURE_DATA.reg());
 		for (var e : STRUCTURES.get()) {
-			StructureConfig config = new StructureConfig(new LinkedHashSet<>());
+			var config = e.config();
 			for (var beds : e.beds) {
 				bed.add(beds.bed(), new BedData(beds.entity.value()), false);
 				entity.add(beds.entity(), beds.data, false);
-				config.entities().add(beds.entity.value());
+				config.addEntity(beds.entity.value());
 			}
-			structure.add(e.id(), config, false);
+			structure.add(e.id(), config.build(), false);
 		}
 	}
 

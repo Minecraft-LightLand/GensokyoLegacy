@@ -4,6 +4,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterData;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
@@ -45,8 +46,11 @@ public class CharacterInfoClientManager {
 		if (data.feedCD() > 0) {
 			lines.add(GLLang.INFO_ENTITY_FEED.time(data.feedCD()).withStyle(ChatFormatting.GRAY));
 		}
-		if (!data.activity().isEmpty()) {
-			lines.add(Component.literal(data.activity()).withStyle(ChatFormatting.DARK_GRAY));
+		if (!data.activity().isEmpty() && Minecraft.getInstance().options.advancedItemTooltips) {
+			String[] strs = data.activity().split("\n");
+			for (var e : strs) {
+				lines.add(Component.literal(e).withStyle(ChatFormatting.DARK_GRAY));
+			}
 		}
 	}
 }
