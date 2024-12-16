@@ -99,7 +99,7 @@ public class HomeData {
 	}
 
 	public BoundingBox getTotalBound() {
-		return start.getBoundingBox();
+		return start.getBoundingBox().inflatedBy(-12);
 	}
 
 	@Nullable

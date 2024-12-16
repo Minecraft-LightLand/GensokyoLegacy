@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
 import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
+import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -85,6 +86,8 @@ public class IntegrityVerifier {
 			for (var e : fetch) {
 				bound.resolve(pos, e);
 				var state = template.stateAt(e);
+				if (state.getBlock() instanceof YoukaiBedBlock) continue;
+				if (level.getBlockState(pos).getBlock() instanceof YoukaiBedBlock) continue;
 				if (!state.isAir() && !config.isPrimary(state) && !config.wouldFix(state))
 					state = Blocks.AIR.defaultBlockState();
 				ans.add(Pair.of(pos.immutable(), state));

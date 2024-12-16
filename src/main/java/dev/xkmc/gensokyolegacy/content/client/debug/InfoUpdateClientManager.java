@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.client.debug;
 
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoRequestToServer;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.core.BlockPos;
 
@@ -25,7 +26,7 @@ public class InfoUpdateClientManager {
 	}
 
 	public static void requestStructure(StructureKey key) {
-
+		GensokyoLegacy.HANDLER.toServer(new StructureInfoRequestToServer(key));
 	}
 
 	public static void clearCache() {

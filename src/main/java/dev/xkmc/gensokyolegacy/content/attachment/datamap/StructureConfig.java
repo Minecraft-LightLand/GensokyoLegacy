@@ -1,9 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.attachment.datamap;
 
-import com.mojang.datafixers.util.Either;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -12,16 +11,14 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Optional;
 
 public record StructureConfig(
 		LinkedHashSet<EntityType<?>> entities,
 		int xzRoomShrink, int topRoomShrink, int floorRoomShrink,
 		int xzHouseShrink, int topHouseShrink, int floorHouseShrink,
-		@Nullable HolderSet<Block> outsideBlock,
-		@Nullable HolderSet<Block> primaryFix,
-		@Nullable HolderSet<Block> wouldFix
+		@Nullable ResourceLocation outsideBlock,
+		@Nullable ResourceLocation primaryFix,
+		@Nullable ResourceLocation wouldFix
 ) {
 
 	public static Builder builder() {
@@ -33,17 +30,22 @@ public record StructureConfig(
 		if (outsideBlock == null) return false;
 		BlockState floor = level.getBlockState(ans.below());
 		BlockState on = level.getBlockState(ans);
-		return floor.is(outsideBlock) || on.is(outsideBlock);
+		TagKey<Block> key = TagKey.create(Registries.BLOCK, outsideBlock);
+		return floor.is(key) || on.is(key);
 	}
 
 	public boolean isPrimary(BlockState state) {
-		if (primaryFix == null) return false;
-		return state.is(primaryFix);
+		return is(primaryFix, state);
 	}
 
 	public boolean wouldFix(BlockState state) {
-		if (wouldFix == null) return false;
-		return state.is(wouldFix);
+		return is(wouldFix, state);
+	}
+
+	private boolean is(@Nullable ResourceLocation tag, BlockState state) {
+		if (tag == null) return false;
+		TagKey<Block> key = TagKey.create(Registries.BLOCK, tag);
+		return state.is(key);
 	}
 
 	public static class Builder {
@@ -51,7 +53,7 @@ public record StructureConfig(
 		int xzRoomShrink, topRoomShrink, floorRoomShrink;
 		int xzHouseShrink, topHouseShrink, floorHouseShrink;
 		@Nullable
-		HolderSet<Block> outSideBlock, primaryFix, wouldFix;
+		ResourceLocation outSideBlock, primaryFix, wouldFix;
 
 		LinkedHashSet<EntityType<?>> entities = new LinkedHashSet<>();
 
@@ -70,17 +72,17 @@ public record StructureConfig(
 		}
 
 		public Builder outside(TagKey<Block> tag) {
-			this.outSideBlock = new FakeHolderSet<>(tag);
+			this.outSideBlock = tag.location();
 			return this;
 		}
 
 		public Builder primary(TagKey<Block> tag) {
-			this.primaryFix = new FakeHolderSet<>(tag);
+			this.primaryFix = tag.location();
 			return this;
 		}
 
 		public Builder wouldFix(TagKey<Block> tag) {
-			this.wouldFix = new FakeHolderSet<>(tag);
+			this.wouldFix = tag.location();
 			return this;
 		}
 
@@ -94,39 +96,6 @@ public record StructureConfig(
 					xzRoomShrink, topRoomShrink, floorRoomShrink,
 					xzHouseShrink, topHouseShrink, floorHouseShrink,
 					outSideBlock, primaryFix, wouldFix);
-		}
-
-	}
-
-	private static class FakeHolderSet<T> extends HolderSet.ListBacked<T> {
-		private final TagKey<T> key;
-
-		FakeHolderSet(TagKey<T> key) {
-			this.key = key;
-		}
-
-		public TagKey<T> key() {
-			return this.key;
-		}
-
-		protected List<Holder<T>> contents() {
-			return List.of();
-		}
-
-		public Either<TagKey<T>, List<Holder<T>>> unwrap() {
-			return Either.left(this.key);
-		}
-
-		public Optional<TagKey<T>> unwrapKey() {
-			return Optional.of(this.key);
-		}
-
-		public boolean contains(Holder<T> holder) {
-			return holder.is(this.key);
-		}
-
-		public String toString() {
-			return "NamedSet(" + key + ")";
 		}
 
 	}

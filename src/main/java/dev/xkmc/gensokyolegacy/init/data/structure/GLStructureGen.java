@@ -59,7 +59,8 @@ public class GLStructureGen {
 		{
 			reimu = new StructStructure(GensokyoLegacy.loc("hakurei_shrine"),
 					YHBiomeTagsProvider.HAS_SHRINE, 24, 8,
-					StructureConfig.builder().room(7, 5, 3)
+					StructureConfig.builder().room(7, 5, 2)
+							.house(0, 0, 1)
 							.primary(GLStructureTagGen.REIMU_PRIMARY)
 							.wouldFix(GLStructureTagGen.REIMU_FIX),
 					List.of(

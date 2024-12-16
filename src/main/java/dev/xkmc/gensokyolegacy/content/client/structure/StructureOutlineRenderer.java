@@ -46,17 +46,21 @@ public class StructureOutlineRenderer {
 		if (data == null || level == null || player == null) return;
 		var buffer = Minecraft.getInstance().renderBuffers().bufferSource();
 		var vc = buffer.getBuffer(RenderType.lines());
-		renderBox(pose, vc, data.structure(), camera.toVector3f(), 1, 1, 1, 1);
-		renderBox(pose, vc, data.house(), camera.toVector3f(), 0.5f, 1, 1, 1);
+		renderBox(pose, vc, data.structure(), camera.toVector3f(), 1, 1, 1, 1, 1f / 32);
+		renderBox(pose, vc, data.house(), camera.toVector3f(), 0.5f, 1, 1, 1, 0);
+		renderBox(pose, vc, data.room(), camera.toVector3f(), 1, 0.5f, 0.5f, 1, -1f / 32);
 		vc = buffer.getBuffer(LineRenderType.OUTLINE);
-		renderBox(pose, vc, data.room(), camera.toVector3f(), 1, 0.5f, 0.5f, 1);
+		renderBox(pose, vc, data.room(), camera.toVector3f(), 1, 0.5f, 0.5f, 1, -1f / 32);
 	}
 
 	private static void renderBox(
 			PoseStack pose, VertexConsumer vc, StructureBoundUpdateToClient.Box box,
-			Vector3f pos, float r, float g, float b, float a
+			Vector3f pos, float r, float g, float b, float a, float offset
 	) {
-		renderCube(pose, vc, box.x0(), box.y0(), box.z0(), box.x1(), box.y1(), box.z1(), -pos.x, -pos.y, -pos.z, r, g, b, a);
+		renderCube(pose, vc,
+				box.x0() - offset, box.y0() - offset, box.z0() - offset,
+				box.x1() + offset, box.y1() + offset, box.z1() + offset,
+				-pos.x, -pos.y, -pos.z, r, g, b, a);
 	}
 
 	public static void renderCube(

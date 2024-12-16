@@ -30,7 +30,7 @@ public class StructureBound {
 		int iz = step % z;
 		int ix = step / z % x;
 		int iy = step / z / x;
-		pos.set(ix, iy, iz);
+		pos.set(x0 + ix, y0 + iy, z0 + iz);
 	}
 
 	public int compute(BlockPos pos) {
