@@ -1,19 +1,18 @@
 package dev.xkmc.gensokyolegacy.content.block.bed;
 
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.client.debug.BedInfoToClient;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.base.tile.BaseBlockEntity;
 import dev.xkmc.l2modularblock.tile_api.TickableBlockEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -40,21 +39,10 @@ public class YoukaiBedBlockEntity extends BaseBlockEntity implements TickableBlo
 			var pos = getBlockPos();
 			if (!located) {
 				located = true;
-				var manager = sl.structureManager();
-				var map = manager.getAllStructuresAt(pos);
-				var reg = sl.registryAccess().registryOrThrow(Registries.STRUCTURE);
-				for (var e : map.keySet()) {
-					var start = manager.getStructureWithPieceAt(pos, e);
-					if (!start.isValid()) continue;
-					var id = reg.getHolder(reg.getId(start.getStructure()));
-					if (id.isEmpty()) continue;
-					if (start.getPieces().isEmpty()) continue;
-					var root = start.getPieces().getFirst().getLocatorPosition();
-					var data = id.get().getData(GLMisc.STRUCTURE_DATA.reg());
-					var bed = BedData.of(getBlockState().getBlock());
-					if (data != null && bed != null && data.entities().contains(bed.type()))
-						key = new StructureKey(id.get().key(), sl.dimension(), root);
-				}
+				var home = HomeHolder.find(sl, pos);
+				var bed = BedData.of(getBlockState().getBlock());
+				if (home != null && bed != null && home.config().entities().contains(bed.type()))
+					key = home.key();
 			}
 			if (key != null && getBlockState().getValue(BedBlock.PART) == BedPart.HEAD) {
 				var data = BedData.of(getBlockState().getBlock());
@@ -63,6 +51,10 @@ public class YoukaiBedBlockEntity extends BaseBlockEntity implements TickableBlo
 					if (config != null && config.structure().equals(key.structure())) {
 						IndexStorage.get(sl).getOrCreate(key).data().blockTick(sl, data, this, key);
 					}
+				}
+				var home = HomeHolder.of(sl, key);
+				if (home != null) {
+					home.tick();
 				}
 			}
 		}

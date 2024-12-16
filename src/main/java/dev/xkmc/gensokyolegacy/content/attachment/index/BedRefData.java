@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.attachment.index;
 
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
@@ -45,6 +46,11 @@ public class BedRefData {
 	}
 
 	void blockTick(BedData bed, CharacterConfig config, ServerLevel sl, YoukaiBedBlockEntity be, StructureKey key) {
+		var home = HomeHolder.of(sl, key);
+		if (home == null || !home.isInRoom(be.getBlockPos())) {
+			sl.removeBlock(be.getBlockPos(), false);
+			return;
+		}
 		if (bedPos == null) {
 			bedPos = be.getBlockPos();
 		} else {

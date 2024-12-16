@@ -1,0 +1,14 @@
+{
+  "values": [
+    "#minecraft:trapdoors",
+    "#minecraft:wooden_doors",
+    "#minecraft:wooden_fences",
+    "#minecraft:fence_gates",
+    "youkaishomecoming:sikkui",
+    "youkaishomecoming:fine_grid_framed_sikkui",
+    "farmersdelight:tatami",
+    "farmersdelight:half_tatami_mat",
+    "farmersdelight:full_tatami_mat",
+    "farmersdelight:canvas_rug"
+  ]
+}

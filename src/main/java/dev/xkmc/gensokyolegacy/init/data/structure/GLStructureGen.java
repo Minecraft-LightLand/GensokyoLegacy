@@ -31,52 +31,59 @@ import java.util.function.Supplier;
 public class GLStructureGen {
 
 	private static List<StructStructure> initStructures() {
-		var cirno = GensokyoLegacy.loc("cirno_nest");
-		var reimu = GensokyoLegacy.loc("hakurei_shrine");
-		return List.of(
-				new StructStructure(cirno, GLStructureTagGen.CIRNO_NEST, 24, 8,
-						StructureConfig.builder().room(1, 1, 1),
-						List.of(
-								new StructBed(GLEntities.CIRNO, GLBlocks.Beds.CIRNO.holder(),
-										CharacterConfig.forStructure(12000, 18000, 8, 600))
-						),
-						new StructSimpleBuilding(
-								List.of(
-										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE),
-										new RuleProcessor(List.of(
-												injectData(Blocks.DECORATED_POT, GLStructureLootGen.CIRNO_POT),
-												injectData(ModBlocks.SPRUCE_CABINET.get(), GLStructureLootGen.CIRNO_CABINET),
-												injectData(ModBlocks.BASKET.get(), GLStructureLootGen.CIRNO_BASKET),
-												injectData(Blocks.BARREL, GLStructureLootGen.CIRNO_BARREL)
-										))
-								), Map.of()
-						)
-				),
+		StructStructure cirno, reimu;
+		{
+			cirno = new StructStructure(GensokyoLegacy.loc("cirno_nest"),
+					GLStructureTagGen.CIRNO_NEST, 24, 8,
+					StructureConfig.builder().room(1, 1, 1)
+							.primary(GLStructureTagGen.CIRNO_PRIMARY)
+							.wouldFix(GLStructureTagGen.CIRNO_FIX),
+					List.of(
+							new StructBed(GLEntities.CIRNO, GLBlocks.Beds.CIRNO.holder(),
+									CharacterConfig.forStructure(12000, 18000, 8, 600))
+					),
+					new StructSimpleBuilding(
+							List.of(
+									new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE),
+									new RuleProcessor(List.of(
+											injectData(Blocks.DECORATED_POT, GLStructureLootGen.CIRNO_POT),
+											injectData(ModBlocks.SPRUCE_CABINET.get(), GLStructureLootGen.CIRNO_CABINET),
+											injectData(ModBlocks.BASKET.get(), GLStructureLootGen.CIRNO_BASKET),
+											injectData(Blocks.BARREL, GLStructureLootGen.CIRNO_BARREL)
+									))
+							), Map.of()
+					)
+			);
+		}
 
-				new StructStructure(reimu,
-						YHBiomeTagsProvider.HAS_SHRINE, 24, 8,
-						StructureConfig.builder().room(7, 5, 3),
-						List.of(
-								new StructBed(GLEntities.REIMU, GLBlocks.Beds.REIMU.holder(),
-										CharacterConfig.forStructure(12000, 24000, 8, 600))
-						),
-						new StructJigsawBuilding(2, List.of(
-								new StructJigsawBuilding.Part("shrine", false, List.of(
-										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE),
-										new RuleProcessor(List.of(
-												injectData(Blocks.CHEST, GLStructureLootGen.SHRINE_CHEST),
-												injectData(Blocks.BARREL, GLStructureLootGen.SHRINE_BARREL),
-												injectData(ModBlocks.SPRUCE_CABINET.get(), GLStructureLootGen.SHRINE_CABINET)
-										)))),
-								new StructJigsawBuilding.Part("storage", false, List.of(
-										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE))),
-								new StructJigsawBuilding.Part("path", false, List.of(
-										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE))),
-								new StructJigsawBuilding.Part("gate", false, List.of(
-										new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE)))
-						), Map.of())
-				)
-		);
+		{
+			reimu = new StructStructure(GensokyoLegacy.loc("hakurei_shrine"),
+					YHBiomeTagsProvider.HAS_SHRINE, 24, 8,
+					StructureConfig.builder().room(7, 5, 3)
+							.primary(GLStructureTagGen.REIMU_PRIMARY)
+							.wouldFix(GLStructureTagGen.REIMU_FIX),
+					List.of(
+							new StructBed(GLEntities.REIMU, GLBlocks.Beds.REIMU.holder(),
+									CharacterConfig.forStructure(12000, 24000, 8, 600))
+					),
+					new StructJigsawBuilding(2, List.of(
+							new StructJigsawBuilding.Part("shrine", false, List.of(
+									new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE),
+									new RuleProcessor(List.of(
+											injectData(Blocks.CHEST, GLStructureLootGen.SHRINE_CHEST),
+											injectData(Blocks.BARREL, GLStructureLootGen.SHRINE_BARREL),
+											injectData(ModBlocks.SPRUCE_CABINET.get(), GLStructureLootGen.SHRINE_CABINET)
+									)))),
+							new StructJigsawBuilding.Part("storage", false, List.of(
+									new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE))),
+							new StructJigsawBuilding.Part("path", false, List.of(
+									new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE))),
+							new StructJigsawBuilding.Part("gate", false, List.of(
+									new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE)))
+					), Map.of())
+			);
+		}
+		return List.of(cirno, reimu);
 	}
 
 	private static final Supplier<List<StructStructure>> STRUCTURES = Lazy.of(GLStructureGen::initStructures);

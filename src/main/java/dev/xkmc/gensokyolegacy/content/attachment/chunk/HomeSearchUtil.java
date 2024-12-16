@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
-import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.youkaishomecoming.content.block.furniture.ChairEntity;
 import dev.xkmc.youkaishomecoming.content.block.furniture.WoodChairBlock;
@@ -55,7 +54,7 @@ public class HomeSearchUtil {
 		}
 	}
 
-	public static <E extends SmartYoukaiEntity> void setSitting(ServerLevel level, BlockPos pos, E entity) {
+	public static void setSitting(ServerLevel level, BlockPos pos, YoukaiEntity entity) {
 		BlockState state = level.getBlockState(pos);
 		if (state.getBlock() instanceof WoodChairBlock) {
 			List<ChairEntity> seats = level.getEntitiesOfClass(ChairEntity.class, new AABB(pos));
@@ -64,7 +63,10 @@ public class HomeSearchUtil {
 			} else {
 				var seat = seats.getFirst();
 				var e = seat.getPassengers();
-				if (!e.isEmpty() && e.getFirst() instanceof Player) return;
+				if (!e.isEmpty()) {
+					if (e.getFirst() instanceof Player) return;
+					if (e.getFirst() instanceof YoukaiEntity) return;
+				}
 				seat.ejectPassengers();
 				entity.startRiding(seat);
 			}

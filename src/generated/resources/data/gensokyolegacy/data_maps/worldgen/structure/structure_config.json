@@ -6,8 +6,10 @@
       ],
       "floorHouseShrink": 0,
       "floorRoomShrink": 1,
+      "primaryFix": "#gensokyolegacy:structure_fix/cirno_nest/primary",
       "topHouseShrink": 0,
       "topRoomShrink": 1,
+      "wouldFix": "#gensokyolegacy:structure_fix/cirno_nest/would_fix",
       "xzHouseShrink": 0,
       "xzRoomShrink": 1
     },
@@ -17,8 +19,10 @@
       ],
       "floorHouseShrink": 0,
       "floorRoomShrink": 3,
+      "primaryFix": "#gensokyolegacy:structure_fix/hakurei_shrine/primary",
       "topHouseShrink": 0,
       "topRoomShrink": 5,
+      "wouldFix": "#gensokyolegacy:structure_fix/hakurei_shrine/would_fix",
       "xzHouseShrink": 0,
       "xzRoomShrink": 7
     }

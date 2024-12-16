@@ -1,9 +1,13 @@
 package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
+import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
+import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoUpdateToClient;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
@@ -17,12 +21,17 @@ public class HomeData {
 
 	private StructureStart start;
 	private StructurePiece piece;
+	private StructureCache.Builder cacheBuilder;
+	private IntegrityVerifier verifier;
 
 	@SerialField
 	private final List<BlockPos> containers = new ArrayList<>();
-
 	@SerialField
 	private final List<BlockPos> chairs = new ArrayList<>();
+	@SerialField
+	private final AbnormalCache abnormal = new AbnormalCache();
+	@SerialField
+	private StructureCache cache;
 
 	public boolean checkInit(HomeHolder holder) {
 		if (piece == null) {
@@ -34,6 +43,31 @@ public class HomeData {
 			piece = start.getPieces().getFirst();
 		}
 		return true;
+	}
+
+	public void tick(HomeHolder holder) {
+		if (piece == null) return;
+		if (cache == null) {
+			if (cacheBuilder == null) {
+				cacheBuilder = new StructureCache.Builder(holder.level(), getHouseBound(holder.config()));
+			}
+			cacheBuilder.tick();
+			if (cacheBuilder.isDone()) {
+				cache = cacheBuilder.build();
+			}
+		} else {
+			if (verifier == null) {
+				verifier = new IntegrityVerifier(holder, getHouseBound(holder.config()),
+						getRoomBound(holder.config()), cache, abnormal);
+				if (!verifier.isValid()) {
+					cache = null;
+					cacheBuilder = null;
+					verifier = null;
+					return;
+				}
+			}
+			verifier.tick();
+		}
 	}
 
 	public BlockPos getRoot() {
@@ -80,7 +114,14 @@ public class HomeData {
 				getRoomBound(holder.config()), holder.level(), center, rxz, ry, trail);
 	}
 
-	private void verifyStructureIntegrity() {
+	public List<Pair<BlockPos, BlockState>> popFix(int count) {
+		if (verifier == null || !verifier.isValid()) return List.of();
+		return verifier.popFix(count);
+	}
 
+	public StructureInfoUpdateToClient getAbnormality(StructureKey key) {
+		return new StructureInfoUpdateToClient(key,
+				abnormal.air.size(), abnormal.primary.size(), abnormal.secondary.size()
+		);
 	}
 }

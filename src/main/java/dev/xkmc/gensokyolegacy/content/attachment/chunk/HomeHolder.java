@@ -1,14 +1,19 @@
 package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
+import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public record HomeHolder(
 		ServerLevel level, LevelChunk chunk, StructureKey key,
@@ -26,8 +31,31 @@ public record HomeHolder(
 		return new HomeHolder(level, chunk, key, config, att, home);
 	}
 
+	@Nullable
+	public static HomeHolder find(ServerLevel sl, BlockPos pos) {
+		if (!sl.isLoaded(pos)) return null;
+		var manager = sl.structureManager();
+		var map = manager.getAllStructuresAt(pos);
+		var reg = sl.registryAccess().registryOrThrow(Registries.STRUCTURE);
+		for (var e : map.keySet()) {
+			var start = manager.getStructureWithPieceAt(pos, e);
+			if (!start.isValid()) continue;
+			var id = reg.getHolder(reg.getId(start.getStructure()));
+			if (id.isEmpty()) continue;
+			if (start.getPieces().isEmpty()) continue;
+			var root = start.getPieces().getFirst().getLocatorPosition();
+			return of(sl, new StructureKey(id.get().key(), sl.dimension(), root));
+		}
+		return null;
+	}
+
 	public boolean isValid() {
 		return level.isLoaded(key.pos()) && data.checkInit(this);
+	}
+
+	public boolean isInRoom(BlockPos pos) {
+		if (!data.checkInit(this)) return false;
+		return data.getRoomBound(config).isInside(pos);
 	}
 
 	@Nullable
@@ -67,4 +95,13 @@ public record HomeHolder(
 		return Math.min(box.getXSpan() / 2, box.getZSpan() / 2);
 	}
 
+	public void tick() {
+		if (!data.checkInit(this)) return;
+		data.tick(this);
+	}
+
+	public List<Pair<BlockPos, BlockState>> popFix(int count) {
+		if (!data.checkInit(this)) return List.of();
+		return data.popFix(count);
+	}
 }

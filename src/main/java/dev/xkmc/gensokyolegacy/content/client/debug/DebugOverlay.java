@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.client.debug;
 
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoClientManager;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.l2itemselector.overlay.OverlayUtil;
@@ -28,14 +29,17 @@ public class DebugOverlay implements LayeredDraw.Layer {
 		var hit = Minecraft.getInstance().hitResult;
 		if (!player.getItemBySlot(EquipmentSlot.HEAD).is(GLItems.DEBUG_GLASSES)) return;
 		List<Component> lines = new ArrayList<>();
+		long time = player.level().getGameTime();
 		if (hit instanceof BlockHitResult block) {
 			if (level.getBlockEntity(block.getBlockPos()) instanceof YoukaiBedBlockEntity bed) {
 				if (bed.getBlockState().getValue(BedBlock.PART) == BedPart.HEAD)
-					BedInfoClientManager.tooltip(lines, player.level().getGameTime(), bed);
+					BedInfoClientManager.tooltip(lines, time, bed);
+			} else {
+				StructureInfoClientManager.tooltip(lines, time, block.getBlockPos());
 			}
 		} else if (hit instanceof EntityHitResult ehit) {
 			if (ehit.getEntity() instanceof YoukaiEntity youkai) {
-				CharacterInfoClientManager.tooltip(lines, player.level().getGameTime(), youkai);
+				CharacterInfoClientManager.tooltip(lines, time, youkai);
 			}
 		}
 		if (lines.isEmpty()) return;

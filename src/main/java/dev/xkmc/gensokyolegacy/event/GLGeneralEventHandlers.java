@@ -7,7 +7,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 
 @EventBusSubscriber(modid = GensokyoLegacy.MODID, bus = EventBusSubscriber.Bus.GAME)
-public class GeneralEventHandlers {
+public class GLGeneralEventHandlers {
 
 	@SubscribeEvent
 	public static void onShieldBlock(LivingShieldBlockEvent event) {

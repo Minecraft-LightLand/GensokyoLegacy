@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.client.debug;
 
+import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.core.BlockPos;
 
@@ -23,8 +24,13 @@ public class InfoUpdateClientManager {
 		CharacterInfoClientManager.data = bed;
 	}
 
+	public static void requestStructure(StructureKey key) {
+
+	}
+
 	public static void clearCache() {
 		BedInfoClientManager.lastTime = 0;
 		CharacterInfoClientManager.lastTime = 0;
 	}
+
 }

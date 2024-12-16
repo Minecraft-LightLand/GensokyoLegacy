@@ -1,0 +1,15 @@
+{
+  "values": [
+    "#minecraft:planks",
+    "#minecraft:logs",
+    "#minecraft:slabs",
+    "#minecraft:stairs",
+    "minecraft:deepslate_tiles",
+    "minecraft:polished_deepslate",
+    "minecraft:polished_andesite",
+    "minecraft:mangrove_wood",
+    "minecraft:stripped_dark_oak_wood",
+    "minecraft:stripped_oak_log",
+    "minecraft:stone"
+  ]
+}

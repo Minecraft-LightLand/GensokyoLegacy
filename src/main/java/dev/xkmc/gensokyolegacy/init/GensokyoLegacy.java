@@ -6,11 +6,16 @@ import dev.xkmc.gensokyolegacy.content.client.debug.BedInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.BedRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterRequestToServer;
-import dev.xkmc.gensokyolegacy.init.data.*;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToClient;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoRequestToServer;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoUpdateToClient;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
+import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureLootGen;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureTagGen;
+import dev.xkmc.gensokyolegacy.init.data.structure.ReportBlocksInStructure;
 import dev.xkmc.gensokyolegacy.init.network.CharDataToClient;
 import dev.xkmc.gensokyolegacy.init.network.PathDataToClient;
 import dev.xkmc.gensokyolegacy.init.registrate.*;
@@ -37,7 +42,10 @@ public class GensokyoLegacy {
 			e -> e.create(BedRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
 			e -> e.create(BedInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(CharacterRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
-			e -> e.create(CharacterInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
+			e -> e.create(CharacterInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(StructureBoundUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(StructureInfoRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
+			e -> e.create(StructureInfoUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
 	public GensokyoLegacy() {
@@ -57,10 +65,13 @@ public class GensokyoLegacy {
 		REGISTRATE.addDataGenerator(ProviderType.LANG, GLLang::genLang);
 		REGISTRATE.addDataGenerator(ProviderType.RECIPE, GLRecipeGen::genRecipe);
 		REGISTRATE.addDataGenerator(ProviderType.LOOT, GLStructureLootGen::genLoot);
+		REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, GLStructureTagGen::genBlockTag);
 		var init = REGISTRATE.getDataGenInitializer();
 		GLStructureGen.init(init);
 		var gen = event.getGenerator();
 		gen.addProvider(event.includeServer(), new GLGLMProvider(gen.getPackOutput(), event.getLookupProvider()));
+
+		ReportBlocksInStructure.report();
 	}
 
 	public static ResourceLocation loc(String id) {

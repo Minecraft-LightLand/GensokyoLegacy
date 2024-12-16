@@ -3,6 +3,8 @@ package dev.xkmc.gensokyolegacy.content.item;
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterData;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
 import dev.xkmc.gensokyolegacy.content.client.debug.InfoUpdateClientManager;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToClient;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoClientManager;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
@@ -41,9 +43,14 @@ public class DebugWand extends Item {
 			if (context.getPlayer() instanceof ServerPlayer sp)
 				be.debugClick(sp);
 			else InfoUpdateClientManager.clearCache();
-			return InteractionResult.SUCCESS;
+		} else {
+			if (context.getPlayer() instanceof ServerPlayer sp) {
+				StructureBoundUpdateToClient.clickBlockInServer(sp, pos);
+			} else if (StructureInfoClientManager.clearCache()) {
+				return InteractionResult.FAIL;
+			}
 		}
-		return super.useOn(context);
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
@@ -60,6 +67,8 @@ public class DebugWand extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> list, TooltipFlag flag) {
 		list.add(GLLang.ITEM_WAND_BED.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM_WAND_BLOCK.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM_WAND_STRUCTURE.get().withStyle(ChatFormatting.GRAY));
 		list.add(GLLang.ITEM_WAND_CHARACTER.get().withStyle(ChatFormatting.GRAY));
 	}
 
