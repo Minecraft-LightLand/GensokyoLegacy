@@ -27,12 +27,18 @@ public class AbnormalCache {
 		secondary.add(step);
 	}
 
-	public int @Nullable [] pop(int count) {
+	public int @Nullable [] pop(int count, FixStage stage) {
 		if (!air.isEmpty()) {
 			return pop(air, count);
-		} else if (!primary.isEmpty()) {
+		}
+		if (stage == FixStage.PATH)
+			return null;
+		if (!primary.isEmpty()) {
 			return pop(primary, count);
-		} else if (!secondary.isEmpty()) {
+		}
+		if (stage == FixStage.PRIMARY)
+			return null;
+		if (!secondary.isEmpty()) {
 			return pop(secondary, count);
 		}
 		return null;

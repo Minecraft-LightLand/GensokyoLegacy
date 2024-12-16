@@ -114,9 +114,9 @@ public class HomeData {
 				getRoomBound(holder.config()), holder.level(), center, rxz, ry, trail);
 	}
 
-	public List<Pair<BlockPos, BlockState>> popFix(int count) {
+	public List<Pair<BlockPos, BlockState>> popFix(int count, FixStage stage) {
 		if (verifier == null || !verifier.isValid()) return List.of();
-		return verifier.popFix(count);
+		return verifier.popFix(count, stage);
 	}
 
 	public StructureInfoUpdateToClient getAbnormality(StructureKey key) {

@@ -5,6 +5,7 @@ import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
 import dev.xkmc.gensokyolegacy.content.client.debug.InfoUpdateClientManager;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToClient;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoClientManager;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureRepairManager;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
@@ -43,8 +44,13 @@ public class DebugWand extends Item {
 			if (context.getPlayer() instanceof ServerPlayer sp)
 				be.debugClick(sp);
 			else InfoUpdateClientManager.clearCache();
-		} else {
-			if (context.getPlayer() instanceof ServerPlayer sp) {
+		} else if (context.getPlayer() != null) {
+			if (context.getPlayer().isShiftKeyDown()) {
+				if (level.isClientSide()) {
+					StructureRepairManager.openScreen();
+				}
+				return InteractionResult.SUCCESS;
+			} else if (context.getPlayer() instanceof ServerPlayer sp) {
 				StructureBoundUpdateToClient.clickBlockInServer(sp, pos);
 			} else if (StructureInfoClientManager.clearCache()) {
 				return InteractionResult.FAIL;

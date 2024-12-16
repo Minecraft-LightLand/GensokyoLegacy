@@ -100,8 +100,17 @@ public record HomeHolder(
 		data.tick(this);
 	}
 
-	public List<Pair<BlockPos, BlockState>> popFix(int count) {
+	public List<Pair<BlockPos, BlockState>> popFix(int count, FixStage stage) {
 		if (!data.checkInit(this)) return List.of();
-		return data.popFix(count);
+		return data.popFix(count, stage);
+	}
+
+	public int doFix(int count, FixStage stage) {
+		if (!data.checkInit(this)) return 0;
+		var list = data.popFix(count, stage);
+		for (var e : list) {
+			level.setBlockAndUpdate(e.getFirst(), e.getSecond());
+		}
+		return list.size();
 	}
 }

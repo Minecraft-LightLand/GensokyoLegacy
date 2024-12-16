@@ -71,7 +71,7 @@ public class IntegrityVerifier {
 			abnormal.addSecondary(step);
 	}
 
-	public List<Pair<BlockPos, BlockState>> popFix(int count) {
+	public List<Pair<BlockPos, BlockState>> popFix(int count, FixStage stage) {
 		var pos = new BlockPos.MutableBlockPos();
 		bound.resolve(pos, 0);
 		if (!level.isLoaded(pos)) return List.of();
@@ -80,7 +80,7 @@ public class IntegrityVerifier {
 		List<Pair<BlockPos, BlockState>> ans = new ArrayList<>();
 		int step = 0;
 		while (step < count) {
-			int[] fetch = abnormal.pop(count - step);
+			int[] fetch = abnormal.pop(count - step, stage);
 			if (fetch == null || fetch.length == 0) break;
 			step += fetch.length;
 			for (var e : fetch) {
