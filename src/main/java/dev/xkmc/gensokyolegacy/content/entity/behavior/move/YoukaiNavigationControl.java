@@ -9,6 +9,10 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.FlyNodeEvaluator;
+import net.minecraft.world.level.pathfinder.PathFinder;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
 import org.jetbrains.annotations.Nullable;
 
 public class YoukaiNavigationControl {
@@ -152,6 +156,13 @@ public class YoukaiNavigationControl {
 		}
 
 		@Override
+		protected PathFinder createPathFinder(int maxVisitedNodes) {
+			this.nodeEvaluator = new YoukaiWalkNodeEvaluator();
+			this.nodeEvaluator.setCanPassDoors(true);
+			return new PathFinder(this.nodeEvaluator, maxVisitedNodes);
+		}
+
+		@Override
 		public void tick() {
 			super.tick();
 		}
@@ -176,6 +187,12 @@ public class YoukaiNavigationControl {
 			}
 		}
 
+		@Override
+		protected PathFinder createPathFinder(int maxVisitedNodes) {
+			this.nodeEvaluator = new YoukaiFlyNodeEvaluator();
+			this.nodeEvaluator.setCanPassDoors(false);
+			return new PathFinder(this.nodeEvaluator, maxVisitedNodes);
+		}
 	}
 
 }

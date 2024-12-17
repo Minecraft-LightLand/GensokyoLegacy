@@ -120,6 +120,9 @@ public class HomeData {
 	}
 
 	public StructureInfoUpdateToClient getAbnormality(StructureKey key) {
+		if (cache == null) {
+			return new StructureInfoUpdateToClient(key, -1, -1, -1);
+		}
 		return new StructureInfoUpdateToClient(key,
 				abnormal.air.size(), abnormal.primary.size(), abnormal.secondary.size()
 		);

@@ -21,7 +21,8 @@ public enum GLLang {
 	INFO_ENTITY_REPUTATION("Your reputation: %s", 1),
 	INFO_ENTITY_FEED("Feed cool down: %s", 1),
 
-	INFO_STRUCTURE("Found %s invalid blocks", 1),
+	INFO_STRUCTURE_SCANNING("Scanning Structure...", 0),
+	INFO_STRUCTURE_ABNORMAL("Found %s invalid blocks", 1),
 
 	ITEM_WAND_BED("Click bed to reset character"),
 	ITEM_WAND_BLOCK("Click block to show structure bounds"),

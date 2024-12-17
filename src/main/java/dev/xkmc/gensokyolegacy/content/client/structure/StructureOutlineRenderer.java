@@ -59,7 +59,7 @@ public class StructureOutlineRenderer {
 	) {
 		renderCube(pose, vc,
 				box.x0() - offset, box.y0() - offset, box.z0() - offset,
-				box.x1() + offset, box.y1() + offset, box.z1() + offset,
+				box.x1() + offset + 1, box.y1() + offset + 1, box.z1() + offset + 1,
 				-pos.x, -pos.y, -pos.z, r, g, b, a);
 	}
 

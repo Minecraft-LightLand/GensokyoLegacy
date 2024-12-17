@@ -90,11 +90,6 @@ public class RumiaEntity extends SmartYoukaiEntity {
 	}
 
 	@Override
-	protected List<AbstractYoukaiModule> createModules() {
-		return List.of(new HomeModule(this), new FeedModule(this));
-	}
-
-	@Override
 	public void aiStep() {
 		super.aiStep();
 		state.tick();

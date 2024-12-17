@@ -5,70 +5,24 @@
       "value": "#minecraft:features_cannot_replace"
     },
     {
-      "processor_type": "minecraft:rule",
-      "rules": [
-        {
-          "block_entity_modifier": {
-            "type": "minecraft:append_loot",
-            "loot_table": "gensokyolegacy:chests/hakurei_shrine/chest"
-          },
-          "input_predicate": {
-            "block": "minecraft:chest",
-            "predicate_type": "minecraft:block_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          },
-          "output_state": {
-            "Name": "minecraft:chest",
-            "Properties": {
-              "type": "single",
-              "facing": "north",
-              "waterlogged": "false"
-            }
-          }
+      "map": {
+        "farmersdelight:spruce_cabinet": {
+          "type": "minecraft:append_loot",
+          "loot_table": "gensokyolegacy:chests/hakurei_shrine/cabinet"
         },
-        {
-          "block_entity_modifier": {
-            "type": "minecraft:append_loot",
-            "loot_table": "gensokyolegacy:chests/hakurei_shrine/barrel"
-          },
-          "input_predicate": {
-            "block": "minecraft:barrel",
-            "predicate_type": "minecraft:block_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          },
-          "output_state": {
-            "Name": "minecraft:barrel",
-            "Properties": {
-              "facing": "north",
-              "open": "false"
-            }
-          }
+        "gensokyolegacy:reimu_bed": {
+          "type": "minecraft:clear"
         },
-        {
-          "block_entity_modifier": {
-            "type": "minecraft:append_loot",
-            "loot_table": "gensokyolegacy:chests/hakurei_shrine/cabinet"
-          },
-          "input_predicate": {
-            "block": "farmersdelight:spruce_cabinet",
-            "predicate_type": "minecraft:block_match"
-          },
-          "location_predicate": {
-            "predicate_type": "minecraft:always_true"
-          },
-          "output_state": {
-            "Name": "farmersdelight:spruce_cabinet",
-            "Properties": {
-              "facing": "north",
-              "open": "false"
-            }
-          }
+        "minecraft:barrel": {
+          "type": "minecraft:append_loot",
+          "loot_table": "gensokyolegacy:chests/hakurei_shrine/barrel"
+        },
+        "minecraft:chest": {
+          "type": "minecraft:append_loot",
+          "loot_table": "gensokyolegacy:chests/hakurei_shrine/chest"
         }
-      ]
+      },
+      "processor_type": "gensokyolegacy:set_data"
     }
   ]
 }

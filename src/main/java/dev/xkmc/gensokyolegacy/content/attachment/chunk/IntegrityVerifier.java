@@ -39,36 +39,53 @@ public class IntegrityVerifier {
 		var pos = new BlockPos.MutableBlockPos();
 		int count = 0;
 		for (int i = 0; i < PerformanceConstants.VERIFY_SCAN; i++) {
-			int step = rand.nextInt(bound.getSize());
-			bound.resolve(pos, step);
+			int step;
+			if (i % 2 == 0) {
+				step = rand.nextInt(bound.getSize());
+				bound.resolve(pos, step);
+			} else {
+				pos.set(
+						roomBound.minX() + rand.nextInt(roomBound.getXSpan()),
+						roomBound.minY() + rand.nextInt(roomBound.getYSpan()),
+						roomBound.minZ() + rand.nextInt(roomBound.getZSpan())
+				);
+				step = bound.compute(pos);
+			}
 			if (!level.isLoaded(pos))
 				continue;
 			int sid = template.raster()[step];
 			boolean inRoom = roomBound.isInside(pos);
-			if (sid == 0 && !inRoom)
-				continue;
 			count++;
 			var state = level.getBlockState(pos);
 			var pal = template.palette()[sid];
-			if (state != pal) {
-				process(step, state, pal, inRoom);
+			if (state.getBlock() != pal.getBlock()) {
+				process(pos, step, state, pal, inRoom);
 			}
 			if (count >= PerformanceConstants.VERIFY_FETCH)
 				return;
 		}
 	}
 
-	private void process(int step, BlockState current, BlockState ref, boolean inRoom) {
-		if (ref.isAir()) {
+	private void process(BlockPos pos, int step, BlockState current, BlockState ref, boolean inRoom) {
+		if (inRoom) {
+			boolean curCollide = current.getCollisionShape(level, pos).isEmpty();
+			boolean refCollide = ref.getCollisionShape(level, pos).isEmpty();
+			if (!refCollide && curCollide) {
 			abnormal.addAir(step);
-			return;
+				return;
+			}
 		}
 		boolean isPrimary = config.isPrimary(ref);
 		boolean wouldFix = isPrimary || config.wouldFix(ref);
 		if (inRoom && wouldFix || isPrimary)
 			abnormal.addPrimary(step);
-		else if (wouldFix || !current.isAir() && current.getBlock() != ref.getBlock())
+		else if (wouldFix)
 			abnormal.addSecondary(step);
+		else if (current.getBlock() != ref.getBlock()) {
+			if (!ref.blocksMotion() && current.blocksMotion()) {
+				abnormal.addSecondary(step);
+			}
+		}
 	}
 
 	public List<Pair<BlockPos, BlockState>> popFix(int count, FixStage stage) {

@@ -24,14 +24,15 @@ public class StructureFixScreen extends Screen {
 
 	@Override
 	protected void init() {
-		addWidget(new Button.Builder(Component.literal("path"), btn -> StructureRepairManager.onGenerateAir())
-				.pos(10, 10).size(40, 20).build());
-		addWidget(new Button.Builder(Component.literal("primary"), btn -> StructureRepairManager.onGeneratePrimary())
-				.pos(10, 40).size(40, 20).build());
-		addWidget(new Button.Builder(Component.literal("secondary"), btn -> StructureRepairManager.onGenerateSecondary())
+		super.init();
+		addRenderableWidget(new Button.Builder(Component.literal("path"), btn -> StructureRepairManager.onGenerateAir())
+				.pos(10, 10).size(70, 20).build());
+		addRenderableWidget(new Button.Builder(Component.literal("primary"), btn -> StructureRepairManager.onGeneratePrimary())
+				.pos(10, 40).size(70, 20).build());
+		addRenderableWidget(new Button.Builder(Component.literal("secondary"), btn -> StructureRepairManager.onGenerateSecondary())
 				.pos(10, 70).size(70, 20).build());
-		addWidget(new Button.Builder(Component.literal("all"), btn -> StructureRepairManager.onGenerateAll())
-				.pos(10, 70).size(100, 20).build());
+		addRenderableWidget(new Button.Builder(Component.literal("all"), btn -> StructureRepairManager.onGenerateAll())
+				.pos(10, 100).size(70, 20).build());
 	}
 
 	public boolean keyPressed(int a, int b, int c) {
@@ -42,6 +43,11 @@ public class StructureFixScreen extends Screen {
 		} else {
 			return super.keyPressed(a, b, c);
 		}
+	}
+
+	@Override
+	public boolean isPauseScreen() {
+		return false;
 	}
 
 }

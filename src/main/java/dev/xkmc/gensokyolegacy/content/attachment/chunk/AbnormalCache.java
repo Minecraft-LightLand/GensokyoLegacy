@@ -51,6 +51,7 @@ public class AbnormalCache {
 			for (int e : set) {
 				all[ind++] = e;
 			}
+			set.clear();
 			return all;
 		} else {
 			int[] toRemove = new int[count];

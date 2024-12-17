@@ -9,6 +9,7 @@ import dev.xkmc.gensokyolegacy.content.client.debug.CharacterRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToClient;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoUpdateToClient;
+import dev.xkmc.gensokyolegacy.content.client.structure.StructureRepairToServer;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
@@ -45,7 +46,8 @@ public class GensokyoLegacy {
 			e -> e.create(CharacterInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(StructureBoundUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(StructureInfoRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
-			e -> e.create(StructureInfoUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
+			e -> e.create(StructureInfoUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(StructureRepairToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER)
 	);
 
 	public GensokyoLegacy() {

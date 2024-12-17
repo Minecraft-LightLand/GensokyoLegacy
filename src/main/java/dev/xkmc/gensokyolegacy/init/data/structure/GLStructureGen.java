@@ -13,14 +13,13 @@ import dev.xkmc.youkaishomecoming.init.data.YHBiomeTagsProvider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
-import net.minecraft.world.level.levelgen.structure.templatesystem.*;
+import net.minecraft.world.level.levelgen.structure.templatesystem.ProtectedBlockProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.rule.blockentity.AppendLoot;
-import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.levelgen.structure.templatesystem.rule.blockentity.Clear;
 import net.neoforged.neoforge.common.util.Lazy;
 import vectorwing.farmersdelight.common.registry.ModBlocks;
 
@@ -45,11 +44,12 @@ public class GLStructureGen {
 					new StructSimpleBuilding(
 							List.of(
 									new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE),
-									new RuleProcessor(List.of(
-											injectData(Blocks.DECORATED_POT, GLStructureLootGen.CIRNO_POT),
-											injectData(ModBlocks.SPRUCE_CABINET.get(), GLStructureLootGen.CIRNO_CABINET),
-											injectData(ModBlocks.BASKET.get(), GLStructureLootGen.CIRNO_BASKET),
-											injectData(Blocks.BARREL, GLStructureLootGen.CIRNO_BARREL)
+									new SetDataProcessor(Map.of(
+											GLBlocks.Beds.CIRNO.get(), new Clear(),
+											Blocks.DECORATED_POT, new AppendLoot(GLStructureLootGen.CIRNO_POT),
+											ModBlocks.SPRUCE_CABINET.get(), new AppendLoot(GLStructureLootGen.CIRNO_CABINET),
+											ModBlocks.BASKET.get(), new AppendLoot(GLStructureLootGen.CIRNO_BASKET),
+											Blocks.BARREL, new AppendLoot(GLStructureLootGen.CIRNO_BARREL)
 									))
 							), Map.of()
 					)
@@ -70,10 +70,11 @@ public class GLStructureGen {
 					new StructJigsawBuilding(2, List.of(
 							new StructJigsawBuilding.Part("shrine", false, List.of(
 									new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE),
-									new RuleProcessor(List.of(
-											injectData(Blocks.CHEST, GLStructureLootGen.SHRINE_CHEST),
-											injectData(Blocks.BARREL, GLStructureLootGen.SHRINE_BARREL),
-											injectData(ModBlocks.SPRUCE_CABINET.get(), GLStructureLootGen.SHRINE_CABINET)
+									new SetDataProcessor(Map.of(
+											GLBlocks.Beds.REIMU.get(), new Clear(),
+											Blocks.CHEST, new AppendLoot(GLStructureLootGen.SHRINE_CHEST),
+											Blocks.BARREL, new AppendLoot(GLStructureLootGen.SHRINE_BARREL),
+											ModBlocks.SPRUCE_CABINET.get(), new AppendLoot(GLStructureLootGen.SHRINE_CABINET)
 									)))),
 							new StructJigsawBuilding.Part("storage", false, List.of(
 									new ProtectedBlockProcessor(BlockTags.FEATURES_CANNOT_REPLACE))),
@@ -128,11 +129,6 @@ public class GLStructureGen {
 						str, new RandomSpreadStructurePlacement(e.spacing(), e.separation(), RandomSpreadType.LINEAR, e.id().hashCode() & 0x7fffffff)));
 			}
 		});
-	}
-
-	private static ProcessorRule injectData(Block block, ResourceKey<LootTable> table) {
-		return new ProcessorRule(new BlockMatchTest(block), AlwaysTrueTest.INSTANCE, PosAlwaysTrueTest.INSTANCE,
-				block.defaultBlockState(), new AppendLoot(table));
 	}
 
 }

@@ -10,9 +10,7 @@ import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataHolder;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
-import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.IPickupModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.YoukaiModuleHolder;
+import dev.xkmc.gensokyolegacy.content.entity.module.*;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
@@ -209,7 +207,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	}
 
 	protected List<AbstractYoukaiModule> createModules() {
-		return List.of();
+		return List.of(new HomeModule(this), new FeedModule(this));
 	}
 
 	@Override

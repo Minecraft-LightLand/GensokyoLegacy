@@ -71,12 +71,16 @@ public class GLStructureTagGen {
 				BlockTags.SLABS, BlockTags.STAIRS
 		).add(
 				Blocks.DEEPSLATE_TILES,
+				Blocks.DEEPSLATE_BRICKS,
 				Blocks.POLISHED_DEEPSLATE,
 				Blocks.POLISHED_ANDESITE,
 				Blocks.MANGROVE_WOOD,
 				Blocks.STRIPPED_DARK_OAK_WOOD,
 				Blocks.STRIPPED_OAK_LOG,
-				Blocks.STONE
+				Blocks.STONE,
+				YHBlocks.SIKKUI.BASE.get(),
+				YHBlocks.FINE_GRID_SIKKUI.get(),
+				ModBlocks.TATAMI.get()
 		);
 		pvd.addTag(REIMU_FIX).addTags(
 				BlockTags.TRAPDOORS,
@@ -84,9 +88,6 @@ public class GLStructureTagGen {
 				BlockTags.WOODEN_FENCES,
 				BlockTags.FENCE_GATES
 		).add(
-				YHBlocks.SIKKUI.BASE.get(),
-				YHBlocks.FINE_GRID_SIKKUI.get(),
-				ModBlocks.TATAMI.get(),
 				ModBlocks.HALF_TATAMI_MAT.get(),
 				ModBlocks.FULL_TATAMI_MAT.get(),
 				ModBlocks.CANVAS_RUG.get()

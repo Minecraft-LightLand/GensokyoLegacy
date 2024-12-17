@@ -5,11 +5,15 @@
     "#minecraft:slabs",
     "#minecraft:stairs",
     "minecraft:deepslate_tiles",
+    "minecraft:deepslate_bricks",
     "minecraft:polished_deepslate",
     "minecraft:polished_andesite",
     "minecraft:mangrove_wood",
     "minecraft:stripped_dark_oak_wood",
     "minecraft:stripped_oak_log",
-    "minecraft:stone"
+    "minecraft:stone",
+    "youkaishomecoming:sikkui",
+    "youkaishomecoming:fine_grid_framed_sikkui",
+    "farmersdelight:tatami"
   ]
 }
