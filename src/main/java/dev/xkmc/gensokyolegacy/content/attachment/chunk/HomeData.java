@@ -119,6 +119,10 @@ public class HomeData {
 		return verifier.popFix(count, stage);
 	}
 
+	public int getBrokenCount() {
+		return abnormal.air.size() + abnormal.primary.size() + abnormal.secondary.size();
+	}
+
 	public StructureInfoUpdateToClient getAbnormality(StructureKey key) {
 		if (cache == null) {
 			return new StructureInfoUpdateToClient(key, -1, -1, -1);

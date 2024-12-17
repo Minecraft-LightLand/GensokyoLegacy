@@ -113,4 +113,10 @@ public record HomeHolder(
 		}
 		return list.size();
 	}
+
+	public boolean isBroken() {
+		if (!data.checkInit(this)) return false;
+		return data.getBrokenCount() >= PerformanceConstants.COMMAND_PLACE_STEP;
+	}
+
 }
