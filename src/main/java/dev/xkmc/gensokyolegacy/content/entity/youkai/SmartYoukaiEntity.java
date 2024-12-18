@@ -187,7 +187,11 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 	}
 
 	@Override
-	public void setTalkTo(ServerPlayer player, int time) {
+	public void setTalkTo(@Nullable ServerPlayer player, int time) {
+		if (player == null) {
+			BrainUtils.clearMemory(this, GLBrains.MEM_TALK.get());
+			return;
+		}
 		getNavigation().stop();
 		BrainUtils.clearMemory(this, MemoryModuleType.WALK_TARGET);
 		if (time < 0)

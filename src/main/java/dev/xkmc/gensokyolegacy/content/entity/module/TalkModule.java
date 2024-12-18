@@ -1,8 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.entity.module;
 
+import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -10,7 +10,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.tslat.smartbrainlib.util.BrainUtils;
 
 @SerialClass
 public class TalkModule extends AbstractYoukaiModule {
@@ -26,6 +25,7 @@ public class TalkModule extends AbstractYoukaiModule {
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
 		if (!self.mayInteract(player)) return InteractionResult.PASS;
+		if (self.getReputation(player) != ReputationState.FRIEND) return InteractionResult.PASS;
 		ItemStack stack = player.getItemInHand(hand);
 		if (!stack.isEmpty()) return InteractionResult.PASS;
 		if (player instanceof ServerPlayer sp) {
@@ -53,7 +53,7 @@ public class TalkModule extends AbstractYoukaiModule {
 
 	public void stopTalking() {
 		if (talkTarget == null) return;
-		BrainUtils.clearMemory(self, GLBrains.MEM_TALK.get());
+		self.setTalkTo(null, -1);
 		talkTarget = null;
 	}
 

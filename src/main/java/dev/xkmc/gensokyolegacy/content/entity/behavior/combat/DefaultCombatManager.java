@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
-import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
@@ -48,8 +47,7 @@ public class DefaultCombatManager implements YoukaiCombatManager {
 	@Override
 	public TargetKind targetKind(LivingEntity le) {
 		if (le instanceof YoukaiEntity) return TargetKind.WORTHY;
-		var state = self.getData(le).map(e -> e.data().getState()).orElse(ReputationState.STRANGER);
-		return state.asTargetKind();
+		return self.getReputation(le).asTargetKind();
 	}
 
 	@Override

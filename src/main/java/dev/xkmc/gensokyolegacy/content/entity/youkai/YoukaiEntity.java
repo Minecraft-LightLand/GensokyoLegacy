@@ -8,6 +8,7 @@ import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
 import dev.xkmc.gensokyolegacy.content.entity.module.*;
@@ -464,7 +465,12 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		return !isHostileTo(player) && getModule(TalkModule.class).map(e -> !e.isTalking()).orElse(true);
 	}
 
-	public void setTalkTo(ServerPlayer player, int time) {
+	public ReputationState getReputation(LivingEntity le) {
+		return getData(le).map(e -> e.data().getState()).orElse(ReputationState.STRANGER);
+	}
+
+	public void setTalkTo(@Nullable ServerPlayer player, int time) {
+		if (player == null) return;
 		getNavigation().stop();
 		lookAt(player, 30, 30);
 	}
