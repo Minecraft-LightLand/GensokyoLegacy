@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.attachment.character;
 
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
-import dev.xkmc.gensokyolegacy.content.entity.module.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;

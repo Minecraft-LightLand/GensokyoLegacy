@@ -9,10 +9,12 @@ import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.*;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -29,7 +31,7 @@ import net.tslat.smartbrainlib.api.core.schedule.SmartBrainSchedule;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import net.tslat.smartbrainlib.object.MemoryTest;
+import net.tslat.smartbrainlib.util.BrainUtils;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -53,6 +55,8 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 		return getBrain().getActiveNonCoreActivity().orElse(Activity.IDLE);
 	}
 
+	// setup
+
 	@Override
 	protected void customServerAiStep() {
 		super.customServerAiStep();
@@ -65,12 +69,13 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 	}
 
 	protected void constructTaskBoard(TaskBoard board) {
-		board.addFirst(100, new YoukaiFetchTargetTask<>(), GLBrains.AT_HOME.get(), Activity.REST);
-		board.addFirst(101, new YoukaiSearchTargetTask<>(), Activity.IDLE, Activity.PLAY);
-		board.addFirst(150, new YoukaiVanishTask(), Activity.IDLE, Activity.PLAY);
-		board.addFirst(200, new YoukaiSleepTask(), Activity.REST);
-		board.addFirst(300, new YoukaiGoHomeTask<>(), Activity.IDLE, GLBrains.AT_HOME.get());
-		board.addFirst(400, new YoukaiRepairHouseTask<>(), GLBrains.AT_HOME.get());
+		board.addAlways(new YoukaiFetchTargetTask<>(), GLBrains.TALK.get(), GLBrains.AT_HOME.get(), Activity.REST);
+		board.addAlways(new YoukaiSearchTargetTask<>(), Activity.IDLE, Activity.PLAY);
+		board.addAlways(new YoukaiVanishTask(), Activity.IDLE, Activity.PLAY);
+		board.addFirst(0, new YoukaiSleepTask(), Activity.REST);
+		board.addFirst(0, new YoukaiTalkTask<>(), GLBrains.TALK.get());
+		board.addFirst(100, new YoukaiGoHomeTask<>(), Activity.IDLE, GLBrains.AT_HOME.get());
+		board.addFirst(200, new YoukaiRepairHouseTask<>(), GLBrains.AT_HOME.get());
 		board.addFirst(1100, new SetPlayerLookTarget<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
 		board.addFirst(1200, new SetRandomLookTarget<>(), Activity.IDLE, Activity.PLAY);
 
@@ -89,12 +94,11 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 				.setScanRate(self -> self.isAggressive() || self.hasPlayerNearby() ? 10 : 20));
 		board.addSensor(new YoukaiUpdateHomeSensor<SmartYoukaiEntity>().setScanRate(e -> 80));
 
-		var idle = MemoryTest.builder(1).noMemory(MemoryModuleType.ATTACK_TARGET);
-		var home = MemoryTest.builder(2).noMemory(MemoryModuleType.ATTACK_TARGET).hasMemory(MemoryModuleType.HOME);
-		board.addScheduledActivity(Activity.REST, home);
-		board.addScheduledActivity(GLBrains.AT_HOME.get(), home);
-		board.addScheduledActivity(Activity.PLAY, idle);
-		board.addScheduledActivity(Activity.IDLE, idle);
+		board.addScheduledActivity(Activity.REST, MemoryModuleType.HOME);
+		board.addScheduledActivity(GLBrains.AT_HOME.get(), MemoryModuleType.HOME);
+		board.addScheduledActivity(Activity.PLAY, null);
+		board.addScheduledActivity(Activity.IDLE, null);
+		board.addPrioritizedActivity(GLBrains.TALK.get(), GLBrains.MEM_TALK.get(), 100);
 	}
 
 	private void checkBoard() {
@@ -104,6 +108,8 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 			board.build();
 		}
 	}
+
+	//brain
 
 	@Override
 	public final List<ExtendedSensor<? extends SmartYoukaiEntity>> getSensors() {
@@ -155,6 +161,8 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 				.activityAt(12000, Activity.REST);
 	}
 
+	// misc
+
 	public String getBrainDebugInfo() {
 		var behaviors = getBrain().getRunningBehaviors();
 		StringBuilder ans = new StringBuilder();
@@ -166,6 +174,25 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 			} else ans.append("\n-").append(e.debugString());
 		}
 		return getBrain().getActiveNonCoreActivity().map(Activity::getName).orElse("") + ans;
+	}
+
+	@Override
+	public boolean mayInteract(Player player) {
+		if (!super.mayInteract(player)) return false;
+		if (level().isClientSide()) {
+			return !isSleeping() && !isAggressive();
+		}
+		var act = getActivity();
+		return act != Activity.REST && act != Activity.FIGHT;
+	}
+
+	@Override
+	public void setTalkTo(ServerPlayer player, int time) {
+		getNavigation().stop();
+		BrainUtils.clearMemory(this, MemoryModuleType.WALK_TARGET);
+		if (time < 0)
+			BrainUtils.setMemory(this, GLBrains.MEM_TALK.get(), player);
+		else getBrain().setMemoryWithExpiry(GLBrains.MEM_TALK.get(), player, time);
 	}
 
 }

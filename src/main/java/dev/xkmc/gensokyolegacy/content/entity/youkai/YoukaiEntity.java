@@ -24,6 +24,7 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
@@ -207,7 +208,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	}
 
 	protected List<AbstractYoukaiModule> createModules() {
-		return List.of(new HomeModule(this), new FeedModule(this));
+		return List.of(new HomeModule(this), new FeedModule(this), new TalkModule(this));
 	}
 
 	@Override
@@ -457,6 +458,15 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		this.setSleepingPos(pos);
 		this.setDeltaMovement(Vec3.ZERO);
 		this.hasImpulse = true;
+	}
+
+	public boolean mayInteract(Player player) {
+		return !isHostileTo(player) && getModule(TalkModule.class).map(e -> !e.isTalking()).orElse(true);
+	}
+
+	public void setTalkTo(ServerPlayer player, int time) {
+		getNavigation().stop();
+		lookAt(player, 30, 30);
 	}
 
 }

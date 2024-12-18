@@ -3,9 +3,6 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiUpdateTargetTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.TaskBoard;
-import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.FeedModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
@@ -33,9 +30,6 @@ import net.minecraft.world.level.Level;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
-import net.tslat.smartbrainlib.object.MemoryTest;
-
-import java.util.List;
 
 @SerialClass
 public class RumiaEntity extends SmartYoukaiEntity {
@@ -55,13 +49,13 @@ public class RumiaEntity extends SmartYoukaiEntity {
 	@Override
 	protected void constructTaskBoard(TaskBoard board) {
 		super.constructTaskBoard(board);
-		board.addFirst(250, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addFirst(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
 		board.addFirst(0, new RumiaParalyzeGoal(), GLBrains.DOWN.get());
 
 		board.addSensor(new ItemTemptingSensor<RumiaEntity>().setRadius(16, 8)
 				.temptedWith((self, stack) -> stack.is(YHTagGen.DANGO)).setScanRate(e -> 20));//TODO
 
-		board.addPrioritizedActivity(GLBrains.DOWN.get(), MemoryTest.builder(1).hasMemory(GLBrains.MEM_DOWN.get()), -100);
+		board.addPrioritizedActivity(GLBrains.DOWN.get(), GLBrains.MEM_DOWN.get(), -100);
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked", "unsafe"})

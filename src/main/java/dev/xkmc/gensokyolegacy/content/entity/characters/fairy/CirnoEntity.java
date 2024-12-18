@@ -8,10 +8,7 @@ import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.TaskBoard;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.YoukaiCraftTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.play.ItemPickupTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.play.YoukaiHuntTask;
-import dev.xkmc.gensokyolegacy.content.entity.module.AbstractYoukaiModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.CountPickupModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.FeedModule;
-import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
+import dev.xkmc.gensokyolegacy.content.entity.module.*;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.GeneralYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.item.FrozenFrogItem;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
@@ -21,14 +18,12 @@ import dev.xkmc.youkaishomecoming.init.food.YHFood;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyItemsSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
-import net.tslat.smartbrainlib.object.MemoryTest;
 
 import java.util.List;
 
@@ -60,6 +55,7 @@ public class CirnoEntity extends GeneralYoukaiEntity {
 		return List.of(
 				new HomeModule(this),
 				new FeedModule(this),
+				new TalkModule(this),
 				new CountPickupModule(this, e -> e.getItem() instanceof FrozenFrogItem)
 		);
 	}
@@ -67,9 +63,9 @@ public class CirnoEntity extends GeneralYoukaiEntity {
 	@Override
 	protected void constructTaskBoard(TaskBoard board) {
 		super.constructTaskBoard(board);
-		board.addFirst(250, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
-		board.addFirst(400, new ItemPickupTask(), Activity.IDLE, Activity.PLAY);
-		board.addFirst(450, new YoukaiHuntTask(6), GLBrains.HUNT.get());
+		board.addFirst(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addFirst(200, new ItemPickupTask(), Activity.IDLE, Activity.PLAY);
+		board.addFirst(250, new YoukaiHuntTask(6), GLBrains.HUNT.get());
 
 		board.addRandom(new YoukaiCraftTask<>(this::doCraft, 60, 12000), GLBrains.AT_HOME.get());
 
@@ -81,8 +77,7 @@ public class CirnoEntity extends GeneralYoukaiEntity {
 				.setScanRate(e -> e.playOrHunt() ? 20 : 60));
 		board.addSensor(new YoukaiFindPreySensor<>(CirnoEntity::playOrHunt));
 
-		board.addPrioritizedActivity(GLBrains.HUNT.get(), MemoryTest.builder(1)
-				.noMemory(MemoryModuleType.ATTACK_TARGET).hasMemories(GLBrains.MEM_PREY.get()), 100);
+		board.addPrioritizedActivity(GLBrains.HUNT.get(), GLBrains.MEM_PREY.get(), 200);
 	}
 
 	@Override

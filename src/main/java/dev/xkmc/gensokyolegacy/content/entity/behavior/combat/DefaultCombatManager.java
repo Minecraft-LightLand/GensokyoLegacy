@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
-import dev.xkmc.gensokyolegacy.content.entity.module.ReputationState;
+import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;

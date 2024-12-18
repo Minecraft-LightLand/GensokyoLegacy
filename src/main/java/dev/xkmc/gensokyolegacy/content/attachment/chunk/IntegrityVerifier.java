@@ -71,7 +71,7 @@ public class IntegrityVerifier {
 			boolean curCollide = current.getCollisionShape(level, pos).isEmpty();
 			boolean refCollide = ref.getCollisionShape(level, pos).isEmpty();
 			if (!refCollide && curCollide) {
-			abnormal.addAir(step);
+				abnormal.addAir(step);
 				return;
 			}
 		}

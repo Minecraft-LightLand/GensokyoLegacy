@@ -63,6 +63,7 @@ public class YoukaiCraftTask<E extends SmartYoukaiEntity> extends AbstractHomeHo
 
 	@Override
 	protected boolean canStillUse(ServerLevel level, E entity, long gameTime) {
+		if (stopCondition.test(entity)) return false;
 		if (!home.isValid()) return false;
 		if (!HomeSearchUtil.isValidChest(level, chest)) return false;
 		if (craftEnd == 0) {
@@ -75,6 +76,8 @@ public class YoukaiCraftTask<E extends SmartYoukaiEntity> extends AbstractHomeHo
 		if (craftEnd == gameTime) {
 			HomeSearchUtil.put(level, chest, doCraft);
 			nextCraft = craftEnd + craftCoolDown;
+			BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
+			BrainUtils.clearMemory(entity, MemoryModuleType.LOOK_TARGET);
 			return false;
 		}
 		return gameTime < craftEnd;
@@ -84,8 +87,6 @@ public class YoukaiCraftTask<E extends SmartYoukaiEntity> extends AbstractHomeHo
 	protected void stop(E entity) {
 		walkEnd = 0;
 		craftEnd = 0;
-		BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
-		BrainUtils.clearMemory(entity, MemoryModuleType.LOOK_TARGET);
 		chest = null;
 		super.stop(entity);
 	}

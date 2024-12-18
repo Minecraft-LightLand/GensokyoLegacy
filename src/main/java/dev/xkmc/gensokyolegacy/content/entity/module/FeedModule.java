@@ -9,6 +9,7 @@ import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffects;
@@ -63,14 +64,14 @@ public class FeedModule extends AbstractYoukaiModule {
 
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
-		if (self.isHostileTo(player)) return InteractionResult.PASS;
+		if (!self.mayInteract(player)) return InteractionResult.PASS;
 		ItemStack stack = player.getItemInHand(hand);
 		var food = stack.getFoodProperties(self);
 		if (food == null) return InteractionResult.PASS;
 		if (feedCoolDown > 0) return InteractionResult.PASS;
 		int favor = getFavor(stack, food);
 		if (favor < 0) return InteractionResult.PASS;
-		if (player.level().isClientSide()) {
+		if (!(player instanceof ServerPlayer sp)) {
 			InfoUpdateClientManager.clearCache();
 			return InteractionResult.SUCCESS;
 		}
@@ -83,6 +84,7 @@ public class FeedModule extends AbstractYoukaiModule {
 		else self.playSound(stack.getEatingSound());
 		if (!remain.isEmpty())
 			player.getInventory().placeItemBackInInventory(remain);
+		self.setTalkTo(sp, 30);
 		return InteractionResult.SUCCESS;
 	}
 

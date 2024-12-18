@@ -2,19 +2,21 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.task.core;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.schedule.Activity;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
-import net.tslat.smartbrainlib.object.MemoryTest;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
 public class TaskBoard {
 
-	private record ActivityEntry(Activity activity, MemoryTest test, int priority) {
+	private record ActivityEntry(Activity activity, @Nullable MemoryModuleType<?> memory, int priority) {
 	}
 
 	private record BehaviorEntry(int priority, ExtendedBehaviour<?> behavior, Set<Activity> activities) {
@@ -23,10 +25,17 @@ public class TaskBoard {
 	private final Map<Activity, ActivityEntry> activities = new LinkedHashMap<>();
 	private final List<ActivityEntry> priorities = new ArrayList<>();
 	private final List<Activity> priority = new ArrayList<>();
+	private final List<BehaviorEntry> always = new ArrayList<>();
 	private final List<BehaviorEntry> first = new ArrayList<>();
 	private final List<BehaviorEntry> random = new ArrayList<>();
 	private final List<ExtendedSensor<? extends SmartYoukaiEntity>> sensors = new ArrayList<>();
 	private final Map<Class<?>, BehaviorEntry> map = new HashMap<>();
+
+	public void addAlways(ExtendedBehaviour<?> behavior, Activity... activities) {
+		var entry = new BehaviorEntry(0, behavior, new LinkedHashSet<>(Set.of(activities)));
+		always.add(entry);
+		map.put(behavior.getClass(), entry);
+	}
 
 	public void addFirst(int priority, ExtendedBehaviour<?> behavior, Activity... activities) {
 		var entry = new BehaviorEntry(priority, behavior, new LinkedHashSet<>(Set.of(activities)));
@@ -48,18 +57,18 @@ public class TaskBoard {
 		this.sensors.add(sensor);
 	}
 
-	public void addScheduledActivity(Activity activity, MemoryTest test) {
-		activities.put(activity, new ActivityEntry(activity, test, 0));
+	public void addScheduledActivity(Activity activity, @Nullable MemoryModuleType<?> test) {
+		activities.put(activity, new ActivityEntry(activity, test, Integer.MAX_VALUE));
 	}
 
-	public void addPrioritizedActivity(Activity activity, MemoryTest test, int priority) {
+	public void addPrioritizedActivity(Activity activity, @Nullable MemoryModuleType<?> test, int priority) {
 		var e = new ActivityEntry(activity, test, priority);
 		activities.put(activity, e);
 		priorities.add(e);
 	}
 
 	public void build() {
-		priorities.add(new ActivityEntry(Activity.FIGHT, MemoryTest.builder(0), 0));
+		priorities.add(new ActivityEntry(Activity.FIGHT, MemoryModuleType.ATTACK_TARGET, 0));
 		priorities.sort(Comparator.comparingInt(e -> e.priority));
 		first.sort(Comparator.comparingInt(e -> e.priority));
 		for (var e : priorities) {
@@ -86,8 +95,14 @@ public class TaskBoard {
 	private BrainActivityGroup<SmartYoukaiEntity> buildActivityGroup(ActivityEntry act) {
 		var entry = new BrainActivityGroup<SmartYoukaiEntity>(act.activity)
 				.priority(10).behaviours(fetch(act.activity));
-		for (var e : act.test) {
-			entry.onlyStartWithMemoryStatus(e.getFirst(), e.getSecond());
+		if (act.priority() == Integer.MAX_VALUE) {
+			for (var a : priorities) {
+				if (a.memory() == null) continue;
+				entry.onlyStartWithMemoryStatus(a.memory(), MemoryStatus.VALUE_ABSENT);
+			}
+		}
+		if (act.memory() != null) {
+			entry.onlyStartWithMemoryStatus(act.memory(), MemoryStatus.VALUE_PRESENT);
 		}
 		return entry;
 	}
@@ -104,10 +119,20 @@ public class TaskBoard {
 			if (e.activities.contains(activity))
 				subRandom.add(e.behavior);
 		}
-		return new Behavior[]{
-				new FirstApplicableBehaviour<>(subFirst.toArray(ExtendedBehaviour[]::new)),
-				new OneRandomBehaviour<>(subRandom.toArray(ExtendedBehaviour[]::new))
-		};
+		List<Behavior<?>> behaviors = new ArrayList<>();
+		for (var e : always) {
+			if (e.activities.contains(activity))
+				behaviors.add(e.behavior);
+		}
+		if (subFirst.size() > 1)
+			behaviors.add(new FirstApplicableBehaviour<>(subFirst.toArray(ExtendedBehaviour[]::new)));
+		else if (subFirst.size() == 1)
+			behaviors.add(subFirst.getFirst());
+		if (subRandom.size() > 1)
+			behaviors.add(new OneRandomBehaviour<>(subRandom.toArray(ExtendedBehaviour[]::new)));
+		else if (subRandom.size() == 1)
+			behaviors.add(subRandom.getFirst());
+		return behaviors.toArray(Behavior[]::new);
 	}
 
 }

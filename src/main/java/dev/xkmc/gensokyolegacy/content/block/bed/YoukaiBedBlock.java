@@ -82,6 +82,11 @@ public class YoukaiBedBlock extends DelegateEntityBlockImpl {
 	}
 
 	@Override
+	public boolean isBed(BlockState state, BlockGetter level, BlockPos pos, LivingEntity sleeper) {
+		return true;
+	}
+
+	@Override
 	protected boolean isPathfindable(BlockState state, PathComputationType pathComputationType) {
 		return false;
 	}

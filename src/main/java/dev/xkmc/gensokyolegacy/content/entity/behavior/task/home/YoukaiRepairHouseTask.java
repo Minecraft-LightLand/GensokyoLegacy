@@ -51,9 +51,12 @@ public class YoukaiRepairHouseTask<E extends SmartYoukaiEntity> extends Abstract
 
 	@Override
 	protected boolean canStillUse(ServerLevel level, E entity, long gameTime) {
+		if (stopCondition.test(entity)) return false;
 		if (!home.isValid() || toFix == null) return false;
 		var pos = entity.getEyePosition().subtract(toFix.getFirst().getCenter());
 		if (pos.horizontalDistance() < 3 && Math.abs(pos.y) < 4) {
+			BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
+			BrainUtils.clearMemory(entity, MemoryModuleType.LOOK_TARGET);
 			entity.swing(InteractionHand.MAIN_HAND);
 			level.setBlockAndUpdate(toFix.getFirst(), toFix.getSecond());
 			walkEnd = 0;
@@ -63,6 +66,12 @@ public class YoukaiRepairHouseTask<E extends SmartYoukaiEntity> extends Abstract
 			return false;
 		}
 		return gameTime < walkEnd;
+	}
+
+	@Override
+	protected void stop(E entity) {
+		toFix = null;
+		walkEnd = 0;
 	}
 
 }

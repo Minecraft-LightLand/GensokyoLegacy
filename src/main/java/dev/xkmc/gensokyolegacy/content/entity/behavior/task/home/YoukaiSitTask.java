@@ -48,6 +48,7 @@ public class YoukaiSitTask<E extends SmartYoukaiEntity> extends AbstractHomeHold
 
 	@Override
 	protected boolean canStillUse(ServerLevel level, E entity, long gameTime) {
+		if (stopCondition.test(entity)) return false;
 		if (!home.isValid()) return false;
 		if (!HomeSearchUtil.isValidChair(level, chair)) return false;
 		if (entity.isPassenger()) return true;
@@ -62,8 +63,6 @@ public class YoukaiSitTask<E extends SmartYoukaiEntity> extends AbstractHomeHold
 
 	@Override
 	protected void stop(E entity) {
-		BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
-		BrainUtils.clearMemory(entity, MemoryModuleType.LOOK_TARGET);
 		if (entity.isPassenger())
 			entity.stopRiding();
 		chair = null;
