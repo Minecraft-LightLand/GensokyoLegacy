@@ -12,7 +12,6 @@ import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
 import dev.xkmc.gensokyolegacy.content.entity.module.*;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
@@ -275,7 +274,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 
 	public Optional<CharDataHolder> getData(@Nullable Entity e) {
 		if (e instanceof Player player) {
-			return Optional.ofNullable(GLMisc.CHAR.type().getOrCreate(player).get(player, this));
+			return Optional.of(CharDataHolder.get(player, this));
 		}
 		return Optional.empty();
 	}

@@ -10,6 +10,8 @@ import net.minecraft.world.entity.player.Player;
 @SerialClass
 public class CharacterData {
 
+	public static final int MAX = 300, MIN = -300;
+
 	public static ReputationState getState(int reputation) {
 		if (reputation >= 150)
 			return ReputationState.FRIEND;
@@ -71,7 +73,7 @@ public class CharacterData {
 	}
 
 	protected void onKillCharacter() {
-		loseReputation(200, -300);
+		loseReputation(200, MIN);
 	}
 
 }

@@ -23,7 +23,7 @@ public record CharacterRequestToServer(UUID id) implements SerialPacketBase<Char
 				.map(BedRefData::getBedPos);
 		int feedCD = e.getModule(FeedModule.class).map(FeedModule::getCoolDown).orElse(0);
 		String activity = e instanceof SmartYoukaiEntity smart ? smart.getBrainDebugInfo() : "";
-		e.getData(sp).ifPresent(data -> GensokyoLegacy.HANDLER.toClientPlayer(new CharacterInfoToClient(
+		e.getData(sp).ifPresent(data -> GensokyoLegacy.HANDLER.toClientPlayer(CharacterInfoToClient.ofEntity(
 				home.orElse(null),
 				bed.orElse(null),
 				data.data().reputation,

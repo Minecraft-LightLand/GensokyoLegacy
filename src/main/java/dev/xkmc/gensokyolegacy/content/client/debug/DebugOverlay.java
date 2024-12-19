@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.client.debug;
 
-import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
+import dev.xkmc.gensokyolegacy.content.block.base.IDebugInfoBlockEntity;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoClientManager;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
@@ -11,8 +11,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 
@@ -31,9 +29,8 @@ public class DebugOverlay implements LayeredDraw.Layer {
 		List<Component> lines = new ArrayList<>();
 		long time = player.level().getGameTime();
 		if (hit instanceof BlockHitResult block) {
-			if (level.getBlockEntity(block.getBlockPos()) instanceof YoukaiBedBlockEntity bed) {
-				if (bed.getBlockState().getValue(BedBlock.PART) == BedPart.HEAD)
-					BedInfoClientManager.tooltip(lines, time, bed);
+			if (level.getBlockEntity(block.getBlockPos()) instanceof IDebugInfoBlockEntity bed) {
+				BedInfoClientManager.tooltip(lines, time, bed);
 			} else {
 				StructureInfoClientManager.tooltip(lines, time, block.getBlockPos());
 			}

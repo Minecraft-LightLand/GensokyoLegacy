@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.client.debug;
 
-import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterData;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import net.minecraft.ChatFormatting;
@@ -21,7 +20,7 @@ public class CharacterInfoClientManager {
 			data = null;
 			lastEntity = youkai;
 		}
-		if (gameTime > lastTime + 20) {
+		if (gameTime > lastTime + 10) {
 			lastTime = gameTime;
 			InfoUpdateClientManager.requestCharacter(youkai.getUUID());
 		}
@@ -29,28 +28,9 @@ public class CharacterInfoClientManager {
 			lines.add(GLLang.INFO_LOADING.get().withStyle(ChatFormatting.GRAY));
 			return;
 		}
-		if (data.home() == null || data.bed() == null) {
-			lines.add(GLLang.INFO_ENTITY_UNBOUND.get().withStyle(ChatFormatting.GRAY));
-		} else {
-			var p = data.bed();
-			lines.add(GLLang.INFO_ENTITY_BED.get(p.getX(), p.getY(), p.getZ()).withStyle(ChatFormatting.GRAY));
-		}
-		lines.add(GLLang.INFO_ENTITY_REPUTATION.get(data.reputation()).withStyle(
-				switch (CharacterData.getState(data.reputation())) {
-					case FRIEND -> ChatFormatting.GREEN;
-					case STRANGER -> ChatFormatting.WHITE;
-					case JERK -> ChatFormatting.YELLOW;
-					case ENEMY -> ChatFormatting.RED;
-				}
-		));
-		if (data.feedCD() > 0) {
-			lines.add(GLLang.INFO_ENTITY_FEED.time(data.feedCD()).withStyle(ChatFormatting.GRAY));
-		}
-		if (!data.activity().isEmpty() && Minecraft.getInstance().options.advancedItemTooltips) {
-			String[] strs = data.activity().split("\n");
-			for (var e : strs) {
-				lines.add(Component.literal(e).withStyle(ChatFormatting.DARK_GRAY));
-			}
+		lines.addAll(data.info());
+		if (Minecraft.getInstance().options.advancedItemTooltips) {
+			lines.addAll(data.advanced());
 		}
 	}
 }

@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "gensokyolegacy:block/donation_box_down",
+    "east": "gensokyolegacy:block/donation_box_side",
+    "north": "gensokyolegacy:block/donation_box_end",
+    "particle": "gensokyolegacy:block/donation_box_down",
+    "south": "gensokyolegacy:block/donation_box_empty",
+    "up": "gensokyolegacy:block/donation_box_up",
+    "west": "gensokyolegacy:block/donation_box_side"
+  }
+}

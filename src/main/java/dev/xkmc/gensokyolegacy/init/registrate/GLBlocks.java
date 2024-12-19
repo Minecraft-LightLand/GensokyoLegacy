@@ -6,13 +6,24 @@ import dev.xkmc.gensokyolegacy.content.block.bed.GLBEWLR;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlock;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedRenderer;
+import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
+import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
+import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
+import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.l2modularblock.core.BlockTemplates;
+import dev.xkmc.l2modularblock.core.DelegateBlock;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.BedItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.Locale;
 
@@ -40,6 +51,9 @@ public class GLBlocks {
 		}
 	}
 
+	public static final BlockEntry<DelegateBlock> DONATION_BOX;
+	public static final BlockEntityEntry<DonationBoxBlockEntity> DONATION_BOX_BE;
+
 	public static final BlockEntry<YoukaiBedBlock>[] BEDS;
 	public static final BlockEntityEntry<YoukaiBedBlockEntity> BE_BED;
 
@@ -61,6 +75,19 @@ public class GLBlocks {
 		BE_BED = GensokyoLegacy.REGISTRATE.blockEntity("youkai_bed", YoukaiBedBlockEntity::new)
 				.renderer(() -> YoukaiBedRenderer::new)
 				.validBlocks(BEDS)
+				.register();
+
+		DONATION_BOX = GensokyoLegacy.REGISTRATE.block("donation_box", p -> DelegateBlock.newBaseBlock(
+						BlockBehaviour.Properties.of().noLootTable().strength(2.0F).sound(SoundType.WOOD)
+								.mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS),
+						BlockTemplates.HORIZONTAL, new DoubleBlockHorizontal(), new DonationShape(), DonationBoxBlock.TE
+				)).blockstate(DonationBoxBlock::buildStates)
+				.simpleItem()
+				.loot((pvd, block) -> pvd.add(block, LootTable.lootTable()))
+				.register();
+
+		DONATION_BOX_BE = GensokyoLegacy.REGISTRATE.blockEntity("donation_box", DonationBoxBlockEntity::new)
+				.validBlock(DONATION_BOX)
 				.register();
 	}
 

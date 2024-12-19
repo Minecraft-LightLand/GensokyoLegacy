@@ -7,7 +7,6 @@ import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -30,10 +29,14 @@ public class CharacterAttachment extends PlayerCapabilityTemplate<CharacterAttac
 		}
 	}
 
-	@Nullable
 	public CharDataHolder get(Player player, YoukaiEntity e) {
 		var val = characterData.computeIfAbsent(e.getType(), k -> new CharacterData());
-		return new CharDataHolder(val, player, e);
+		return new CharDataHolder(val, player, e.getType(), e);
+	}
+
+	public CharDataHolder getUnbounded(Player player, EntityType<?> e) {
+		var val = characterData.computeIfAbsent(e, k -> new CharacterData());
+		return new CharDataHolder(val, player, e, null);
 	}
 
 	public void replace(EntityType<?> target, CharacterData data) {

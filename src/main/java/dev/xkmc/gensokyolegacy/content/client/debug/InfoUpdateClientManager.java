@@ -10,10 +10,10 @@ import java.util.UUID;
 public class InfoUpdateClientManager {
 
 	public static void requestBed(BlockPos pos) {
-		GensokyoLegacy.HANDLER.toServer(new BedRequestToServer(pos));
+		GensokyoLegacy.HANDLER.toServer(new BlockRequestToServer(pos));
 	}
 
-	public static void handleBedInfo(BedInfoToClient bed) {
+	public static void handleBedInfo(BlockInfoToClient bed) {
 		BedInfoClientManager.data = bed;
 	}
 

@@ -2,8 +2,8 @@ package dev.xkmc.gensokyolegacy.init;
 
 import com.tterrag.registrate.providers.ProviderType;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
-import dev.xkmc.gensokyolegacy.content.client.debug.BedInfoToClient;
-import dev.xkmc.gensokyolegacy.content.client.debug.BedRequestToServer;
+import dev.xkmc.gensokyolegacy.content.client.debug.BlockInfoToClient;
+import dev.xkmc.gensokyolegacy.content.client.debug.BlockRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToClient;
@@ -40,8 +40,8 @@ public class GensokyoLegacy {
 	public static final PacketHandler HANDLER = new PacketHandler(MODID, 1,
 			e -> e.create(CharDataToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(PathDataToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
-			e -> e.create(BedRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
-			e -> e.create(BedInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(BlockRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
+			e -> e.create(BlockInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(CharacterRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
 			e -> e.create(CharacterInfoToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(StructureBoundUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
