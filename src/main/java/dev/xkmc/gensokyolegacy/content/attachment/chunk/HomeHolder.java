@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
@@ -8,7 +7,6 @@ import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -100,7 +98,7 @@ public record HomeHolder(
 		data.tick(this);
 	}
 
-	public List<Pair<BlockPos, BlockState>> popFix(int count, FixStage stage) {
+	public List<BlockFix> popFix(int count, FixStage stage) {
 		if (!data.checkInit(this)) return List.of();
 		return data.popFix(count, stage);
 	}
@@ -109,7 +107,7 @@ public record HomeHolder(
 		if (!data.checkInit(this)) return 0;
 		var list = data.popFix(count, stage);
 		for (var e : list) {
-			level.setBlockAndUpdate(e.getFirst(), e.getSecond());
+			e.fix(level);
 		}
 		return list.size();
 	}

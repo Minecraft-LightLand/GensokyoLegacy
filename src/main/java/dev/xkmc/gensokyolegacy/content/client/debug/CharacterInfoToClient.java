@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.client.debug;
 
-import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterData;
+import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.l2serial.network.SerialPacketBase;
@@ -29,17 +29,9 @@ public record CharacterInfoToClient(
 		if (home == null || bed == null) {
 			info.add(GLLang.INFO_ENTITY_UNBOUND.get().withStyle(ChatFormatting.GRAY));
 		} else {
-			var p = bed;
-			info.add(GLLang.INFO_ENTITY_BED.get(p.getX(), p.getY(), p.getZ()).withStyle(ChatFormatting.GRAY));
+			info.add(GLLang.INFO_ENTITY_BED.get(bed.getX(), bed.getY(), bed.getZ()).withStyle(ChatFormatting.GRAY));
 		}
-		info.add(GLLang.INFO_ENTITY_REPUTATION.get(reputation).withStyle(
-				switch (CharacterData.getState(reputation)) {
-					case FRIEND -> ChatFormatting.GREEN;
-					case STRANGER -> ChatFormatting.WHITE;
-					case JERK -> ChatFormatting.YELLOW;
-					case ENEMY -> ChatFormatting.RED;
-				}
-		));
+		info.add(ReputationState.toInfo(reputation));
 		if (feedCD > 0) {
 			info.add(GLLang.INFO_ENTITY_FEED.time(feedCD).withStyle(ChatFormatting.GRAY));
 		}

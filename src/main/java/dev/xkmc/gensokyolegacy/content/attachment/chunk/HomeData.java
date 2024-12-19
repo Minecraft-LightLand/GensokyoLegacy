@@ -1,13 +1,11 @@
 package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoUpdateToClient;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
@@ -114,7 +112,7 @@ public class HomeData {
 				getRoomBound(holder.config()), holder.level(), center, rxz, ry, trail);
 	}
 
-	public List<Pair<BlockPos, BlockState>> popFix(int count, FixStage stage) {
+	public List<BlockFix> popFix(int count, FixStage stage) {
 		if (verifier == null || !verifier.isValid()) return List.of();
 		return verifier.popFix(count, stage);
 	}

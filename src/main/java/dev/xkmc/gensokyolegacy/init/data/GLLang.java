@@ -11,7 +11,7 @@ public enum GLLang {
 	MSG_RESET("Character reset"),
 	INFO_LOADING("Loading..."),
 
-	INFO_BED_UNBOUND("This bed is not linked to a structure"),
+	INFO_BED_UNBOUND("This block is not linked to a structure"),
 	INFO_BED_PRESENT("Character is present at (%s, %s, %s)", 3),
 	INFO_BED_MISSING("Character is missing for %s", 1),
 	INFO_BED_RESPAWN("Character respawning. Remaining time: %s", 1),

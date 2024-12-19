@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.attachment.chunk;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlock;
 import net.minecraft.core.BlockPos;
@@ -88,13 +87,13 @@ public class IntegrityVerifier {
 		}
 	}
 
-	public List<Pair<BlockPos, BlockState>> popFix(int count, FixStage stage) {
+	public List<BlockFix> popFix(int count, FixStage stage) {
 		var pos = new BlockPos.MutableBlockPos();
 		bound.resolve(pos, 0);
 		if (!level.isLoaded(pos)) return List.of();
 		bound.resolve(pos, bound.getSize() - 1);
 		if (!level.isLoaded(pos)) return List.of();
-		List<Pair<BlockPos, BlockState>> ans = new ArrayList<>();
+		List<BlockFix> ans = new ArrayList<>();
 		int step = 0;
 		while (step < count) {
 			int[] fetch = abnormal.pop(count - step, stage);
@@ -107,7 +106,7 @@ public class IntegrityVerifier {
 				if (level.getBlockState(pos).getBlock() instanceof YoukaiBedBlock) continue;
 				if (!state.isAir() && !config.isPrimary(state) && !config.wouldFix(state))
 					state = Blocks.AIR.defaultBlockState();
-				ans.add(Pair.of(pos.immutable(), state));
+				ans.add(new BlockFix(pos.immutable(), state));
 			}
 		}
 		return ans;

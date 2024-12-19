@@ -38,8 +38,9 @@ public class GLStructureGen {
 							.primary(GLStructureTagGen.CIRNO_PRIMARY)
 							.wouldFix(GLStructureTagGen.CIRNO_FIX),
 					List.of(
-							new StructBed(GLEntities.CIRNO, GLBlocks.Beds.CIRNO.holder(),
-									CharacterConfig.forStructure(12000, 18000, 8, 600))
+							new StructBed(GLEntities.CIRNO,
+									CharacterConfig.forStructure(12000, 18000, 8, 600),
+									GLBlocks.Beds.CIRNO.holder())
 					),
 					new StructSimpleBuilding(
 							List.of(
@@ -64,8 +65,9 @@ public class GLStructureGen {
 							.primary(GLStructureTagGen.REIMU_PRIMARY)
 							.wouldFix(GLStructureTagGen.REIMU_FIX),
 					List.of(
-							new StructBed(GLEntities.REIMU, GLBlocks.Beds.REIMU.holder(),
-									CharacterConfig.forStructure(12000, 24000, 8, 600))
+							new StructBed(GLEntities.REIMU,
+									CharacterConfig.forStructure(12000, 24000, 8, 600),
+									GLBlocks.Beds.REIMU.holder(), GLBlocks.DONATION_BOX)
 					),
 					new StructJigsawBuilding(2, List.of(
 							new StructJigsawBuilding.Part("shrine", false, List.of(
@@ -91,17 +93,18 @@ public class GLStructureGen {
 	private static final Supplier<List<StructStructure>> STRUCTURES = Lazy.of(GLStructureGen::initStructures);
 
 	public static void dataMap(RegistrateDataMapProvider pvd) {
-		var bed = pvd.builder(GLMisc.BED_DATA.reg());
-		var entity = pvd.builder(GLMisc.ENTITY_DATA.reg());
-		var structure = pvd.builder(GLMisc.STRUCTURE_DATA.reg());
+		var bedReg = pvd.builder(GLMisc.BED_DATA.reg());
+		var entityReg = pvd.builder(GLMisc.ENTITY_DATA.reg());
+		var structureReg = pvd.builder(GLMisc.STRUCTURE_DATA.reg());
 		for (var e : STRUCTURES.get()) {
 			var config = e.config();
-			for (var beds : e.beds()) {
-				bed.add(beds.bed(), new BedData(beds.entity().value()), false);
-				entity.add(beds.entity(), beds.data().withId(e.id()), false);
-				config.addEntity(beds.entity().value());
+			for (var bedData : e.beds()) {
+				for (var bed : bedData.bed())
+					bedReg.add(bed, new BedData(bedData.entity().value()), false);
+				entityReg.add(bedData.entity(), bedData.data().withId(e.id()), false);
+				config.addEntity(bedData.entity().value());
 			}
-			structure.add(e.id(), config.build(), false);
+			structureReg.add(e.id(), config.build(), false);
 		}
 	}
 

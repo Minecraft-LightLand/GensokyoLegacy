@@ -3,6 +3,7 @@ package dev.xkmc.gensokyolegacy.init.data.structure;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.registrate.GLBlocks;
 import dev.xkmc.gensokyolegacy.init.registrate.GLDecoBlocks;
 import dev.xkmc.youkaishomecoming.init.registrate.YHBlocks;
 import net.minecraft.core.registries.Registries;
@@ -84,13 +85,14 @@ public class GLStructureTagGen {
 		);
 		pvd.addTag(REIMU_FIX).addTags(
 				BlockTags.TRAPDOORS,
-				BlockTags.WOODEN_DOORS,
-				BlockTags.WOODEN_FENCES,
+				BlockTags.DOORS,
+				BlockTags.FENCES,
 				BlockTags.FENCE_GATES
 		).add(
 				ModBlocks.HALF_TATAMI_MAT.get(),
 				ModBlocks.FULL_TATAMI_MAT.get(),
-				ModBlocks.CANVAS_RUG.get()
+				ModBlocks.CANVAS_RUG.get(),
+				GLBlocks.DONATION_BOX.get()
 		);
 	}
 }

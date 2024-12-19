@@ -37,7 +37,7 @@
 	"gensokyolegacy.tooltip.info_bed_missing": "角色失联：%s",
 	"gensokyolegacy.tooltip.info_bed_present": "角色在 (%s, %s, %s)",
 	"gensokyolegacy.tooltip.info_bed_respawn": "角色重生中：%s",
-	"gensokyolegacy.tooltip.info_bed_unbound": "这张床未被绑定到结构",
+	"gensokyolegacy.tooltip.info_bed_unbound": "这个方块未被绑定到结构",
 	"gensokyolegacy.tooltip.info_entity_bed": "角色的床在 (%s, %s, %s)",
 	"gensokyolegacy.tooltip.info_entity_reputation": "好感度：%s",
 	"gensokyolegacy.tooltip.info_entity_unbound": "角色未绑定结构",

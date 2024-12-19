@@ -14,7 +14,7 @@ public record BlockRequestToServer(BlockPos pos) implements SerialPacketBase<Blo
 		if (!(player instanceof ServerPlayer sp)) return;
 		if (!player.level().isLoaded(pos)) return;
 		if (!(player.level().getBlockEntity(pos) instanceof IDebugInfoBlockEntity be)) return;
-		GensokyoLegacy.HANDLER.toClientPlayer(be.getDebugPacket(), sp);
+		GensokyoLegacy.HANDLER.toClientPlayer(be.getDebugPacket(sp), sp);
 	}
 
 }

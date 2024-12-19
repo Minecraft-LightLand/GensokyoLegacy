@@ -23,7 +23,7 @@
   "gensokyolegacy.tooltip.info_bed_missing": "Character is missing for %s",
   "gensokyolegacy.tooltip.info_bed_present": "Character is present at (%s, %s, %s)",
   "gensokyolegacy.tooltip.info_bed_respawn": "Character respawning. Remaining time: %s",
-  "gensokyolegacy.tooltip.info_bed_unbound": "This bed is not linked to a structure",
+  "gensokyolegacy.tooltip.info_bed_unbound": "This block is not linked to a structure",
   "gensokyolegacy.tooltip.info_entity_bed": "Character's bed is at (%s, %s, %s)",
   "gensokyolegacy.tooltip.info_entity_feed": "Feed cool down: %s",
   "gensokyolegacy.tooltip.info_entity_reputation": "Your reputation: %s",

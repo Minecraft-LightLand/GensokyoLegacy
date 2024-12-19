@@ -1,17 +1,16 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
 import com.mojang.datafixers.util.Pair;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.BlockFix;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.FixStage;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.PerformanceConstants;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
-import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.smartbrainlib.object.MemoryTest;
 import net.tslat.smartbrainlib.util.BrainUtils;
 
@@ -24,7 +23,7 @@ public class YoukaiRepairHouseTask<E extends SmartYoukaiEntity> extends Abstract
 			.hasMemory(MemoryModuleType.HOME)
 			.noMemory(MemoryModuleType.ATTACK_TARGET);
 
-	private Pair<BlockPos, BlockState> toFix;
+	private BlockFix toFix;
 
 	private long walkEnd;
 
@@ -44,8 +43,8 @@ public class YoukaiRepairHouseTask<E extends SmartYoukaiEntity> extends Abstract
 
 	@Override
 	protected void start(ServerLevel level, E entity, long gameTime) {
-		BrainUtils.setMemory(entity, MemoryModuleType.WALK_TARGET, new WalkTarget(toFix.getFirst(), 1, 3));
-		BrainUtils.setMemory(entity, MemoryModuleType.LOOK_TARGET, new BlockPosTracker(toFix.getFirst()));
+		BrainUtils.setMemory(entity, MemoryModuleType.WALK_TARGET, new WalkTarget(toFix.pos(), 1, 3));
+		BrainUtils.setMemory(entity, MemoryModuleType.LOOK_TARGET, new BlockPosTracker(toFix.pos()));
 		walkEnd = gameTime + 300;
 	}
 
@@ -53,12 +52,12 @@ public class YoukaiRepairHouseTask<E extends SmartYoukaiEntity> extends Abstract
 	protected boolean canStillUse(ServerLevel level, E entity, long gameTime) {
 		if (stopCondition.test(entity)) return false;
 		if (!home.isValid() || toFix == null) return false;
-		var pos = entity.getEyePosition().subtract(toFix.getFirst().getCenter());
+		var pos = entity.getEyePosition().subtract(toFix.pos().getCenter());
 		if (pos.horizontalDistance() < 3 && Math.abs(pos.y) < 4) {
 			BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
 			BrainUtils.clearMemory(entity, MemoryModuleType.LOOK_TARGET);
 			entity.swing(InteractionHand.MAIN_HAND);
-			level.setBlockAndUpdate(toFix.getFirst(), toFix.getSecond());
+			toFix.fix(level);
 			walkEnd = 0;
 			if (!entity.hasPlayerNearby() && home.isBroken()) {
 				home.doFix(PerformanceConstants.COMMAND_PLACE_STEP, FixStage.ALL);

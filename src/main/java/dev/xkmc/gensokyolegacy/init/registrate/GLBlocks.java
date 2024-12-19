@@ -12,7 +12,6 @@ import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
 import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
-import dev.xkmc.l2modularblock.core.DelegateBlock;
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.BedItem;
 import net.minecraft.world.item.DyeColor;
@@ -51,7 +50,7 @@ public class GLBlocks {
 		}
 	}
 
-	public static final BlockEntry<DelegateBlock> DONATION_BOX;
+	public static final BlockEntry<DonationBoxBlock> DONATION_BOX;
 	public static final BlockEntityEntry<DonationBoxBlockEntity> DONATION_BOX_BE;
 
 	public static final BlockEntry<YoukaiBedBlock>[] BEDS;
@@ -77,7 +76,7 @@ public class GLBlocks {
 				.validBlocks(BEDS)
 				.register();
 
-		DONATION_BOX = GensokyoLegacy.REGISTRATE.block("donation_box", p -> DelegateBlock.newBaseBlock(
+		DONATION_BOX = GensokyoLegacy.REGISTRATE.block("donation_box", p -> new DonationBoxBlock(
 						BlockBehaviour.Properties.of().noLootTable().strength(2.0F).sound(SoundType.WOOD)
 								.mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS),
 						BlockTemplates.HORIZONTAL, new DoubleBlockHorizontal(), new DonationShape(), DonationBoxBlock.TE

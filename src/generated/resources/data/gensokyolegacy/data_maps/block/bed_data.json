@@ -3,6 +3,9 @@
     "gensokyolegacy:cirno_bed": {
       "type": "gensokyolegacy:cirno"
     },
+    "gensokyolegacy:donation_box": {
+      "type": "gensokyolegacy:reimu"
+    },
     "gensokyolegacy:reimu_bed": {
       "type": "gensokyolegacy:reimu"
     }

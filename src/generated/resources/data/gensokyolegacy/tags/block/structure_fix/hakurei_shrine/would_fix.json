@@ -1,11 +1,12 @@
 {
   "values": [
     "#minecraft:trapdoors",
-    "#minecraft:wooden_doors",
-    "#minecraft:wooden_fences",
+    "#minecraft:doors",
+    "#minecraft:fences",
     "#minecraft:fence_gates",
     "farmersdelight:half_tatami_mat",
     "farmersdelight:full_tatami_mat",
-    "farmersdelight:canvas_rug"
+    "farmersdelight:canvas_rug",
+    "gensokyolegacy:donation_box"
   ]
 }

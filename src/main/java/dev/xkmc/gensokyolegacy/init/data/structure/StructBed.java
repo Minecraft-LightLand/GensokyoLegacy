@@ -7,7 +7,10 @@ import net.minecraft.world.level.block.Block;
 
 public record StructBed(
 		Holder<EntityType<?>> entity,
-		Holder<Block> bed,
-		CharacterConfig data
+		CharacterConfig data,
+		Holder<Block>... bed
 ) {
+	@SafeVarargs
+	public StructBed {
+	}
 }
