@@ -1,6 +1,10 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
+import dev.xkmc.danmakuapi.content.item.SpellItem;
+import dev.xkmc.danmakuapi.init.DanmakuAPI;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.gensokyolegacy.content.spell.item.ReimuItemSpell;
 import dev.xkmc.gensokyolegacy.content.item.DebugGlasses;
 import dev.xkmc.gensokyolegacy.content.item.DebugWand;
 import dev.xkmc.gensokyolegacy.content.item.FairyIceItem;
@@ -9,6 +13,7 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 
 public class GLItems {
 
@@ -16,7 +21,7 @@ public class GLItems {
 
 	public static final ItemEntry<FairyIceItem> FAIRY_ICE_CRYSTAL;
 	public static final ItemEntry<FrozenFrogItem> FROZEN_FROG_COLD, FROZEN_FROG_WARM, FROZEN_FROG_TEMPERATE;
-
+	public static final ItemEntry<SpellItem> REIMU_SPELL;
 	public static final ItemEntry<DebugGlasses> DEBUG_GLASSES;
 	public static final ItemEntry<DebugWand> DEBUG_WAND;
 
@@ -32,6 +37,14 @@ public class GLItems {
 				p -> new FrozenFrogItem(p.stacksTo(16), FrogVariant.WARM)).register();
 		FROZEN_FROG_TEMPERATE = GensokyoLegacy.REGISTRATE.item("frozen_frog_temperate",
 				p -> new FrozenFrogItem(p.stacksTo(16), FrogVariant.TEMPERATE)).register();
+
+		REIMU_SPELL = DanmakuAPI.REGISTRATE
+				.item("spell_reimu", p -> new SpellItem(
+						p.stacksTo(1), ReimuItemSpell::new, true,
+						() -> DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).get()))
+				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
+				.lang("Reimu's Spellcard \"Innate Dream\"")
+				.register();
 
 		DEBUG_GLASSES = GensokyoLegacy.REGISTRATE.item("debug_glasses", p -> new DebugGlasses(p.stacksTo(1)))
 				.defaultModel().defaultLang().register();

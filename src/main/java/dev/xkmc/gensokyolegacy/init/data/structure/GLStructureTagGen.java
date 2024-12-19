@@ -79,8 +79,8 @@ public class GLStructureTagGen {
 				Blocks.STRIPPED_DARK_OAK_WOOD,
 				Blocks.STRIPPED_OAK_LOG,
 				Blocks.STONE,
-				YHBlocks.SIKKUI.BASE.get(),
-				YHBlocks.FINE_GRID_SIKKUI.get(),
+				YHBlocks.SIKKUI.SIKKUI.BASE.get(),
+				YHBlocks.SIKKUI.FINE_GRID_SIKKUI.get(),
 				ModBlocks.TATAMI.get()
 		);
 		pvd.addTag(REIMU_FIX).addTags(

@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.spellcard;
+package dev.xkmc.gensokyolegacy.content.spell.card;
 
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
 import dev.xkmc.danmakuapi.content.spell.mover.RectMover;
@@ -6,6 +6,7 @@ import dev.xkmc.danmakuapi.content.spell.spellcard.ActualSpellCard;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.gensokyolegacy.content.spell.mover.AttachedMover;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.BlockPos;
@@ -14,7 +15,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 @SerialClass
-public class MarisaSpells extends ActualSpellCard {
+public class MarisaSpell extends ActualSpellCard {
 
 	@SerialField
 	private int cooldown;
@@ -57,7 +58,7 @@ public class MarisaSpells extends ActualSpellCard {
 	}
 
 	@SerialClass
-	public static class BlackHole extends Ticker<MarisaSpells> {
+	public static class BlackHole extends Ticker<MarisaSpell> {
 
 		private static final DyeColor[] COLOR = {
 				DyeColor.RED, DyeColor.YELLOW, DyeColor.GREEN, DyeColor.CYAN, DyeColor.BLUE
@@ -65,7 +66,7 @@ public class MarisaSpells extends ActualSpellCard {
 		private static final double W0 = 7, V0 = 0.2, W1 = -4, ACC = 0.05, VEC = 0.8;
 
 		@Override
-		public boolean tick(CardHolder holder, MarisaSpells card) {
+		public boolean tick(CardHolder holder, MarisaSpell card) {
 			Vec3 cen = holder.center();
 			var tar = holder.target();
 			if (tar != null && tar.y > cen.y)
@@ -92,10 +93,10 @@ public class MarisaSpells extends ActualSpellCard {
 	}
 
 	@SerialClass
-	public static class EarthLight extends Ticker<MarisaSpells> {
+	public static class EarthLight extends Ticker<MarisaSpell> {
 
 		@Override
-		public boolean tick(CardHolder holder, MarisaSpells card) {
+		public boolean tick(CardHolder holder, MarisaSpell card) {
 			var tar = holder.target();
 			if (tar == null) return true;
 			var rand = holder.random();
@@ -122,7 +123,7 @@ public class MarisaSpells extends ActualSpellCard {
 	}
 
 	@SerialClass
-	public static class MasterSpark extends Ticker<MarisaSpells> {
+	public static class MasterSpark extends Ticker<MarisaSpell> {
 
 		@SerialField
 		private Vec3 target;
@@ -136,7 +137,7 @@ public class MarisaSpells extends ActualSpellCard {
 		}
 
 		@Override
-		public boolean tick(CardHolder holder, MarisaSpells card) {
+		public boolean tick(CardHolder holder, MarisaSpell card) {
 			if (target == null) return true;
 			var cen = holder.center();
 			if (tick == 0) {

@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.entity.spellcard;
+package dev.xkmc.gensokyolegacy.content.spell.mover;
 
 import dev.xkmc.danmakuapi.content.spell.mover.MoverInfo;
 import dev.xkmc.danmakuapi.content.spell.mover.TargetPosMover;

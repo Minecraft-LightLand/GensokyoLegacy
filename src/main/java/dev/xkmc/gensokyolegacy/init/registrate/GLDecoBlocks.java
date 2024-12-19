@@ -7,6 +7,7 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.youkaishomecoming.content.block.variants.VerticalSlabBlock;
+import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -79,9 +80,8 @@ public class GLDecoBlocks {
 					.register();
 			vertical = GensokyoLegacy.REGISTRATE.block(id + "_vertical_slab", p ->
 							new VerticalSlabBlock(prop))
-					.blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), VerticalSlabBlock.buildModel(ctx, pvd)
-							.texture("top", side).texture("side", side)))
-					.tag(tool).item().build().register();
+					.blockstate((ctx, pvd) -> VerticalSlabBlock.buildBlockState(ctx, pvd, side, side))
+					.tag(YHTagGen.VERTICAL_SLAB, tool).item().build().register();
 		}
 
 		public void genRecipe(RegistrateRecipeProvider pvd) {

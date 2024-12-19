@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.entity.spellcard;
+package dev.xkmc.gensokyolegacy.content.spell.card;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 
