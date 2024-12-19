@@ -61,4 +61,5 @@ public class DonationBoxBlockEntity extends LocatedBlockEntity implements IDebug
 		var reputation = CharDataHolder.getUnbounded(player, bed.type()).data().reputation;
 		return BlockInfoToClient.of(ReputationState.toInfo(reputation));
 	}
+
 }

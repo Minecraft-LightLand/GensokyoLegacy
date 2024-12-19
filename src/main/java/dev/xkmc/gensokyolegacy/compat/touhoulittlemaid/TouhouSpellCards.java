@@ -13,6 +13,7 @@ import dev.xkmc.danmakuapi.presets.game.youmu.YoumuSlash;
 import dev.xkmc.danmakuapi.presets.game.yukari.YukariMain;
 import dev.xkmc.danmakuapi.presets.game.yuyuko.YuyukoTest;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.MaidenEntity;
+import dev.xkmc.gensokyolegacy.content.entity.spellcard.MarisaSpells;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.GeneralYoukaiEntity;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -38,6 +39,7 @@ public class TouhouSpellCards {
 		registerSpell("touhou_little_maid:cirno", CirnoIceStorm::new);
 		registerSpell("touhou_little_maid:kochiya_sanae", Sugiruyoru::new);
 		registerSpell("touhou_little_maid:komeiji_koishi", AncestorDream::new);
+		registerSpell("touhou_little_maid:kirisame_marisa", MarisaSpells::new);
 
 		registerSpell("touhou_little_maid:konpaku_youmu", () -> ListSpellCard.of(new YoumuSlash()));
 		registerSpell("touhou_little_maid:saigyouji_yuyuko", () -> ListSpellCard.of(new YuyukoTest()));

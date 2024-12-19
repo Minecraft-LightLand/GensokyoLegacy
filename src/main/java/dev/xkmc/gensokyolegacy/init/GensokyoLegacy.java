@@ -1,6 +1,8 @@
 package dev.xkmc.gensokyolegacy.init;
 
+import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TLMCompat;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.client.debug.BlockInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.BlockRequestToServer;
@@ -26,8 +28,10 @@ import dev.xkmc.l2serial.network.PacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @Mod(GensokyoLegacy.MODID)
@@ -58,6 +62,9 @@ public class GensokyoLegacy {
 		GLBrains.register();
 		GLEntities.register();
 		TouhouSpellCards.registerSpells();
+		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
+			NeoForge.EVENT_BUS.register(TLMCompat.class);
+		}
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
