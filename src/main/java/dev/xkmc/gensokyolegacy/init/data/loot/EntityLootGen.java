@@ -32,35 +32,6 @@ public class EntityLootGen {
 		pvd.add(type, LootTable.lootTable());
 	}
 
-	public static void rumia(RegistrateEntityLootTables pvd, EntityType<RumiaEntity> type) {
-		pvd.add(type, LootTable.lootTable()
-				.withPool(LootPool.lootPool().add(getItem(DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).get(), 5, 10))
-						.apply(lootCount(pvd, 1f))
-						.when(byPlayer()))
-				.withPool(LootPool.lootPool().add(getItem(DanmakuItems.Bullet.CIRCLE.get(DyeColor.BLACK).get(), 3, 6))
-						.apply(lootCount(pvd, 1f))
-						.when(byPlayer()))
-		);
-	}
-
-	public static void reimu(RegistrateEntityLootTables pvd, EntityType<ReimuEntity> type) {
-		pvd.add(type, LootTable.lootTable()
-				.withPool(LootPool.lootPool().add(getItem(DanmakuItems.REIMU_SPELL.get(), 1, 1))
-						.when(byPlayer()))
-		);
-	}
-
-	public static void cirno(RegistrateEntityLootTables pvd, EntityType<CirnoEntity> type) {
-		pvd.add(type, LootTable.lootTable()
-				.withPool(LootPool.lootPool()
-						.add(getItem(DanmakuItems.Bullet.MENTOS.get(DyeColor.LIGHT_BLUE).get(), 1, 1)
-								.setWeight(6))
-						.when(lootChance(pvd, 0.3f))
-						.when(danmakuKill())
-						.when(byPlayer()))
-		);
-	}
-
 	private static LootItemFunction.Builder onFire() {
 		return SmeltItemFunction.smelted()
 				.when(LootItemEntityPropertyCondition.hasProperties(

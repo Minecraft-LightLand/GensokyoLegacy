@@ -4,6 +4,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.content.item.SpellItem;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.gensokyolegacy.content.spell.item.MarisaItemSpell;
 import dev.xkmc.gensokyolegacy.content.spell.item.ReimuItemSpell;
 import dev.xkmc.gensokyolegacy.content.item.DebugGlasses;
 import dev.xkmc.gensokyolegacy.content.item.DebugWand;
@@ -21,7 +22,7 @@ public class GLItems {
 
 	public static final ItemEntry<FairyIceItem> FAIRY_ICE_CRYSTAL;
 	public static final ItemEntry<FrozenFrogItem> FROZEN_FROG_COLD, FROZEN_FROG_WARM, FROZEN_FROG_TEMPERATE;
-	public static final ItemEntry<SpellItem> REIMU_SPELL;
+	public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL;
 	public static final ItemEntry<DebugGlasses> DEBUG_GLASSES;
 	public static final ItemEntry<DebugWand> DEBUG_WAND;
 
@@ -38,12 +39,20 @@ public class GLItems {
 		FROZEN_FROG_TEMPERATE = GensokyoLegacy.REGISTRATE.item("frozen_frog_temperate",
 				p -> new FrozenFrogItem(p.stacksTo(16), FrogVariant.TEMPERATE)).register();
 
-		REIMU_SPELL = DanmakuAPI.REGISTRATE
+		REIMU_SPELL = GensokyoLegacy.REGISTRATE
 				.item("spell_reimu", p -> new SpellItem(
 						p.stacksTo(1), ReimuItemSpell::new, true,
 						() -> DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).get()))
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Reimu's Spellcard \"Innate Dream\"")
+				.register();
+
+		MARISA_SPELL = GensokyoLegacy.REGISTRATE
+				.item("spell_marisa", p -> new SpellItem(
+						p.stacksTo(1), MarisaItemSpell::new, true,
+						() -> DanmakuItems.Laser.LASER.get(DyeColor.WHITE).get()))
+				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
+				.lang("Marisa's Spellcard \"Master Spark\"")
 				.register();
 
 		DEBUG_GLASSES = GensokyoLegacy.REGISTRATE.item("debug_glasses", p -> new DebugGlasses(p.stacksTo(1)))
