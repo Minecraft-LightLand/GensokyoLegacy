@@ -49,7 +49,7 @@ public class GLItems {
 
 		MARISA_SPELL = GensokyoLegacy.REGISTRATE
 				.item("spell_marisa", p -> new SpellItem(
-						p.stacksTo(1), MarisaItemSpell::new, true,
+						p.stacksTo(1), MarisaItemSpell::new, false,
 						() -> DanmakuItems.Laser.LASER.get(DyeColor.WHITE).get()))
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Marisa's Spellcard \"Master Spark\"")

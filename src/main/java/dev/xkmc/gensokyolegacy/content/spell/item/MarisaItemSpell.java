@@ -2,19 +2,16 @@ package dev.xkmc.gensokyolegacy.content.spell.item;
 
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
 import dev.xkmc.danmakuapi.content.spell.item.ItemSpell;
-import dev.xkmc.danmakuapi.content.spell.mover.RectMover;
-import dev.xkmc.danmakuapi.content.spell.spellcard.ActualSpellCard;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.gensokyolegacy.content.spell.mover.AttachedMover;
+import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +21,8 @@ public class MarisaItemSpell extends ItemSpell {
 	@Override
 	public void start(Player player, @Nullable LivingEntity target) {
 		super.start(player, target);
-		addTicker(new MasterSpark());
+		Vec3 tar = RayTraceUtil.getRayTerm(player.getEyePosition(), player.getXRot(), player.getYRot(), 10);
+		addTicker(new MasterSpark(tar));
 	}
 
 	@SerialClass
@@ -84,7 +82,7 @@ public class MarisaItemSpell extends ItemSpell {
 					var v = rand.nextDouble() * 0.3 + 0.6;
 					var e = holder.prepareDanmaku(40, vec.scale(v),
 							DanmakuItems.Bullet.BALL, DyeColor.YELLOW);
-					e.setPos(cen);
+					e.setPos(cen.add(vec.scale(v + 1)));
 					holder.shoot(e);
 				}
 			}
