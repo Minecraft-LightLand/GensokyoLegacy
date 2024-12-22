@@ -82,7 +82,7 @@ public class CirnoEntity extends GeneralYoukaiEntity {
 
 	@Override
 	public void initSpellCard() {
-		TouhouSpellCards.setCirno(this);
+		TouhouSpellCards.set(this);
 	}
 
 	private boolean playOrHunt() {

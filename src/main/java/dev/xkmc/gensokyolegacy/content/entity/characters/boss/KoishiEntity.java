@@ -15,7 +15,7 @@ public class KoishiEntity extends BossYoukaiEntity {
 
 	@Override
 	public void initSpellCard() {
-		TouhouSpellCards.setKoishi(this);
+		TouhouSpellCards.set(this);
 	}
 
 }

@@ -7,6 +7,7 @@ import dev.xkmc.danmakuapi.content.spell.spellcard.SpellCardWrapper;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.MaidenEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.GeneralYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.spell.card.*;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
@@ -32,6 +33,10 @@ public class TouhouSpellCards {
 		registerSpell("touhou_little_maid:kochiya_sanae", SanaeSpell::new);
 		registerSpell("touhou_little_maid:komeiji_koishi", KoishiSpell::new);
 		registerSpell("touhou_little_maid:kirisame_marisa", MarisaSpell::new);
+		registerSpell("touhou_little_maid:mystia_lorelei", MystiaSpell::new);
+		registerSpell("touhou_little_maid:sunny_milk", SunnySpell::new);
+		registerSpell("touhou_little_maid:luna_child", LunaSpell::new);
+		registerSpell("touhou_little_maid:star_sapphire", StarSpell::new);
 
 	}
 
@@ -56,20 +61,8 @@ public class TouhouSpellCards {
 		}
 	}
 
-	public static void setCirno(GeneralYoukaiEntity e) {
-		setSpell(e, "touhou_little_maid:cirno");
-	}
-
-	public static void setYukari(GeneralYoukaiEntity e) {
-		setSpell(e, "touhou_little_maid:yukari_yakumo");
-	}
-
-	public static void setSanae(GeneralYoukaiEntity e) {
-		setSpell(e, "touhou_little_maid:kochiya_sanae");
-	}
-
-	public static void setKoishi(GeneralYoukaiEntity e) {
-		setSpell(e, "touhou_little_maid:komeiji_koishi");
+	public static void set(GeneralYoukaiEntity e) {
+		setSpell(e, "touhou_little_maid:" + BuiltInRegistries.ENTITY_TYPE.getKey(e.getType()).getPath());
 	}
 
 }

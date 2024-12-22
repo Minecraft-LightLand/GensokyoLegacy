@@ -15,7 +15,7 @@
     },
     "gensokyolegacy:hakurei_shrine": {
       "entities": [
-        "gensokyolegacy:reimu"
+        "gensokyolegacy:hakurei_reimu"
       ],
       "floorHouseShrink": 1,
       "floorRoomShrink": 2,

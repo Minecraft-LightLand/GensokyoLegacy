@@ -4,10 +4,10 @@
       "type": "gensokyolegacy:cirno"
     },
     "gensokyolegacy:donation_box": {
-      "type": "gensokyolegacy:reimu"
+      "type": "gensokyolegacy:hakurei_reimu"
     },
     "gensokyolegacy:reimu_bed": {
-      "type": "gensokyolegacy:reimu"
+      "type": "gensokyolegacy:hakurei_reimu"
     }
   }
 }

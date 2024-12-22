@@ -10,10 +10,19 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 
 @SerialClass
 public class GeneralYoukaiEntity extends SmartYoukaiEntity {
+
+	public static AttributeSupplier.Builder createAttributes() {
+		return YoukaiEntity.createAttributes()
+				.add(Attributes.MAX_HEALTH, 60)
+				.add(Attributes.ATTACK_DAMAGE, 8)
+				.add(Attributes.FOLLOW_RANGE, 128);
+	}
 
 	public static final ResourceLocation SPELL = GensokyoLegacy.loc("ex_rumia");
 

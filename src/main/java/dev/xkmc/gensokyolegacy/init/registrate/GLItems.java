@@ -4,6 +4,7 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.content.item.SpellItem;
 import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.gensokyolegacy.content.block.plant.MistletoeBranch;
 import dev.xkmc.gensokyolegacy.content.spell.item.MarisaItemSpell;
 import dev.xkmc.gensokyolegacy.content.spell.item.ReimuItemSpell;
 import dev.xkmc.gensokyolegacy.content.item.DebugGlasses;
@@ -22,6 +23,7 @@ public class GLItems {
 
 	public static final ItemEntry<FairyIceItem> FAIRY_ICE_CRYSTAL;
 	public static final ItemEntry<FrozenFrogItem> FROZEN_FROG_COLD, FROZEN_FROG_WARM, FROZEN_FROG_TEMPERATE;
+	public static final ItemEntry<MistletoeBranch> MISTLETOE_BRANCH;
 	public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL;
 	public static final ItemEntry<DebugGlasses> DEBUG_GLASSES;
 	public static final ItemEntry<DebugWand> DEBUG_WAND;
@@ -38,6 +40,8 @@ public class GLItems {
 				p -> new FrozenFrogItem(p.stacksTo(16), FrogVariant.WARM)).register();
 		FROZEN_FROG_TEMPERATE = GensokyoLegacy.REGISTRATE.item("frozen_frog_temperate",
 				p -> new FrozenFrogItem(p.stacksTo(16), FrogVariant.TEMPERATE)).register();
+		MISTLETOE_BRANCH = GensokyoLegacy.REGISTRATE.item("mistletoe_branch",
+				MistletoeBranch::new).register();
 
 		REIMU_SPELL = GensokyoLegacy.REGISTRATE
 				.item("spell_reimu", p -> new SpellItem(

@@ -7,7 +7,7 @@
       "structure": "gensokyolegacy:cirno_nest",
       "wanderRadius": 8
     },
-    "gensokyolegacy:reimu": {
+    "gensokyolegacy:hakurei_reimu": {
       "discardTime": 12000,
       "noPlayerVanishTime": 600,
       "respawnTime": 24000,

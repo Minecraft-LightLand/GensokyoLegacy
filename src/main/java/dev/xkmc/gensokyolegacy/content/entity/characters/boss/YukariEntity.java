@@ -15,7 +15,7 @@ public class YukariEntity extends BossYoukaiEntity {
 
 	@Override
 	public void initSpellCard() {
-		TouhouSpellCards.setYukari(this);
+		TouhouSpellCards.set(this);
 	}
 
 }

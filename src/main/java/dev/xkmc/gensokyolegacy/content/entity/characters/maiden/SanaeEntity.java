@@ -14,7 +14,7 @@ public class SanaeEntity extends MaidenEntity {
 
 	@Override
 	public void initSpellCard() {
-		TouhouSpellCards.setSanae(this);
+		TouhouSpellCards.set(this);
 	}
 
 }

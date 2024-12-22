@@ -5,6 +5,8 @@ import dev.xkmc.gensokyolegacy.content.entity.characters.boss.KoishiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.boss.YukariEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoRenderer;
+import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.FairyEntity;
+import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.MaidenEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.SanaeEntity;
@@ -13,6 +15,7 @@ import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.misc.FairyIce;
 import dev.xkmc.gensokyolegacy.content.entity.misc.FrozenFrog;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.BossYoukaiEntity;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.GeneralYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.GeneralYoukaiRenderer;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.loot.EntityLootGen;
@@ -43,7 +46,7 @@ public class GLEntities {
 				.register();
 
 		REIMU = GensokyoLegacy.REGISTRATE
-				.entity("reimu", ReimuEntity::new, MobCategory.MONSTER)
+				.entity("hakurei_reimu", ReimuEntity::new, MobCategory.MONSTER)
 				.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
 				.attributes(BossYoukaiEntity::createAttributes)
 				.renderer(() -> ReimuRenderer::new)
@@ -63,7 +66,7 @@ public class GLEntities {
 
 
 		YUKARI = GensokyoLegacy.REGISTRATE
-				.entity("yukari", YukariEntity::new, MobCategory.MONSTER)
+				.entity("yukari_yakumo", YukariEntity::new, MobCategory.MONSTER)
 				.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
 				.attributes(BossYoukaiEntity::createAttributes)
 				.renderer(() -> GeneralYoukaiRenderer::new)
@@ -88,6 +91,53 @@ public class GLEntities {
 				.spawnEgg(0x88BA7F, 0x645856).build()
 				.loot(EntityLootGen::noLoot)
 				.register();
+
+		GensokyoLegacy.REGISTRATE
+				.entity("kirisame_marisa", MaidenEntity::new, MobCategory.MONSTER)
+				.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
+				.attributes(BossYoukaiEntity::createAttributes)
+				.renderer(() -> GeneralYoukaiRenderer::new)
+				.spawnEgg(0x52403C, 0xFAF2EF).build()
+				.loot(EntityLootGen::noLoot)
+				.register();
+
+		GensokyoLegacy.REGISTRATE
+				.entity("mystia_lorelei", GeneralYoukaiEntity::new, MobCategory.MONSTER)
+				.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
+				.attributes(GeneralYoukaiEntity::createAttributes)
+				.renderer(() -> GeneralYoukaiRenderer::new)
+				.spawnEgg(0x9B6D79, 0xF4BDAE).build()
+				.loot(EntityLootGen::noLoot)
+				.register();
+
+		GensokyoLegacy.REGISTRATE
+				.entity("sunny_milk", FairyEntity::new, MobCategory.MONSTER)
+				.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
+				.attributes(FairyEntity::createAttributes)
+				.renderer(() -> GeneralYoukaiRenderer::new)
+				.spawnEgg(0xB14435, 0xFCF5D8).build()
+				.loot(EntityLootGen::noLoot)
+				.register();
+
+		GensokyoLegacy.REGISTRATE
+				.entity("luna_child", FairyEntity::new, MobCategory.MONSTER)
+				.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
+				.attributes(FairyEntity::createAttributes)
+				.renderer(() -> GeneralYoukaiRenderer::new)
+				.spawnEgg(0xFFF9DA, 0xA26B4F).build()
+				.loot(EntityLootGen::noLoot)
+				.register();
+
+		GensokyoLegacy.REGISTRATE
+				.entity("star_sapphire", FairyEntity::new, MobCategory.MONSTER)
+				.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
+				.attributes(FairyEntity::createAttributes)
+				.renderer(() -> GeneralYoukaiRenderer::new)
+				.spawnEgg(0x353D95, 0x482E25).build()
+				.loot(EntityLootGen::noLoot)
+				.register();
+
+
 
 		FROZEN_FROG = GensokyoLegacy.REGISTRATE
 				.<FrozenFrog>entity("frozen_frog", FrozenFrog::new, MobCategory.MISC)

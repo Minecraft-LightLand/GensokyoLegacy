@@ -5,7 +5,7 @@ import dev.xkmc.danmakuapi.content.spell.item.ItemSpell;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.gensokyolegacy.content.spell.mover.AttachedMover;
+import dev.xkmc.gensokyolegacy.content.spell.mover.AttachedFreeRotMover;
 import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
@@ -21,8 +21,7 @@ public class MarisaItemSpell extends ItemSpell {
 	@Override
 	public void start(Player player, @Nullable LivingEntity target) {
 		super.start(player, target);
-		Vec3 tar = RayTraceUtil.getRayTerm(player.getEyePosition(), player.getXRot(), player.getYRot(), 10);
-		addTicker(new MasterSpark(tar));
+		addTicker(new MasterSpark(player));
 	}
 
 	@SerialClass
@@ -31,36 +30,31 @@ public class MarisaItemSpell extends ItemSpell {
 		@SerialField
 		private Vec3 target;
 
+		@Nullable
+		private Player player;
+
 		public MasterSpark() {
 
 		}
 
-		public MasterSpark(Vec3 vec) {
-			this.target = vec;
+		public MasterSpark(Player player) {
+			this.player = player;
 		}
 
 		@Override
 		public boolean tick(CardHolder holder, MarisaItemSpell card) {
-			if (target == null) return true;
+			if (player != null)
+				target = RayTraceUtil.getRayTerm(Vec3.ZERO, player.getXRot(), player.getYRot(), 10);
 			var cen = holder.center();
 			if (tick == 0) {
-				var e = holder.prepareLaser(1, cen, target.subtract(cen).normalize(), 80,
+				var e = holder.prepareLaser(1, cen, target.normalize(), 80,
 						DanmakuItems.Laser.LASER, DyeColor.YELLOW);
 				e.setupTime(20, 1, 1, 1);
-				e.mover = new AttachedMover();
+				e.mover = new AttachedFreeRotMover();
 				holder.shoot(e);
 			}
 			if (tick > 20) {
-				var tar = holder.target();
-				if (tar != null) {
-					double maxMove = 0.02;
-					var da = target.subtract(cen).normalize();
-					var db = tar.subtract(cen).normalize();
-					double dist = da.distanceTo(db);
-					double perc = dist < maxMove ? 1 : maxMove / dist;
-					target = target.lerp(tar, perc);
-				}
-				var forw = target.subtract(cen).normalize();
+				var forw = target.normalize();
 				var rand = holder.random();
 				var o = DanmakuHelper.getOrientation(forw);
 				for (int i = 0; i < 10; i++) {
