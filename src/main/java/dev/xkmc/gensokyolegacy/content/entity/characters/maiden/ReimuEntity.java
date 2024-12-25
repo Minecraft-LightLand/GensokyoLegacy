@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;
 
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
-import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.world.damagesource.DamageSource;
@@ -19,11 +18,6 @@ public class ReimuEntity extends MaidenEntity {
 	@Override
 	public YoukaiFeatureSet getFeatures() {
 		return YoukaiFeatureSet.MAIDEN;
-	}
-
-	@Override
-	public void initSpellCard() {
-		TouhouSpellCards.setReimu(this);
 	}
 
 	@Override

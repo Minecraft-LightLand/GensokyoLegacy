@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.fairy;
 
-import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.sensor.YoukaiFindPreySensor;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiSearchTargetTask;
@@ -78,11 +77,6 @@ public class CirnoEntity extends GeneralYoukaiEntity {
 		board.addSensor(new YoukaiFindPreySensor<>(CirnoEntity::playOrHunt));
 
 		board.addPrioritizedActivity(GLBrains.HUNT.get(), GLBrains.MEM_PREY.get(), 200);
-	}
-
-	@Override
-	public void initSpellCard() {
-		TouhouSpellCards.set(this);
 	}
 
 	private boolean playOrHunt() {

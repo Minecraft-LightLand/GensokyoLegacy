@@ -42,7 +42,7 @@ public class MarisaSpell extends ActualSpellCard {
 		boolean r0 = holder.random().nextDouble() < 0.3;
 		boolean r1 = holder.random().nextDouble() < 0.3;
 		if (!r0 && (close || r1 || far && !fast)) {
-			addTicker(new MasterSpark(target));
+			addTicker(new MasterSpark(target.subtract(cen).normalize()));
 			cooldown = 100;
 		} else if (far && fast || r0) {
 			addTicker(new EarthLight());
@@ -141,7 +141,7 @@ public class MarisaSpell extends ActualSpellCard {
 			if (target == null) return true;
 			var cen = holder.center();
 			if (tick == 0) {
-				var e = holder.prepareLaser(1, cen, target.subtract(cen).normalize(), 80,
+				var e = holder.prepareLaser(1, cen, target, 80,
 						DanmakuItems.Laser.LASER, DyeColor.YELLOW);
 				e.setupTime(20, 1, 1, 1);
 				e.mover = new AttachedMover();
@@ -150,18 +150,16 @@ public class MarisaSpell extends ActualSpellCard {
 			if (tick > 20) {
 				var tar = holder.target();
 				if (tar != null) {
-					double maxMove = 0.02;
-					var da = target.subtract(cen).normalize();
+					double maxMove = 0.1;
 					var db = tar.subtract(cen).normalize();
-					double dist = da.distanceTo(db);
+					double dist = target.distanceTo(db);
 					double perc = dist < maxMove ? 1 : maxMove / dist;
-					target = target.lerp(tar, perc);
+					target = target.lerp(db, perc);
 				}
-				var forw = target.subtract(cen).normalize();
 				var rand = holder.random();
-				var o = DanmakuHelper.getOrientation(forw);
+				var o = DanmakuHelper.getOrientation(target);
 				for (int i = 0; i < 20; i++) {
-					var pos = cen.add(forw.scale(i * 1.4 + 2));
+					var pos = cen.add(target.scale(i * 1.4 + 2));
 					double x = rand.nextDouble() * 30 - 15;
 					double y = rand.nextDouble() * 30 - 15;
 					var vec = o.rotateDegrees(x, y);

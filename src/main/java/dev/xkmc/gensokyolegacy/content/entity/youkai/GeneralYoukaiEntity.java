@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.youkai;
 
+import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManager;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -60,6 +61,11 @@ public class GeneralYoukaiEntity extends SmartYoukaiEntity {
 	@Override
 	protected YoukaiCombatManager createCombatManager() {
 		return new DefaultCombatManager(this, SPELL);
+	}
+
+	@Override
+	public void initSpellCard() {
+		TouhouSpellCards.set(this);
 	}
 
 }

@@ -4,13 +4,13 @@ import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
 import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
-import dev.xkmc.danmakuapi.content.spell.mover.RectMover;
 import dev.xkmc.danmakuapi.content.spell.spellcard.ActualSpellCard;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.fastprojectileapi.entity.ProjectileMovement;
+import dev.xkmc.gensokyolegacy.content.spell.part.ReimuPart;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.sounds.SoundEvents;
@@ -48,14 +48,11 @@ public class ReimuSpell extends ActualSpellCard {
 	}
 
 	private void shoot(boolean far) {
-		var ans = new StateChange();
-		ans.r0 = far ? 32 : 8;
-		ans.r1 = far ? 32 : 6;
-		ans.t0 = far ? 10 : 20;
-		ans.t1 = far ? 10 : 20;
-		ans.termSpeed = far ? 3 : 1;
-		if (abyss) ans.color = DyeColor.BLUE;
-		addTicker(ans);
+		ReimuPart<ReimuSpell> ans = new ReimuPart<>();
+		if (far) ans.setRad(32, 32, 10, 10, 3);
+		else ans.setRad(8, 6, 20, 20, 1);
+		addTicker(ans.setVals(20, 30, 40, 60)
+				.setProp(DanmakuItems.Bullet.CIRCLE, abyss ? DyeColor.BLUE : DyeColor.RED));
 	}
 
 	private void intercept(CardHolder holder, Vec3 target) {
@@ -125,20 +122,13 @@ public class ReimuSpell extends ActualSpellCard {
 		int n = 8;
 		int s = r.nextDouble() < 0.5 ? -1 : 1;
 		for (int i = 0; i <= 5; i++) {
-			var ans = new StateChange();
-			ans.r0 = far ? 32 : 24;
-			ans.r1 = far ? 32 : 18;
-			ans.t0 = far ? 10 : 20;
-			ans.t1 = far ? 10 : 20;
-			ans.termSpeed = far ? 3 : 1;
-			ans.n = n;
-			ans.bullet = DanmakuItems.Bullet.BUBBLE;
-			ans.pos = holder.center();
-			ans.init = DanmakuHelper.getOrientation(ori, normal).rotateDegrees(s * (i - 2) * 360d / n / 4);
-			ans.normal = normal;
-			ans.tick = -i * 2;
-			if (abyss) ans.color = DyeColor.BLUE;
-			addTicker(ans);
+			var init = DanmakuHelper.getOrientation(ori, normal).rotateDegrees(s * (i - 2) * 360d / n / 4);
+			ReimuPart<ReimuSpell> ans = new ReimuPart<>();
+			if (far) ans.setRad(32, 32, 10, 10, 3);
+			else ans.setRad(24, 18, 20, 20, 1);
+			addTicker(ans.setVals(n, 30, 40, 60)
+					.init(holder.center(), init, normal, -i * 2)
+					.setProp(DanmakuItems.Bullet.BUBBLE, abyss ? DyeColor.BLUE : DyeColor.RED));
 		}
 	}
 
@@ -156,86 +146,6 @@ public class ReimuSpell extends ActualSpellCard {
 			mob.playSound(SoundEvents.ENDERMAN_TELEPORT, 1.0F, 1.0F);
 		}
 		return true;
-	}
-
-	@SerialClass
-	public static class StateChange extends Ticker<ReimuSpell> {
-
-		@SerialField
-		private Vec3 pos, init, normal, target1;
-		@SerialField
-		private int r0 = 8, r1 = 6, n = 20;
-		@SerialField
-		private int t0 = 20, t1 = 20, t2 = 40, dt = 20;
-		@SerialField
-		private double termSpeed = 1;
-		@SerialField
-		private DanmakuItems.Bullet bullet = DanmakuItems.Bullet.CIRCLE;
-		@SerialField
-		private DyeColor color = DyeColor.RED;
-
-		@Override
-		public boolean tick(CardHolder holder, ReimuSpell card) {
-			step(holder);
-			super.tick(holder, card);
-			return false;
-		}
-
-		private void step(CardHolder holder) {
-			var le = holder.target();
-			if (le == null) return;
-			var r = holder.random();
-			if (init == null) {
-				pos = holder.center();
-				var dir = le.subtract(holder.center()).normalize();
-				init = DanmakuHelper.getOrientation(dir).rotateDegrees(90, 60 * r.nextDouble() - 30);
-				normal = dir.cross(init);
-			}
-			if (tick < 0) return;
-			if (tick == 0) {
-				DanmakuHelper.Orientation o0 = DanmakuHelper.getOrientation(init, normal);
-				double acc = r0 * 2d / t0 / t0;
-				for (int i = 0; i < n; i++) {
-					var front = o0.rotateDegrees(360.0 / n * i);
-					var vec = front.scale(acc * t0);
-					var e = holder.prepareDanmaku(t0, vec, bullet, DyeColor.LIGHT_GRAY);
-					e.mover = new RectMover(pos, vec, front.scale(-acc));
-					holder.shoot(e);
-				}
-			}
-			if (tick == t0) {
-				target1 = le;
-				DanmakuHelper.Orientation o0 = DanmakuHelper.getOrientation(init, normal);
-				double acc = r1 * 2d / t1 / t1;
-				for (int i = 0; i < n; i++) {
-					var f0 = o0.rotateDegrees(360.0 / n * i);
-					var p0 = pos.add(f0.scale(r0));
-					var f1 = target1.subtract(p0).normalize();
-					var vec = f1.scale(acc * t1);
-					var e = holder.prepareDanmaku(t1, vec, bullet, DyeColor.PURPLE);
-					e.setPos(p0);
-					e.mover = new RectMover(p0, vec, f1.scale(-acc));
-					holder.shoot(e);
-				}
-			}
-			if (tick == t0 + t1) {
-				DanmakuHelper.Orientation o0 = DanmakuHelper.getOrientation(init, normal);
-				for (int i = 0; i < n; i++) {
-					var f0 = o0.rotateDegrees(360.0 / n * i);
-					var p0 = pos.add(f0.scale(r0));
-					var f1 = target1.subtract(p0).normalize();
-					var p1 = p0.add(f1.scale(r1));
-					var f2 = le.subtract(p1).normalize();
-					var vec = f2.scale(termSpeed);
-					int t = t2 + r.nextInt(dt);
-					var e = holder.prepareDanmaku(t, vec, bullet, color);
-					e.setPos(p1);
-					e.mover = new RectMover(p1, vec, Vec3.ZERO);
-					holder.shoot(e);
-				}
-			}
-		}
-
 	}
 
 	@SerialClass

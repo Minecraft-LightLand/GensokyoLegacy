@@ -68,5 +68,9 @@
 	"item.gensokyolegacy.luna_child_spawn_egg": "露娜刷怪蛋",
 	"item.gensokyolegacy.mystia_lorelei_spawn_egg": "米斯蒂亚刷怪蛋",
 	"item.gensokyolegacy.star_sapphire_spawn_egg": "斯塔刷怪蛋",
-	"item.gensokyolegacy.sunny_milk_spawn_egg": "桑尼刷怪蛋"
+	"item.gensokyolegacy.sunny_milk_spawn_egg": "桑尼刷怪蛋",
+	"block.gensokyolegacy.mistletoe_foliage": "Mistletoe Foliage",
+	"block.gensokyolegacy.mistletoe_leaves": "Mistletoe Leaves",
+	"item.gensokyolegacy.mistletoe_branch": "Mistletoe Branch",
+	"item.gensokyolegacy.spell_sanae": "Sanae's Spellcard \"Inherited Ritual\""
 }
