@@ -1,19 +1,23 @@
-package dev.xkmc.gensokyolegacy.content.block.plant;
+package dev.xkmc.gensokyolegacy.content.block.mistletoe;
 
 import dev.xkmc.l2modularblock.core.BlockTemplates;
 import dev.xkmc.l2modularblock.core.DelegateBlock;
+import dev.xkmc.l2modularblock.mult.PlacementBlockMethod;
 import dev.xkmc.l2modularblock.mult.RandomTickBlockMethod;
 import dev.xkmc.l2modularblock.mult.ShapeUpdateBlockMethod;
+import dev.xkmc.l2modularblock.mult.SurviveBlockMethod;
 import dev.xkmc.l2modularblock.one.ShapeBlockMethod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -21,7 +25,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.CommonHooks;
 import org.jetbrains.annotations.Nullable;
 
-public class MistletoePlaneBlock implements ShapeBlockMethod, RandomTickBlockMethod, ShapeUpdateBlockMethod {
+public class MistletoeFoliageBlock implements
+		ShapeBlockMethod, RandomTickBlockMethod, ShapeUpdateBlockMethod,
+		PlacementBlockMethod, SurviveBlockMethod {
 
 	public static final VoxelShape[] SHAPES;
 
@@ -42,10 +48,24 @@ public class MistletoePlaneBlock implements ShapeBlockMethod, RandomTickBlockMet
 		}
 	}
 
+	public static DelegateBlock create() {
+		var prop = BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES);
+		return DelegateBlock.newBaseBlock(prop, BlockTemplates.ALL_DIRECTION, new MistletoeFoliageBlock(), BlockTemplates.WATER);
+	}
+
+	public static boolean isSupported(BlockState self, BlockGetter level, BlockState state, BlockPos pos) {
+		return state.isFaceSturdy(level, pos, self.getValue(BlockTemplates.FACING), SupportType.FULL);
+	}
+
 	@Nullable
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
 		return SHAPES[state.getValue(BlockTemplates.FACING).ordinal()];
+	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockState state, BlockPlaceContext ctx) {
+		return state.setValue(BlockTemplates.FACING, ctx.getClickedFace());
 	}
 
 	@Override
@@ -73,21 +93,22 @@ public class MistletoePlaneBlock implements ShapeBlockMethod, RandomTickBlockMet
 	}
 
 	@Override
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+		var next = pos.relative(state.getValue(BlockTemplates.FACING).getOpposite());
+		return isSupported(state, level, level.getBlockState(next), next);
+	}
+
+	@Override
 	public BlockState updateShape(
 			Block block, BlockState current, BlockState selfState, Direction dir,
 			BlockState neighState, LevelAccessor level, BlockPos selfPos, BlockPos neighPos
 	) {
-		if (dir == selfState.getValue(BlockTemplates.FACING)) {
-			if (!neighState.is(BlockTags.LEAVES) || !neighState.isCollisionShapeFullBlock(level, neighPos)) {
+		if (dir.getOpposite() == selfState.getValue(BlockTemplates.FACING)) {
+			if (!isSupported(selfState, level, neighState, neighPos)) {
 				return Blocks.AIR.defaultBlockState();
 			}
 		}
 		return current;
-	}
-
-	public static DelegateBlock create() {
-		var prop = BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES);
-		return DelegateBlock.newBaseBlock(prop, BlockTemplates.ALL_DIRECTION, new MistletoePlaneBlock(), BlockTemplates.WATER);
 	}
 
 }

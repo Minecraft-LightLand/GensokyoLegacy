@@ -2,15 +2,15 @@ package dev.xkmc.gensokyolegacy.init.registrate;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.content.item.SpellItem;
-import dev.xkmc.danmakuapi.init.DanmakuAPI;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.gensokyolegacy.content.block.plant.MistletoeBranch;
+import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeBranch;
 import dev.xkmc.gensokyolegacy.content.spell.item.MarisaItemSpell;
 import dev.xkmc.gensokyolegacy.content.spell.item.ReimuItemSpell;
 import dev.xkmc.gensokyolegacy.content.item.DebugGlasses;
 import dev.xkmc.gensokyolegacy.content.item.DebugWand;
 import dev.xkmc.gensokyolegacy.content.item.FairyIceItem;
 import dev.xkmc.gensokyolegacy.content.item.FrozenFrogItem;
+import dev.xkmc.gensokyolegacy.content.spell.item.SanaeItemSpell;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.world.entity.animal.FrogVariant;
@@ -24,7 +24,7 @@ public class GLItems {
 	public static final ItemEntry<FairyIceItem> FAIRY_ICE_CRYSTAL;
 	public static final ItemEntry<FrozenFrogItem> FROZEN_FROG_COLD, FROZEN_FROG_WARM, FROZEN_FROG_TEMPERATE;
 	public static final ItemEntry<MistletoeBranch> MISTLETOE_BRANCH;
-	public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL;
+	public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL, SANAE_SPELL;
 	public static final ItemEntry<DebugGlasses> DEBUG_GLASSES;
 	public static final ItemEntry<DebugWand> DEBUG_WAND;
 
@@ -57,6 +57,14 @@ public class GLItems {
 						() -> DanmakuItems.Laser.LASER.get(DyeColor.WHITE).get()))
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Marisa's Spellcard \"Master Spark\"")
+				.register();
+
+		SANAE_SPELL = GensokyoLegacy.REGISTRATE
+				.item("spell_sanae", p -> new SpellItem(
+						p.stacksTo(1), SanaeItemSpell::new, false,
+						() -> DanmakuItems.Bullet.BALL.get(DyeColor.GREEN).get()))//TODO spark
+				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
+				.lang("Sanae's Spellcard \"Inherited Ritual\"")
 				.register();
 
 		DEBUG_GLASSES = GensokyoLegacy.REGISTRATE.item("debug_glasses", p -> new DebugGlasses(p.stacksTo(1)))

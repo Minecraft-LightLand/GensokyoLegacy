@@ -10,8 +10,8 @@ import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
 import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
-import dev.xkmc.gensokyolegacy.content.block.plant.MistletoeLeavesBlock;
-import dev.xkmc.gensokyolegacy.content.block.plant.MistletoePlaneBlock;
+import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeLeavesBlock;
+import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeFoliageBlock;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
 import dev.xkmc.l2modularblock.core.DelegateBlock;
@@ -75,7 +75,7 @@ public class GLBlocks {
 				.item().tag(ItemTags.LEAVES).build()
 				.register();
 
-		MISTLETOE_FOLIAGE = GensokyoLegacy.REGISTRATE.block("mistletoe_foliage", p -> MistletoePlaneBlock.create())
+		MISTLETOE_FOLIAGE = GensokyoLegacy.REGISTRATE.block("mistletoe_foliage", p -> MistletoeFoliageBlock.create())
 				.blockstate((ctx, pvd) -> pvd.directionalBlock(ctx.get(), pvd.models()
 						.carpet(ctx.getName(), pvd.modLoc("block/mistletoe_leaves"))
 						.renderType("cutout")))
