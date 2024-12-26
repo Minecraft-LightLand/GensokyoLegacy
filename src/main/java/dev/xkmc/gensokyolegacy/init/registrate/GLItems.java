@@ -11,6 +11,7 @@ import dev.xkmc.gensokyolegacy.content.item.DebugWand;
 import dev.xkmc.gensokyolegacy.content.item.FairyIceItem;
 import dev.xkmc.gensokyolegacy.content.item.FrozenFrogItem;
 import dev.xkmc.gensokyolegacy.content.spell.item.SanaeItemSpell;
+import dev.xkmc.gensokyolegacy.content.spell.item.YukariItemSpellLaser;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.world.entity.animal.FrogVariant;
@@ -24,7 +25,7 @@ public class GLItems {
 	public static final ItemEntry<FairyIceItem> FAIRY_ICE_CRYSTAL;
 	public static final ItemEntry<FrozenFrogItem> FROZEN_FROG_COLD, FROZEN_FROG_WARM, FROZEN_FROG_TEMPERATE;
 	public static final ItemEntry<MistletoeBranch> MISTLETOE_BRANCH;
-	public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL, SANAE_SPELL;
+	public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL, SANAE_SPELL, YUKARI_SPELL, MYSTIA_SPELL;
 	public static final ItemEntry<DebugGlasses> DEBUG_GLASSES;
 	public static final ItemEntry<DebugWand> DEBUG_WAND;
 
@@ -65,6 +66,22 @@ public class GLItems {
 						() -> DanmakuItems.Bullet.BALL.get(DyeColor.GREEN).get()))//TODO spark
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Sanae's Spellcard \"Inherited Ritual\"")
+				.register();
+
+		YUKARI_SPELL = GensokyoLegacy.REGISTRATE
+				.item("spell_yukari", p -> new SpellItem(
+						p.stacksTo(1), YukariItemSpellLaser::new, false,
+						() -> DanmakuItems.Laser.LASER.get(DyeColor.RED).get()))
+				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
+				.lang("Barrier \"Mesh of Light & Darkness\"")
+				.register();
+
+		MYSTIA_SPELL = GensokyoLegacy.REGISTRATE
+				.item("spell_mystia", p -> new SpellItem(
+						p.stacksTo(1), YukariItemSpellLaser::new, false,
+						() -> DanmakuItems.Bullet.MENTOS.get(DyeColor.GREEN).get()))
+				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
+				.lang("Night Sparrow \"Midnight Chorus Master\"")
 				.register();
 
 		DEBUG_GLASSES = GensokyoLegacy.REGISTRATE.item("debug_glasses", p -> new DebugGlasses(p.stacksTo(1)))

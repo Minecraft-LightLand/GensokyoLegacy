@@ -52,7 +52,7 @@ public class MystiaPart<T> extends Ticker<T> {
 					mover.add(t0, new RectMover(p0, v, a));
 					var p1 = p0.add(v.scale(t0 * 0.5));
 					mover.add(t1, new ZeroMover(vec, vec, t1));
-					mover.add(20, new RectMover(p1, Vec3.ZERO, a.scale(-1)));
+					mover.add(20, new RectMover(p1, Vec3.ZERO, vec.scale(speed / 10)));
 					e.mover = mover;
 					holder.shoot(e);
 				}

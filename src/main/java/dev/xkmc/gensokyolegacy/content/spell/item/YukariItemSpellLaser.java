@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
 @SerialClass
-public class YukariItemSpell extends ItemSpell {
+public class YukariItemSpellLaser extends ItemSpell {
 
 	@Override
 	public void start(Player player, @Nullable LivingEntity target) {
