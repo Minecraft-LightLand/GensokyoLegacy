@@ -3,7 +3,6 @@ package dev.xkmc.gensokyolegacy.content.effect;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.youkaishomecoming.content.effect.EmptyEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 

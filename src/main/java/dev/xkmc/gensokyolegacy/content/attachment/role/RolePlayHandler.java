@@ -4,7 +4,6 @@ import dev.xkmc.gensokyolegacy.content.role.core.Role;
 import dev.xkmc.l2core.util.Proxy;
 import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;

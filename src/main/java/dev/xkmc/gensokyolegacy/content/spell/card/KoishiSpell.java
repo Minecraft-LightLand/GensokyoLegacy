@@ -117,11 +117,17 @@ public class KoishiSpell extends ActualSpellCard {
 		@SerialField
 		private Vec3 pos, front;
 		@SerialField
-		private int r0 = 4;
+		private final int r0 = 4;
 		@SerialField
-		private int t0 = 20, t2 = 40, dt = 20;
+		private final int t0 = 20;
 		@SerialField
-		private double termSpeed = 1, dr = 20;
+		private final int t2 = 40;
+		@SerialField
+		private final int dt = 20;
+		@SerialField
+		private final double termSpeed = 1;
+		@SerialField
+		private final double dr = 20;
 
 		@Override
 		public boolean tick(CardHolder holder, KoishiSpell card) {

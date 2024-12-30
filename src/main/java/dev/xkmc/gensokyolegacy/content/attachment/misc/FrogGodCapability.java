@@ -1,12 +1,12 @@
 package dev.xkmc.gensokyolegacy.content.attachment.misc;
 
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2core.capability.attachment.GeneralCapabilityTemplate;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.world.entity.Entity;
@@ -33,7 +33,7 @@ public class FrogGodCapability extends GeneralCapabilityTemplate<Frog, FrogGodCa
 	}
 
 	public void syncToClient(LivingEntity entity) {
-		YoukaisHomecoming.HANDLER.toTrackingPlayers(new FrogSyncPacket(entity, this), entity);
+		GensokyoLegacy.HANDLER.toTrackingPlayers(new FrogSyncPacket(entity, this), entity);
 	}
 
 	public void eat(Frog frog, Entity other) {
@@ -81,7 +81,7 @@ public class FrogGodCapability extends GeneralCapabilityTemplate<Frog, FrogGodCa
 	public static void startTracking(Frog frog, Player entity) {
 		if (GLMeta.FROG_GOD.type().isProper(frog)) {
 			FrogGodCapability cap = GLMeta.FROG_GOD.type().getOrCreate(frog);
-			YoukaisHomecoming.HANDLER.toClientPlayer(new FrogSyncPacket(frog, cap), (ServerPlayer) entity);
+			GensokyoLegacy.HANDLER.toClientPlayer(new FrogSyncPacket(frog, cap), (ServerPlayer) entity);
 		}
 	}
 

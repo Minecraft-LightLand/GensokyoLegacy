@@ -163,7 +163,7 @@ public class YukariSpell extends ActualSpellCard {
 			if (tick == 0) {
 				var target = holder.target();
 				if (target != null) {
-					card.hiddenImpl(holder, pos, target);
+					hiddenImpl(holder, pos, target);
 				}
 			}
 			super.tick(holder, card);

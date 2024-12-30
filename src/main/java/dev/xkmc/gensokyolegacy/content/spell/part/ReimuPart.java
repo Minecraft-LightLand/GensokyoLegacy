@@ -5,7 +5,6 @@ import dev.xkmc.danmakuapi.content.spell.mover.RectMover;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.gensokyolegacy.content.spell.card.ReimuSpell;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.world.item.DyeColor;

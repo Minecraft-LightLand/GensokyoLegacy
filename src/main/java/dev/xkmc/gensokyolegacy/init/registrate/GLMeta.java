@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
-import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRolePlayAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.StructureAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
@@ -8,6 +7,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiAttackCapability;
+import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRolePlayAttachment;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.structure.SetDataProcessor;
 import dev.xkmc.l2core.capability.player.PlayerCapabilityNetworkHandler;

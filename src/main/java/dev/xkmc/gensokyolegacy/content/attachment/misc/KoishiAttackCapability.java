@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.attachment.misc;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLAdvGen;
 import dev.xkmc.gensokyolegacy.init.data.GLDamageTypes;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
@@ -11,8 +12,6 @@ import dev.xkmc.l2core.capability.player.PlayerCapabilityTemplate;
 import dev.xkmc.l2library.content.raytrace.RayTraceUtil;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
-import dev.xkmc.youkaishomecoming.init.data.YHAdvGen;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -65,7 +64,7 @@ public class KoishiAttackCapability extends PlayerCapabilityTemplate<KoishiAttac
 			tickRemain--;
 			if (tickRemain == DELAY - MARK_POS) {
 				source = RayTraceUtil.rayTraceBlock(player.level(), player, -2).getLocation();
-				YoukaisHomecoming.HANDLER.toClientPlayer(new KoishiStartPacket(KoishiStartPacket.Type.PARTICLE, source), sp);
+				GensokyoLegacy.HANDLER.toClientPlayer(new KoishiStartPacket(KoishiStartPacket.Type.PARTICLE, source), sp);
 			}
 			if (tickRemain == 0 && source != null) {
 				attackCooldown = GLModConfig.SERVER.koishiAttackCoolDown.get();
@@ -96,7 +95,7 @@ public class KoishiAttackCapability extends PlayerCapabilityTemplate<KoishiAttac
 		if (player.getRandom().nextDouble() < GLModConfig.SERVER.koishiAttackChance.get()) {
 			tickRemain = DELAY;
 			GLCriteriaTriggers.KOISHI_RING.get().trigger(sp);
-			YoukaisHomecoming.HANDLER.toClientPlayer(new KoishiStartPacket(KoishiStartPacket.Type.START, player.position()), sp);
+			GensokyoLegacy.HANDLER.toClientPlayer(new KoishiStartPacket(KoishiStartPacket.Type.START, player.position()), sp);
 		}
 
 	}

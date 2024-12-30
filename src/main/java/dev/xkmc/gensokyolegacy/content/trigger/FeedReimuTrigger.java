@@ -1,4 +1,3 @@
-
 package dev.xkmc.gensokyolegacy.content.trigger;
 
 import com.mojang.serialization.Codec;

@@ -1,4 +1,3 @@
-
 package dev.xkmc.gensokyolegacy.content.spell.part;
 
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;

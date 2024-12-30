@@ -2,11 +2,11 @@ package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.RegistrateAdvancementProvider;
 import dev.xkmc.gensokyolegacy.compat.food.GLFood;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLCriteriaTriggers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.l2core.serial.advancements.AdvancementGenerator;
 import dev.xkmc.l2core.serial.advancements.CriterionBuilder;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.ConsumeItemTrigger;
@@ -18,9 +18,9 @@ import java.util.Optional;
 
 public class GLAdvGen {
 
-	public static final ResourceLocation FLESH_WARN = YoukaisHomecoming.loc("flesh_warn");
-	public static final ResourceLocation HURT_WARN = YoukaisHomecoming.loc("hurt_warn");
-	public static final ResourceLocation KOISHI_FIRST = YoukaisHomecoming.loc("koishi_first");
+	public static final ResourceLocation FLESH_WARN = GensokyoLegacy.loc("flesh_warn");
+	public static final ResourceLocation HURT_WARN = GensokyoLegacy.loc("hurt_warn");
+	public static final ResourceLocation KOISHI_FIRST = GensokyoLegacy.loc("koishi_first");
 
 	public static void genAdv(RegistrateAdvancementProvider pvd) {
 		pvd.accept(Advancement.Builder.advancement().addCriterion("flesh_warn",
@@ -33,7 +33,7 @@ public class GLAdvGen {
 				GLCriteriaTriggers.KOISHI_FIRST.get().createCriterion(new PlayerTrigger.TriggerInstance(Optional.empty()))
 		).build(KOISHI_FIRST));
 
-		var gen = new AdvancementGenerator(pvd, YoukaisHomecoming.MODID);
+		var gen = new AdvancementGenerator(pvd, GensokyoLegacy.MODID);
 		var b = gen.new TabBuilder("main");
 		var root = b.root("welcome_to_youkais_homecoming", GLItems.SUWAKO_HAT.asStack(),
 				CriterionBuilder.one(PlayerTrigger.TriggerInstance.tick()),

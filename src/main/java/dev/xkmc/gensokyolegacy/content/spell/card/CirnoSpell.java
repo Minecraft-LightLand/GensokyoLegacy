@@ -1,15 +1,13 @@
 package dev.xkmc.gensokyolegacy.content.spell.card;
 
 import dev.xkmc.danmakuapi.content.entity.DanmakuHelper;
-import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.danmakuapi.content.spell.mover.RectMover;
 import dev.xkmc.danmakuapi.content.spell.spellcard.ActualSpellCard;
 import dev.xkmc.danmakuapi.content.spell.spellcard.CardHolder;
 import dev.xkmc.danmakuapi.content.spell.spellcard.Ticker;
+import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec3;
 
@@ -41,11 +39,21 @@ public class CirnoSpell extends ActualSpellCard {
 		@SerialField
 		private Vec3 pos, init, normal;
 		@SerialField
-		private int r0 = 12, n = 3, m = 4;
+		private final int r0 = 12;
 		@SerialField
-		private int t0 = 20, t2 = 40, dt = 20;
+		private final int n = 3;
 		@SerialField
-		private double termSpeed = 1, dr = 20;
+		private final int m = 4;
+		@SerialField
+		private final int t0 = 20;
+		@SerialField
+		private final int t2 = 40;
+		@SerialField
+		private final int dt = 20;
+		@SerialField
+		private final double termSpeed = 1;
+		@SerialField
+		private final double dr = 20;
 
 		@Override
 		public boolean tick(CardHolder holder, CirnoSpell card) {

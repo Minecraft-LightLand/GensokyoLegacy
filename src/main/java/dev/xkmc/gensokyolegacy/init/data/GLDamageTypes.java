@@ -4,7 +4,6 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2damagetracker.init.data.DamageTypeAndTagsGen;
 import dev.xkmc.l2damagetracker.init.data.L2DamageTypes;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageSource;
@@ -15,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 public class GLDamageTypes extends DamageTypeAndTagsGen {
 
 	public static final ResourceKey<DamageType> KOISHI = create("koishi_attack"
-	, "Koishi stabbed %s in the back", "%2$s stabbed %1$s in the back");
+			, "Koishi stabbed %s in the back", "%2$s stabbed %1$s in the back");
 	public static final ResourceKey<DamageType> RUMIA = create("rumia_attack",
 			"%s is eaten by Rumia", "%s is eaten by %s");
 
@@ -25,10 +24,6 @@ public class GLDamageTypes extends DamageTypeAndTagsGen {
 				.add(L2DamageTypes.BYPASS_MAGIC);
 		new DamageTypeHolder(RUMIA, new DamageType("rumia_attack", 0.1f))
 				.add(L2DamageTypes.BYPASS_MAGIC);
-	}
-
-	private static ResourceKey<DamageType> createDamage(String id) {
-		return ResourceKey.create(Registries.DAMAGE_TYPE, YoukaisHomecoming.loc(id));
 	}
 
 	public static DamageSource koishi(LivingEntity target, Vec3 source) {

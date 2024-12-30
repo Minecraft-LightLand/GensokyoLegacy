@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.content.client.model;// Made with Blockbench 4.9
 // Paste this class into your mod and generate all required imports
 
 
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.PartPose;
@@ -11,7 +11,7 @@ import net.minecraft.client.model.geom.builders.*;
 
 public class KoishiHatModel {
 
-	public static final ModelLayerLocation HAT = new ModelLayerLocation(YoukaisHomecoming.loc("koishi_hat"), "main");
+	public static final ModelLayerLocation HAT = new ModelLayerLocation(GensokyoLegacy.loc("koishi_hat"), "main");
 
 	public static LayerDefinition createHat() {
 		MeshDefinition meshdefinition = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0F);

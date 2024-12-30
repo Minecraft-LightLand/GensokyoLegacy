@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.init.data;
 
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.util.ConfigInit;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class GLModConfig {
@@ -113,7 +113,7 @@ public class GLModConfig {
 
 	}
 
-	public static final Server SERVER = YoukaisHomecoming.REGISTRATE.registerSynced(Server::new);
+	public static final Server SERVER = GensokyoLegacy.REGISTRATE.registerSynced(Server::new);
 
 	/**
 	 * Registers any relevant listeners for config

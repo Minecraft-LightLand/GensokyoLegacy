@@ -154,7 +154,13 @@ public class ReimuSpell extends ActualSpellCard {
 		@SerialField
 		private Vec3 vec = Vec3.ZERO, dir = new Vec3(1, 0, 0);
 		@SerialField
-		private double dist = 32, w = 360d / 60 * 3, speed = 2, duration = 80;
+		private final double dist = 32;
+		@SerialField
+		private final double w = 360d / 60 * 3;
+		@SerialField
+		private final double speed = 2;
+		@SerialField
+		private final double duration = 80;
 
 		@Override
 		public boolean tick(CardHolder holder, ReimuSpell card) {

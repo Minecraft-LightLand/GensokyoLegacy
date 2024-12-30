@@ -2,8 +2,8 @@ package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureTagGen;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -41,15 +41,15 @@ public class GLTagGen {
 	}
 
 	public static TagKey<Item> item(String id) {
-		return ItemTags.create(YoukaisHomecoming.loc(id));
+		return ItemTags.create(GensokyoLegacy.loc(id));
 	}
 
 	public static TagKey<Block> block(String id) {
-		return BlockTags.create(YoukaisHomecoming.loc(id));
+		return BlockTags.create(GensokyoLegacy.loc(id));
 	}
 
 	public static TagKey<EntityType<?>> entity(String id) {
-		return TagKey.create(Registries.ENTITY_TYPE, YoukaisHomecoming.loc(id));
+		return TagKey.create(Registries.ENTITY_TYPE, GensokyoLegacy.loc(id));
 	}
 
 }

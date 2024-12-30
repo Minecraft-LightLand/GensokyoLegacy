@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.content.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.model.FrogModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelPart;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class FrogHatLayer<T extends Frog> extends RenderLayer<T, FrogModel<T>> {
 
-	private static final ResourceLocation TEX = YoukaisHomecoming.loc("textures/models/straw_hat.png");
+	private static final ResourceLocation TEX = GensokyoLegacy.loc("textures/models/straw_hat.png");
 	private static final List<String> PART = List.of("body", "head", "hat");
 
 	private final ModelPart model;

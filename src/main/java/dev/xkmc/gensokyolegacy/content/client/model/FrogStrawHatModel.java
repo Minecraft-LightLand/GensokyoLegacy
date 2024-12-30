@@ -1,13 +1,14 @@
 package dev.xkmc.gensokyolegacy.content.client.model;
 
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
+
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 
 public class FrogStrawHatModel {
 
-	public static final ModelLayerLocation STRAW = new ModelLayerLocation(YoukaisHomecoming.loc("frog_straw_hat"), "main");
+	public static final ModelLayerLocation STRAW = new ModelLayerLocation(GensokyoLegacy.loc("frog_straw_hat"), "main");
 
 	public static MeshDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();

@@ -2,7 +2,6 @@ package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -117,6 +116,6 @@ public enum GLLang {
 			pvd.add(e.key, e.def);
 		}
 
-		pvd.add(YoukaisHomecoming.MODID + ".subtitle.koishi_ring", "Koishi Phone Call");
+		pvd.add(GensokyoLegacy.MODID + ".subtitle.koishi_ring", "Koishi Phone Call");
 	}
 }

@@ -7,5 +7,4 @@ import dev.xkmc.l2serial.serialization.marker.SerialClass;
 public class PlayerRolePlayAttachment extends PlayerCapabilityTemplate<PlayerRolePlayAttachment> {
 
 
-
 }
