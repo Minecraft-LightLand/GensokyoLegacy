@@ -64,7 +64,7 @@ public class MarisaItemSpell extends ItemSpell {
 					var vec = o.rotateDegrees(x, y);
 					var v = rand.nextDouble() + 2;
 					var e = holder.prepareDanmaku(40, vec.scale(v),
-							DanmakuItems.Bullet.MENTOS, DyeColor.WHITE);
+							DanmakuItems.Bullet.STAR, DyeColor.WHITE);
 					e.setPos(pos);
 					holder.shoot(e);
 				}
@@ -75,7 +75,7 @@ public class MarisaItemSpell extends ItemSpell {
 					var vec = o.rotateDegrees(x, y);
 					var v = rand.nextDouble() * 0.3 + 0.6;
 					var e = holder.prepareDanmaku(40, vec.scale(v),
-							DanmakuItems.Bullet.BALL, DyeColor.YELLOW);
+							DanmakuItems.Bullet.SPARK, DyeColor.YELLOW);
 					e.setPos(cen.add(vec.scale(v + 1)));
 					holder.shoot(e);
 				}

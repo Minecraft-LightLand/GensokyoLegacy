@@ -71,7 +71,7 @@ public class SanaeItemSpell extends ItemSpell {
 				for (int j = 0; j < m; j++) {
 					var d = p0.lerp(p1, (tick + 1d * j / m) / n);
 					var e = holder.prepareDanmaku(65 + n - tick, Vec3.ZERO,
-							DanmakuItems.Bullet.BALL, color//TODO spark
+							DanmakuItems.Bullet.SPARK, color
 					);
 					var p = pos.add(d.scale(4));
 					e.setPos(p);

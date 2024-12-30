@@ -80,7 +80,7 @@ public class MarisaSpell extends ActualSpellCard {
 					for (int j = 0; j < 5; j++) {
 						double v = 0.35 + t * 0.2 + Math.sin(tick * 0.1 + i) * 0.15;
 						Vec3 dir = o.rotateDegrees(tick * W1 + 72 * j + 24 * t).scale(v * VEC);
-						var e = holder.prepareDanmaku(40, dir, DanmakuItems.Bullet.BALL, COLOR[i]);
+						var e = holder.prepareDanmaku(40, dir, DanmakuItems.Bullet.SPARK, COLOR[i]);
 						e.setPos(pos);
 						e.mover = new RectMover(pos, dir, acc);
 						holder.shoot(e);
@@ -165,7 +165,7 @@ public class MarisaSpell extends ActualSpellCard {
 					var vec = o.rotateDegrees(x, y);
 					var v = rand.nextDouble() + 2;
 					var e = holder.prepareDanmaku(40, vec.scale(v),
-							DanmakuItems.Bullet.MENTOS, DyeColor.WHITE);
+							DanmakuItems.Bullet.STAR, DyeColor.WHITE);
 					e.setPos(pos);
 					holder.shoot(e);
 				}
@@ -176,7 +176,7 @@ public class MarisaSpell extends ActualSpellCard {
 					var vec = o.rotateDegrees(x, y);
 					var v = rand.nextDouble() * 0.3 + 0.6;
 					var e = holder.prepareDanmaku(40, vec.scale(v),
-							DanmakuItems.Bullet.BALL, DyeColor.YELLOW);
+							DanmakuItems.Bullet.SPARK, DyeColor.YELLOW);
 					e.setPos(cen);
 					holder.shoot(e);
 				}

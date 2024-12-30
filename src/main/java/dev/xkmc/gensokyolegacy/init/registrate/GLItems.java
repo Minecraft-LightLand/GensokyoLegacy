@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.init.registrate;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.content.item.SpellItem;
+import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
 import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeBranch;
 import dev.xkmc.gensokyolegacy.content.spell.item.MarisaItemSpell;
@@ -50,6 +51,7 @@ public class GLItems {
 						() -> DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED).get()))
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Reimu's Spellcard \"Innate Dream\"")
+				.tag(DanmakuTagGen.PRESET_SPELL)
 				.register();
 
 		MARISA_SPELL = GensokyoLegacy.REGISTRATE
@@ -58,14 +60,16 @@ public class GLItems {
 						() -> DanmakuItems.Laser.LASER.get(DyeColor.WHITE).get()))
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Marisa's Spellcard \"Master Spark\"")
+				.tag(DanmakuTagGen.PRESET_SPELL)
 				.register();
 
 		SANAE_SPELL = GensokyoLegacy.REGISTRATE
 				.item("spell_sanae", p -> new SpellItem(
 						p.stacksTo(1), SanaeItemSpell::new, false,
-						() -> DanmakuItems.Bullet.BALL.get(DyeColor.GREEN).get()))//TODO spark
+						() -> DanmakuItems.Bullet.SPARK.get(DyeColor.GREEN).get()))
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Sanae's Spellcard \"Inherited Ritual\"")
+				.tag(DanmakuTagGen.PRESET_SPELL)
 				.register();
 
 		YUKARI_SPELL = GensokyoLegacy.REGISTRATE
@@ -74,6 +78,7 @@ public class GLItems {
 						() -> DanmakuItems.Laser.LASER.get(DyeColor.RED).get()))
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Barrier \"Mesh of Light & Darkness\"")
+				.tag(DanmakuTagGen.PRESET_SPELL)
 				.register();
 
 		MYSTIA_SPELL = GensokyoLegacy.REGISTRATE
@@ -82,6 +87,7 @@ public class GLItems {
 						() -> DanmakuItems.Bullet.MENTOS.get(DyeColor.GREEN).get()))
 				.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
 				.lang("Night Sparrow \"Midnight Chorus Master\"")
+				.tag(DanmakuTagGen.PRESET_SPELL)
 				.register();
 
 		DEBUG_GLASSES = GensokyoLegacy.REGISTRATE.item("debug_glasses", p -> new DebugGlasses(p.stacksTo(1)))

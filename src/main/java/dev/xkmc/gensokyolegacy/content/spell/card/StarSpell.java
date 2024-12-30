@@ -57,7 +57,7 @@ public class StarSpell extends ActualSpellCard {
 					double y = holder.random().nextGaussian() * 10;
 					var vec = o.rotateDegrees(x, y).scale(0.4);
 					var e = holder.prepareDanmaku(80, vec,
-							DanmakuItems.Bullet.BALL, DyeColor.BLUE);//TODO spark
+							DanmakuItems.Bullet.SPARK, DyeColor.BLUE);
 					e.setPos(p);
 					holder.shoot(e);
 				}
