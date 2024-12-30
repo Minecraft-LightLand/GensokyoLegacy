@@ -315,6 +315,10 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		getData(le).ifPresent(CharDataHolder::onKillCharacter);
 	}
 
+	public void refreshIdle() {
+		noPlayerTime = 0;
+	}
+
 	// combat
 
 	protected YoukaiCombatManager createCombatManager() {

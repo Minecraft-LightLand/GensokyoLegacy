@@ -8,7 +8,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBlocks;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.youkaishomecoming.init.data.YHBiomeTagsProvider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -93,9 +93,9 @@ public class GLStructureGen {
 	private static final Supplier<List<StructStructure>> STRUCTURES = Lazy.of(GLStructureGen::initStructures);
 
 	public static void dataMap(RegistrateDataMapProvider pvd) {
-		var bedReg = pvd.builder(GLMisc.BED_DATA.reg());
-		var entityReg = pvd.builder(GLMisc.ENTITY_DATA.reg());
-		var structureReg = pvd.builder(GLMisc.STRUCTURE_DATA.reg());
+		var bedReg = pvd.builder(GLMeta.BED_DATA.reg());
+		var entityReg = pvd.builder(GLMeta.ENTITY_DATA.reg());
+		var structureReg = pvd.builder(GLMeta.STRUCTURE_DATA.reg());
 		for (var e : STRUCTURES.get()) {
 			var config = e.config();
 			for (var bedData : e.beds()) {

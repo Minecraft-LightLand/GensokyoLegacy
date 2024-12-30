@@ -1,9 +1,9 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -49,7 +49,7 @@ public class YoukaiTargetContainer {
 	public boolean isValidTarget(LivingEntity e) {
 		return e.level() == youkai.level() && e.isAddedToLevel() &&
 				!e.isRemoved() && e.isAlive() &&
-				e.canBeSeenAsEnemy() && !e.getType().is(YHTagGen.YOUKAI_IGNORE);
+				e.canBeSeenAsEnemy() && !e.getType().is(GLTagGen.YOUKAI_IGNORE);
 	}
 
 	private boolean isValid(UUID id) {

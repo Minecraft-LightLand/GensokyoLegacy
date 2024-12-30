@@ -1,14 +1,18 @@
 {
-  "required": true,
-  "priority": 1000,
-  "package": "dev.xkmc.gensokyolegacy.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "mixins": [
-  ],
-  "client": [
-  ],
-  "injectors": {
-	"defaultRequire": 1
-  },
-  "minVersion": "0.8"
+	"required": true,
+	"priority": 1000,
+	"package": "dev.xkmc.gensokyolegacy.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"FrogAttackablesSensorMixin",
+		"LivingEntityMixin",
+		"RandomizableContainerBlockEntityMixin",
+		"ShootTongueMixin"
+	],
+	"client": [
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"minVersion": "0.8"
 }

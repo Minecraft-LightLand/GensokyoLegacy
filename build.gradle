@@ -112,7 +112,8 @@ repositories {
         url "https://maven.ithundxr.dev/snapshots"
     }
     maven {
-        url = "https://maven.theillusivec4.top/"
+        name = "OctoStudios"
+        url = uri("https://maven.octo-studios.com/releases")
     }
     maven {
         // Location of the maven for vazkii's mods
@@ -189,6 +190,7 @@ dependencies {
 
     implementation "mezz.jei:jei-${jei_minecraft_version}:${jei_version}"
 
+    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     implementation "curse.maven:farmers-delight-398521:5566383"
     implementation "curse.maven:better-advancements-272515:5511371"
     implementation "dev.xkmc:cuisinedelight:1.2.3-slim"

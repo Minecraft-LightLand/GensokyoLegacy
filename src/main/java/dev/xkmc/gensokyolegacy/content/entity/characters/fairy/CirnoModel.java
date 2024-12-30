@@ -12,7 +12,7 @@ import net.minecraft.util.Mth;
 public class CirnoModel<T extends CirnoEntity> extends HierarchicalModel<T> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("cirno"), "main");
-	public static final ModelLayerLocation HAT_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("cirno_hat"), "main");
+	public static final ModelLayerLocation HAT = new ModelLayerLocation(GensokyoLegacy.loc("cirno_hat"), "main");
 	public static final ModelLayerLocation WINGS_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("cirno_wings"), "main");
 
 	private final ModelPart head;

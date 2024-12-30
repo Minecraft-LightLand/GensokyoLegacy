@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
 public class ReimuModel<T extends MaidenEntity> extends HierarchicalModel<T> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("hakurei_reimu"), "main");
-	public static final ModelLayerLocation HAT_LOCATION = new ModelLayerLocation(GensokyoLegacy.loc("reimu_hat"), "main");
+	public static final ModelLayerLocation HAIRBAND = new ModelLayerLocation(GensokyoLegacy.loc("reimu_hat"), "main");
 
 	public static LayerDefinition createBodyLayer() {
 		MeshDefinition meshdefinition = new MeshDefinition();

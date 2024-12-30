@@ -1,0 +1,11 @@
+{
+  "koishi_ring": {
+	"sounds": [
+	  {
+		"type": "file",
+		"name": "gensokyolegacy:koishi_ring"
+	  }
+	],
+	"subtitle": "gensokyolegacy.subtitle.koishi_ring"
+  }
+}

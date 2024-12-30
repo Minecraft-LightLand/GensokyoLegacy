@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.misc;
 
-import dev.xkmc.gensokyolegacy.content.item.FrozenFrogItem;
+import dev.xkmc.gensokyolegacy.content.item.ingredient.FrozenFrogItem;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import net.minecraft.core.particles.ItemParticleOption;

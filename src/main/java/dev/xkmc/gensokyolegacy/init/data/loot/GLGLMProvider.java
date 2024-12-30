@@ -1,9 +1,9 @@
 package dev.xkmc.gensokyolegacy.init.data.loot;
 
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
-import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
 import dev.xkmc.youkaishomecoming.mixin.AddItemModifierAccessor;
 import dev.xkmc.youkaishomecoming.mixin.AddLootTableModifierAccessor;
 import net.minecraft.advancements.critereon.*;
@@ -55,7 +55,7 @@ public class GLGLMProvider extends GlobalLootModifierProvider {
 		return LootItemEntityPropertyCondition.hasProperties(
 				LootContext.EntityTarget.THIS,
 				EntityPredicate.Builder.entity().entityType(
-						EntityTypePredicate.of(YHTagGen.FLESH_SOURCE))).build();
+						EntityTypePredicate.of(GLTagGen.FLESH_SOURCE))).build();
 	}
 
 	private static LootItemCondition killer(EntityType<?> type) {

@@ -5,7 +5,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +28,7 @@ public record CharacterConfig(
 
 	@Nullable
 	public static CharacterConfig of(EntityType<?> key) {
-		return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(key).getData(GLMisc.ENTITY_DATA.reg());
+		return BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(key).getData(GLMeta.ENTITY_DATA.reg());
 	}
 
 	@Nullable

@@ -4,6 +4,8 @@ import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.tterrag.registrate.providers.ProviderType;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TLMCompat;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
+import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogSyncPacket;
+import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiStartPacket;
 import dev.xkmc.gensokyolegacy.content.client.debug.BlockInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.BlockRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
@@ -12,8 +14,7 @@ import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToCl
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoUpdateToClient;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureRepairToServer;
-import dev.xkmc.gensokyolegacy.init.data.GLLang;
-import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
+import dev.xkmc.gensokyolegacy.init.data.*;
 import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureLootGen;
@@ -51,16 +52,19 @@ public class GensokyoLegacy {
 			e -> e.create(StructureBoundUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(StructureInfoRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
 			e -> e.create(StructureInfoUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
-			e -> e.create(StructureRepairToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER)
+			e -> e.create(StructureRepairToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
+			e -> e.create(FrogSyncPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(KoishiStartPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
 	public GensokyoLegacy() {
 		GLDecoBlocks.register();
 		GLItems.register();
-		GLMisc.register();
-		GLBlocks.register();
+		GLMeta.register();
 		GLBrains.register();
 		GLEntities.register();
+		GLSounds.register();
+		GLCriteriaTriggers.register();
 		TouhouSpellCards.registerSpells();
 		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
 			NeoForge.EVENT_BUS.register(TLMCompat.class);
@@ -69,14 +73,20 @@ public class GensokyoLegacy {
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void gatherData(GatherDataEvent event) {
+		REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, GLTagGen::onBlockTagGen);
+		REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, GLTagGen::onItemTagGen);
+		REGISTRATE.addDataGenerator(ProviderType.ENTITY_TAGS, GLTagGen::onEntityTagGen);
 		REGISTRATE.addDataGenerator(GLStructureTagGen.BIOME_TAG, GLStructureTagGen::genBiomeTag);
 		REGISTRATE.addDataGenerator(ProviderType.DATA_MAP, GLStructureGen::dataMap);
 		REGISTRATE.addDataGenerator(ProviderType.LANG, GLLang::genLang);
 		REGISTRATE.addDataGenerator(ProviderType.RECIPE, GLRecipeGen::genRecipe);
 		REGISTRATE.addDataGenerator(ProviderType.LOOT, GLStructureLootGen::genLoot);
-		REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, GLStructureTagGen::genBlockTag);
+		REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, GLAdvGen::genAdv);
 		var init = REGISTRATE.getDataGenInitializer();
 		GLStructureGen.init(init);
+
+		new GLDamageTypes(REGISTRATE).generate();
+
 		var gen = event.getGenerator();
 		gen.addProvider(event.includeServer(), new GLGLMProvider(gen.getPackOutput(), event.getLookupProvider()));
 

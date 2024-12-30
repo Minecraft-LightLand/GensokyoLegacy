@@ -8,6 +8,7 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
@@ -126,8 +127,8 @@ public class RumiaEntity extends SmartYoukaiEntity {
 	protected void actuallyHurt(DamageSource source, float amount) {
 		boolean isVoid = source.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
 		if (!isVoid && !isEx() && amount >= getMaxHealth()) {
-			//TODO if (YHModConfig.COMMON.exRumiaConversion.get())
-			setEx(true);
+			if (GLModConfig.SERVER.exRumiaConversion.get())
+				setEx(true);
 		}
 		if (source.getEntity() instanceof LivingEntity le) {
 			state.onHurt(le, amount);

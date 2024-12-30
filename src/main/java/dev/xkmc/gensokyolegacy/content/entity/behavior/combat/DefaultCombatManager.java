@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
@@ -59,7 +60,7 @@ public class DefaultCombatManager implements YoukaiCombatManager {
 	public void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku) {
 		if (targetKind(e).noAdditionalEffect()) return;
 		if (self.targets.contains(e)) {
-			double heal = 0.2;//TODO YHModConfig.COMMON.danmakuHealOnHitTarget.get();
+			double heal = GLModConfig.SERVER.danmakuHealOnHitTarget.get();
 			self.heal(self.getMaxHealth() * (float) heal);
 		}
 	}
@@ -70,7 +71,9 @@ public class DefaultCombatManager implements YoukaiCombatManager {
 		if (e.tickCount - e.getLastHurtByMobTimestamp() < 20) return;
 		if (e instanceof Player player && player.getAbilities().instabuild) return;
 		if (!source.is(DamageTypeTags.BYPASSES_EFFECTS)) return;
-		double rate = 0.2;// TODO e instanceof Player ? YHModConfig.COMMON.danmakuPlayerPHPDamage.get() : YHModConfig.COMMON.danmakuMinPHPDamage.get();
+		double rate = e instanceof Player ?
+				GLModConfig.SERVER.danmakuPlayerPHPDamage.get() :
+				GLModConfig.SERVER.danmakuMinPHPDamage.get();
 		double dmg = Math.max(rate * Math.max(e.getHealth(), e.getMaxHealth()), danmaku.damage(e));
 		e.setHealth(e.getHealth() - (float) dmg);
 		if (e.isDeadOrDying())
