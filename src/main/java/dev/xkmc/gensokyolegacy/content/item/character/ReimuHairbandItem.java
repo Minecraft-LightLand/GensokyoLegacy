@@ -5,7 +5,6 @@ import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;

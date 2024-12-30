@@ -20,7 +20,7 @@ public class GLFoodType {
 	public static final FoodType FLESH = new FleshFoodType(FleshFoodItem::new, false, false, null, GLTagGen.FLESH_FOOD);
 	public static final FoodType FLESH_FAST = new FleshFoodType(FleshFoodItem::new, true, false, null, GLTagGen.FLESH_FOOD);
 	public static final FoodType BOWL_FLESH = new FleshFoodType(FleshFoodItem::new, false, false, Items.BOWL, GLTagGen.FLESH_FOOD);
-	public static final FoodType CAN_FLESH = new FleshFoodType(CannedFleshFoodItem::new, true, false,null, GLTagGen.FLESH_FOOD);
+	public static final FoodType CAN_FLESH = new FleshFoodType(CannedFleshFoodItem::new, true, false, null, GLTagGen.FLESH_FOOD);
 
 	public static class FleshFoodType extends FoodType {
 

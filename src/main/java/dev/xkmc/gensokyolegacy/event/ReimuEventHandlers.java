@@ -9,7 +9,6 @@ import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLCriteriaTriggers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import dev.xkmc.youkaishomecoming.init.registrate.YHEffects;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

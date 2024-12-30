@@ -3,7 +3,6 @@ package dev.xkmc.gensokyolegacy.content.attachment.role;
 import dev.xkmc.gensokyolegacy.content.role.core.Role;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.l2core.util.Proxy;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

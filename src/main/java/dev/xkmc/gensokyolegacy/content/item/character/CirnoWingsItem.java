@@ -2,7 +2,6 @@ package dev.xkmc.gensokyolegacy.content.item.character;
 
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLRoles;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;

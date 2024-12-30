@@ -2,7 +2,6 @@ package dev.xkmc.gensokyolegacy.content.item.ingredient;
 
 import dev.xkmc.gensokyolegacy.content.entity.misc.FrozenFrog;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;

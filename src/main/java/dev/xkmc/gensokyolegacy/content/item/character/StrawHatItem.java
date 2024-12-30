@@ -5,7 +5,6 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLCriteriaTriggers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;

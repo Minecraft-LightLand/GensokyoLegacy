@@ -4,7 +4,6 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.content.item.SpellItem;
 import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.gensokyolegacy.compat.food.reg.GLFoodItems;
 import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeBranch;
 import dev.xkmc.gensokyolegacy.content.client.model.*;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoModel;

@@ -4,7 +4,6 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

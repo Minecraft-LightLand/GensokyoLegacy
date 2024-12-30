@@ -7,7 +7,6 @@ import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEffects;
 import dev.xkmc.l2core.base.effects.EffectUtil;
 import dev.xkmc.l2damagetracker.init.L2DamageTracker;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
