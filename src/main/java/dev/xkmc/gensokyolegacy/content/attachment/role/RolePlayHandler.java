@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.attachment.role;
 
 import dev.xkmc.gensokyolegacy.content.role.core.Role;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.l2core.util.Proxy;
 import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
@@ -59,14 +60,14 @@ public class RolePlayHandler {
 	public static void addTooltips(List<Component> list, @Nullable Component obtain, @Nullable Component usage) {
 		if (showInfo()) {
 			if (obtain != null)
-				list.add(YHLangData.OBTAIN.get().append(obtain));
+				list.add(GLLang.OBTAIN.get().append(obtain));
 			if (usage != null)
-				list.add(YHLangData.USAGE.get().append(usage));
+				list.add(GLLang.USAGE.get().append(usage));
 		} else {
 			if (obtain != null)
-				list.add(YHLangData.OBTAIN.get().append(YHLangData.UNKNOWN.get()));
+				list.add(GLLang.OBTAIN.get().append(GLLang.UNKNOWN.get()));
 			if (usage != null)
-				list.add(YHLangData.USAGE.get().append(YHLangData.UNKNOWN.get()));
+				list.add(GLLang.USAGE.get().append(GLLang.UNKNOWN.get()));
 		}
 	}
 

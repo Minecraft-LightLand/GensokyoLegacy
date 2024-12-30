@@ -18,7 +18,7 @@ public abstract class LivingEntityMixin {
 	public abstract boolean hasEffect(Holder<MobEffect> effect);
 
 	@Inject(at = @At("HEAD"), method = "canBeSeenAsEnemy", cancellable = true)
-	public void youkaishomecoming$canBeSeenAsEnemy$unconscious(CallbackInfoReturnable<Boolean> cir) {
+	public void gensokyolegacy$canBeSeenAsEnemy$unconscious(CallbackInfoReturnable<Boolean> cir) {
 		LivingEntity self = (LivingEntity) (Object) this;
 		if (self instanceof Player player && hasEffect(GLEffects.UNCONSCIOUS)) {
 			cir.setReturnValue(false);

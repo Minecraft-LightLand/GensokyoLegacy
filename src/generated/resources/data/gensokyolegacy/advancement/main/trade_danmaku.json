@@ -1,0 +1,26 @@
+{
+  "parent": "gensokyolegacy:main/flesh",
+  "criteria": {
+    "0": {
+      "trigger": "gensokyolegacy:rumia_trade"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.gensokyolegacy.main.trade_danmaku.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "gensokyolegacy:flesh_chocolate_mousse"
+    },
+    "title": {
+      "translate": "advancements.gensokyolegacy.main.trade_danmaku.title"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

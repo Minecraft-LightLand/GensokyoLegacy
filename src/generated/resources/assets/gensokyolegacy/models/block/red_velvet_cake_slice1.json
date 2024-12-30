@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/cake_slice1",
+  "textures": {
+    "bottom": "gensokyolegacy:block/red_velvet_cake_bottom",
+    "inside": "gensokyolegacy:block/red_velvet_cake_inner",
+    "particle": "gensokyolegacy:block/red_velvet_cake_side",
+    "side": "gensokyolegacy:block/red_velvet_cake_side",
+    "top": "gensokyolegacy:block/red_velvet_cake_top"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "type": "farmersdelight:cooking",
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "tag": "c:foods/dough"
+    },
+    {
+      "tag": "gensokyolegacy:raw_flesh"
+    },
+    {
+      "tag": "c:foods/vegetable"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "count": 2,
+    "id": "gensokyolegacy:flesh_dumplings"
+  }
+}

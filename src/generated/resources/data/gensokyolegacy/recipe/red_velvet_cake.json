@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:sugar"
+    },
+    "B": {
+      "item": "minecraft:milk_bucket"
+    },
+    "C": {
+      "item": "gensokyolegacy:blood_bottle"
+    },
+    "D": {
+      "item": "gensokyolegacy:flesh"
+    },
+    "E": {
+      "item": "minecraft:wheat"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "gensokyolegacy:red_velvet_cake"
+  }
+}

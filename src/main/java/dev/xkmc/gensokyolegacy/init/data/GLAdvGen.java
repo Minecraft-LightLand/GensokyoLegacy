@@ -1,7 +1,8 @@
 package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.RegistrateAdvancementProvider;
-import dev.xkmc.gensokyolegacy.compat.food.GLFood;
+import dev.xkmc.gensokyolegacy.compat.food.reg.GLFood;
+import dev.xkmc.gensokyolegacy.compat.food.reg.GLFoodItems;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLCriteriaTriggers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
@@ -47,7 +48,7 @@ public class GLAdvGen {
 		youkai.create("bloody", GLItems.BLOOD_BOTTLE.asStack(1),
 						CriterionBuilder.item(GLItems.BLOOD_BOTTLE.item.get()),
 						"Bloody!", "Get a Blood Bottle")
-				.create("monstrosity", GLItems.FLESH_FEAST.asStack(),
+				.create("monstrosity", GLFoodItems.FLESH_FEAST.asStack(),
 						CriterionBuilder.one(ConsumeItemTrigger.TriggerInstance.usedItem(GLFood.BOWL_OF_FLESH_FEAST.item.get())),
 						"Monstrosity", "Eat a bowl of flesh feast")
 				.type(AdvancementType.GOAL, true, true, false);

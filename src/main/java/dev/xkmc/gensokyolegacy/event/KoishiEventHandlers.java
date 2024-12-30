@@ -26,7 +26,7 @@ public class KoishiEventHandlers {
 	}
 
 	@SubscribeEvent
-	public static void onTick(PlayerTickEvent event) {
+	public static void onTick(PlayerTickEvent.Post event) {
 		var e = event.getEntity();
 		if (e.getLastHurtMob() instanceof MaidenEntity ||
 				e.getLastHurtByMob() instanceof MaidenEntity) {

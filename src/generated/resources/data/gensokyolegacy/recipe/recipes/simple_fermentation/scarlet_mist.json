@@ -1,0 +1,29 @@
+{
+  "type": "youkaishomecoming:simple_fermentation",
+  "ingredients": [
+    {
+      "item": "minecraft:rose_bush"
+    },
+    {
+      "item": "minecraft:rose_bush"
+    },
+    {
+      "item": "minecraft:poppy"
+    },
+    {
+      "item": "danmaku_api:red_circle_danmaku"
+    },
+    {
+      "item": "danmaku_api:red_circle_danmaku"
+    }
+  ],
+  "inputFluid": {
+    "fluid": "gensokyolegacy:flowing_blood"
+  },
+  "outputFluid": {
+    "amount": 1000,
+    "id": "gensokyolegacy:flowing_scarlet_mist"
+  },
+  "results": [],
+  "time": 3600
+}

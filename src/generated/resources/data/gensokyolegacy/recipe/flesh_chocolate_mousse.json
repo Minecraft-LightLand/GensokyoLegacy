@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "c:foods/milk"
+    },
+    "C": {
+      "item": "gensokyolegacy:blood_bottle"
+    },
+    "D": {
+      "item": "gensokyolegacy:flesh"
+    },
+    "E": {
+      "item": "minecraft:wheat"
+    },
+    "F": {
+      "item": "minecraft:cocoa_beans"
+    }
+  },
+  "pattern": [
+    " B ",
+    "FDF",
+    "ECE"
+  ],
+  "result": {
+    "count": 4,
+    "id": "gensokyolegacy:flesh_chocolate_mousse"
+  }
+}

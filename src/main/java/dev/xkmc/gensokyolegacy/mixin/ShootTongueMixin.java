@@ -16,7 +16,7 @@ public class ShootTongueMixin {
 
 	@WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/animal/frog/Frog;canEat(Lnet/minecraft/world/entity/LivingEntity;)Z"),
 			method = "checkExtraStartConditions(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/animal/frog/Frog;)Z")
-	private boolean youkaishomecoming$canEat(LivingEntity slime, Operation<Boolean> original, ServerLevel level, Frog frog) {
+	private boolean gensokyolegacy$canEat(LivingEntity slime, Operation<Boolean> original, ServerLevel level, Frog frog) {
 		if (FrogGodCapability.canEatSpecial(frog, slime)) {
 			return true;
 		}
@@ -25,7 +25,7 @@ public class ShootTongueMixin {
 
 	@WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;remove(Lnet/minecraft/world/entity/Entity$RemovalReason;)V"),
 			method = "eatEntity")
-	private void youkaishomecoming$eatTarget(Entity instance, Entity.RemovalReason pReason, Operation<Void> original, ServerLevel pLevel, Frog frog) {
+	private void gensokyolegacy$eatTarget(Entity instance, Entity.RemovalReason pReason, Operation<Void> original, ServerLevel pLevel, Frog frog) {
 		FrogGodCapability.onEatTarget(frog, instance);
 		original.call(instance, pReason);
 	}

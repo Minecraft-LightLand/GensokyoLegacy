@@ -4,6 +4,7 @@ import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.tterrag.registrate.util.entry.EntityEntry;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.MaidenEntity;
 import dev.xkmc.gensokyolegacy.init.data.GLAdvGen;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLCriteriaTriggers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
@@ -70,7 +71,7 @@ public class ReimuEventHandlers {
 			KoishiEventHandlers.removeKoishi(le);
 			sp.getCooldowns().addCooldown(hat, 1200);
 			sp.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100));
-			sp.sendSystemMessage(YHLangData.KOISHI_REIMU.get(), true);
+			sp.sendSystemMessage(GLLang.KOISHI_REIMU.get(), true);
 			return true;
 		}
 		return false;
@@ -82,7 +83,7 @@ public class ReimuEventHandlers {
 		if (adv == null || sp.getAdvancements().getOrStartProgress(adv).isDone()) return false;
 		GLCriteriaTriggers.FLESH_WARN.get().trigger(sp);
 		sp.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100));
-		sp.sendSystemMessage(YHLangData.REIMU_FLESH.get(), true);
+		sp.sendSystemMessage(GLLang.REIMU_FLESH.get(), true);
 		return true;
 	}
 
@@ -93,7 +94,7 @@ public class ReimuEventHandlers {
 		if (adv == null || sp.getAdvancements().getOrStartProgress(adv).isDone()) return;
 		GLCriteriaTriggers.HURT_WARN.get().trigger(sp);
 		sp.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100));
-		sp.sendSystemMessage(YHLangData.REIMU_WARN.get(), true);
+		sp.sendSystemMessage(GLLang.REIMU_WARN.get(), true);
 	}
 
 	@Nullable

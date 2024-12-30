@@ -1,0 +1,33 @@
+{
+  "parent": "gensokyolegacy:main/flesh",
+  "criteria": {
+    "0": {
+      "conditions": {
+        "items": [
+          {
+            "items": "gensokyolegacy:blood_bottle"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.gensokyolegacy.main.bloody.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "gensokyolegacy:blood_bottle"
+    },
+    "title": {
+      "translate": "advancements.gensokyolegacy.main.bloody.title"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

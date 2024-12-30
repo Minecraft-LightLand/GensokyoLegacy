@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.item.character;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLCriteriaTriggers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.youkaishomecoming.init.data.YHLangData;
@@ -57,7 +58,7 @@ public class StrawHatItem extends TouhouHatItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		RolePlayHandler.addTooltips(list, null, YHLangData.USAGE_STRAW_HAT.get(RolePlayHandler.tooltipStart()));
+		RolePlayHandler.addTooltips(list, null, GLLang.USAGE_STRAW_HAT.get(RolePlayHandler.tooltipStart()));
 	}
 
 }

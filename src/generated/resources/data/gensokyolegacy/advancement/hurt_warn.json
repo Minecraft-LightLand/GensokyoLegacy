@@ -1,0 +1,13 @@
+{
+  "criteria": {
+    "hurt_warn": {
+      "trigger": "gensokyolegacy:hurt_warn"
+    }
+  },
+  "requirements": [
+    [
+      "hurt_warn"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

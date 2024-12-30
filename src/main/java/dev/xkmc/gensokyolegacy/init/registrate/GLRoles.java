@@ -21,4 +21,8 @@ public class GLRoles {
 		return new Val.Registrate<>(GensokyoLegacy.REGISTRATE.generic(ROLES, id, sup).register());
 	}
 
+	public static void register() {
+
+	}
+
 }

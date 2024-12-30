@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "gensokyolegacy:item/mistletoe_branch"
+    "layer0": "gensokyolegacy:item/ingredient/mistletoe_branch"
   }
 }

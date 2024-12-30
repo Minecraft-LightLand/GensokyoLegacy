@@ -1,0 +1,35 @@
+{
+  "type": "youkaishomecoming:simple_fermentation",
+  "ingredients": [
+    {
+      "tag": "c:crops/rice"
+    },
+    {
+      "tag": "c:crops/rice"
+    },
+    {
+      "tag": "c:crops/rice"
+    },
+    {
+      "item": "danmaku_api:lime_circle_danmaku"
+    },
+    {
+      "item": "minecraft:dandelion"
+    },
+    {
+      "tag": "c:tea_leaves/green"
+    },
+    {
+      "item": "youkaishomecoming:matcha"
+    }
+  ],
+  "inputFluid": {
+    "tag": "c:water"
+  },
+  "outputFluid": {
+    "amount": 1000,
+    "id": "gensokyolegacy:flowing_wind_priestesses"
+  },
+  "results": [],
+  "time": 3600
+}

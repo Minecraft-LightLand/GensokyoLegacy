@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "gensokyolegacy:block/black_red_velvet_candle_cake"
+    },
+    "lit=true": {
+      "model": "gensokyolegacy:block/black_red_velvet_candle_cake_lit"
+    }
+  }
+}

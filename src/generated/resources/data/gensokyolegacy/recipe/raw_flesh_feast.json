@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": {
+      "tag": "c:crops/carrot"
+    },
+    "2": {
+      "item": "minecraft:brown_mushroom"
+    },
+    "3": {
+      "tag": "c:foods/onion"
+    },
+    "4": {
+      "tag": "c:foods/cabbage"
+    },
+    "F": {
+      "tag": "gensokyolegacy:raw_flesh"
+    },
+    "S": {
+      "item": "minecraft:skeleton_skull"
+    }
+  },
+  "pattern": [
+    "FFF",
+    "1F2",
+    "3S4"
+  ],
+  "result": {
+    "count": 1,
+    "id": "gensokyolegacy:raw_flesh_feast"
+  }
+}

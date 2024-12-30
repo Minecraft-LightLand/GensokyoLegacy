@@ -1,0 +1,30 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "count": 1,
+    "id": "minecraft:bowl"
+  },
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "item": "gensokyolegacy:raw_flesh_feast"
+    },
+    {
+      "tag": "gensokyolegacy:raw_flesh"
+    },
+    {
+      "item": "gensokyolegacy:blood_bottle"
+    },
+    {
+      "item": "gensokyolegacy:blood_bottle"
+    },
+    {
+      "item": "youkaishomecoming:soy_sauce_bottle"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "count": 1,
+    "id": "gensokyolegacy:flesh_feast"
+  }
+}

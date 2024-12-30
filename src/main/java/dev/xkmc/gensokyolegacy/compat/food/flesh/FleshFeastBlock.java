@@ -3,6 +3,7 @@ package dev.xkmc.gensokyolegacy.compat.food.flesh;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.BlockPos;
@@ -54,8 +55,8 @@ public class FleshFeastBlock extends FeastBlock {
 	public MutableComponent getName() {
 		return Component.translatable(this.getDescriptionId(),
 				RolePlayHandler.showInfo() ?
-						YHLangData.FLESH_NAME_YOUKAI.get() :
-						YHLangData.FLESH_NAME_HUMAN.get()
+						GLLang.FLESH_NAME_YOUKAI.get() :
+						GLLang.FLESH_NAME_HUMAN.get()
 		);
 	}
 

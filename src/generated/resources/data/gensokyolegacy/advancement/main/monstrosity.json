@@ -1,0 +1,32 @@
+{
+  "parent": "gensokyolegacy:main/bloody",
+  "criteria": {
+    "0": {
+      "conditions": {
+        "item": {
+          "items": "gensokyolegacy:bowl_of_flesh_feast"
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.gensokyolegacy.main.monstrosity.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "gensokyolegacy:flesh_feast"
+    },
+    "title": {
+      "translate": "advancements.gensokyolegacy.main.monstrosity.title"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -72,5 +72,7 @@
 	"block.gensokyolegacy.mistletoe_foliage": "Mistletoe Foliage",
 	"block.gensokyolegacy.mistletoe_leaves": "Mistletoe Leaves",
 	"item.gensokyolegacy.mistletoe_branch": "Mistletoe Branch",
-	"item.gensokyolegacy.spell_sanae": "Sanae's Spellcard \"Inherited Ritual\""
+	"item.gensokyolegacy.spell_sanae": "Sanae's Spellcard \"Inherited Ritual\"",
+	"item.gensokyolegacy.spell_mystia": "Night Sparrow \"Midnight Chorus Master\"",
+	"item.gensokyolegacy.spell_yukari": "Barrier \"Mesh of Light & Darkness\""
 }

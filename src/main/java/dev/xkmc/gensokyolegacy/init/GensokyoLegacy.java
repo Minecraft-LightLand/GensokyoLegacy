@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.init;
 
 import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.gensokyolegacy.compat.food.reg.GLFoodItems;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TLMCompat;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogSyncPacket;
@@ -60,9 +61,12 @@ public class GensokyoLegacy {
 	public GensokyoLegacy() {
 		GLDecoBlocks.register();
 		GLItems.register();
+		GLFoodItems.register();
 		GLMeta.register();
 		GLBrains.register();
 		GLEntities.register();
+		GLRoles.register();
+		GLEffects.register();
 		GLSounds.register();
 		GLCriteriaTriggers.register();
 		TouhouSpellCards.registerSpells();

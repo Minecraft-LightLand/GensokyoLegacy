@@ -1,0 +1,26 @@
+{
+  "parent": "gensokyolegacy:main/flesh",
+  "criteria": {
+    "0": {
+      "trigger": "gensokyolegacy:koishi_ring"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.gensokyolegacy.main.mary_call.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "farmersdelight:iron_knife"
+    },
+    "title": {
+      "translate": "advancements.gensokyolegacy.main.mary_call.title"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

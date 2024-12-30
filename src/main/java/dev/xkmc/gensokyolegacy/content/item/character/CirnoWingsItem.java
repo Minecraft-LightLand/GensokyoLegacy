@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.item.character;
 
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLRoles;
 import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
@@ -16,7 +17,7 @@ public class CirnoWingsItem extends TouhouWingsItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		list.add(YHLangData.USAGE_FAIRY_WINGS.get(GLRoles.FAIRY.get().getName()));
+		list.add(GLLang.USAGE_FAIRY_WINGS.get(GLRoles.FAIRY.get().getName()));
 	}
 
 }

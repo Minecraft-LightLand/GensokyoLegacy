@@ -1,0 +1,13 @@
+{
+  "criteria": {
+    "koishi_first": {
+      "trigger": "gensokyolegacy:koishi_first"
+    }
+  },
+  "requirements": [
+    [
+      "koishi_first"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

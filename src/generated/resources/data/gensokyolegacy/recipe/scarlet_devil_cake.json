@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:honey_bottle"
+    },
+    "B": {
+      "tag": "c:foods/milk"
+    },
+    "C": {
+      "item": "gensokyolegacy:blood_bottle"
+    },
+    "D": {
+      "item": "gensokyolegacy:flesh"
+    },
+    "E": {
+      "item": "minecraft:wheat"
+    },
+    "F": {
+      "item": "minecraft:pink_petals"
+    }
+  },
+  "pattern": [
+    "FBF",
+    "ADA",
+    "ECE"
+  ],
+  "result": {
+    "count": 4,
+    "id": "gensokyolegacy:scarlet_devil_cake"
+  }
+}

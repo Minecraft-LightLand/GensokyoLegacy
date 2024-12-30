@@ -1,0 +1,24 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "count": 1,
+    "id": "gensokyolegacy:can"
+  },
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "tag": "gensokyolegacy:raw_flesh"
+    },
+    {
+      "tag": "c:foods/onion"
+    },
+    {
+      "item": "youkaishomecoming:soy_sauce_bottle"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "count": 2,
+    "id": "gensokyolegacy:canned_flesh"
+  }
+}

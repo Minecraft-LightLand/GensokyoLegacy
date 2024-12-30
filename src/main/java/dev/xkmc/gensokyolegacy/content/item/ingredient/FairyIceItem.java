@@ -1,8 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.item.ingredient;
 
+import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.entity.misc.FairyIce;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -44,8 +44,9 @@ public class FairyIceItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> list, TooltipFlag flag) {
-		list.add(YHLangData.OBTAIN.get().append(GLLang.ITEM_FAIRY_ICE_OBTAIN.get().withStyle(ChatFormatting.GRAY)));
-		list.add(YHLangData.USAGE.get().append(GLLang.ITEM_FAIRY_ICE_USAGE.get().withStyle(ChatFormatting.GRAY)));
+		RolePlayHandler.addTooltips(list,
+				GLLang.ITEM_FAIRY_ICE_OBTAIN.get().withStyle(ChatFormatting.GRAY),
+				GLLang.ITEM_FAIRY_ICE_USAGE.get().withStyle(ChatFormatting.GRAY));
 	}
 
 }

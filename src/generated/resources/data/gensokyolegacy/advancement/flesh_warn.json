@@ -1,0 +1,13 @@
+{
+  "criteria": {
+    "flesh_warn": {
+      "trigger": "gensokyolegacy:flesh_warn"
+    }
+  },
+  "requirements": [
+    [
+      "flesh_warn"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

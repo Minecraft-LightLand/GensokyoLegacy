@@ -51,8 +51,8 @@ public class FrozenFrogItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		list.add(YHLangData.OBTAIN.get().append(GLLang.ITEM_FROZEN_FROG_OBTAIN.get().withStyle(ChatFormatting.GRAY)));
-		list.add(YHLangData.USAGE.get().append(GLLang.ITEM_FROZEN_FROG_USAGE.get().withStyle(ChatFormatting.GRAY)));
+		list.add(GLLang.OBTAIN.get().append(GLLang.ITEM_FROZEN_FROG_OBTAIN.get().withStyle(ChatFormatting.GRAY)));
+		list.add(GLLang.USAGE.get().append(GLLang.ITEM_FROZEN_FROG_USAGE.get().withStyle(ChatFormatting.GRAY)));
 	}
 
 }

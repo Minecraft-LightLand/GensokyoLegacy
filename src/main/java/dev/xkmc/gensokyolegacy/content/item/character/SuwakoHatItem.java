@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.item.character;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEffects;
 import dev.xkmc.l2core.base.effects.EffectUtil;
@@ -48,8 +49,8 @@ public class SuwakoHatItem extends TouhouHatItem {
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
 		RolePlayHandler.addTooltips(list,
-				YHLangData.OBTAIN_SUWAKO_HAT.get(Component.literal("" + GLModConfig.SERVER.frogEatCountForHat.get())),
-				YHLangData.USAGE_SUWAKO_HAT.get(Component.translatable(GLEffects.NATIVE.get().getDescriptionId()))
+				GLLang.OBTAIN_SUWAKO_HAT.get(Component.literal("" + GLModConfig.SERVER.frogEatCountForHat.get())),
+				GLLang.USAGE_SUWAKO_HAT.get(Component.translatable(GLEffects.NATIVE.get().getDescriptionId()))
 		);
 	}
 

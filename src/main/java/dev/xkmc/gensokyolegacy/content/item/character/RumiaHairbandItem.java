@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.item.character;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLRoles;
 import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
@@ -45,8 +46,8 @@ public class RumiaHairbandItem extends TouhouHatItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		RolePlayHandler.addTooltips(list, YHLangData.OBTAIN_RUMIA_HAIRBAND.get(),
-				YHLangData.USAGE_RUMIA_HAIRBAND.get(GLRoles.RUMIA.get().getName()));
+		RolePlayHandler.addTooltips(list, GLLang.OBTAIN_RUMIA_HAIRBAND.get(),
+				GLLang.USAGE_RUMIA_HAIRBAND.get(GLRoles.RUMIA.get().getName()));
 	}
 
 }

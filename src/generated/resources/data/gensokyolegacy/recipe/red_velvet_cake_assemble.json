@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "gensokyolegacy:red_velvet_cake_slice"
+    },
+    {
+      "item": "gensokyolegacy:red_velvet_cake_slice"
+    },
+    {
+      "item": "gensokyolegacy:red_velvet_cake_slice"
+    },
+    {
+      "item": "gensokyolegacy:red_velvet_cake_slice"
+    },
+    {
+      "item": "gensokyolegacy:red_velvet_cake_slice"
+    },
+    {
+      "item": "gensokyolegacy:red_velvet_cake_slice"
+    },
+    {
+      "item": "gensokyolegacy:red_velvet_cake_slice"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "gensokyolegacy:red_velvet_cake"
+  }
+}

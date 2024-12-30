@@ -1,0 +1,33 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "count": 1,
+    "id": "minecraft:bowl"
+  },
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "tag": "gensokyolegacy:raw_flesh"
+    },
+    {
+      "tag": "gensokyolegacy:raw_flesh"
+    },
+    {
+      "tag": "youkaishomecoming:raw_eel"
+    },
+    {
+      "tag": "c:foods/vegetable"
+    },
+    {
+      "tag": "c:foods/vegetable"
+    },
+    {
+      "item": "youkaishomecoming:soy_sauce_bottle"
+    }
+  ],
+  "recipe_book_tab": "meals",
+  "result": {
+    "count": 1,
+    "id": "gensokyolegacy:flesh_stew"
+  }
+}

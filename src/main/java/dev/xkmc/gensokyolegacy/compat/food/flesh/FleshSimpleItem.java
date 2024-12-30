@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.compat.food.flesh;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -16,8 +17,8 @@ public class FleshSimpleItem extends Item {
 	public Component getName(ItemStack pStack) {
 		return Component.translatable(this.getDescriptionId(pStack),
 				RolePlayHandler.showInfo() ?
-						YHLangData.FLESH_NAME_YOUKAI.get() :
-						YHLangData.FLESH_NAME_HUMAN.get()
+						GLLang.FLESH_NAME_YOUKAI.get() :
+						GLLang.FLESH_NAME_HUMAN.get()
 		);
 	}
 

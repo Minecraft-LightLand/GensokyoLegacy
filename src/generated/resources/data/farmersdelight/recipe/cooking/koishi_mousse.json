@@ -1,0 +1,26 @@
+{
+  "type": "farmersdelight:cooking",
+  "experience": 0.1,
+  "ingredients": [
+    {
+      "item": "minecraft:cornflower"
+    },
+    {
+      "item": "minecraft:allium"
+    },
+    {
+      "tag": "c:foods/dough"
+    },
+    {
+      "item": "minecraft:honey_bottle"
+    },
+    {
+      "item": "youkaishomecoming:bowl_of_cream"
+    }
+  ],
+  "recipe_book_tab": "misc",
+  "result": {
+    "count": 1,
+    "id": "gensokyolegacy:koishi_mousse"
+  }
+}

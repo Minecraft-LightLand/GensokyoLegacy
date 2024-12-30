@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "gensokyolegacy:item/fairy_ice_crystal"
+    "layer0": "gensokyolegacy:item/ingredient/fairy_ice_crystal"
   }
 }

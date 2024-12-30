@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.compat.food.flesh;
 
-import dev.xkmc.gensokyolegacy.compat.food.GLFood;
+import dev.xkmc.gensokyolegacy.compat.food.reg.GLFood;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.event.ReimuEventHandlers;
@@ -8,7 +8,6 @@ import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.gensokyolegacy.init.registrate.GLRoles;
 import dev.xkmc.youkaishomecoming.content.item.food.YHFoodItem;
-import dev.xkmc.youkaishomecoming.init.data.YHLangData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -50,7 +49,12 @@ public class FleshFoodItem extends YHFoodItem {
 				builder.effect(ent::effect, ent.probability());
 			}
 		}
+		modifyFood(stack, entity, builder);
 		return builder.build();
+	}
+
+	protected void modifyFood(ItemStack stack, @Nullable LivingEntity entity, FoodProperties.Builder builder) {
+
 	}
 
 	@Override
@@ -58,11 +62,11 @@ public class FleshFoodItem extends YHFoodItem {
 		super.appendHoverText(stack, level, list, flag);
 		double prog = RolePlayHandler.progress(GLRoles.VAMPIRE.get());
 		if (prog >= 1) {
-			list.add(YHLangData.FLESH_TASTE_YOUKAI.get());
+			list.add(GLLang.FLESH_TASTE_YOUKAI.get());
 		} else if (prog > 0) {
-			list.add(YHLangData.FLESH_TASTE_HALF_YOUKAI.get());
+			list.add(GLLang.FLESH_TASTE_HALF_YOUKAI.get());
 		} else if (getDefaultInstance().is(GLTagGen.APPARENT_FLESH_FOOD)) {
-			list.add(YHLangData.FLESH_TASTE_HUMAN.get());
+			list.add(GLLang.FLESH_TASTE_HUMAN.get());
 		}
 		if (this == GLFood.FLESH.item.get()) {
 			RolePlayHandler.addTooltips(list, GLLang.OBTAIN_FLESH.get(), null);//TODO
@@ -73,8 +77,8 @@ public class FleshFoodItem extends YHFoodItem {
 	public Component getName(ItemStack pStack) {
 		return Component.translatable(this.getDescriptionId(pStack),
 				RolePlayHandler.showInfo() ?
-						YHLangData.FLESH_NAME_YOUKAI.get() :
-						YHLangData.FLESH_NAME_HUMAN.get()
+						GLLang.FLESH_NAME_YOUKAI.get() :
+						GLLang.FLESH_NAME_HUMAN.get()
 		);
 	}
 

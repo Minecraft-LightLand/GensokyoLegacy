@@ -1,0 +1,34 @@
+{
+  "parent": "gensokyolegacy:main/trade_danmaku",
+  "criteria": {
+    "0": {
+      "conditions": {
+        "items": [
+          {
+            "items": "gensokyolegacy:rumia_hairband"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.gensokyolegacy.main.lost_memories.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "gensokyolegacy:rumia_hairband"
+    },
+    "title": {
+      "translate": "advancements.gensokyolegacy.main.lost_memories.title"
+    }
+  },
+  "requirements": [
+    [
+      "0"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

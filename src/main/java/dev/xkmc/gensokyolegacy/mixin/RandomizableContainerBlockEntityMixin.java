@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RandomizableContainer.class)
-public class RandomizableContainerBlockEntityMixin {
+public interface RandomizableContainerBlockEntityMixin {
 
 	@Inject(at = @At("HEAD"), method = "unpackLootTable")
-	public void youkaishomecoming$trayLoad(Player player, CallbackInfo ci) {
+	default void gensokyolegacy$trayLoad(Player player, CallbackInfo ci) {
 		if (player != null) {
 			KoishiEventHandlers.removeKoishi(player);
 		}

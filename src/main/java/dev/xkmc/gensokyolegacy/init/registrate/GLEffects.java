@@ -29,7 +29,7 @@ public class GLEffects {
 			() -> new CharacterEffect(GLRoles.FAIRY, MobEffectCategory.NEUTRAL, 0xd0c3a5),
 			"Prompt player into Fairy role");
 
-	public static final LegacyHolder<MobEffect> DARKNESS = genEffect("rumia",
+	public static final LegacyHolder<MobEffect> RUMIA = genEffect("rumia",
 			() -> new CharacterEffect(GLRoles.RUMIA, MobEffectCategory.NEUTRAL, 0xd0c3a5),
 			"Prompt player into Rumia role");
 
@@ -39,6 +39,10 @@ public class GLEffects {
 
 	private static <T extends MobEffect> LegacyHolder<MobEffect> genEffect(String name, NonNullSupplier<T> sup, String desc) {
 		return new SimpleEntry<>(GensokyoLegacy.REGISTRATE.effect(name, sup, desc).lang(MobEffect::getDescriptionId).register());
+	}
+
+	public static void register() {
+
 	}
 
 }

@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.item.ingredient;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.youkaishomecoming.content.item.fluid.SakeBottleItem;
 import dev.xkmc.youkaishomecoming.content.item.fluid.SakeFluid;
 import dev.xkmc.youkaishomecoming.init.data.YHLangData;
@@ -19,7 +20,7 @@ public class BloodBottleItem extends SakeBottleItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		RolePlayHandler.addTooltips(list, YHLangData.OBTAIN_BLOOD.get(),//TODO
+		RolePlayHandler.addTooltips(list, GLLang.OBTAIN_BLOOD.get(),//TODO
 				null);
 	}
 
