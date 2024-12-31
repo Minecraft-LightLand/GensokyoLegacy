@@ -2,7 +2,7 @@ package dev.xkmc.gensokyolegacy.init;
 
 import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.tterrag.registrate.providers.ProviderType;
-import dev.xkmc.gensokyolegacy.compat.food.reg.GLFoodItems;
+import dev.ghen.thirst.Thirst;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TLMCompat;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogSyncPacket;
@@ -15,6 +15,9 @@ import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToCl
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoUpdateToClient;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureRepairToServer;
+import dev.xkmc.gensokyolegacy.content.food.compat.GLThirstCompat;
+import dev.xkmc.gensokyolegacy.content.food.reg.GLFoodItems;
+import dev.xkmc.gensokyolegacy.content.item.character.TouhouMat;
 import dev.xkmc.gensokyolegacy.init.data.*;
 import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
@@ -27,12 +30,17 @@ import dev.xkmc.gensokyolegacy.init.registrate.*;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.simple.Reg;
 import dev.xkmc.l2serial.network.PacketHandler;
+import dev.xkmc.youkaishomecoming.content.item.fluid.SakeFluidWrapper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
@@ -62,6 +70,7 @@ public class GensokyoLegacy {
 		GLDecoBlocks.register();
 		GLItems.register();
 		GLFoodItems.register();
+		TouhouMat.register();
 		GLMeta.register();
 		GLBrains.register();
 		GLEntities.register();
@@ -74,6 +83,26 @@ public class GensokyoLegacy {
 		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
 			NeoForge.EVENT_BUS.register(TLMCompat.class);
 		}
+	}
+
+	@SubscribeEvent
+	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+		event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new SakeFluidWrapper(stack), GLItems.BLOOD_BOTTLE.item().get());
+	}
+
+	@SubscribeEvent
+	public static void commonSetup(FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> {
+			DispenserBlock.registerProjectileBehavior(GLItems.FROZEN_FROG_COLD.get());
+			DispenserBlock.registerProjectileBehavior(GLItems.FROZEN_FROG_WARM.get());
+			DispenserBlock.registerProjectileBehavior(GLItems.FROZEN_FROG_TEMPERATE.get());
+			DispenserBlock.registerProjectileBehavior(GLItems.FAIRY_ICE_CRYSTAL.get());
+
+			if (ModList.get().isLoaded(Thirst.ID)) {
+				GLThirstCompat.init();
+			}
+
+		});
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGH)
@@ -89,7 +118,6 @@ public class GensokyoLegacy {
 		REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, GLAdvGen::genAdv);
 		var init = REGISTRATE.getDataGenInitializer();
 		GLStructureGen.init(init);
-
 		new GLDamageTypes(REGISTRATE).generate();
 
 		var gen = event.getGenerator();

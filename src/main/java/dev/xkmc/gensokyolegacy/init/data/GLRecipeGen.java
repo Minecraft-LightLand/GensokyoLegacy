@@ -3,10 +3,10 @@ package dev.xkmc.gensokyolegacy.init.data;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.gensokyolegacy.compat.food.reg.GLDish;
-import dev.xkmc.gensokyolegacy.compat.food.reg.GLFood;
-import dev.xkmc.gensokyolegacy.compat.food.reg.GLFoodItems;
-import dev.xkmc.gensokyolegacy.compat.food.reg.GLSake;
+import dev.xkmc.gensokyolegacy.content.food.reg.GLDish;
+import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
+import dev.xkmc.gensokyolegacy.content.food.reg.GLFoodItems;
+import dev.xkmc.gensokyolegacy.content.food.reg.GLSake;
 import dev.xkmc.gensokyolegacy.init.registrate.GLDecoBlocks;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.youkaishomecoming.content.pot.base.BasePotOutput;
@@ -28,7 +28,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient;
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab;
 import vectorwing.farmersdelight.common.registry.ModItems;
 import vectorwing.farmersdelight.common.tag.CommonTags;
@@ -185,14 +184,14 @@ public class GLRecipeGen {
 					.addIngredient(GLItems.BLOOD_BOTTLE.item)
 					.build(tea(pvd));
 
-			unlock(pvd, new SimpleFermentationBuilder(FluidIngredient.of(GLItems.BLOOD_BOTTLE.fluid.get()), GLSake.SCARLET_MIST.fluid.get(), 3600)::unlockedBy, ModItems.RICE.get())
+			unlock(pvd, new SimpleFermentationBuilder(GLItems.BLOOD_BOTTLE, GLSake.SCARLET_MIST, 3600)::unlockedBy, ModItems.RICE.get())
 					.addInput(Items.ROSE_BUSH).addInput(Items.ROSE_BUSH)
 					.addInput(Items.POPPY)
 					.addInput(DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED))
 					.addInput(DanmakuItems.Bullet.CIRCLE.get(DyeColor.RED))
 					.save(pvd, GLSake.SCARLET_MIST.item.getRegisteredName());
 
-			unlock(pvd, new SimpleFermentationBuilder(Tags.Fluids.WATER, GLSake.WIND_PRIESTESSES.fluid.get(), 3600)::unlockedBy, ModItems.RICE.get())
+			unlock(pvd, new SimpleFermentationBuilder(Tags.Fluids.WATER, GLSake.WIND_PRIESTESSES, 3600)::unlockedBy, ModItems.RICE.get())
 					.addInput(CommonTags.CROPS_RICE).addInput(CommonTags.CROPS_RICE).addInput(CommonTags.CROPS_RICE)
 					.addInput(DanmakuItems.Bullet.CIRCLE.get(DyeColor.LIME))
 					.addInput(Items.DANDELION).addInput(YHTagGen.TEA_GREEN).addInput(YHItems.MATCHA)

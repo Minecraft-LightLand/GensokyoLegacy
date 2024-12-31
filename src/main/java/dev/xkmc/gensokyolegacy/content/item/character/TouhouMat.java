@@ -57,4 +57,7 @@ public enum TouhouMat {
 		return mat;
 	}
 
+	public static void register() {
+	}
+
 }

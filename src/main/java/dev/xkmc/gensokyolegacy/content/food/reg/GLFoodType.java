@@ -1,7 +1,7 @@
-package dev.xkmc.gensokyolegacy.compat.food.reg;
+package dev.xkmc.gensokyolegacy.content.food.reg;
 
-import dev.xkmc.gensokyolegacy.compat.food.flesh.CannedFleshFoodItem;
-import dev.xkmc.gensokyolegacy.compat.food.flesh.FleshFoodItem;
+import dev.xkmc.gensokyolegacy.content.food.flesh.CannedFleshFoodItem;
+import dev.xkmc.gensokyolegacy.content.food.flesh.FleshFoodItem;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.youkaishomecoming.init.food.EffectEntry;
 import dev.xkmc.youkaishomecoming.init.food.FoodType;

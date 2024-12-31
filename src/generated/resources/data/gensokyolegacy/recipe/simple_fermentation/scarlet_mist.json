@@ -18,11 +18,11 @@
     }
   ],
   "inputFluid": {
-    "fluid": "gensokyolegacy:flowing_blood"
+    "fluid": "gensokyolegacy:blood"
   },
   "outputFluid": {
     "amount": 1000,
-    "id": "gensokyolegacy:flowing_scarlet_mist"
+    "id": "gensokyolegacy:scarlet_mist"
   },
   "results": [],
   "time": 3600

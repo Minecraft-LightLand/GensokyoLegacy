@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.compat.food.flesh;
+package dev.xkmc.gensokyolegacy.content.food.flesh;
 
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;

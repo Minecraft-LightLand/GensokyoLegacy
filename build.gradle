@@ -196,4 +196,5 @@ dependencies {
     implementation "dev.xkmc:cuisinedelight:1.2.3-slim"
     implementation "curse.maven:touhou-little-maid-355044:5896992"
     implementation "curse.maven:jade-324717:5976517"
+    compileOnly "curse.maven:thirst-was-taken-679270:5568715"
 }

@@ -1,6 +1,6 @@
-package dev.xkmc.gensokyolegacy.compat.food.flesh;
+package dev.xkmc.gensokyolegacy.content.food.flesh;
 
-import dev.xkmc.gensokyolegacy.compat.food.reg.GLFood;
+import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.event.ReimuEventHandlers;
@@ -69,7 +69,7 @@ public class FleshFoodItem extends YHFoodItem {
 			list.add(GLLang.FLESH_TASTE_HUMAN.get());
 		}
 		if (this == GLFood.FLESH.item.get()) {
-			RolePlayHandler.addTooltips(list, GLLang.OBTAIN_FLESH.get(), null);//TODO
+			RolePlayHandler.addTooltips(list, GLLang.OBTAIN_FLESH.get(RoleCategory.YOUKAI.getName()), null);
 		}
 	}
 

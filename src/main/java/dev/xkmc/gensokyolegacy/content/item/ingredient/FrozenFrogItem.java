@@ -1,8 +1,11 @@
 package dev.xkmc.gensokyolegacy.content.item.ingredient;
 
+import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.entity.misc.FrozenFrog;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
-import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
@@ -12,14 +15,16 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 
-public class FrozenFrogItem extends Item {
+public class FrozenFrogItem extends Item implements ProjectileItem {
 
 	public final ResourceKey<FrogVariant> variant;
 
@@ -50,8 +55,12 @@ public class FrozenFrogItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		list.add(GLLang.OBTAIN.get().append(GLLang.ITEM_FROZEN_FROG_OBTAIN.get().withStyle(ChatFormatting.GRAY)));
-		list.add(GLLang.USAGE.get().append(GLLang.ITEM_FROZEN_FROG_USAGE.get().withStyle(ChatFormatting.GRAY)));
+		RolePlayHandler.addTooltips(list, GLLang.ITEM_FROZEN_FROG_OBTAIN.get(), GLLang.ITEM_FROZEN_FROG_USAGE.get());
+	}
+
+	@Override
+	public Projectile asProjectile(Level level, Position pos, ItemStack stack, Direction direction) {
+		return Util.make(new FrozenFrog(level, pos.x(), pos.y(), pos.z()), e -> e.setItem(stack));
 	}
 
 }

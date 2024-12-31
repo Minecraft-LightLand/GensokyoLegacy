@@ -45,7 +45,7 @@ public class RolePlayHandler {
 	}
 
 	public static boolean startTransition(Player player) {
-		return false;//TODO
+		return player.getAbilities().instabuild;//TODO
 	}
 
 	public static Component tooltipStart() {

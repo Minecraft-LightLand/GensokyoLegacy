@@ -1,10 +1,10 @@
-package dev.xkmc.gensokyolegacy.compat.food.reg;
+package dev.xkmc.gensokyolegacy.content.food.reg;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import dev.xkmc.gensokyolegacy.compat.food.flesh.FleshBlockItem;
-import dev.xkmc.gensokyolegacy.compat.food.flesh.FleshFeastBlock;
-import dev.xkmc.gensokyolegacy.compat.food.flesh.FleshSimpleItem;
+import dev.xkmc.gensokyolegacy.content.food.flesh.FleshBlockItem;
+import dev.xkmc.gensokyolegacy.content.food.flesh.FleshFeastBlock;
+import dev.xkmc.gensokyolegacy.content.food.flesh.FleshSimpleItem;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.youkaishomecoming.init.food.CakeEntry;
