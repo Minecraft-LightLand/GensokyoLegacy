@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "gensokyolegacy:block/blood_curd",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "gensokyolegacy:block/blood_curd"
+    },
+    "facing=south": {
+      "model": "gensokyolegacy:block/blood_curd",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "gensokyolegacy:block/blood_curd",
+      "y": 270
+    }
+  }
+}

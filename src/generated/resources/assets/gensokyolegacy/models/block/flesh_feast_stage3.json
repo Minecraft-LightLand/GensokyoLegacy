@@ -3,9 +3,9 @@
   "render_type": "minecraft:cutout",
   "textures": {
     "brain": "gensokyolegacy:block/flesh_brain_3",
-    "particle": "gensokyolegacy:block/tray_top",
+    "particle": "youkaishomecoming:block/tray_top",
     "skeleton": "gensokyolegacy:block/flesh_skeleton_2",
-    "tray_bottom": "gensokyolegacy:block/tray_bottom",
-    "tray_top": "gensokyolegacy:block/tray_top"
+    "tray_bottom": "youkaishomecoming:block/tray_bottom",
+    "tray_top": "youkaishomecoming:block/tray_top"
   }
 }

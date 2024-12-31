@@ -15,10 +15,7 @@ import dev.xkmc.gensokyolegacy.content.item.debug.DebugWand;
 import dev.xkmc.gensokyolegacy.content.item.ingredient.BloodBottleItem;
 import dev.xkmc.gensokyolegacy.content.item.ingredient.FairyIceItem;
 import dev.xkmc.gensokyolegacy.content.item.ingredient.FrozenFrogItem;
-import dev.xkmc.gensokyolegacy.content.spell.item.MarisaItemSpell;
-import dev.xkmc.gensokyolegacy.content.spell.item.ReimuItemSpell;
-import dev.xkmc.gensokyolegacy.content.spell.item.SanaeItemSpell;
-import dev.xkmc.gensokyolegacy.content.spell.item.YukariItemSpellLaser;
+import dev.xkmc.gensokyolegacy.content.spell.item.*;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
@@ -40,7 +37,7 @@ public class GLItems {
 	public static final ItemEntry<MistletoeBranch> MISTLETOE_BRANCH;
 	public static final BottledFluid<BloodBottleItem> BLOOD_BOTTLE;
 
-	public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL, SANAE_SPELL, YUKARI_SPELL, MYSTIA_SPELL;
+	public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL, SANAE_SPELL, YUKARI_SPELL_BUTTERFLY, YUKARI_SPELL_LASER, MYSTIA_SPELL;
 
 	public static final ItemEntry<StrawHatItem> STRAW_HAT;
 	public static final ItemEntry<SuwakoHatItem> SUWAKO_HAT;
@@ -108,11 +105,20 @@ public class GLItems {
 					.tag(DanmakuTagGen.PRESET_SPELL)
 					.register();
 
-			YUKARI_SPELL = reg
-					.item("spell_yukari", p -> new SpellItem(
+			YUKARI_SPELL_BUTTERFLY = reg
+					.item("spell_yukari_butterfly", p -> new SpellItem(
+							p.stacksTo(1), YukariItemSpellButterfly::new, false,
+							() -> DanmakuItems.Bullet.BUTTERFLY.get(DyeColor.MAGENTA).get()))
+					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/spell_yukari")))
+					.lang("Barrier \"Double Black Death Butterfly\"")
+					.tag(DanmakuTagGen.PRESET_SPELL)
+					.register();
+
+			YUKARI_SPELL_LASER = reg
+					.item("spell_yukari_laser", p -> new SpellItem(
 							p.stacksTo(1), YukariItemSpellLaser::new, false,
 							() -> DanmakuItems.Laser.LASER.get(DyeColor.RED).get()))
-					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/" + ctx.getName())))
+					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/spell/spell_yukari")))
 					.lang("Barrier \"Mesh of Light & Darkness\"")
 					.tag(DanmakuTagGen.PRESET_SPELL)
 					.register();

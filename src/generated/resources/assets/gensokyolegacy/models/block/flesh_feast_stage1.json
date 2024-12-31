@@ -5,9 +5,9 @@
     "brain": "gensokyolegacy:block/flesh_brain_2",
     "meat": "gensokyolegacy:block/flesh_meat_1",
     "misc": "gensokyolegacy:block/flesh_misc_1",
-    "particle": "gensokyolegacy:block/tray_top",
+    "particle": "youkaishomecoming:block/tray_top",
     "skeleton": "gensokyolegacy:block/flesh_skeleton_2",
-    "tray_bottom": "gensokyolegacy:block/tray_bottom",
-    "tray_top": "gensokyolegacy:block/tray_top"
+    "tray_bottom": "youkaishomecoming:block/tray_bottom",
+    "tray_top": "youkaishomecoming:block/tray_top"
   }
 }

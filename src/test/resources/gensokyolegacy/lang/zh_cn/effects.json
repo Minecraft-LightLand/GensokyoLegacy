@@ -1,0 +1,22 @@
+{
+	"effect.gensokyolegacy": {
+		"higi": "生命力",
+		"higi.desc": "提高攻击伤害和移动速度，缓慢回血",
+		"higi.description": "提高攻击伤害和移动速度，缓慢回血",
+		"native_god_bless": "土著神的祝福",
+		"native_god_bless.desc": "提升触及距离和移动速度",
+		"native_god_bless.description": "提升触及距离和移动速度",
+		"unconscious": "无意识",
+		"unconscious.desc": "你不会成为攻击目标。进行攻击或者打开战利品箱后效果消失",
+		"unconscious.description": "你不会成为攻击目标。进行攻击或者打开战利品箱后效果消失",
+		"fairy": "妖精化",
+		"fairy.desc": "让玩家加速进入妖精身份",
+		"fairy.description": "让玩家加速进入妖精身份",
+		"vampire": "吸血鬼化",
+		"vampire.desc": "让玩家加速进入吸血鬼身份",
+		"vampire.description": "让玩家加速进入吸血鬼身份",
+		"rumia": "霄暗妖怪化",
+		"rumia.desc": "让玩家加速进入霄暗妖怪身份",
+		"rumia.description": "让玩家加速进入霄暗妖怪身份"
+	}
+}

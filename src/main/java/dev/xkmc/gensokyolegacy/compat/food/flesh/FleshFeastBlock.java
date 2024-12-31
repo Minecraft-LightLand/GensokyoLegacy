@@ -4,6 +4,7 @@ import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
+import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -102,9 +103,9 @@ public class FleshFeastBlock extends FeastBlock {
 			String name = name().toLowerCase(Locale.ROOT);
 			var ans = pvd.models().getBuilder("flesh_feast_" + name)
 					.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("custom/flesh_feast_" + name)));
-			ans.texture("tray_top", pvd.modLoc("block/tray_top"));
-			ans.texture("particle", pvd.modLoc("block/tray_top"));
-			ans.texture("tray_bottom", pvd.modLoc("block/tray_bottom"));
+			ans.texture("tray_top", YoukaisHomecoming.loc("block/tray_top"));
+			ans.texture("particle", YoukaisHomecoming.loc("block/tray_top"));
+			ans.texture("tray_bottom", YoukaisHomecoming.loc("block/tray_bottom"));
 			if (skeleton > 0) ans.texture("skeleton", pvd.modLoc("block/flesh_skeleton_" + skeleton));
 			if (brain > 0) ans.texture("brain", pvd.modLoc("block/flesh_brain_" + brain));
 			if (misc > 0) ans.texture("misc", pvd.modLoc("block/flesh_misc_" + misc));

@@ -33,41 +33,37 @@ public enum GLLang {
 	ITEM_GLASS_PATH("Display character path finding"),
 	ITEM_GLASS_CHARACTER("Display character info"),
 	ITEM_GLASS_BED("Display bed info"),
-	ITEM_FAIRY_ICE_OBTAIN("Crafted by Cirno."),
-	ITEM_FAIRY_ICE_USAGE("Throw to deal damage and freeze target."),
-	ITEM_FROZEN_FROG_OBTAIN("Dropped when Cirno freezes a frog."),
-	ITEM_FROZEN_FROG_USAGE("Throw toward target to summon a frog."),
 
+	FLESH_TASTE_HUMAN("flesh.taste_human", "Unappealing smell...", 0, ChatFormatting.GRAY),
+	FLESH_TASTE_HALF_YOUKAI("flesh.taste_half_youkai", "Strange flavor...", 0, ChatFormatting.GRAY),
+	FLESH_TASTE_YOUKAI("flesh.taste_youkai", "Delicious!", 0, ChatFormatting.GRAY),
+	FLESH_NAME_HUMAN("flesh.flesh_human", "Weird Meat", 0, null),
+	FLESH_NAME_YOUKAI("flesh.flesh_youkai", "Flesh", 0, null),
 
-	FLESH_TASTE_HUMAN("tooltip.taste_human", "Unappealing smell...", 0, ChatFormatting.GRAY),
-	FLESH_TASTE_HALF_YOUKAI("tooltip.taste_half_youkai", "Strange flavor...", 0, ChatFormatting.GRAY),
-	FLESH_TASTE_YOUKAI("tooltip.taste_youkai", "Delicious!", 0, ChatFormatting.GRAY),
-	FLESH_NAME_HUMAN("flesh_human", "Weird Meat", 0, null),
-	FLESH_NAME_YOUKAI("flesh_youkai", "Flesh", 0, null),
+	OBTAIN("item.obtain", "Source: ", 0, ChatFormatting.GRAY),
+	UNKNOWN("item.unknown", "???", 0, ChatFormatting.GRAY),
+	USAGE("item.usage", "Usage: ", 0, ChatFormatting.GRAY),
+	OBTAIN_FLESH("item.obtain_flesh", "Kill human mobs with knife while in %s or %s effect", 2, ChatFormatting.GRAY),
+	OBTAIN_BLOOD("item.obtain_blood", "Kill human mobs with knife and have glass bottle in off hand while in %s or %s effect", 2, ChatFormatting.GRAY),
+	ITEM_FAIRY_ICE_OBTAIN("item.obtain_fairy_ice", "Crafted by Cirno.",0,null),
+	ITEM_FAIRY_ICE_USAGE("item.usage_fairy_ice", "Throw to deal damage and freeze target.", 0, null),
+	ITEM_FROZEN_FROG_OBTAIN("item.obtain_frozen_frog", "Dropped when Cirno freezes a frog.", 0, null),
+	ITEM_FROZEN_FROG_USAGE("item.usage_frozen_frog", "Throw toward target to summon a frog.", 0, null),
+	USAGE_STRAW_HAT("item.usage_straw_hat", "While in %s or %s effect, you can equip it on frogs to allow them to eat raiders", 2, ChatFormatting.GRAY),
+	OBTAIN_SUWAKO_HAT("item.obtain_suwako_hat", "Drops when frog with hat eats %s different kinds of raiders in front of villagers", 1, ChatFormatting.GRAY),
+	USAGE_SUWAKO_HAT("item.usage_suwako_hat", "Grants constant %s. Allows using Cyan and Lime danmaku without consumption.", 1, ChatFormatting.GRAY),
+	OBTAIN_KOISHI_HAT("item.obtain_koishi_hat", "Drops when blocking Koishi attacks %s times in a row", 1, ChatFormatting.GRAY),
+	USAGE_KOISHI_HAT("item.usage_koishi_hat", "Grants constant %s. Allows using Blue and Red danmaku without consumption.", 1, ChatFormatting.GRAY),
+	OBTAIN_RUMIA_HAIRBAND("item.obtain_rumia_hairband", "Drops when player defeat Ex. Rumia with Danmaku", 0, ChatFormatting.GRAY),
+	USAGE_RUMIA_HAIRBAND("item.usage_rumia_hairband", "Grants constant %s when applicable. Drops heads when killing mobs. Flesh and blood drops no longer require knife (bonus when still using knife).", 1, ChatFormatting.GRAY),
+	OBTAIN_REIMU_HAIRBAND("item.obtain_reimu_hairband", "Feed Reimu a variety of food", 0, ChatFormatting.GRAY),
+	USAGE_REIMU_HAIRBAND("item.usage_reimu_hairband", "Enables creative flight. Your danmaku damage bypasses magical protection.", 0, ChatFormatting.GRAY),
+	USAGE_CIRNO_HAIRBAND("item.usage_cirno_hairband", "Grants constant %s. Your magic damage freezes target (and frogs). Allows using Light Blue danmaku without consumption.", 1, ChatFormatting.GRAY),
+	USAGE_FAIRY_WINGS("item.usage_fairy_wings", "When you have %s, enables creative flight.", 1, ChatFormatting.GRAY),
 
-	OBTAIN("obtain", "Source: ", 0, ChatFormatting.GRAY),
-	UNKNOWN("unknown", "???", 0, ChatFormatting.GRAY),
-	USAGE("usage", "Usage: ", 0, ChatFormatting.GRAY),
-
-	OBTAIN_FLESH("obtain_flesh", "Kill human mobs with knife while in %s or %s effect", 2, ChatFormatting.GRAY),
-	OBTAIN_BLOOD("obtain_blood", "Kill human mobs with knife and have glass bottle in off hand while in %s or %s effect", 2, ChatFormatting.GRAY),
-
-	USAGE_STRAW_HAT("usage_straw_hat", "While in %s or %s effect, you can equip it on frogs to allow them to eat raiders", 2, ChatFormatting.GRAY),
-	OBTAIN_SUWAKO_HAT("obtain_suwako_hat", "Drops when frog with hat eats %s different kinds of raiders in front of villagers", 1, ChatFormatting.GRAY),
-	USAGE_SUWAKO_HAT("usage_suwako_hat", "Grants constant %s. Allows using Cyan and Lime danmaku without consumption.", 1, ChatFormatting.GRAY),
-	OBTAIN_KOISHI_HAT("obtain_koishi_hat", "Drops when blocking Koishi attacks %s times in a row", 1, ChatFormatting.GRAY),
-	USAGE_KOISHI_HAT("usage_koishi_hat", "Grants constant %s. Allows using Blue and Red danmaku without consumption.", 1, ChatFormatting.GRAY),
-	OBTAIN_RUMIA_HAIRBAND("obtain_rumia_hairband", "Drops when player defeat Ex. Rumia with Danmaku", 0, ChatFormatting.GRAY),
-	USAGE_RUMIA_HAIRBAND("usage_rumia_hairband", "Grants constant %s when applicable. Drops heads when killing mobs. Flesh and blood drops no longer require knife (bonus when still using knife).", 1, ChatFormatting.GRAY),
-	OBTAIN_REIMU_HAIRBAND("obtain_reimu_hairband", "Feed Reimu a variety of food", 0, ChatFormatting.GRAY),
-	USAGE_REIMU_HAIRBAND("usage_reimu_hairband", "Enables creative flight. Your danmaku damage bypasses magical protection.", 0, ChatFormatting.GRAY),
-
-	USAGE_CIRNO_HAIRBAND("usage_cirno_hairband", "Grants constant %s. Your magic damage freezes target (and frogs). Allows using Light Blue danmaku without consumption.", 1, ChatFormatting.GRAY),
-	USAGE_FAIRY_WINGS("usage_fairy_wings", "When you have %s, enables creative flight.", 1, ChatFormatting.GRAY),
-
-	REIMU_FLESH("reimu_flesh", "Reimu: You shall not eat it. Last warning.", 0, ChatFormatting.RED),
-	REIMU_WARN("reimu_warn", "Reimu: Drink some tea and keep your sanity. Last warning.", 0, ChatFormatting.RED),
-	KOISHI_REIMU("koishi_reimu", "Reimu: ???", 0, ChatFormatting.RED),
+	REIMU_FLESH("msg.reimu_flesh", "Reimu: You shall not eat it. Last warning.", 0, ChatFormatting.RED),
+	REIMU_WARN("msg.reimu_warn", "Reimu: Drink some tea and keep your sanity. Last warning.", 0, ChatFormatting.RED),
+	KOISHI_REIMU("msg.koishi_reimu", "Reimu: ???", 0, ChatFormatting.RED),
 
 	;
 
@@ -90,7 +86,7 @@ public enum GLLang {
 	GLLang(String key, String def, int argn, @Nullable ChatFormatting format) {
 		this.def = def;
 		this.argn = argn;
-		this.key = GensokyoLegacy.MODID + key;
+		this.key = GensokyoLegacy.MODID + "." + key;
 		this.format = format;
 	}
 

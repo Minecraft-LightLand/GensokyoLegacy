@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.attachment.misc;
 
+import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouConditionalSpawns;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLAdvGen;
@@ -106,6 +107,8 @@ public class KoishiAttackCapability extends PlayerCapabilityTemplate<KoishiAttac
 		if (blockCount >= GLModConfig.SERVER.koishiAttackBlockCount.get()) {
 			blockCount = 0;
 			player.spawnAtLocation(GLItems.KOISHI_HAT.get());
+		} else if (player.getY() > 127 && source != null) {
+			TouhouConditionalSpawns.triggerKoishi(player, source);
 		}
 	}
 

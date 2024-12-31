@@ -27,7 +27,7 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
 import java.util.List;
 
 @SerialClass
-public class CirnoEntity extends GeneralYoukaiEntity {
+public class CirnoEntity extends FairyEntity {
 
 	public static AttributeSupplier.Builder createAttributes() {
 		return GeneralYoukaiEntity.createAttributes()

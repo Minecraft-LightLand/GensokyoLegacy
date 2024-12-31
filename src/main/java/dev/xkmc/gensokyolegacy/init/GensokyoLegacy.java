@@ -69,6 +69,7 @@ public class GensokyoLegacy {
 		GLEffects.register();
 		GLSounds.register();
 		GLCriteriaTriggers.register();
+		GLModConfig.init();
 		TouhouSpellCards.registerSpells();
 		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
 			NeoForge.EVENT_BUS.register(TLMCompat.class);

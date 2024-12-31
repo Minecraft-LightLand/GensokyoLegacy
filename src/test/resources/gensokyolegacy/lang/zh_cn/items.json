@@ -1,0 +1,79 @@
+{
+	"entity.gensokyolegacy.fairy_ice_crystal": "妖精冰晶",
+	"entity.gensokyolegacy.frozen_frog": "冻青蛙",
+	"block.gensokyolegacy": {
+		"donation_box": "赛钱箱",
+		"ice_bricks": "冰砖",
+		"ice_brick_slab": "冰砖台阶",
+		"ice_brick_stairs": "冰砖楼梯",
+		"ice_brick_vertical_slab": "冰砖竖半砖",
+		"snow_bricks": "雪砖",
+		"snow_brick_slab": "雪砖台阶",
+		"snow_brick_stairs": "雪砖楼梯",
+		"snow_brick_vertical_slab": "雪砖竖半砖",
+		"mistletoe_foliage": "槲寄生",
+		"mistletoe_leaves": "槲寄生树叶",
+		"cirno_bed": "琪露诺的床",
+		"rumia_bed": "露米娅的床",
+		"reimu_bed": "博丽灵梦的床"
+	},
+	"item.gensokyolegacy": {
+		"frozen_frog_cold": "冻青蛙",
+		"frozen_frog_warm": "冻青蛙",
+		"frozen_frog_temperate": "冻青蛙",
+		"fairy_ice_crystal": "妖精冰晶",
+		"mistletoe_branch": "槲寄生",
+		"koishi_hat": "帽子先生",
+		"straw_hat": "稻草帽",
+		"suwako_hat": "诹访子的帽子",
+		"rumia_hairband": "露米娅的发带",
+		"reimu_hairband": "灵梦的大蝴蝶结",
+		"cirno_hairband": "琪露诺的蝴蝶结",
+		"cirno_wings": "琪露诺的翅膀",
+		"debug_glasses": "调试眼镜",
+		"debug_wand": "调试手杖",
+		"spell_reimu": "「梦想天生」",
+		"spell_marisa": "恋符「极限火花」",
+		"spell_sanae": "秘术「一脉单传的弹幕」",
+		"spell_mystia": "夜雀「午夜的合唱指挥」",
+		"spell_yukari_butterfly": "魍魉「二重黑死蝶」",
+		"spell_yukari_laser": "结界「光与暗的网目」"
+	},
+	"-cartesian": {
+		"entity": {
+			"path": "",
+			"list": [
+				{
+					"rumia": "露米娅",
+					"hakurei_reimu": "博丽灵梦",
+					"cirno": "琪露诺",
+					"yukari_yakumo": "八云紫",
+					"kochiya_sanae": "东风谷早苗",
+					"komeiji_koishi": "古明地恋",
+					"kirisame_marisa": "雾雨魔理沙",
+					"mystia_lorelei": "米斯蒂亚",
+					"luna_child": "露娜",
+					"star_sapphire": "斯塔",
+					"sunny_milk": "桑尼"
+				},
+				{
+					"entity.gensokyolegacy.*": "",
+					"item.gensokyolegacy.*_spawn_egg": "生成蛋"
+				}
+			]
+		},
+		"bottle": {
+			"path": "",
+			"reverse": true,
+			"list": [
+				{
+					"blood": "血液"
+				},
+				{
+					"fluid.gensokyolegacy.*": "",
+					"item.gensokyolegacy.*_bottle": "瓶装"
+				}
+			]
+		}
+	}
+}

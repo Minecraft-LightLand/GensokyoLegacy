@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.init.data.loot;
 
 import com.tterrag.registrate.providers.loot.RegistrateEntityLootTables;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
+import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import net.minecraft.advancements.critereon.DamageSourcePredicate;
 import net.minecraft.advancements.critereon.EntityFlagsPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -10,6 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
@@ -24,6 +26,44 @@ public class EntityLootGen {
 
 	public static <T extends LivingEntity> void noLoot(RegistrateEntityLootTables pvd, EntityType<T> type) {
 		pvd.add(type, LootTable.lootTable());
+	}
+
+
+	public static void reimu(RegistrateEntityLootTables pvd, EntityType<?> type) {
+		pvd.add(type, LootTable.lootTable()
+				.withPool(LootPool.lootPool().add(getItem(GLItems.REIMU_SPELL.get(), 1, 1))
+						.when(byPlayer()).when(danmakuKill()))
+		);
+	}
+
+	public static void sanae(RegistrateEntityLootTables pvd, EntityType<?> type) {
+		pvd.add(type, LootTable.lootTable()
+				.withPool(LootPool.lootPool().add(getItem(GLItems.SANAE_SPELL.get(), 1, 1))
+						.when(byPlayer()).when(danmakuKill()))
+		);
+	}
+
+	public static void marisa(RegistrateEntityLootTables pvd, EntityType<?> type) {
+		pvd.add(type, LootTable.lootTable()
+				.withPool(LootPool.lootPool().add(getItem(GLItems.MARISA_SPELL.get(), 1, 1))
+						.when(byPlayer()).when(danmakuKill()))
+		);
+	}
+
+	public static void mystia(RegistrateEntityLootTables pvd, EntityType<?> type) {
+		pvd.add(type, LootTable.lootTable()
+				.withPool(LootPool.lootPool().add(getItem(GLItems.MYSTIA_SPELL.get(), 1, 1))
+						.when(byPlayer()).when(danmakuKill()))
+		);
+	}
+
+	public static void yukari(RegistrateEntityLootTables pvd, EntityType<?> type) {
+		pvd.add(type, LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.when(byPlayer()).when(danmakuKill())
+						.add(getItem(GLItems.YUKARI_SPELL_LASER.get(), 1, 1))
+						.add(getItem(GLItems.YUKARI_SPELL_BUTTERFLY.get(), 1, 1)))
+		);
 	}
 
 	private static LootItemFunction.Builder onFire() {

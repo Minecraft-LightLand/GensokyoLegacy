@@ -52,7 +52,7 @@ public class GLEntities {
 					.attributes(BossYoukaiEntity::createAttributes)
 					.renderer(() -> ReimuRenderer::new)
 					.spawnEgg(0xa93937, 0xfaf5f2).build()
-					.loot(EntityLootGen::noLoot)
+					.loot(EntityLootGen::reimu)
 					.register();
 
 			CIRNO = GensokyoLegacy.REGISTRATE
@@ -72,7 +72,7 @@ public class GLEntities {
 					.attributes(BossYoukaiEntity::createAttributes)
 					.renderer(() -> GeneralYoukaiRenderer::new)
 					.spawnEgg(0x4B1442, 0xFFFFFF).build()
-					.loot(EntityLootGen::noLoot)
+					.loot(EntityLootGen::yukari)
 					.register();
 
 			SANAE = GensokyoLegacy.REGISTRATE
@@ -81,7 +81,7 @@ public class GLEntities {
 					.attributes(BossYoukaiEntity::createAttributes)
 					.renderer(() -> GeneralYoukaiRenderer::new)
 					.spawnEgg(0x4eaff9, 0xFFFFFF).build()
-					.loot(EntityLootGen::noLoot)
+					.loot(EntityLootGen::sanae)
 					.register();
 
 			KOISHI = GensokyoLegacy.REGISTRATE
@@ -99,7 +99,7 @@ public class GLEntities {
 					.attributes(BossYoukaiEntity::createAttributes)
 					.renderer(() -> GeneralYoukaiRenderer::new)
 					.spawnEgg(0x52403C, 0xFAF2EF).build()
-					.loot(EntityLootGen::noLoot)
+					.loot(EntityLootGen::marisa)
 					.register();
 
 			MYSTIA = GensokyoLegacy.REGISTRATE
@@ -108,7 +108,7 @@ public class GLEntities {
 					.attributes(GeneralYoukaiEntity::createAttributes)
 					.renderer(() -> GeneralYoukaiRenderer::new)
 					.spawnEgg(0x9B6D79, 0xF4BDAE).build()
-					.loot(EntityLootGen::noLoot)
+					.loot(EntityLootGen::mystia)
 					.register();
 
 			SUNNY = GensokyoLegacy.REGISTRATE

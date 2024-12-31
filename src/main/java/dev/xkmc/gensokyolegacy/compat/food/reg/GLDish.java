@@ -1,8 +1,8 @@
 package dev.xkmc.gensokyolegacy.compat.food.reg;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.youkaishomecoming.content.block.food.FoodSaucerBlock;
-import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
 import dev.xkmc.youkaishomecoming.init.food.EffectEntry;
 import dev.xkmc.youkaishomecoming.init.food.IYHDish;
 import dev.xkmc.youkaishomecoming.init.food.Saucer;
@@ -31,7 +31,7 @@ public enum GLDish implements IYHDish {
 			builder.effect(e::getEffect, e.chance());
 		}
 		var food = builder.build();
-		block = buildBlock(YoukaisHomecoming.REGISTRATE, food);
+		block = buildBlock(GensokyoLegacy.REGISTRATE, food);
 	}
 
 	@Override

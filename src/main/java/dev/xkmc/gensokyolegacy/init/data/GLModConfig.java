@@ -33,8 +33,11 @@ public class GLModConfig {
 		public final ModConfigSpec.BooleanValue reimuSummonKill;
 		public final ModConfigSpec.IntValue reimuSummonCost;
 
-		Server(Builder builder) {
+		public final ModConfigSpec.BooleanValue fairyAttackYoukaified;
+		public final ModConfigSpec.DoubleValue fairySummonReinforcement;
 
+		Server(Builder builder) {
+			markL2();
 			builder.push("food_effect", "Potion Effects");
 			{
 				higiHealingPeriod = builder.text("Higi Healing Interval")
@@ -57,56 +60,60 @@ public class GLModConfig {
 
 			builder.push("koishi_attack", "Koishi Attack");
 			{
-				koishiAttackEnable = builder.comment("Enable koishi attack when player has youkaifying or youkaified effect")
+				koishiAttackEnable = builder.text("Enable koishi attack when player has youkaifying or youkaified effect")
 						.define("koishiAttackEnable", true);
-				koishiAttackCoolDown = builder.comment("Time in ticks for minimum time between koishi attacks")
+				koishiAttackCoolDown = builder.text("Time in ticks for minimum time between koishi attacks")
 						.defineInRange("koishiAttackCoolDown", 6000, 1, 1000000);
-				koishiAttackChance = builder.comment("Chance every tick to do koishi attack")
+				koishiAttackChance = builder.text("Chance every tick to do koishi attack")
 						.defineInRange("koishiAttackChance", 0.001, 0, 1);
-				koishiAttackDamage = builder.comment("Koishi attack damage")
+				koishiAttackDamage = builder.text("Koishi attack damage")
 						.defineInRange("koishiAttackDamage", 100, 0, 100000000);
-				koishiAttackBlockCount = builder.comment("Number of times player needs to consecutively block Koishi attack to get hat")
+				koishiAttackBlockCount = builder.text("Number of times player needs to consecutively block Koishi attack to get hat")
 						.defineInRange("koishiAttackBlockCount", 3, 0, 100);
 			}
 			builder.pop();
 
 			builder.push("danmaku_battle", "Danmaku Battle");
 			{
-				danmakuMinPHPDamage = builder.comment("Minimum damage youkai danmaku will deal against non-player")
+				danmakuMinPHPDamage = builder.text("Minimum damage youkai danmaku will deal against non-player")
 						.defineInRange("danmakuMinPHPDamage", 0.02, 0, 1);
-				danmakuPlayerPHPDamage = builder.comment("Minimum damage youkai danmaku will deal against player")
+				danmakuPlayerPHPDamage = builder.text("Minimum damage youkai danmaku will deal against player")
 						.defineInRange("danmakuPlayerPHPDamage", 0.1, 0, 1);
-				danmakuHealOnHitTarget = builder.comment("When danmaku hits target, heal youkai health by percentage of max health")
+				danmakuHealOnHitTarget = builder.text("When danmaku hits target, heal youkai health by percentage of max health")
 						.defineInRange("danmakuHealOnHitTarget", 0.2, 0, 1);
 			}
 			builder.pop();
 
 			builder.push("rumia", "Rumia");
 			{
-				exRumiaConversion = builder.comment("Enable Ex Rumia conversion when Rumia takes too high damage in one hit")
+				exRumiaConversion = builder.text("Enable Ex Rumia conversion when Rumia takes too high damage in one hit")
 						.define("exRumiaConversion", true);
-				rumiaDamageCap = builder.comment("Allow Rumia to cap incoming damage at a factor of max health")
+				rumiaDamageCap = builder.text("Allow Rumia to cap incoming damage at a factor of max health")
 						.define("rumiaDamageCap", true);
-				rumiaNoTargetHealing = builder.comment("Enable Rumia healing when having no target")
+				rumiaNoTargetHealing = builder.text("Enable Rumia healing when having no target")
 						.define("rumiaNoTargetHealing", true);
-				rumiaHairbandDrop = builder.comment("Enable Ex Rumia hairband drop")
+				rumiaHairbandDrop = builder.text("Enable Ex Rumia hairband drop")
 						.define("rumiaHairbandDrop", true);
 			}
 			builder.pop();
 
 			builder.push("reimu", "Reimu");
 			{
-				reimuSummonFlesh = builder.comment("Summon Reimu when player eats flesh in front of villagers")
+				reimuSummonFlesh = builder.text("Summon Reimu when player eats flesh in front of villagers")
 						.define("reimuSummonFlesh", true);
-				reimuSummonKill = builder.comment("Summon Reimu when player with youkaified/fying effect kills villager in front of other villagers")
+				reimuSummonKill = builder.text("Summon Reimu when player with youkaified/fying effect kills villager in front of other villagers")
 						.define("reimuSummonKill", true);
-				reimuSummonCost = builder.comment("Cost of emerald/gold to summon Reimu")
+				reimuSummonCost = builder.text("Cost of emerald/gold to summon Reimu")
 						.defineInRange("reimuSummonCost", 8, 1, 100000);
 			}
 			builder.pop();
 
 			builder.push("fairy", "Fairy");
 			{
+				fairyAttackYoukaified = builder.text("Fairies will actively attack players with youkaifying/ed effects")
+						.define("fairyAttackYoukaified", true);
+				fairySummonReinforcement = builder.text("Chance for fairies to summon other fairies when killed by non-danmaku damage")
+						.defineInRange("fairySummonReinforcement", 0.5, 0, 1);
 			}
 			builder.pop();
 		}

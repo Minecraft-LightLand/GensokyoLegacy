@@ -1,0 +1,32 @@
+{
+	"advancements.gensokyolegacy.main": {
+		"bloody.description": "获得瓶装血液",
+		"bloody.title": "血淋淋的!",
+		"flesh.description": "获得怪肉",
+		"flesh.title": "这是啥?",
+		"mousse.description": "吃掉一个恋恋慕斯",
+		"mousse.title": "嗯...啊?刚刚发生什么了?",
+		"powerful_being.description": "获得妖怪化效果",
+		"powerful_being.title": "是异变啊!灵梦!",
+		"monstrosity.description": "吃一份盘装人肉宴",
+		"monstrosity.title": "汉尼拔",
+		"first_time.description": "获得半妖怪化状态",
+		"first_time.title": "小心灵梦",
+		"koishi_hat.description": "和恋恋玩，获取帽子先生",
+		"koishi_hat.title": "钢盔",
+		"mary_call.description": "半妖怪化状态下在下界被恋恋打电话",
+		"mary_call.title": "这里是玛丽小姐～",
+		"suwako_hat.description": "收集信仰获取诹访子的帽子",
+		"suwako_hat.title": "信仰收集",
+		"suwako_wear.description": "在半妖怪化或者妖怪化状态下给青蛙带草帽",
+		"suwako_wear.title": "祟神之路",
+		"lost_memories.description": "露米娅受到40点以上的伤害时会变化为Ex露米娅。用弹幕击败Ex露米娅并获得露米娅的发带",
+		"lost_memories.title": "失落的记忆",
+		"spellcard_power.description": "你在村民面前吃人肉时灵梦会出现并试图治退你。击败灵梦并获得她的符卡",
+		"spellcard_power.title": "赤色杀人魔",
+		"trade_danmaku.description": "妖怪化状态下和露米娅交易获取弹幕",
+		"trade_danmaku.title": "可口的交易",
+		"feed_reimu.description": "投喂灵梦妖怪归家中所有正常的食物，灵梦会给你她的大蝴蝶结作为谢礼",
+		"feed_reimu.title": "满足的灵梦"
+	}
+}

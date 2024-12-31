@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;
 
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
+import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouConditionalSpawns;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.world.damagesource.DamageSource;
@@ -22,8 +23,9 @@ public class ReimuEntity extends MaidenEntity {
 
 	@Override
 	protected void onKilledBy(LivingEntity le, DamageSource source) {
+		super.onKilledBy(le, source);
 		if (!source.is(DanmakuDamageTypes.DANMAKU_TYPE)) {
-			//TODO TouhouConditionalSpawns.triggetYukari(le, position());
+			TouhouConditionalSpawns.triggetYukari(le, position());
 		}
 	}
 

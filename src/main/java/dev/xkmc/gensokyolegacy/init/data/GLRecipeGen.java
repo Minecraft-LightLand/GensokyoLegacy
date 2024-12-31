@@ -52,7 +52,6 @@ public class GLRecipeGen {
 					.save(pvd);
 		}
 
-
 		{
 			pvd.stonecutting(DataIngredient.items(Items.IRON_INGOT), RecipeCategory.MISC, GLFoodItems.CAN);
 			pvd.smelting(DataIngredient.items(GLFoodItems.CAN.get()), RecipeCategory.MISC, Items.IRON_INGOT::asItem, 0.1f, 200);

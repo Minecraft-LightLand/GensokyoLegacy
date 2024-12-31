@@ -98,6 +98,11 @@ public class BedRefData {
 		entityId = Util.NIL_UUID;
 	}
 
+	public void removeEntity(ServerLevel sl, YoukaiEntity self) {
+		entityId = Util.NIL_UUID;
+		self.discard();
+	}
+
 	public void onDebugClick(ServerPlayer sp, CharacterConfig config) {
 		if (sp.serverLevel().getEntity(entityId) instanceof YoukaiEntity e) {
 			e.discard();

@@ -67,7 +67,7 @@ public class YoukaiSleepTask extends ExtendedBehaviour<YoukaiEntity> {
 			if (level.isLoaded(pos.pos())) {
 				entity.moveTo(pos.pos().getCenter());
 			} else {
-				BedRefData.of(level, entity);//TODO
+				BedRefData.of(level, entity).ifPresent(bed -> bed.removeEntity(level, entity));
 			}
 			desperateSleepyTime = 0;
 		}
