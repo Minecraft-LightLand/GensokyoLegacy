@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "gensokyolegacy:block/darkstone",
+    "side": "gensokyolegacy:block/darkstone",
+    "top": "gensokyolegacy:block/darkstone"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "item": "minecraft:packed_ice"
+    }
+  },
+  "pattern": [
+    "XXX"
+  ],
+  "result": {
+    "count": 6,
+    "id": "gensokyolegacy:packed_ice_slab"
+  }
+}

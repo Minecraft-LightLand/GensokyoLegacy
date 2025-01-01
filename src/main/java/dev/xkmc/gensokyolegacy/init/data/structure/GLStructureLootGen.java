@@ -74,10 +74,10 @@ public class GLStructureLootGen {
 
 			pvd.addLootAction(LootContextParamSets.CHEST, cons -> cons.accept(CIRNO_BARREL, LootTable.lootTable()
 					.withPool(getPool(5, 1)
-							.add(getItem(GLDecoBlocks.ICE_SET.block.get().asItem(), 4, 8))
-							.add(getItem(GLDecoBlocks.ICE_SET.slab.asItem(), 2, 4))
-							.add(getItem(GLDecoBlocks.ICE_SET.vertical.asItem(), 2, 4))
-							.add(getItem(GLDecoBlocks.ICE_SET.stairs.asItem(), 1, 2))
+							.add(getItem(GLDecoBlocks.ICE_BRICK_SET.block.get().asItem(), 4, 8))
+							.add(getItem(GLDecoBlocks.ICE_BRICK_SET.slab.asItem(), 2, 4))
+							.add(getItem(GLDecoBlocks.ICE_BRICK_SET.vertical.asItem(), 2, 4))
+							.add(getItem(GLDecoBlocks.ICE_BRICK_SET.stairs.asItem(), 1, 2))
 							.add(getItem(ModItems.CANVAS_RUG.get(), 2, 4))
 							.add(getItem(Items.BRICK, 3, 6)))
 			));

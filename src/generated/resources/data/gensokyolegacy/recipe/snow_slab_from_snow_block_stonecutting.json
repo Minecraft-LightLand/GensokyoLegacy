@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "minecraft:snow_block"
+  },
+  "result": {
+    "count": 2,
+    "id": "gensokyolegacy:snow_slab"
+  }
+}

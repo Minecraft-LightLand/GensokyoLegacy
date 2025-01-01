@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "gensokyolegacy:block/snow_slab"
+    },
+    "type=double": {
+      "model": "minecraft:block/snow"
+    },
+    "type=top": {
+      "model": "gensokyolegacy:block/snow_slab_top"
+    }
+  }
+}

@@ -28,13 +28,12 @@ public class GLFoodItems {
 		var reg = GensokyoLegacy.REGISTRATE;
 
 		TAB = reg.buildModCreativeTab("food", "Gensokyo Legacy - Foods",
-				e -> e.icon(GLFood.FLESH_CHOCOLATE_MOUSSE.item::asStack));
+				e -> e.icon(GLFood.SCARLET_DEVIL_CAKE.item::asStack));
 
 		CAN = reg.item("can", Item::new).register();
 		GLFood.register();
 
 		{
-
 
 			RAW_FLESH_FEAST = reg.item("raw_flesh_feast", FleshSimpleItem::new)
 					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/feast/" + ctx.getName())))

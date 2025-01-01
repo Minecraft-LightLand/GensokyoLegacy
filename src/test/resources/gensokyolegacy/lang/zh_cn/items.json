@@ -3,16 +3,12 @@
 	"entity.gensokyolegacy.frozen_frog": "冻青蛙",
 	"block.gensokyolegacy": {
 		"donation_box": "赛钱箱",
-		"ice_bricks": "冰砖",
-		"ice_brick_slab": "冰砖台阶",
-		"ice_brick_stairs": "冰砖楼梯",
-		"ice_brick_vertical_slab": "冰砖竖半砖",
-		"snow_bricks": "雪砖",
-		"snow_brick_slab": "雪砖台阶",
-		"snow_brick_stairs": "雪砖楼梯",
-		"snow_brick_vertical_slab": "雪砖竖半砖",
 		"mistletoe_foliage": "槲寄生",
 		"mistletoe_leaves": "槲寄生树叶",
+		"ice_bricks": "冰砖",
+		"snow_bricks": "雪砖",
+		"darkstone": "宵暗石",
+		"darkstone_bricks": "宵暗瓦块",
 		"cirno_bed": "琪露诺的床",
 		"rumia_bed": "露米娅的床",
 		"reimu_bed": "博丽灵梦的床"
@@ -72,6 +68,24 @@
 				{
 					"fluid.gensokyolegacy.*": "",
 					"item.gensokyolegacy.*_bottle": "瓶装"
+				}
+			]
+		},
+		"bricks": {
+			"path": "block.gensokyolegacy",
+			"list": [
+				{
+					"packed_ice": "浮冰",
+					"snow": "雪",
+					"ice_brick": "冰砖",
+					"snow_brick": "雪砖",
+					"darkstone": "宵暗石",
+					"darkstone_brick": "宵暗瓦"
+				},
+				{
+					"slab": "台阶",
+					"stairs": "楼梯",
+					"vertical_slab": "墙"
 				}
 			]
 		}

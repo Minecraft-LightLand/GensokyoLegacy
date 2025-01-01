@@ -40,12 +40,10 @@ public class GLRecipeGen {
 
 	public static void genRecipe(RegistrateRecipeProvider pvd) {
 		{
-			GLDecoBlocks.ICE_SET.genRecipe(pvd);
-			GLDecoBlocks.SNOW_SET.genRecipe(pvd);
+			pvd.stonecutting(DataIngredient.items(Blocks.PACKED_ICE), RecipeCategory.BUILDING_BLOCKS, GLDecoBlocks.ICE_BRICK_SET.block);
+			pvd.stonecutting(DataIngredient.items(GLDecoBlocks.DARKSTONE.block.get()), RecipeCategory.BUILDING_BLOCKS, GLDecoBlocks.DARKSTONE_BRICK.block);
 
-			pvd.stonecutting(DataIngredient.items(Blocks.PACKED_ICE), RecipeCategory.BUILDING_BLOCKS, GLDecoBlocks.ICE_SET.block);
-
-			GLRecipeGen.unlock(pvd, ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, GLDecoBlocks.SNOW_SET.block.get())::unlockedBy, Items.SNOW_BLOCK)
+			GLRecipeGen.unlock(pvd, ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, GLDecoBlocks.SNOW_BRICK_SET.block.get())::unlockedBy, Items.SNOW_BLOCK)
 					.pattern("XX").pattern("XX")
 					.define('X', Items.SNOW_BLOCK)
 					.save(pvd);

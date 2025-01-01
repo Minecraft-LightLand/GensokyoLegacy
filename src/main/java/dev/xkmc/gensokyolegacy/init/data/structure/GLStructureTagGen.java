@@ -53,10 +53,10 @@ public class GLStructureTagGen {
 	@SuppressWarnings({"unchecked"})
 	public static void genBlockTag(RegistrateTagsProvider.IntrinsicImpl<Block> pvd) {
 		pvd.addTag(CIRNO_PRIMARY).add(
-				GLDecoBlocks.ICE_SET.block.get(),
-				GLDecoBlocks.ICE_SET.stairs.get(),
-				GLDecoBlocks.ICE_SET.slab.get(),
-				GLDecoBlocks.ICE_SET.vertical.get());
+				GLDecoBlocks.ICE_BRICK_SET.block.get(),
+				GLDecoBlocks.ICE_BRICK_SET.stairs.get(),
+				GLDecoBlocks.ICE_BRICK_SET.slab.get(),
+				GLDecoBlocks.ICE_BRICK_SET.vertical.get());
 
 		pvd.addTag(CIRNO_FIX).add(
 				Blocks.SPRUCE_DOOR,

@@ -1,6 +1,10 @@
 {
   "values": [
+    "gensokyolegacy:packed_ice_stairs",
+    "gensokyolegacy:snow_stairs",
     "gensokyolegacy:ice_brick_stairs",
-    "gensokyolegacy:snow_brick_stairs"
+    "gensokyolegacy:snow_brick_stairs",
+    "gensokyolegacy:darkstone_stairs",
+    "gensokyolegacy:darkstone_brick_stairs"
   ]
 }

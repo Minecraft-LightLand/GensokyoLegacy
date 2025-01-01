@@ -68,8 +68,8 @@ public class GensokyoLegacy {
 
 	public GensokyoLegacy() {
 		GLDecoBlocks.register();
-		GLItems.register();
 		GLFoodItems.register();
+		GLItems.register();
 		TouhouMat.register();
 		GLMeta.register();
 		GLBrains.register();

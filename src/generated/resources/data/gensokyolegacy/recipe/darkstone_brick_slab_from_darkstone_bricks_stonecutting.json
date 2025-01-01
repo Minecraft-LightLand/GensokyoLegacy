@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "gensokyolegacy:darkstone_bricks"
+  },
+  "result": {
+    "count": 2,
+    "id": "gensokyolegacy:darkstone_brick_slab"
+  }
+}
