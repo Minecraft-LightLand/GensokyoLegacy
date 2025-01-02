@@ -1,9 +1,9 @@
 {
   "values": [
-    "gensokyolegacy:packed_ice_vertical_slab",
     "gensokyolegacy:snow_vertical_slab",
-    "gensokyolegacy:ice_brick_vertical_slab",
     "gensokyolegacy:snow_brick_vertical_slab",
+    "gensokyolegacy:packed_ice_vertical_slab",
+    "gensokyolegacy:ice_brick_vertical_slab",
     "gensokyolegacy:darkstone_vertical_slab",
     "gensokyolegacy:darkstone_brick_vertical_slab"
   ]

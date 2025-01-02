@@ -45,7 +45,7 @@ public enum GLLang {
 	USAGE("item.usage", "Usage: ", 0, ChatFormatting.GRAY),
 	OBTAIN_FLESH("item.obtain_flesh", "Kill human mobs with knife while being %s", 1, ChatFormatting.GRAY),
 	OBTAIN_BLOOD("item.obtain_blood", "Kill human mobs with knife and have glass bottle in off hand wile being %s", 1, ChatFormatting.GRAY),
-	ITEM_FAIRY_ICE_OBTAIN("item.obtain_fairy_ice", "Crafted by Cirno.",0,ChatFormatting.GRAY),
+	ITEM_FAIRY_ICE_OBTAIN("item.obtain_fairy_ice", "Crafted by Cirno.", 0, ChatFormatting.GRAY),
 	ITEM_FAIRY_ICE_USAGE("item.usage_fairy_ice", "Throw to deal damage and freeze target.", 0, ChatFormatting.GRAY),
 	ITEM_FROZEN_FROG_OBTAIN("item.obtain_frozen_frog", "Dropped when Cirno freezes a frog.", 0, ChatFormatting.GRAY),
 	ITEM_FROZEN_FROG_USAGE("item.usage_frozen_frog", "Throw toward target to summon a frog.", 0, ChatFormatting.GRAY),

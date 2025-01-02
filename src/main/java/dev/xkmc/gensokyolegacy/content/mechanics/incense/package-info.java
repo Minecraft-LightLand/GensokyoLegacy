@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.role.core;
+package dev.xkmc.gensokyolegacy.content.mechanics.incense;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

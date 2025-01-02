@@ -1,0 +1,7 @@
+{
+  "parent": "gensokyolegacy:custom/censer",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "0": "gensokyolegacy:block/censer"
+  }
+}

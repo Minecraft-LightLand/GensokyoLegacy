@@ -7,7 +7,6 @@ import dev.xkmc.gensokyolegacy.content.food.reg.GLDish;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLFoodItems;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLSake;
-import dev.xkmc.gensokyolegacy.init.registrate.GLDecoBlocks;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.youkaishomecoming.content.pot.base.BasePotOutput;
 import dev.xkmc.youkaishomecoming.content.pot.ferment.SimpleFermentationBuilder;
@@ -26,7 +25,6 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import vectorwing.farmersdelight.client.recipebook.CookingPotRecipeBookTab;
 import vectorwing.farmersdelight.common.registry.ModItems;
@@ -40,13 +38,6 @@ public class GLRecipeGen {
 
 	public static void genRecipe(RegistrateRecipeProvider pvd) {
 		{
-			pvd.stonecutting(DataIngredient.items(Blocks.PACKED_ICE), RecipeCategory.BUILDING_BLOCKS, GLDecoBlocks.ICE_BRICK_SET.block);
-			pvd.stonecutting(DataIngredient.items(GLDecoBlocks.DARKSTONE.block.get()), RecipeCategory.BUILDING_BLOCKS, GLDecoBlocks.DARKSTONE_BRICK.block);
-
-			GLRecipeGen.unlock(pvd, ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, GLDecoBlocks.SNOW_BRICK_SET.block.get())::unlockedBy, Items.SNOW_BLOCK)
-					.pattern("XX").pattern("XX")
-					.define('X', Items.SNOW_BLOCK)
-					.save(pvd);
 		}
 
 		{

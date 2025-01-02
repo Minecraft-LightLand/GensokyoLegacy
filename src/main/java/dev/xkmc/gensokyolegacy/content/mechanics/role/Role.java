@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.role.core;
+package dev.xkmc.gensokyolegacy.content.mechanics.role;
 
 import dev.xkmc.gensokyolegacy.init.registrate.GLRoles;
 import dev.xkmc.l2core.init.reg.registrate.NamedEntry;

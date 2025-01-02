@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public class FeedReimuTrigger extends SimpleCriterionTrigger<FeedReimuTrigger.TriggerInstance> {
+public class FeedCharacterTrigger extends SimpleCriterionTrigger<FeedCharacterTrigger.TriggerInstance> {
 	@Override
-	public Codec<FeedReimuTrigger.TriggerInstance> codec() {
-		return FeedReimuTrigger.TriggerInstance.CODEC;
+	public Codec<FeedCharacterTrigger.TriggerInstance> codec() {
+		return FeedCharacterTrigger.TriggerInstance.CODEC;
 	}
 
 	public void trigger(ServerPlayer player, LivingEntity le, ItemStack item) {
@@ -30,17 +30,17 @@ public class FeedReimuTrigger extends SimpleCriterionTrigger<FeedReimuTrigger.Tr
 			Optional<EntityPredicate> entity,
 			Optional<ItemPredicate> item
 	) implements SimpleCriterionTrigger.SimpleInstance {
-		public static final Codec<FeedReimuTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(i -> i.group(
-						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(FeedReimuTrigger.TriggerInstance::player),
-						EntityPredicate.CODEC.optionalFieldOf("entity").forGetter(FeedReimuTrigger.TriggerInstance::entity),
-						ItemPredicate.CODEC.optionalFieldOf("item").forGetter(FeedReimuTrigger.TriggerInstance::item)
-				).apply(i, FeedReimuTrigger.TriggerInstance::new)
+		public static final Codec<FeedCharacterTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(i -> i.group(
+						EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(FeedCharacterTrigger.TriggerInstance::player),
+						EntityPredicate.CODEC.optionalFieldOf("entity").forGetter(FeedCharacterTrigger.TriggerInstance::entity),
+						ItemPredicate.CODEC.optionalFieldOf("item").forGetter(FeedCharacterTrigger.TriggerInstance::item)
+				).apply(i, FeedCharacterTrigger.TriggerInstance::new)
 		);
 
-		public static Criterion<FeedReimuTrigger.TriggerInstance> usedItem(
+		public static Criterion<FeedCharacterTrigger.TriggerInstance> usedItem(
 				@Nullable ContextAwarePredicate player, @Nullable EntityPredicate entity, @Nullable ItemPredicate item
 		) {
-			return GLCriteriaTriggers.FEED_REIMU.get().createCriterion(new FeedReimuTrigger.TriggerInstance(
+			return GLCriteriaTriggers.FEED_REIMU.get().createCriterion(new FeedCharacterTrigger.TriggerInstance(
 					Optional.ofNullable(player), Optional.ofNullable(entity), Optional.ofNullable(item)));
 		}
 

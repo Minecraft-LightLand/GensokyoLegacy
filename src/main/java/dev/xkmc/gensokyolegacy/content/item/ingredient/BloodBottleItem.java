@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.item.ingredient;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
-import dev.xkmc.gensokyolegacy.content.role.core.RoleCategory;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.youkaishomecoming.content.item.fluid.SakeBottleItem;
 import dev.xkmc.youkaishomecoming.content.item.fluid.SakeFluid;

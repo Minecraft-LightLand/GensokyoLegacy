@@ -4,16 +4,21 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
+import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.youkaishomecoming.content.block.variants.VerticalSlabBlock;
 import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
@@ -26,31 +31,34 @@ public class GLDecoBlocks {
 
 	public static final SimpleEntry<CreativeModeTab> TAB;
 
-	public static final BrickSet PACKED_ICE_SET, SNOW_SET, ICE_BRICK_SET, SNOW_BRICK_SET,
-			DARKSTONE, DARKSTONE_BRICK;
+	public static final BrickSet PACKED_ICE_SET, SNOW_SET, ICE_BRICK_SET, SNOW_BRICK_SET;
+
+	public static final StoneAndBrickSet DARKSTONE;
 
 	static {
-		TAB = GensokyoLegacy.REGISTRATE.buildModCreativeTab("building_blocks", "Gensokyo Legacy - Building Blocks",
+		var reg = GensokyoLegacy.REGISTRATE;
+		TAB = reg.buildModCreativeTab("building_blocks", "Gensokyo Legacy - Building Blocks",
 				e -> e.icon(() -> GLDecoBlocks.ICE_BRICK_SET.block.get().asItem().getDefaultInstance()));
 
-		PACKED_ICE_SET = new BrickSet("packed_ice", BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE),
-				ResourceLocation.withDefaultNamespace("block/packed_ice"), () -> Blocks.PACKED_ICE,
-				BlockTags.MINEABLE_WITH_PICKAXE);
-		SNOW_SET = new BrickSet("snow", BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK),
+		SNOW_SET = new BrickSet(reg, "snow", BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK),
 				ResourceLocation.withDefaultNamespace("block/snow"), () -> Blocks.SNOW_BLOCK,
 				BlockTags.MINEABLE_WITH_SHOVEL);
+		SNOW_BRICK_SET = new BrickSet(reg, "snow", BlockBehaviour.Properties.of().mapColor(MapColor.SNOW)
+				.requiresCorrectToolForDrops().strength(0.2F).sound(SoundType.SNOW),
+				(ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())::unlockedBy, Items.SNOW_BLOCK)
+						.pattern("XX").pattern("XX").define('X', Items.SNOW_BLOCK).save(pvd));
 
-		ICE_BRICK_SET = new BrickSet("ice", BlockBehaviour.Properties.of().mapColor(MapColor.ICE)
-				.instrument(NoteBlockInstrument.CHIME)
-				.requiresCorrectToolForDrops().strength(0.5F).sound(SoundType.GLASS));
-		SNOW_BRICK_SET = new BrickSet("snow", BlockBehaviour.Properties.of().mapColor(MapColor.SNOW)
-				.requiresCorrectToolForDrops().strength(0.2F).sound(SoundType.SNOW));
-
-		DARKSTONE = new BrickSet("darkstone", BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)
-				.requiresCorrectToolForDrops().strength(1F).sound(SoundType.DEEPSLATE),
+		PACKED_ICE_SET = new BrickSet(reg, "packed_ice", BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE),
+				ResourceLocation.withDefaultNamespace("block/packed_ice"), () -> Blocks.PACKED_ICE,
 				BlockTags.MINEABLE_WITH_PICKAXE);
-		DARKSTONE_BRICK = new BrickSet("darkstone", BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK)
-				.requiresCorrectToolForDrops().strength(1F).sound(SoundType.DEEPSLATE_BRICKS));
+
+		ICE_BRICK_SET = new BrickSet(reg, "ice", BlockBehaviour.Properties.of().mapColor(MapColor.ICE)
+				.instrument(NoteBlockInstrument.CHIME)
+				.requiresCorrectToolForDrops().strength(0.5F).sound(SoundType.GLASS),
+				(ctx, pvd) -> pvd.stonecutting(DataIngredient.items(Blocks.PACKED_ICE), RecipeCategory.BUILDING_BLOCKS, ctx));
+
+		DARKSTONE = new StoneAndBrickSet(reg, "darkstone", MapColor.COLOR_BLACK, 1F,
+				SoundType.DEEPSLATE, SoundType.DEEPSLATE_BRICKS);
 
 	}
 
@@ -67,31 +75,31 @@ public class GLDecoBlocks {
 
 		private boolean suppressCraft;
 
-		public BrickSet(String id, BlockBehaviour.Properties prop) {
-			this(id + "_brick", prop, GensokyoLegacy.loc("block/" + id + "_bricks"),
-					GensokyoLegacy.REGISTRATE.block(id + "_bricks", p -> new Block(prop))
+		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop,
+						NonNullBiConsumer<DataGenContext<Block, Block>, RegistrateRecipeProvider> recipe) {
+			this(reg, id + "_brick", prop, GensokyoLegacy.loc("block/" + id + "_bricks"),
+					reg.block(id + "_bricks", p -> new Block(prop))
 							.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
-							.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+							.tag(BlockTags.MINEABLE_WITH_PICKAXE).recipe(recipe)
 							.simpleItem().register(),
 					BlockTags.MINEABLE_WITH_PICKAXE);
-			suppressCraft = true;
 		}
 
-		public BrickSet(String id, BlockBehaviour.Properties prop, TagKey<Block> tool) {
-			this(id, prop, GensokyoLegacy.loc("block/" + id),
-					GensokyoLegacy.REGISTRATE.block(id, p -> new Block(prop))
+		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop, TagKey<Block> tool) {
+			this(reg, id, prop, GensokyoLegacy.loc("block/" + id),
+					reg.block(id, p -> new Block(prop))
 							.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
 							.tag(tool).simpleItem().register(), tool);
 		}
 
-		public BrickSet(String id, BlockBehaviour.Properties prop, ResourceLocation side, Supplier<Block> base, TagKey<Block> tool) {
+		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop, ResourceLocation side, Supplier<Block> base, TagKey<Block> tool) {
 			block = base;
-			stairs = GensokyoLegacy.REGISTRATE.block(id + "_stairs", p ->
+			stairs = reg.block(id + "_stairs", p ->
 							new StairBlock(block.get().defaultBlockState(), prop))
 					.blockstate((ctx, pvd) -> pvd.stairsBlock(ctx.get(), id, side))
 					.tag(tool, BlockTags.STAIRS).item().tag(ItemTags.STAIRS).build()
 					.recipe(this::genStair).register();
-			slab = GensokyoLegacy.REGISTRATE.block(id + "_slab", p ->
+			slab = reg.block(id + "_slab", p ->
 							new SlabBlock(prop))
 					.blockstate((ctx, pvd) -> pvd.slabBlock(ctx.get(),
 							pvd.models().slab(ctx.getName(), side, side, side),
@@ -99,11 +107,16 @@ public class GLDecoBlocks {
 							new ModelFile.UncheckedModelFile(side)))
 					.tag(tool, BlockTags.SLABS).item().tag(ItemTags.SLABS).build()
 					.recipe(this::genSlab).register();
-			vertical = GensokyoLegacy.REGISTRATE.block(id + "_vertical_slab", p ->
+			vertical = reg.block(id + "_vertical_slab", p ->
 							new VerticalSlabBlock(prop))
 					.blockstate((ctx, pvd) -> VerticalSlabBlock.buildBlockState(ctx, pvd, side, side))
 					.tag(YHTagGen.VERTICAL_SLAB, tool).item().build()
 					.recipe(this::genVertical).register();
+		}
+
+		private BrickSet suppressCraft() {
+			suppressCraft = true;
+			return this;
 		}
 
 		private void genStair(DataGenContext<Block, StairBlock> ctx, RegistrateRecipeProvider pvd) {
@@ -129,6 +142,44 @@ public class GLDecoBlocks {
 			}
 			VerticalSlabBlock.genRecipe(pvd, block, ctx);
 		}
+
+	}
+
+	public static class StoneAndBrickSet {
+
+		public BrickSet stone, brick;
+		public BlockEntry<Block> chiseled;
+
+		public StoneAndBrickSet(L2Registrate reg, String id, MapColor color, float strength, SoundType stoneSound, SoundType brickSound) {
+			stone = new BrickSet(reg, id, BlockBehaviour.Properties.of().mapColor(color)
+					.requiresCorrectToolForDrops().strength(strength).sound(stoneSound),
+					BlockTags.MINEABLE_WITH_PICKAXE);
+			var brickProp = BlockBehaviour.Properties.of().mapColor(color)
+					.requiresCorrectToolForDrops().strength(strength).sound(brickSound);
+			brick = new BrickSet(reg, id, brickProp, this::brick);
+			chiseled = reg.block("chiseled_" + id + "_bricks", Block::new)
+					.properties(p -> brickProp).defaultBlockstate()
+					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+					.simpleItem()
+					.recipe(this::chisel)
+					.register();
+		}
+
+		private void chisel(DataGenContext<Block, Block> ctx, RegistrateRecipeProvider pvd) {
+			pvd.stonecutting(DataIngredient.items(stone.block.get()), RecipeCategory.BUILDING_BLOCKS, ctx);
+			pvd.stonecutting(DataIngredient.items(brick.block.get()), RecipeCategory.BUILDING_BLOCKS, ctx);
+			GLRecipeGen.unlock(pvd, ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get())::unlockedBy,
+							brick.slab.asItem()).pattern("A").pattern("A").define('A', brick.slab.asItem())
+					.save(pvd);
+		}
+
+		private void brick(DataGenContext<Block, Block> ctx, RegistrateRecipeProvider pvd) {
+			pvd.stonecutting(DataIngredient.items(stone.block.get()), RecipeCategory.BUILDING_BLOCKS, ctx);
+			GLRecipeGen.unlock(pvd, ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ctx.get(), 4)::unlockedBy,
+							brick.block.get().asItem()).pattern("AA").pattern("AA").define('A', brick.block.get())
+					.save(pvd);
+		}
+
 
 	}
 

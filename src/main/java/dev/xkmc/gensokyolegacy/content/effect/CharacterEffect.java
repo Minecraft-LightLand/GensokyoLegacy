@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.effect;
 
-import dev.xkmc.gensokyolegacy.content.role.core.Role;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.Role;
 import dev.xkmc.l2core.base.effects.api.InherentEffect;
 import dev.xkmc.l2core.init.reg.simple.Val;
 import net.minecraft.world.effect.MobEffectCategory;

@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.role.core;
+package dev.xkmc.gensokyolegacy.content.mechanics.role;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;

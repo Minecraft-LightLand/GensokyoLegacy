@@ -7,6 +7,7 @@ import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TLMCompat;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogSyncPacket;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiStartPacket;
+import dev.xkmc.gensokyolegacy.content.block.censer.CenserBlockEntity;
 import dev.xkmc.gensokyolegacy.content.client.debug.BlockInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.BlockRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
@@ -88,6 +89,7 @@ public class GensokyoLegacy {
 	@SubscribeEvent
 	public static void registerCapabilities(RegisterCapabilitiesEvent event) {
 		event.registerItem(Capabilities.FluidHandler.ITEM, (stack, ctx) -> new SakeFluidWrapper(stack), GLItems.BLOOD_BOTTLE.item().get());
+		event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, GLBlocks.CENSER_BE.get(), CenserBlockEntity::getItemHandler);
 	}
 
 	@SubscribeEvent

@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
-import dev.xkmc.gensokyolegacy.content.trigger.FeedReimuTrigger;
+import dev.xkmc.gensokyolegacy.content.trigger.FeedCharacterTrigger;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.simple.SR;
 import dev.xkmc.l2core.init.reg.simple.Val;
@@ -19,7 +19,7 @@ public class GLCriteriaTriggers {
 	public static final Val<PlayerTrigger> FLESH_WARN = CT.reg("flesh_warn", PlayerTrigger::new);
 	public static final Val<PlayerTrigger> HURT_WARN = CT.reg("hurt_warn", PlayerTrigger::new);
 	public static final Val<PlayerTrigger> KOISHI_FIRST = CT.reg("koishi_first", PlayerTrigger::new);
-	public static final Val<FeedReimuTrigger> FEED_REIMU = CT.reg("feed_reimu", FeedReimuTrigger::new);
+	public static final Val<FeedCharacterTrigger> FEED_REIMU = CT.reg("feed_reimu", FeedCharacterTrigger::new);
 
 	public static void register() {
 

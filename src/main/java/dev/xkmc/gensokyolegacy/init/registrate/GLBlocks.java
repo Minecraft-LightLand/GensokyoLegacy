@@ -6,6 +6,9 @@ import dev.xkmc.gensokyolegacy.content.block.bed.GLBEWLR;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlock;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedRenderer;
+import dev.xkmc.gensokyolegacy.content.block.censer.CenserBlock;
+import dev.xkmc.gensokyolegacy.content.block.censer.CenserBlockEntity;
+import dev.xkmc.gensokyolegacy.content.block.censer.CenserRenderer;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
@@ -61,6 +64,9 @@ public class GLBlocks {
 	public static final BlockEntry<DonationBoxBlock> DONATION_BOX;
 	public static final BlockEntityEntry<DonationBoxBlockEntity> DONATION_BOX_BE;
 
+	public static final BlockEntry<DelegateBlock> CENSER;
+	public static final BlockEntityEntry<CenserBlockEntity> CENSER_BE;
+
 	public static final BlockEntry<YoukaiBedBlock>[] BEDS;
 	public static final BlockEntityEntry<YoukaiBedBlockEntity> BE_BED;
 
@@ -96,6 +102,14 @@ public class GLBlocks {
 		DONATION_BOX_BE = GensokyoLegacy.REGISTRATE.blockEntity("donation_box", DonationBoxBlockEntity::new)
 				.validBlock(DONATION_BOX)
 				.register();
+
+		CENSER = GensokyoLegacy.REGISTRATE.block("censer", p -> CenserBlock.create())
+				.blockstate(CenserBlock::buildStates)
+				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
+				.simpleItem().register();
+
+		CENSER_BE = GensokyoLegacy.REGISTRATE.blockEntity("censer", CenserBlockEntity::new)
+				.validBlock(CENSER).renderer(() -> CenserRenderer::new).register();
 
 		BEDS = new BlockEntry[Beds.values().length];
 		for (var e : Beds.values()) {

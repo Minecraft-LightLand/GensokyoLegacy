@@ -1,10 +1,10 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
-import dev.xkmc.gensokyolegacy.content.role.core.Role;
-import dev.xkmc.gensokyolegacy.content.role.simple.DarknessRole;
-import dev.xkmc.gensokyolegacy.content.role.simple.FairyRole;
-import dev.xkmc.gensokyolegacy.content.role.simple.VampireRole;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.DarknessRole;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.FairyRole;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.Role;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.VampireRole;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.simple.Val;
