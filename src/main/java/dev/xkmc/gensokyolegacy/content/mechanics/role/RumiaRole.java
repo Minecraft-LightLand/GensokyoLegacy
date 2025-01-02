@@ -1,4 +1,4 @@
 package dev.xkmc.gensokyolegacy.content.mechanics.role;
 
-public class DarknessRole extends Role {
+public class RumiaRole extends Role {
 }

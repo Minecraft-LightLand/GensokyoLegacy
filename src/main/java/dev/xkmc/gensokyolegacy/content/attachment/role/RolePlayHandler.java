@@ -1,7 +1,10 @@
 package dev.xkmc.gensokyolegacy.content.attachment.role;
 
+import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaEntity;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.Role;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2core.util.Proxy;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
@@ -22,7 +25,7 @@ public class RolePlayHandler {
 	}
 
 	public static boolean showInfo(Player player) {
-		return player.getAbilities().instabuild || startTransition(player);
+		return player.getAbilities().instabuild || hasAbility(player);
 	}
 
 	public static boolean showInfo() {
@@ -37,15 +40,17 @@ public class RolePlayHandler {
 	}
 
 	public static double progress(Player player, Role role) {
-		return 0;//TODO
+		var data = GLMeta.ABILITY.type().getOrCreate(player).getData(player, role);
+		return data == null ? 0 : data.data().getProgress();
 	}
 
 	public static boolean transitioning(Player player) {
-		return false; //TODO
+		var max = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player);
+		return max != null && max.data().getProgress() < 1;
 	}
 
-	public static boolean startTransition(Player player) {
-		return player.getAbilities().instabuild;//TODO
+	public static boolean hasAbility(Player player) {
+		return player.getAbilities().instabuild || GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player) != null;
 	}
 
 	public static Component tooltipStart() {
@@ -53,7 +58,10 @@ public class RolePlayHandler {
 	}
 
 	public static boolean isYoukai(LivingEntity le) {
-		return false;//TODO
+		if (le instanceof RumiaEntity) return true;//TODO
+		if (!(le instanceof Player player)) return false;
+		var max = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player);
+		return max != null && max.role().getCategory() == RoleCategory.YOUKAI;
 	}
 
 	public static void addTooltips(List<Component> list, @Nullable Component obtain, @Nullable Component usage) {

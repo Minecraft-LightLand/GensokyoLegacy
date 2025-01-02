@@ -7,9 +7,9 @@ import dev.xkmc.gensokyolegacy.content.mechanics.incense.simple.DarknessIncense;
 import dev.xkmc.gensokyolegacy.content.mechanics.incense.simple.GlowingIncense;
 import dev.xkmc.gensokyolegacy.content.mechanics.incense.simple.HealIncense;
 import dev.xkmc.gensokyolegacy.content.mechanics.ritual.Ritual;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.DarknessRole;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.FairyRole;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.Role;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.RumiaRole;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.VampireRole;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.datapack.DataMapReg;
@@ -29,7 +29,7 @@ public class GLMechanics {
 					INCENSE.key(), new CodecAdaptor<>(IncenseData.class)).build());
 
 	public static final Val<VampireRole> VAMPIRE = regRole("vampire", VampireRole::new);
-	public static final Val<DarknessRole> RUMIA = regRole("darkness", DarknessRole::new);
+	public static final Val<RumiaRole> RUMIA = regRole("darkness", RumiaRole::new);
 	public static final Val<FairyRole> FAIRY = regRole("fairy", FairyRole::new);
 
 	public static final IncenseEntry<HealIncense> HEAL = regIncense("heal_incense", HealIncense::new)

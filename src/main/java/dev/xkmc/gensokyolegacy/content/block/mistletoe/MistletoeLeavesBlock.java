@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.block.mistletoe;
 
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
+import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBlocks;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.l2core.serial.loot.LootHelper;
@@ -27,7 +28,7 @@ import net.neoforged.neoforge.common.Tags;
 public class MistletoeLeavesBlock extends LeavesBlock {
 
 	public static double chance() {
-		return 0.2;//TODO
+		return GLModConfig.SERVER.mistletoeSpreadChance.get();
 	}
 
 	public static boolean isMistletoe(BlockState state) {
@@ -35,7 +36,11 @@ public class MistletoeLeavesBlock extends LeavesBlock {
 	}
 
 	public static boolean isSpreadable(BlockGetter level, BlockState state, BlockPos pos) {
-		return state.is(BlockTags.LEAVES) && !isMistletoe(state) && state.isCollisionShapeFullBlock(level, pos);
+		if (!state.is(BlockTags.LEAVES)) return false;
+		if (state.hasProperty(LeavesBlock.PERSISTENT) && state.getValue(LeavesBlock.PERSISTENT) &&
+				!GLModConfig.SERVER.mistletoeSpreadToPersistentLeaves.get())
+			return false;
+		return !isMistletoe(state) && state.isCollisionShapeFullBlock(level, pos);
 	}
 
 	public static BlockState copyState(BlockState state) {

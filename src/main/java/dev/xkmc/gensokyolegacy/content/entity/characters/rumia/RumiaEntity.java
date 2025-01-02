@@ -8,6 +8,7 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.data.GLDamageTypes;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
@@ -44,7 +45,7 @@ public class RumiaEntity extends SmartYoukaiEntity {
 	public RumiaEntity(EntityType<? extends RumiaEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel, 8);
 		setPersistenceRequired();
-		sources.mobAttack = e -> level().damageSources().mobAttack(e);//TODO
+		sources.mobAttack = GLDamageTypes::rumia;
 	}
 
 	@Override

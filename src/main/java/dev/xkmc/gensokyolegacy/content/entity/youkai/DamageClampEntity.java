@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.entity.youkai;
 
 import com.google.common.collect.Sets;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
+import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
@@ -77,7 +78,8 @@ public class DamageClampEntity extends DamageRefactorEntity {
 	}
 
 	private int getCD(DamageSource source) {
-		//TODO config
+		if (!GLModConfig.SERVER.enableExtraCoolDown.get())
+			return 0;
 		if (!getFeatures().damageCoolDown())
 			return 10;
 		if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY))

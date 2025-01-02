@@ -20,7 +20,7 @@ public class GlowingIncense extends SimpleEntityIncense {
 	public void tickServer(Level level, BlockPos pos, int radius) {
 		if (level.getGameTime() % 20 == 0) {
 			for (var e : getEntities(level, pos, radius, e -> true)) {
-				EffectUtil.addEffect(e, new MobEffectInstance(MobEffects.GLOWING, 100, 0, true, false), null);
+				EffectUtil.addEffect(e, new MobEffectInstance(MobEffects.GLOWING, 40, 0, true, false), null);
 			}
 		}
 	}

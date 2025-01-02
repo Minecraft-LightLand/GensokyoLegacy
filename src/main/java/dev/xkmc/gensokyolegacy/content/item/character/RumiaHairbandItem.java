@@ -40,7 +40,7 @@ public class RumiaHairbandItem extends TouhouHatItem {
 
 	@Override
 	protected void tick(ItemStack stack, Level level, Player player) {
-		GLMechanics.RUMIA.get().advance(player, 0.5, 1);
+		GLMechanics.RUMIA.get().startOrAdvance(player, 0.5, 1);
 	}
 
 	@Override

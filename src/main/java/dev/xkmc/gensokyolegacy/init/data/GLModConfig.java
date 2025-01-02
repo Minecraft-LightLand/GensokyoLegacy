@@ -11,6 +11,9 @@ public class GLModConfig {
 		public final ModConfigSpec.IntValue higiHealingPeriod;
 		public final ModConfigSpec.DoubleValue fairyHealingFactor;
 
+		public final ModConfigSpec.DoubleValue mistletoeSpreadChance;
+		public final ModConfigSpec.BooleanValue mistletoeSpreadToPersistentLeaves;
+
 		public final ModConfigSpec.IntValue frogEatCountForHat;
 		public final ModConfigSpec.IntValue frogEatRaiderVillagerSightRange;
 		public final ModConfigSpec.IntValue frogEatRaiderVillagerNoSightRange;
@@ -23,6 +26,7 @@ public class GLModConfig {
 		public final ModConfigSpec.DoubleValue danmakuMinPHPDamage;
 		public final ModConfigSpec.DoubleValue danmakuPlayerPHPDamage;
 		public final ModConfigSpec.DoubleValue danmakuHealOnHitTarget;
+		public final ModConfigSpec.BooleanValue enableExtraCoolDown;
 
 		public final ModConfigSpec.BooleanValue exRumiaConversion;
 		public final ModConfigSpec.BooleanValue rumiaDamageCap;
@@ -44,6 +48,15 @@ public class GLModConfig {
 						.defineInRange("higiHealingPeriod", 60, 0, 10000);
 				fairyHealingFactor = builder.text("Fairy Healing Factor")
 						.defineInRange("fairyHealingFactor", 2d, 1, 100);
+			}
+			builder.pop();
+
+			builder.push("blocks", "Blocks");
+			{
+				mistletoeSpreadChance = builder.text("Mistletoe spread chance")
+						.defineInRange("mistletoeSpreadChance", 0.2, 0, 1);
+				mistletoeSpreadToPersistentLeaves = builder.text("Whether mistletoe can spread to persistent leaves")
+						.define("mistletoeSpreadToPersistentLeaves", true);
 			}
 			builder.pop();
 
@@ -81,6 +94,9 @@ public class GLModConfig {
 						.defineInRange("danmakuPlayerPHPDamage", 0.1, 0, 1);
 				danmakuHealOnHitTarget = builder.text("When danmaku hits target, heal youkai health by percentage of max health")
 						.defineInRange("danmakuHealOnHitTarget", 0.2, 0, 1);
+				enableExtraCoolDown = builder.text("Extra Damage Cooldown")
+						.comment("Enable extra damage cool down on some youkai")
+						.define("enableExtraCoolDown", true);
 			}
 			builder.pop();
 

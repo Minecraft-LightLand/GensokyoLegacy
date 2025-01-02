@@ -38,7 +38,7 @@ public class StrawHatItem extends TouhouHatItem {
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
 		if (!(target instanceof Frog frog))
 			return InteractionResult.PASS;
-		if (!RolePlayHandler.startTransition(player))
+		if (!RolePlayHandler.hasAbility(player))
 			return InteractionResult.FAIL;
 		if (!GLMeta.FROG_GOD.type().isProper(frog))
 			return InteractionResult.FAIL;

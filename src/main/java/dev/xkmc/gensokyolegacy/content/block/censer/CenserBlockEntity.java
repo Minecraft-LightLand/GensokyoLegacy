@@ -142,7 +142,6 @@ public class CenserBlockEntity extends BaseBlockEntity
 			if (min >= 1000)
 				return List.of(Component.literal("--:--"));
 			return List.of(Component.literal("%02d:%02d".formatted(min, sec)));
-
 		}
 		return List.of();//TODO
 	}
