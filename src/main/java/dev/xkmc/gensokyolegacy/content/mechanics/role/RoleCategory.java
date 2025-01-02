@@ -14,4 +14,5 @@ public enum RoleCategory {
 	public Component getName() {
 		return Component.literal("");//TODO
 	}
+
 }

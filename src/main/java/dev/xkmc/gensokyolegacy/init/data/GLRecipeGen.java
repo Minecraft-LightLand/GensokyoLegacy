@@ -3,11 +3,13 @@ package dev.xkmc.gensokyolegacy.init.data;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
+import dev.xkmc.gensokyolegacy.content.block.censer.SimpleCenserRecipeBuilder;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLDish;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLFoodItems;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLSake;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMechanics;
 import dev.xkmc.youkaishomecoming.content.pot.base.BasePotOutput;
 import dev.xkmc.youkaishomecoming.content.pot.ferment.SimpleFermentationBuilder;
 import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
@@ -21,6 +23,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -40,6 +43,7 @@ public class GLRecipeGen {
 		{
 		}
 
+		// food
 		{
 			pvd.stonecutting(DataIngredient.items(Items.IRON_INGOT), RecipeCategory.MISC, GLFoodItems.CAN);
 			pvd.smelting(DataIngredient.items(GLFoodItems.CAN.get()), RecipeCategory.MISC, Items.IRON_INGOT::asItem, 0.1f, 200);
@@ -185,6 +189,19 @@ public class GLRecipeGen {
 					.addInput(DanmakuItems.Bullet.CIRCLE.get(DyeColor.LIME))
 					.addInput(Items.DANDELION).addInput(YHTagGen.TEA_GREEN).addInput(YHItems.MATCHA)
 					.save(pvd, GLSake.WIND_PRIESTESSES.item.getRegisteredName());
+		}
+
+		// incense
+		{
+
+			unlock(pvd, new SimpleCenserRecipeBuilder(GLMechanics.GLOW.get(), 12000)::unlockedBy, Items.GLOWSTONE_DUST)
+					.require(ItemTags.COALS).require(Items.GLOWSTONE_DUST).save(pvd);
+
+			unlock(pvd, new SimpleCenserRecipeBuilder(GLMechanics.HEAL.get(), 6000)::unlockedBy, Items.GHAST_TEAR)
+					.require(Items.REDSTONE).require(Items.GLOWSTONE_DUST).require(Items.GHAST_TEAR).save(pvd);
+
+			unlock(pvd, new SimpleCenserRecipeBuilder(GLMechanics.CLEANSE.get(), 12000)::unlockedBy, YHFood.BUTTER.asItem())
+					.require(Items.REDSTONE).require(Items.GLOWSTONE_DUST).require(YHFood.BUTTER).save(pvd);
 		}
 
 	}

@@ -8,6 +8,8 @@ import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiAttackCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRolePlayAttachment;
+import dev.xkmc.gensokyolegacy.content.mechanics.incense.core.Incense;
+import dev.xkmc.gensokyolegacy.content.mechanics.incense.core.IncenseData;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.structure.SetDataProcessor;
 import dev.xkmc.l2core.capability.player.PlayerCapabilityNetworkHandler;

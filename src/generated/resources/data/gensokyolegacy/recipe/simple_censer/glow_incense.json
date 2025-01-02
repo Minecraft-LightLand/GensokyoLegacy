@@ -1,0 +1,13 @@
+{
+  "type": "gensokyolegacy:simple_censer",
+  "duration": 12000,
+  "ingredients": [
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    }
+  ],
+  "result": "gensokyolegacy:glow_incense"
+}

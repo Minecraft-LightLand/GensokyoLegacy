@@ -71,11 +71,13 @@ public class GensokyoLegacy {
 		GLDecoBlocks.register();
 		GLFoodItems.register();
 		GLItems.register();
+		GLMechanics.register();
+		GLEntities.register();
+
+		GLRecipes.register();
 		TouhouMat.register();
 		GLMeta.register();
 		GLBrains.register();
-		GLEntities.register();
-		GLRoles.register();
 		GLEffects.register();
 		GLSounds.register();
 		GLCriteriaTriggers.register();

@@ -26,15 +26,15 @@ public class GLEffects {
 			"Boost attack damage and movement speed, heal slowly");
 
 	public static final LegacyHolder<MobEffect> FAIRY = genEffect("fairy",
-			() -> new CharacterEffect(GLRoles.FAIRY, MobEffectCategory.NEUTRAL, 0xd0c3a5),
+			() -> new CharacterEffect(GLMechanics.FAIRY, MobEffectCategory.NEUTRAL, 0xd0c3a5),
 			"Prompt player into Fairy role");
 
 	public static final LegacyHolder<MobEffect> RUMIA = genEffect("rumia",
-			() -> new CharacterEffect(GLRoles.RUMIA, MobEffectCategory.NEUTRAL, 0xd0c3a5),
+			() -> new CharacterEffect(GLMechanics.RUMIA, MobEffectCategory.NEUTRAL, 0xd0c3a5),
 			"Prompt player into Rumia role");
 
 	public static final LegacyHolder<MobEffect> VAMPIRE = genEffect("vampire",
-			() -> new CharacterEffect(GLRoles.VAMPIRE, MobEffectCategory.NEUTRAL, 0xd0c3a5),
+			() -> new CharacterEffect(GLMechanics.VAMPIRE, MobEffectCategory.NEUTRAL, 0xd0c3a5),
 			"Prompt player into Vampire role");
 
 	private static <T extends MobEffect> LegacyHolder<MobEffect> genEffect(String name, NonNullSupplier<T> sup, String desc) {

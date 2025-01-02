@@ -1,0 +1,16 @@
+{
+  "type": "gensokyolegacy:simple_censer",
+  "duration": 6000,
+  "ingredients": [
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "minecraft:ghast_tear"
+    }
+  ],
+  "result": "gensokyolegacy:heal_incense"
+}

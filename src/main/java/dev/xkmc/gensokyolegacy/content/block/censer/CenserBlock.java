@@ -27,9 +27,12 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.ItemAbilities;
 import net.neoforged.neoforge.common.ItemAbility;
@@ -37,7 +40,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class CenserBlock {
 
-	private static final BooleanProperty LIT = BlockStateProperties.LIT;
+	public static final IntegerProperty LIT = BlockStateProperties.LEVEL;
 
 	public record States() implements LightBlockMethod,
 			DefaultStateBlockMethod, CreateBlockStateBlockMethod, PlacementBlockMethod,
@@ -50,26 +53,26 @@ public class CenserBlock {
 
 		@Override
 		public BlockState getDefaultState(BlockState state) {
-			return state.setValue(LIT, false);
+			return state.setValue(LIT, 0);
 		}
 
 		@Override
 		public BlockState getStateForPlacement(BlockState state, BlockPlaceContext blockPlaceContext) {
-			return state.setValue(LIT, false);
+			return state.setValue(LIT, 0);
 		}
 
 		@Override
 		public int getLightValue(BlockState state, BlockGetter blockGetter, BlockPos blockPos) {
-			return state.getValue(LIT) ? 15 : 0;
+			return state.getValue(LIT);
 		}
 
 		@Override
 		public BlockState changeState(Block block, BlockState state, BlockState old, LevelAccessor level, BlockPos pos) {
-			boolean flag = state.getValue(LIT);
+			boolean flag = state.getValue(LIT) > 0;
 			if (flag) {
 				level.playSound(null, pos, SoundEvents.GENERIC_EXTINGUISH_FIRE, SoundSource.BLOCKS, 1.0F, 1.0F);
 			}
-			return state.setValue(LIT, false);
+			return state.setValue(LIT, 0);
 		}
 
 		@Override
@@ -78,14 +81,31 @@ public class CenserBlock {
 				UseOnContext ctx, ItemAbility ability, boolean simulate
 		) {
 			if (ability != ItemAbilities.FIRESTARTER_LIGHT) return current;
-			if (old.getValue(LIT) || old.getValue(BlockStateProperties.WATERLOGGED)) {
+			if (old.getValue(LIT) > 0 || old.getValue(BlockStateProperties.WATERLOGGED)) {
 				return null;
 			}
-			return old.setValue(LIT, true);
+			if (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof CenserBlockEntity be) {
+				int lit = be.tryLit(simulate);
+				if (lit > 0) {
+					old.setValue(LIT, lit);
+				}
+			}
+			return null;
 		}
 	}
 
-	public record Shapes() implements ShapeBlockMethod {
+	public record Shape() implements ShapeBlockMethod {
+
+		private static final VoxelShape BASE = Shapes.or(
+				Block.box(4.5, 0, 4.5, 11.5, 9, 11.5),
+				Block.box(6, 6, 6, 10, 10, 10)
+		);
+
+		@Nullable
+		@Override
+		public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
+			return BASE;
+		}
 
 	}
 
@@ -94,9 +114,9 @@ public class CenserBlock {
 		@Override
 		public ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 			if (player.isShiftKeyDown()) {
-				if (state.getValue(LIT)) {
+				if (state.getValue(LIT) > 0) {
 					if (!level.isClientSide()) {
-						level.setBlockAndUpdate(pos, state.setValue(LIT, false));
+						level.setBlockAndUpdate(pos, state.setValue(LIT, 0));
 					}
 				} else {
 					if (!level.isClientSide() && level.getBlockEntity(pos) instanceof CenserBlockEntity be) {
@@ -105,7 +125,7 @@ public class CenserBlock {
 				}
 				return ItemInteractionResult.SUCCESS;
 			}
-			if (!state.getValue(LIT) && stack.canPerformAction(ItemAbilities.FIRESTARTER_LIGHT))
+			if (state.getValue(LIT) == 0 && stack.canPerformAction(ItemAbilities.FIRESTARTER_LIGHT))
 				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 			if (level.getBlockEntity(pos) instanceof CenserBlockEntity be) {
 				if (be.tryAddItem(stack)) {
@@ -121,7 +141,7 @@ public class CenserBlock {
 		return DelegateBlock.newBaseBlock(
 				BlockBehaviour.Properties.of().mapColor(MapColor.GOLD).sound(SoundType.METAL)
 						.requiresCorrectToolForDrops().strength(0.5f).noOcclusion(),
-				new Click(), new States(), new Shapes(), BlockTemplates.WATER,
+				new Click(), new States(), new Shape(), BlockTemplates.WATER,
 				new BlockEntityBlockMethodImpl<>(GLBlocks.CENSER_BE, CenserBlockEntity.class)
 		);
 	}
