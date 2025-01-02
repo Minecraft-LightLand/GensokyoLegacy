@@ -1,0 +1,7 @@
+{
+  "parent": "gensokyolegacy:custom/mistletoe_side",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "all": "gensokyolegacy:block/mistletoe_leaves"
+  }
+}

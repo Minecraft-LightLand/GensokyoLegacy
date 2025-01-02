@@ -33,13 +33,13 @@ public class GLMechanics {
 	public static final Val<FairyRole> FAIRY = regRole("fairy", FairyRole::new);
 
 	public static final IncenseEntry<HealIncense> HEAL = regIncense("heal_incense", HealIncense::new)
-			.dataMap(INCENSE_DATA.reg(), new IncenseData(8, 15)).register();
+			.dataMap(INCENSE_DATA.reg(), new IncenseData(8, 15, 0xffff0000)).register();
 	public static final IncenseEntry<CleanseIncense> CLEANSE = regIncense("cleanse_incense", CleanseIncense::new)
-			.dataMap(INCENSE_DATA.reg(), new IncenseData(8, 12)).register();
+			.dataMap(INCENSE_DATA.reg(), new IncenseData(8, 12, 0xffffff7f)).register();
 	public static final IncenseEntry<GlowingIncense> GLOW = regIncense("glow_incense", GlowingIncense::new)
-			.dataMap(INCENSE_DATA.reg(), new IncenseData(16, 15)).register();
+			.dataMap(INCENSE_DATA.reg(), new IncenseData(16, 15, 0xffffffff)).register();
 	public static final IncenseEntry<DarknessIncense> DARK = regIncense("darkness_incense", DarknessIncense::new)
-			.dataMap(INCENSE_DATA.reg(), new IncenseData(6, 1)).register();
+			.dataMap(INCENSE_DATA.reg(), new IncenseData(6, 1, 0xff000000)).register();
 
 	public static <T extends Role> Val<T> regRole(String id, NonNullSupplier<T> sup) {
 		return new Val.Registrate<>(GensokyoLegacy.REGISTRATE.generic(ROLES, id, sup).register());

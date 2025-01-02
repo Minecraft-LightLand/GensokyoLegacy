@@ -82,9 +82,7 @@ public class GLBlocks {
 				.register();
 
 		MISTLETOE_FOLIAGE = GensokyoLegacy.REGISTRATE.block("mistletoe_foliage", p -> MistletoeFoliageBlock.create())
-				.blockstate((ctx, pvd) -> pvd.directionalBlock(ctx.get(), pvd.models()
-						.carpet(ctx.getName(), pvd.modLoc("block/mistletoe_leaves"))
-						.renderType("cutout")))
+				.blockstate(MistletoeFoliageBlock::buildModels)
 				.loot(MistletoeLeavesBlock::buildFoliageLoot)
 				.tag(BlockTags.MINEABLE_WITH_HOE)
 				.item().build()

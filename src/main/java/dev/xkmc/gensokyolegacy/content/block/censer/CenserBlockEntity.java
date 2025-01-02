@@ -85,6 +85,7 @@ public class CenserBlockEntity extends BaseBlockEntity
 		incense = item.get();
 		incenseRemainingDuration = item.getIncenseDuration(level, stack);
 		incenseRadius = item.getIncenseRadius(level, stack);
+		sync();
 	}
 
 	public boolean tryAddItem(ItemStack stack) {
@@ -132,6 +133,17 @@ public class CenserBlockEntity extends BaseBlockEntity
 
 	@Override
 	public List<Component> lines() {
+		if (incense != null) {
+			int val = incenseRemainingDuration;
+			val /= 20;
+			int sec = val % 60;
+			val /= 60;
+			int min = val;
+			if (min >= 1000)
+				return List.of(Component.literal("--:--"));
+			return List.of(Component.literal("%02d:%02d".formatted(min, sec)));
+
+		}
 		return List.of();//TODO
 	}
 

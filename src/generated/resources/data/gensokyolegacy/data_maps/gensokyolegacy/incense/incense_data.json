@@ -1,18 +1,22 @@
 {
   "values": {
     "gensokyolegacy:cleanse_incense": {
+      "color": -129,
       "light": 12,
       "radius": 8
     },
     "gensokyolegacy:darkness_incense": {
+      "color": -16777216,
       "light": 1,
       "radius": 6
     },
     "gensokyolegacy:glow_incense": {
+      "color": -1,
       "light": 15,
       "radius": 16
     },
     "gensokyolegacy:heal_incense": {
+      "color": -65536,
       "light": 15,
       "radius": 8
     }

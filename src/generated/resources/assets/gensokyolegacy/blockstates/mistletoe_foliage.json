@@ -9,31 +9,25 @@
       "x": 180
     },
     "facing=east,waterlogged=false": {
-      "model": "gensokyolegacy:block/mistletoe_foliage",
-      "x": 90,
+      "model": "gensokyolegacy:block/mistletoe_foliage_side",
       "y": 90
     },
     "facing=east,waterlogged=true": {
-      "model": "gensokyolegacy:block/mistletoe_foliage",
-      "x": 90,
+      "model": "gensokyolegacy:block/mistletoe_foliage_side",
       "y": 90
     },
     "facing=north,waterlogged=false": {
-      "model": "gensokyolegacy:block/mistletoe_foliage",
-      "x": 90
+      "model": "gensokyolegacy:block/mistletoe_foliage_side"
     },
     "facing=north,waterlogged=true": {
-      "model": "gensokyolegacy:block/mistletoe_foliage",
-      "x": 90
+      "model": "gensokyolegacy:block/mistletoe_foliage_side"
     },
     "facing=south,waterlogged=false": {
-      "model": "gensokyolegacy:block/mistletoe_foliage",
-      "x": 90,
+      "model": "gensokyolegacy:block/mistletoe_foliage_side",
       "y": 180
     },
     "facing=south,waterlogged=true": {
-      "model": "gensokyolegacy:block/mistletoe_foliage",
-      "x": 90,
+      "model": "gensokyolegacy:block/mistletoe_foliage_side",
       "y": 180
     },
     "facing=up,waterlogged=false": {
@@ -43,13 +37,11 @@
       "model": "gensokyolegacy:block/mistletoe_foliage"
     },
     "facing=west,waterlogged=false": {
-      "model": "gensokyolegacy:block/mistletoe_foliage",
-      "x": 90,
+      "model": "gensokyolegacy:block/mistletoe_foliage_side",
       "y": 270
     },
     "facing=west,waterlogged=true": {
-      "model": "gensokyolegacy:block/mistletoe_foliage",
-      "x": 90,
+      "model": "gensokyolegacy:block/mistletoe_foliage_side",
       "y": 270
     }
   }

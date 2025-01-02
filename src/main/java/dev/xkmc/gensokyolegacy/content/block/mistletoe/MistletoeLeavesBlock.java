@@ -27,7 +27,7 @@ import net.neoforged.neoforge.common.Tags;
 public class MistletoeLeavesBlock extends LeavesBlock {
 
 	public static double chance() {
-		return 1;//TODO
+		return 0.2;//TODO
 	}
 
 	public static boolean isMistletoe(BlockState state) {
@@ -40,6 +40,9 @@ public class MistletoeLeavesBlock extends LeavesBlock {
 
 	public static BlockState copyState(BlockState state) {
 		var nextState = GLBlocks.MISTLETOE_LEAVES.getDefaultState();
+		if (state.hasProperty(LeavesBlock.PERSISTENT)) {
+			nextState = nextState.setValue(LeavesBlock.PERSISTENT, state.getValue(LeavesBlock.PERSISTENT));
+		}
 		if (state.hasProperty(LeavesBlock.DISTANCE)) {
 			nextState = nextState.setValue(LeavesBlock.DISTANCE, state.getValue(LeavesBlock.DISTANCE));
 		}

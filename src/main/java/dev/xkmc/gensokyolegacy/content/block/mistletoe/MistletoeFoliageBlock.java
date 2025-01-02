@@ -1,5 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.block.mistletoe;
 
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
 import dev.xkmc.l2modularblock.core.DelegateBlock;
 import dev.xkmc.l2modularblock.mult.PlacementBlockMethod;
@@ -17,11 +19,13 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SupportType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.CommonHooks;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,7 +58,7 @@ public class MistletoeFoliageBlock implements
 	}
 
 	public static boolean isSupported(BlockState self, BlockGetter level, BlockState state, BlockPos pos) {
-		return state.isFaceSturdy(level, pos, self.getValue(BlockTemplates.FACING), SupportType.FULL);
+		return state.isCollisionShapeFullBlock(level, pos);
 	}
 
 	@Nullable
@@ -111,4 +115,22 @@ public class MistletoeFoliageBlock implements
 		return current;
 	}
 
+	public static void buildModels(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd) {
+		var carpet = pvd.models()
+				.carpet(ctx.getName(), pvd.modLoc("block/mistletoe_leaves"))
+				.renderType("cutout");
+		var foliage = pvd.models().getBuilder(ctx.getName() + "_side")
+				.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("custom/mistletoe_side")))
+				.texture("all", pvd.modLoc("block/mistletoe_leaves"))
+				.renderType("cutout");
+		pvd.getVariantBuilder(ctx.get())
+				.forAllStates(state -> {
+					Direction dir = state.getValue(BlockStateProperties.FACING);
+					return ConfiguredModel.builder()
+							.modelFile(dir.getAxis().isHorizontal() ? foliage : carpet)
+							.rotationX(dir == Direction.DOWN ? 180 : 0)
+							.rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360)
+							.build();
+				});
+	}
 }

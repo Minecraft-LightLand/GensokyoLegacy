@@ -3,17 +3,13 @@ package dev.xkmc.gensokyolegacy.content.mechanics.incense.core;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMechanics;
 import dev.xkmc.l2core.init.reg.registrate.NamedEntry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.entity.EntityTypeTest;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.List;
-import java.util.function.Predicate;
 
 public class Incense extends NamedEntry<Incense> {
 
@@ -26,17 +22,29 @@ public class Incense extends NamedEntry<Incense> {
 	}
 
 	public void tick(Level level, BlockPos pos, int radius) {
+		if (level.isClientSide()) {
+			tickClient(level, pos, radius);
+		} else {
+			tickServer(level, pos, radius);
+		}
 	}
 
-	public List<LivingEntity> getEntities(Level level, BlockPos pos, int radius, Predicate<LivingEntity> pred) {
-		Vec3 center = pos.getCenter();
-		return level.getEntities(EntityTypeTest.forClass(LivingEntity.class),
-				AABB.encapsulatingFullBlocks(pos, pos).inflate(radius + 2), e -> pred.test(e) &&
-						center.distanceTo(e.position().add(0, e.getBbHeight() / 2, 0)) <
-								radius + e.getBbWidth() / 2 + e.getBbHeight() / 2);
+	public void tickClient(Level level, BlockPos pos, int radius) {
+		if (level.getGameTime() % 4 == 0)
+			addCenserParticle(level, pos);
 	}
 
-	public void addParticles(Level level, BlockPos pos, int radius, int count, ParticleOptions opt) {
+	public void tickServer(Level level, BlockPos pos, int radius) {
+
+	}
+
+	public void addCenserParticle(Level level, BlockPos pos) {
+		var opt = ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, getData(level).color());
+		Vec3 p = pos.getCenter();
+		level.addParticle(opt, p.x, p.y - 0.3, p.z, 0, 0, 0);
+	}
+
+	public void addParticlesInRange(Level level, BlockPos pos, int radius, int count, ParticleOptions opt) {
 		Vec3 center = pos.getCenter();
 		var r = level.getRandom();
 		for (int i = 0; i < count; i++) {

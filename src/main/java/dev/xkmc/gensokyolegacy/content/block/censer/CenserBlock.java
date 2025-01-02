@@ -87,7 +87,7 @@ public class CenserBlock {
 			if (ctx.getLevel().getBlockEntity(ctx.getClickedPos()) instanceof CenserBlockEntity be) {
 				int lit = be.tryLit(simulate);
 				if (lit > 0) {
-					old.setValue(LIT, lit);
+					return old.setValue(LIT, lit);
 				}
 			}
 			return null;
