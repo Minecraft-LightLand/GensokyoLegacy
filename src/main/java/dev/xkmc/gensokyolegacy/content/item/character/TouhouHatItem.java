@@ -59,7 +59,7 @@ public class TouhouHatItem extends ArmorItem {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-		if (entity instanceof Player player && slotId == 36) tick(stack, level, player);
+		if (entity instanceof Player player && slotId == 39) tick(stack, level, player);
 	}
 
 	protected void tick(ItemStack stack, Level level, Player player) {

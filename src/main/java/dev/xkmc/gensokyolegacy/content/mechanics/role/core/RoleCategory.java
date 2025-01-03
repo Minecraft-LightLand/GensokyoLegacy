@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.mechanics.role;
+package dev.xkmc.gensokyolegacy.content.mechanics.role.core;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -22,7 +22,7 @@ public enum RoleCategory {
 	}
 
 
-	public void advanceIfStarted(Player player, double max, int val) {
+	public void advanceIfStarted(Player player, int max, int val) {
 		var data = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player, this);
 		if (data != null) data.advance(max, val);
 	}

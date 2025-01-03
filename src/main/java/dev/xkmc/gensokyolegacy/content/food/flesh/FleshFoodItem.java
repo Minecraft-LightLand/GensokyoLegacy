@@ -2,7 +2,7 @@ package dev.xkmc.gensokyolegacy.content.food.flesh;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.event.ReimuEventHandlers;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
@@ -36,7 +36,7 @@ public class FleshFoodItem extends YHFoodItem {
 			double prog = RolePlayHandler.progress(player, GLMechanics.VAMPIRE.get());
 			if (prog > 0)
 				factor++;
-			if (prog >= 1)
+			if (prog >= 1000)
 				factor++;
 		}
 		var builder = new FoodProperties.Builder();
@@ -61,7 +61,7 @@ public class FleshFoodItem extends YHFoodItem {
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(stack, level, list, flag);
 		double prog = RolePlayHandler.progress(GLMechanics.VAMPIRE.get());
-		if (prog >= 1) {
+		if (prog >= 1000) {
 			list.add(GLLang.FLESH_TASTE_YOUKAI.get());
 		} else if (prog > 0) {
 			list.add(GLLang.FLESH_TASTE_HALF_YOUKAI.get());
@@ -84,7 +84,7 @@ public class FleshFoodItem extends YHFoodItem {
 
 	public void consume(Player consumer) {
 		if (consumer.level().isClientSide()) return;
-		RoleCategory.YOUKAI.advanceIfStarted(consumer, 1.5, 10);
+		RoleCategory.YOUKAI.advanceIfStarted(consumer, 1500, 10);
 		if (getDefaultInstance().is(GLTagGen.APPARENT_FLESH_FOOD) && consumer instanceof ServerPlayer sp) {
 			ReimuEventHandlers.triggerReimuResponse(sp, 24, true);
 		}

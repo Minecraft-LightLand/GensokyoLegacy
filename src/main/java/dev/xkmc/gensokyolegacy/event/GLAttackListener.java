@@ -4,7 +4,7 @@ import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouHatItem;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.l2core.events.SchedulerHandler;

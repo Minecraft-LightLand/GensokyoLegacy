@@ -4,7 +4,7 @@ import dev.xkmc.danmakuapi.api.DanmakuDamageEvent;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouHatItem;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLDamageTypes;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;

@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.attachment.role;
 
-import dev.xkmc.gensokyolegacy.content.mechanics.role.Role;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.Role;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2core.util.Proxy;
@@ -37,14 +37,14 @@ public class RolePlayHandler {
 		return progress(player, role);
 	}
 
-	public static double progress(Player player, Role role) {
+	public static int progress(Player player, Role role) {
 		var data = GLMeta.ABILITY.type().getOrCreate(player).getData(player, role);
 		return data == null ? 0 : data.data().getProgress();
 	}
 
 	public static boolean transitioning(Player player) {
 		var max = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player, null);
-		return max != null && max.data().getProgress() < 1;
+		return max != null && max.data().getProgress() < 1000;
 	}
 
 	public static boolean hasAbility(Player player) {

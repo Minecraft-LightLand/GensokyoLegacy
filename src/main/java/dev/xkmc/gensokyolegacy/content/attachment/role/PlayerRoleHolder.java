@@ -1,11 +1,15 @@
 package dev.xkmc.gensokyolegacy.content.attachment.role;
 
-import dev.xkmc.gensokyolegacy.content.mechanics.role.Role;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.Role;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public record PlayerRoleHolder(Player player, PlayerRolePlayAttachment root, Role role, PlayerRoleData data) {
 
-	public void advance(double max, int val) {
+	public void advance(int max, int val) {
+		if (!(player instanceof ServerPlayer sp))
+			return;
 		boolean canAdvance = true;
 		for (var e : root.getAll(player)) {
 			if (e.role != role) {
@@ -14,9 +18,10 @@ public record PlayerRoleHolder(Player player, PlayerRolePlayAttachment root, Rol
 				e.data().retract(val);
 			}
 		}
-		root.cleanUp();
 		if (canAdvance)
 			data.advance(max, val);
+		root.cleanUp();
+		GLMeta.ABILITY.type().network.toClient(sp);
 	}
 
 }

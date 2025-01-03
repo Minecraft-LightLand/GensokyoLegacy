@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -65,6 +65,8 @@ public enum GLLang {
 	REIMU_FLESH("msg.reimu_flesh", "Reimu: You shall not eat it. Last warning.", 0, ChatFormatting.RED),
 	REIMU_WARN("msg.reimu_warn", "Reimu: Drink some tea and keep your sanity. Last warning.", 0, ChatFormatting.RED),
 	KOISHI_REIMU("msg.koishi_reimu", "Reimu: ???", 0, ChatFormatting.RED),
+
+	TAB("tab.title", "Role", 0, null),
 
 	;
 

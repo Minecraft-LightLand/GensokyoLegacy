@@ -36,7 +36,8 @@ public class CirnoHairbandItem extends TouhouHatItem {
 
 	@Override
 	protected void tick(ItemStack stack, Level level, Player player) {
-		GLMechanics.ICE_FAIRY.get().startOrAdvance(player, 0.5, 1);
+		if (player.tickCount % 20 == 0)
+			GLMechanics.ICE_FAIRY.get().startOrAdvance(player, 2000, 20);
 	}
 
 	@Override

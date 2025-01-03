@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.effect;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import net.minecraft.world.effect.MobEffect;
