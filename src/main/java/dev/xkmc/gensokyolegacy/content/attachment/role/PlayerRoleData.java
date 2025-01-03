@@ -20,4 +20,9 @@ public class PlayerRoleData {
 		if (progress < maxPoint)
 			progress = Math.max(maxPoint, progress + val);
 	}
+
+	public void retract(int val) {
+		progress = Math.max(0, progress - val);
+	}
+
 }

@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.RegistrateLangProvider;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -108,6 +109,7 @@ public enum GLLang {
 	}
 
 	public static void genLang(RegistrateLangProvider pvd) {
+		RoleCategory.genLang(pvd);
 		for (var e : values()) {
 			pvd.add(e.key, e.def);
 		}

@@ -20,9 +20,12 @@ public class Role extends NamedEntry<Role> {
 	}
 
 	public void startOrAdvance(Player player, double max, int point) {
-		GLMeta.ABILITY.type().getOrCreate(player).getOrCreate(player, this)
-				.data().advance(max, point);
+		GLMeta.ABILITY.type().getOrCreate(player).getOrCreate(player, this).advance(max, point);
+	}
 
+	public void advanceIfStarted(Player player, double max, int point) {
+		var data = GLMeta.ABILITY.type().getOrCreate(player).getData(player, this);
+		if (data != null) data.advance(max, point);
 	}
 
 	public RoleCategory getCategory() {

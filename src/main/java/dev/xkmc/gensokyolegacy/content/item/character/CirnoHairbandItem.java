@@ -36,7 +36,7 @@ public class CirnoHairbandItem extends TouhouHatItem {
 
 	@Override
 	protected void tick(ItemStack stack, Level level, Player player) {
-		GLMechanics.FAIRY.get().startOrAdvance(player, 0.5, 1);
+		GLMechanics.ICE_FAIRY.get().startOrAdvance(player, 0.5, 1);
 	}
 
 	@Override
@@ -51,7 +51,7 @@ public class CirnoHairbandItem extends TouhouHatItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		RolePlayHandler.addTooltips(list, GLLang.USAGE_CIRNO_HAIRBAND.get(GLMechanics.FAIRY.get().getName()), null);
+		RolePlayHandler.addTooltips(list, GLLang.USAGE_CIRNO_HAIRBAND.get(GLMechanics.ICE_FAIRY.get().getName()), null);
 	}
 
 	@Override

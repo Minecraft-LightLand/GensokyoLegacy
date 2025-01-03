@@ -4,6 +4,7 @@ import dev.xkmc.danmakuapi.api.DanmakuDamageEvent;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouHatItem;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLDamageTypes;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
@@ -39,9 +40,9 @@ public class GeneralEventHandlers {
 	@SubscribeEvent
 	public static void collectBlood(LivingDeathEvent event) {
 		if (!event.getEntity().getType().is(GLTagGen.FLESH_SOURCE)) return;
-		if (event.getSource().getEntity() instanceof LivingEntity le) {
+		if (event.getSource().getEntity() instanceof Player le) {
 			if (le.getMainHandItem().is(CommonTags.TOOLS_KNIFE) &&
-					RolePlayHandler.isYoukai(le))
+					RolePlayHandler.is(le, RoleCategory.YOUKAI))
 				spawnBlood(le);
 			if (le.getItemBySlot(EquipmentSlot.HEAD).is(GLItems.RUMIA_HAIRBAND.get()))
 				spawnBlood(le);
@@ -68,8 +69,8 @@ public class GeneralEventHandlers {
 	@SubscribeEvent
 	public static void onEntityKilled(LivingDeathEvent event) {
 		if (event.getEntity() instanceof Villager && GLModConfig.SERVER.reimuSummonKill.get()) {
-			if (event.getSource().getEntity() instanceof LivingEntity le) {
-				if (RolePlayHandler.isYoukai(le))
+			if (event.getSource().getEntity() instanceof Player le) {
+				if (RolePlayHandler.is(le, RoleCategory.YOUKAI))
 					ReimuEventHandlers.triggerReimuResponse(le, 16, false);
 			}
 		}

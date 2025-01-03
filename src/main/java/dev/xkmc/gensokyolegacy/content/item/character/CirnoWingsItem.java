@@ -16,7 +16,7 @@ public class CirnoWingsItem extends TouhouWingsItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		list.add(GLLang.USAGE_FAIRY_WINGS.get(GLMechanics.FAIRY.get().getName()));
+		list.add(GLLang.USAGE_FAIRY_WINGS.get(GLMechanics.ICE_FAIRY.get().getName()));
 	}
 
 }

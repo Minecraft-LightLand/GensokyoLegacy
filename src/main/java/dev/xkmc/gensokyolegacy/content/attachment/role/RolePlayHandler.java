@@ -1,13 +1,11 @@
 package dev.xkmc.gensokyolegacy.content.attachment.role;
 
-import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaEntity;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.Role;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2core.util.Proxy;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -45,23 +43,20 @@ public class RolePlayHandler {
 	}
 
 	public static boolean transitioning(Player player) {
-		var max = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player);
+		var max = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player, null);
 		return max != null && max.data().getProgress() < 1;
 	}
 
 	public static boolean hasAbility(Player player) {
-		return player.getAbilities().instabuild || GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player) != null;
+		return player.getAbilities().instabuild || GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player, null) != null;
 	}
 
 	public static Component tooltipStart() {
 		return Component.literal("");//TODO
 	}
 
-	public static boolean isYoukai(LivingEntity le) {
-		if (le instanceof RumiaEntity) return true;//TODO
-		if (!(le instanceof Player player)) return false;
-		var max = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player);
-		return max != null && max.role().getCategory() == RoleCategory.YOUKAI;
+	public static boolean is(Player player, RoleCategory category) {
+		return GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player, category) != null;
 	}
 
 	public static void addTooltips(List<Component> list, @Nullable Component obtain, @Nullable Component usage) {
