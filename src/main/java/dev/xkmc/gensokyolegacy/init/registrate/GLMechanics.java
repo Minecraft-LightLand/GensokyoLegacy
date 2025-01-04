@@ -7,6 +7,7 @@ import dev.xkmc.gensokyolegacy.content.mechanics.incense.simple.DarknessIncense;
 import dev.xkmc.gensokyolegacy.content.mechanics.incense.simple.GlowingIncense;
 import dev.xkmc.gensokyolegacy.content.mechanics.incense.simple.HealIncense;
 import dev.xkmc.gensokyolegacy.content.mechanics.ritual.Ritual;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleAttributeData;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.core.Role;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.simple.IceFairyRole;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.simple.RumiaRole;
@@ -27,6 +28,9 @@ public class GLMechanics {
 	public static final DataMapReg<Incense, IncenseData> INCENSE_DATA =
 			GensokyoLegacy.REG.dataMap(DataMapType.builder(GensokyoLegacy.loc("incense_data"),
 					INCENSE.key(), new CodecAdaptor<>(IncenseData.class)).build());
+	public static final DataMapReg<Role, RoleAttributeData> ROLE_ATTRIBUTE =
+			GensokyoLegacy.REG.dataMap(DataMapType.builder(GensokyoLegacy.loc("role_attribute"),
+					ROLES.key(), new CodecAdaptor<>(RoleAttributeData.class)).build());
 
 	public static final Val<VampireRole> VAMPIRE = regRole("vampire", VampireRole::new);
 	public static final Val<RumiaRole> RUMIA = regRole("darkness", RumiaRole::new);

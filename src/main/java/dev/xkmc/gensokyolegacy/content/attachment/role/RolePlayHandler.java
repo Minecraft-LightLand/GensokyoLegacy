@@ -52,7 +52,7 @@ public class RolePlayHandler {
 	}
 
 	public static Component tooltipStart() {
-		return Component.literal("");//TODO
+		return GLLang.ITEM_HAS_ABILITY.get();
 	}
 
 	public static boolean is(Player player, RoleCategory category) {

@@ -29,6 +29,7 @@ public class PlayerRolePlayAttachment extends PlayerCapabilityTemplate<PlayerRol
 		if (isWasDeath && !player.level().getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).get()) {
 			map.clear();
 		}
+		tickActual(player, null);
 	}
 
 	@Override
@@ -83,7 +84,7 @@ public class PlayerRolePlayAttachment extends PlayerCapabilityTemplate<PlayerRol
 		return max == null ? null : new PlayerRoleHolder(player, this, max.getKey(), max.getValue());
 	}
 
-	protected List<PlayerRoleHolder> getAll(Player player) {
+	public List<PlayerRoleHolder> getAll(Player player) {
 		List<PlayerRoleHolder> list = new ArrayList<>();
 		for (var ent : map.entrySet()) {
 			if (ent.getValue().getProgress() == 0) continue;

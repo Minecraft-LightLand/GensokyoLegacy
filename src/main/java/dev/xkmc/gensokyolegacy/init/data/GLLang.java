@@ -34,6 +34,7 @@ public enum GLLang {
 	ITEM_GLASS_PATH("Display character path finding"),
 	ITEM_GLASS_CHARACTER("Display character info"),
 	ITEM_GLASS_BED("Display bed info"),
+	ITEM_HAS_ABILITY("gensokyo roles"),
 
 	FLESH_TASTE_HUMAN("flesh.taste_human", "Unappealing smell...", 0, ChatFormatting.GRAY),
 	FLESH_TASTE_HALF_YOUKAI("flesh.taste_half_youkai", "Strange flavor...", 0, ChatFormatting.GRAY),
@@ -66,7 +67,11 @@ public enum GLLang {
 	REIMU_WARN("msg.reimu_warn", "Reimu: Drink some tea and keep your sanity. Last warning.", 0, ChatFormatting.RED),
 	KOISHI_REIMU("msg.koishi_reimu", "Reimu: ???", 0, ChatFormatting.RED),
 
-	TAB("tab.title", "Role", 0, null),
+	TAB_TITLE("tab.title", "Gensokyo Roles", 0, null),
+	TAB_NO_ROLE("tab.no_role", "No Role", 0, null),
+	TAB_MAIN_ROLE("tab.main_role", "%s (%s)", 2, null),
+	TAB_ROLE_PROGRESS("tab.role", "%s - %s", 2, null),
+
 
 	;
 

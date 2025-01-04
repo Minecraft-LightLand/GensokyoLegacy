@@ -1,0 +1,72 @@
+{
+  "values": {
+    "gensokyolegacy:darkness": {
+      "attrs": [
+        {
+          "attr": "minecraft:generic.attack_damage",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_BASE",
+          "start": 0,
+          "value": 0.1
+        },
+        {
+          "attr": "l2damagetracker:damage_reduction",
+          "base": 2,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 2,
+          "value": -0.05
+        }
+      ]
+    },
+    "gensokyolegacy:fairy": {
+      "attrs": [
+        {
+          "attr": "minecraft:generic.max_health",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 0,
+          "value": -0.1
+        },
+        {
+          "attr": "minecraft:generic.attack_damage",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 0,
+          "value": -0.1
+        },
+        {
+          "attr": "l2damagetracker:regen",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 2,
+          "value": 0.5
+        }
+      ]
+    },
+    "gensokyolegacy:vampire": {
+      "attrs": [
+        {
+          "attr": "minecraft:generic.max_health",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_BASE",
+          "start": 0,
+          "value": 4.0
+        },
+        {
+          "attr": "l2damagetracker:regen",
+          "base": 0,
+          "op": "ADD_VALUE",
+          "start": 0,
+          "value": 0.2
+        },
+        {
+          "attr": "l2damagetracker:damage_reduction",
+          "base": 2,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 2,
+          "value": -0.05
+        }
+      ]
+    }
+  }
+}

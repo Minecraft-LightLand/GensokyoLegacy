@@ -6,6 +6,8 @@ import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2core.init.reg.registrate.NamedEntry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 public class Role extends NamedEntry<Role> {
 
@@ -40,9 +42,16 @@ public class Role extends NamedEntry<Role> {
 		return category;
 	}
 
+	@Nullable
+	private RoleAttributeData getData(Level level) {
+		return GLMechanics.ROLE_ATTRIBUTE.get(level.registryAccess(), holder());
+	}
+
 	public void start(PlayerRoleHolder player, int stage) {
 		for (var e : effects[stage])
 			e.start(player, stage);
+		var attr = getData(player.player().level());
+		if (attr != null) attr.start(player, stage);
 	}
 
 	public void tick(PlayerRoleHolder player, int stage) {
@@ -53,6 +62,8 @@ public class Role extends NamedEntry<Role> {
 	public void end(PlayerRoleHolder player, int stage) {
 		for (var e : effects[stage])
 			e.end(player, stage);
+		var attr = getData(player.player().level());
+		if (attr != null) attr.end(player, stage);
 	}
 
 }
