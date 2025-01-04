@@ -62,14 +62,14 @@ public class FleshFoodItem extends YHFoodItem {
 		super.appendHoverText(stack, level, list, flag);
 		double prog = RolePlayHandler.progress(GLMechanics.VAMPIRE.get());
 		if (prog >= 1000) {
-			list.add(GLLang.FLESH_TASTE_YOUKAI.get());
+			list.add(GLLang.FLESH$TASTE_YOUKAI.get());
 		} else if (prog > 0) {
-			list.add(GLLang.FLESH_TASTE_HALF_YOUKAI.get());
+			list.add(GLLang.FLESH$TASTE_HALF_YOUKAI.get());
 		} else if (getDefaultInstance().is(GLTagGen.APPARENT_FLESH_FOOD)) {
-			list.add(GLLang.FLESH_TASTE_HUMAN.get());
+			list.add(GLLang.FLESH$TASTE_HUMAN.get());
 		}
 		if (this == GLFood.FLESH.item.get()) {
-			RolePlayHandler.addTooltips(list, GLLang.OBTAIN_FLESH.get(RoleCategory.YOUKAI.getName()), null);
+			RolePlayHandler.addTooltips(list, GLLang.ITEM$OBTAIN_FLESH.get(RoleCategory.YOUKAI.getName()), null);
 		}
 	}
 
@@ -77,8 +77,8 @@ public class FleshFoodItem extends YHFoodItem {
 	public Component getName(ItemStack pStack) {
 		return Component.translatable(this.getDescriptionId(pStack),
 				RolePlayHandler.showInfo() ?
-						GLLang.FLESH_NAME_YOUKAI.get() :
-						GLLang.FLESH_NAME_HUMAN.get()
+						GLLang.FLESH$FLESH_YOUKAI.get() :
+						GLLang.FLESH$FLESH_HUMAN.get()
 		);
 	}
 

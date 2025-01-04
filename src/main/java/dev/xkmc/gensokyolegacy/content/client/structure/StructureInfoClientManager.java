@@ -29,13 +29,13 @@ public class StructureInfoClientManager {
 			InfoUpdateClientManager.requestStructure(key);
 		}
 		if (info == null) {
-			lines.add(GLLang.INFO_LOADING.get().withStyle(ChatFormatting.GRAY));
+			lines.add(GLLang.INFO$LOADING.get().withStyle(ChatFormatting.GRAY));
 		} else if (info.remove() < 0) {
-			lines.add(GLLang.INFO_STRUCTURE_SCANNING.get().withStyle(ChatFormatting.GRAY));
+			lines.add(GLLang.INFO$STRUCTURE_SCANNING.get().withStyle(ChatFormatting.GRAY));
 
 		} else {
 			int total = info.remove() + info.primary() + info.secondary();
-			lines.add(GLLang.INFO_STRUCTURE_ABNORMAL.get(total).withStyle(ChatFormatting.GRAY));
+			lines.add(GLLang.INFO$STRUCTURE_ABNORMAL.get(total).withStyle(ChatFormatting.GRAY));
 		}
 	}
 

@@ -16,8 +16,8 @@ public class FleshSimpleItem extends Item {
 	public Component getName(ItemStack pStack) {
 		return Component.translatable(this.getDescriptionId(pStack),
 				RolePlayHandler.showInfo() ?
-						GLLang.FLESH_NAME_YOUKAI.get() :
-						GLLang.FLESH_NAME_HUMAN.get()
+						GLLang.FLESH$FLESH_YOUKAI.get() :
+						GLLang.FLESH$FLESH_HUMAN.get()
 		);
 	}
 

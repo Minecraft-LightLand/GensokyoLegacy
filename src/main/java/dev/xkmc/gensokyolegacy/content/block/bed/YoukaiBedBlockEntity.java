@@ -67,7 +67,7 @@ public class YoukaiBedBlockEntity extends LocatedBlockEntity implements IDebugIn
 	public BlockInfoToClient getDebugPacket(ServerPlayer sp) {
 		var sl = sp.serverLevel();
 		if (key == null) {
-			return BlockInfoToClient.of(GLLang.INFO_BED_UNBOUND.get().withStyle(ChatFormatting.RED));
+			return BlockInfoToClient.of(GLLang.INFO$BED_UNBOUND.get().withStyle(ChatFormatting.RED));
 		}
 		var data = BedData.of(getBlockState().getBlock());
 		if (data != null) {

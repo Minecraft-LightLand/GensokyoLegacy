@@ -109,20 +109,20 @@ public class BedRefData {
 		}
 		entityId = Util.NIL_UUID;
 		lastEntityTickedTime = sp.level().getGameTime() - config.respawnTime();
-		sp.sendSystemMessage(GLLang.MSG_RESET.get());
+		sp.sendSystemMessage(GLLang.MSG$RESET.get());
 	}
 
 	public BlockInfoToClient getDebugPacket(ServerLevel sl, CharacterConfig config, StructureKey key) {
 		if (entityId.equals(Util.NIL_UUID)) {
 			long diff = lastEntityTickedTime + config.respawnTime() - sl.getGameTime();
-			return BlockInfoToClient.of(GLLang.INFO_BED_RESPAWN.time(diff).withStyle(ChatFormatting.GRAY));
+			return BlockInfoToClient.of(GLLang.INFO$BED_RESPAWN.time(diff).withStyle(ChatFormatting.GRAY));
 		}
 		if (!(sl.getEntity(entityId) instanceof YoukaiEntity youkai)) {
 			long diff = sl.getGameTime() - lastEntityTickedTime;
-			return BlockInfoToClient.of(GLLang.INFO_BED_MISSING.time(diff).withStyle(ChatFormatting.GRAY));
+			return BlockInfoToClient.of(GLLang.INFO$BED_MISSING.time(diff).withStyle(ChatFormatting.GRAY));
 		}
 		var p = youkai.blockPosition();
-		return BlockInfoToClient.of(GLLang.INFO_BED_PRESENT.get(p.getX(), p.getY(), p.getZ()).withStyle(ChatFormatting.GRAY));
+		return BlockInfoToClient.of(GLLang.INFO$BED_PRESENT.get(p.getX(), p.getY(), p.getZ()).withStyle(ChatFormatting.GRAY));
 	}
 
 }

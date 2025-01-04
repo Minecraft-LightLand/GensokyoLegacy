@@ -39,12 +39,12 @@ public class RoleTabScreen extends BaseTextScreen {
 		var data = GLMeta.ABILITY.type().getOrCreate(player).getAll(player);
 		data.sort(Comparator.comparingInt(e -> -e.data().getProgress()));
 		if (data.isEmpty()) {
-			list.add(GLLang.TAB_NO_ROLE.get());
+			list.add(GLLang.TAB$NO_ROLE.get());
 		} else {
 			var first = data.getFirst();
-			list.add(GLLang.TAB_MAIN_ROLE.get(first.role().getName(), first.role().getCategory().getName()));
+			list.add(GLLang.TAB$MAIN_ROLE.get(first.role().getName(), first.role().getCategory().getName()));
 			for (var e : data) {
-				list.add(GLLang.TAB_ROLE_PROGRESS.get(e.role().getName(), e.data().getProgress() / 10 + "%"));
+				list.add(GLLang.TAB$ROLE_PROGRESS.get(e.role().getName(), e.data().getProgress() / 10 + "%"));
 			}
 		}
 		return list;

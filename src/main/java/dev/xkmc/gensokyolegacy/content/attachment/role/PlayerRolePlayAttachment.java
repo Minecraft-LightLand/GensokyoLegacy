@@ -97,4 +97,15 @@ public class PlayerRolePlayAttachment extends PlayerCapabilityTemplate<PlayerRol
 		map.values().removeIf(e -> e.getProgress() == 0);
 	}
 
+	public void commandSetRolePoints(Role role, int point) {
+		map.clear();
+		var data = new PlayerRoleData();
+		data.advance(point, point);
+		map.put(role, data);
+	}
+
+	public void commandClearRoles() {
+		map.clear();
+	}
+
 }

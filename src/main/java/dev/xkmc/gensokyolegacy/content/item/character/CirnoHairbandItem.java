@@ -52,7 +52,7 @@ public class CirnoHairbandItem extends TouhouHatItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		RolePlayHandler.addTooltips(list, GLLang.USAGE_CIRNO_HAIRBAND.get(GLMechanics.ICE_FAIRY.get().getName()), null);
+		RolePlayHandler.addTooltips(list, GLLang.ITEM$USAGE_CIRNO_HAIRBAND.get(GLMechanics.ICE_FAIRY.get().getName()), null);
 	}
 
 	@Override

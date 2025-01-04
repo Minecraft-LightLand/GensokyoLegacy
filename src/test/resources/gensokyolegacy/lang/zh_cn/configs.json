@@ -52,5 +52,12 @@
 	"gensokyolegacy.configuration.section.l2configs.gensokyolegacy.server.toml": "Gensokyo Legacy Server Configuration",
 	"gensokyolegacy.configuration.section.l2configs.gensokyolegacy.server.toml.title": "Gensokyo Legacy Server Configuration",
 	"gensokyolegacy.configuration.suwako_hat": "Suwako Hat",
-	"gensokyolegacy.configuration.title": "Gensokyo Legacy Configuration"
+	"gensokyolegacy.configuration.title": "Gensokyo Legacy Configuration",
+	"gensokyolegacy.configuration.blocks": "Blocks",
+	"gensokyolegacy.configuration.enableExtraCoolDown": "Extra Damage Cooldown",
+	"gensokyolegacy.configuration.enableExtraCoolDown.tooltip": "Enable extra damage cool down on some youkai",
+	"gensokyolegacy.configuration.mistletoeSpreadChance": "Mistletoe spread chance",
+	"gensokyolegacy.configuration.mistletoeSpreadChance.tooltip": " Default: 0.2\n Range: 0.0 ~ 1.0",
+	"gensokyolegacy.configuration.mistletoeSpreadToPersistentLeaves": "Whether mistletoe can spread to persistent leaves",
+	"gensokyolegacy.configuration.mistletoeSpreadToPersistentLeaves.tooltip": ""
 }

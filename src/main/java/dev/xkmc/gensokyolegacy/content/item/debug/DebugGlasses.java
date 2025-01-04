@@ -24,10 +24,10 @@ public class DebugGlasses extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> list, TooltipFlag flag) {
-		list.add(GLLang.ITEM_GLASS_PATH.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM$GLASS_PATH.get().withStyle(ChatFormatting.GRAY));
 
-		list.add(GLLang.ITEM_GLASS_CHARACTER.get().withStyle(ChatFormatting.GRAY));
-		list.add(GLLang.ITEM_GLASS_BED.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM$GLASS_CHARACTER.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM$GLASS_BED.get().withStyle(ChatFormatting.GRAY));
 	}
 
 }

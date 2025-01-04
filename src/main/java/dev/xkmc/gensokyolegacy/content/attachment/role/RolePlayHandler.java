@@ -52,7 +52,7 @@ public class RolePlayHandler {
 	}
 
 	public static Component tooltipStart() {
-		return GLLang.ITEM_HAS_ABILITY.get();
+		return GLLang.ITEM$HAS_ABILITY.get();
 	}
 
 	public static boolean is(Player player, RoleCategory category) {
@@ -62,14 +62,14 @@ public class RolePlayHandler {
 	public static void addTooltips(List<Component> list, @Nullable Component obtain, @Nullable Component usage) {
 		if (showInfo()) {
 			if (obtain != null)
-				list.add(GLLang.OBTAIN.get().append(obtain));
+				list.add(GLLang.ITEM$OBTAIN.get().append(obtain));
 			if (usage != null)
-				list.add(GLLang.USAGE.get().append(usage));
+				list.add(GLLang.ITEM$USAGE.get().append(usage));
 		} else {
 			if (obtain != null)
-				list.add(GLLang.OBTAIN.get().append(GLLang.UNKNOWN.get()));
+				list.add(GLLang.ITEM$OBTAIN.get().append(GLLang.ITEM$UNKNOWN.get()));
 			if (usage != null)
-				list.add(GLLang.USAGE.get().append(GLLang.UNKNOWN.get()));
+				list.add(GLLang.ITEM$USAGE.get().append(GLLang.ITEM$UNKNOWN.get()));
 		}
 	}
 

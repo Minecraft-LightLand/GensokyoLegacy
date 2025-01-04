@@ -55,8 +55,8 @@ public class FleshFeastBlock extends FeastBlock {
 	public MutableComponent getName() {
 		return Component.translatable(this.getDescriptionId(),
 				RolePlayHandler.showInfo() ?
-						GLLang.FLESH_NAME_YOUKAI.get() :
-						GLLang.FLESH_NAME_HUMAN.get()
+						GLLang.FLESH$FLESH_YOUKAI.get() :
+						GLLang.FLESH$FLESH_HUMAN.get()
 		);
 	}
 

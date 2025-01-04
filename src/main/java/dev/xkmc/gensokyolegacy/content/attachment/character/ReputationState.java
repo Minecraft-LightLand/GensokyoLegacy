@@ -9,7 +9,7 @@ public enum ReputationState {
 	FRIEND, STRANGER, JERK, ENEMY;
 
 	public static Component toInfo(int reputation) {
-		return GLLang.INFO_ENTITY_REPUTATION.get(reputation).withStyle(
+		return GLLang.INFO$ENTITY_REPUTATION.get(reputation).withStyle(
 				switch (CharacterData.getState(reputation)) {
 					case FRIEND -> ChatFormatting.GREEN;
 					case STRANGER -> ChatFormatting.WHITE;

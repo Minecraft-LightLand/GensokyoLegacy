@@ -57,7 +57,7 @@ public class StrawHatItem extends TouhouHatItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		RolePlayHandler.addTooltips(list, null, GLLang.USAGE_STRAW_HAT.get(RolePlayHandler.tooltipStart()));
+		RolePlayHandler.addTooltips(list, null, GLLang.ITEM$USAGE_STRAW_HAT.get(RolePlayHandler.tooltipStart()));
 	}
 
 }

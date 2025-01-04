@@ -57,7 +57,7 @@ public class DonationBoxBlockEntity extends LocatedBlockEntity implements IDebug
 	public BlockInfoToClient getDebugPacket(ServerPlayer player) {
 		var bed = BedData.of(getBlockState().getBlock());
 		if (bed == null || key == null)
-			return BlockInfoToClient.of(GLLang.INFO_BED_UNBOUND.get().withStyle(ChatFormatting.RED));
+			return BlockInfoToClient.of(GLLang.INFO$BED_UNBOUND.get().withStyle(ChatFormatting.RED));
 		var reputation = CharDataHolder.getUnbounded(player, bed.type()).data().reputation;
 		return BlockInfoToClient.of(ReputationState.toInfo(reputation));
 	}

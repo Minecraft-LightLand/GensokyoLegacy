@@ -70,7 +70,7 @@ public class ReimuEventHandlers {
 			KoishiEventHandlers.removeKoishi(le);
 			sp.getCooldowns().addCooldown(hat, 1200);
 			sp.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100));
-			sp.sendSystemMessage(GLLang.KOISHI_REIMU.get(), true);
+			sp.sendSystemMessage(GLLang.MSG$KOISHI_REIMU.get(), true);
 			return true;
 		}
 		return false;
@@ -82,7 +82,7 @@ public class ReimuEventHandlers {
 		if (adv == null || sp.getAdvancements().getOrStartProgress(adv).isDone()) return false;
 		GLCriteriaTriggers.FLESH_WARN.get().trigger(sp);
 		sp.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100));
-		sp.sendSystemMessage(GLLang.REIMU_FLESH.get(), true);
+		sp.sendSystemMessage(GLLang.MSG$REIMU_FLESH.get(), true);
 		return true;
 	}
 
@@ -93,7 +93,7 @@ public class ReimuEventHandlers {
 		if (adv == null || sp.getAdvancements().getOrStartProgress(adv).isDone()) return;
 		GLCriteriaTriggers.HURT_WARN.get().trigger(sp);
 		sp.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 100));
-		sp.sendSystemMessage(GLLang.REIMU_WARN.get(), true);
+		sp.sendSystemMessage(GLLang.MSG$REIMU_WARN.get(), true);
 	}
 
 	@Nullable

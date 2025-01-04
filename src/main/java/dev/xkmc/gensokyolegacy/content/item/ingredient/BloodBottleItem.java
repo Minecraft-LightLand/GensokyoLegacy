@@ -20,7 +20,7 @@ public class BloodBottleItem extends SakeBottleItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		RolePlayHandler.addTooltips(list, GLLang.OBTAIN_BLOOD.get(RoleCategory.YOUKAI.getName()), null);
+		RolePlayHandler.addTooltips(list, GLLang.ITEM$OBTAIN_BLOOD.get(RoleCategory.YOUKAI.getName()), null);
 	}
 
 }

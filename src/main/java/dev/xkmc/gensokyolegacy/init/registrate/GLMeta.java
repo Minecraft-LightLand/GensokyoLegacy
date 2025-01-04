@@ -59,7 +59,7 @@ public class GLMeta {
 	public static final Val<StructureProcessorType<SetDataProcessor>> SET_DATA = PROCESSORS.reg("set_data", () -> () -> SetDataProcessor.CODEC);
 
 	public static final Val<TabToken<InvTabData, TabRole>> TAB_ATTRIBUTE = SR.of(GensokyoLegacy.REG, L2Tabs.TABS.reg())
-			.reg("role", () -> L2Tabs.GROUP.registerTab(() -> TabRole::new, GLLang.TAB_TITLE.get()));
+			.reg("role", () -> L2Tabs.GROUP.registerTab(() -> TabRole::new, GLLang.TAB$TITLE.get()));
 
 	public static void register() {
 

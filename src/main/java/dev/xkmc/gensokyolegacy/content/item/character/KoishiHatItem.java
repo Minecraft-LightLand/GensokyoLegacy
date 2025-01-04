@@ -42,8 +42,8 @@ public class KoishiHatItem extends TouhouHatItem {
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
 		RolePlayHandler.addTooltips(list,
-				GLLang.OBTAIN_KOISHI_HAT.get(Component.literal("" + GLModConfig.SERVER.koishiAttackBlockCount.get())),
-				GLLang.USAGE_KOISHI_HAT.get(Component.translatable(GLEffects.UNCONSCIOUS.get().getDescriptionId()))
+				GLLang.ITEM$OBTAIN_KOISHI_HAT.get(Component.literal("" + GLModConfig.SERVER.koishiAttackBlockCount.get())),
+				GLLang.ITEM$USAGE_KOISHI_HAT.get(Component.translatable(GLEffects.UNCONSCIOUS.get().getDescriptionId()))
 		);
 	}
 

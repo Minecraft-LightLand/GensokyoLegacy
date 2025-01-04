@@ -27,13 +27,13 @@ public record CharacterInfoToClient(
 		ArrayList<Component> info = new ArrayList<>();
 		ArrayList<Component> advanced = new ArrayList<>();
 		if (home == null || bed == null) {
-			info.add(GLLang.INFO_ENTITY_UNBOUND.get().withStyle(ChatFormatting.GRAY));
+			info.add(GLLang.INFO$ENTITY_UNBOUND.get().withStyle(ChatFormatting.GRAY));
 		} else {
-			info.add(GLLang.INFO_ENTITY_BED.get(bed.getX(), bed.getY(), bed.getZ()).withStyle(ChatFormatting.GRAY));
+			info.add(GLLang.INFO$ENTITY_BED.get(bed.getX(), bed.getY(), bed.getZ()).withStyle(ChatFormatting.GRAY));
 		}
 		info.add(ReputationState.toInfo(reputation));
 		if (feedCD > 0) {
-			info.add(GLLang.INFO_ENTITY_FEED.time(feedCD).withStyle(ChatFormatting.GRAY));
+			info.add(GLLang.INFO$ENTITY_FEED.time(feedCD).withStyle(ChatFormatting.GRAY));
 		}
 		if (!activity.isEmpty()) {
 			String[] strs = activity.split("\n");

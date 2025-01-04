@@ -25,7 +25,7 @@ public class BedInfoClientManager {
 			InfoUpdateClientManager.requestBed(bed.asBlockEntity().getBlockPos());
 		}
 		if (data == null) {
-			lines.add(GLLang.INFO_LOADING.get().withStyle(ChatFormatting.GRAY));
+			lines.add(GLLang.INFO$LOADING.get().withStyle(ChatFormatting.GRAY));
 			return;
 		}
 		lines.addAll(data.info());

@@ -72,10 +72,10 @@ public class DebugWand extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext ctx, List<Component> list, TooltipFlag flag) {
-		list.add(GLLang.ITEM_WAND_BED.get().withStyle(ChatFormatting.GRAY));
-		list.add(GLLang.ITEM_WAND_BLOCK.get().withStyle(ChatFormatting.GRAY));
-		list.add(GLLang.ITEM_WAND_STRUCTURE.get().withStyle(ChatFormatting.GRAY));
-		list.add(GLLang.ITEM_WAND_CHARACTER.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM$WAND_BED.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM$WAND_BLOCK.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM$WAND_STRUCTURE.get().withStyle(ChatFormatting.GRAY));
+		list.add(GLLang.ITEM$WAND_CHARACTER.get().withStyle(ChatFormatting.GRAY));
 	}
 
 }

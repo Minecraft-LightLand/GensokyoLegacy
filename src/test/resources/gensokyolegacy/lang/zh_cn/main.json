@@ -7,26 +7,18 @@
 		"food": "异域梦闻记 - 食物"
 	},
 	"gensokyolegacy": {
-		"tooltip": {
-			"info_bed_missing": "角色失联：%s",
-			"info_bed_present": "角色在 (%s, %s, %s)",
-			"info_bed_respawn": "角色重生中：%s",
-			"info_bed_unbound": "这个方块未被绑定到结构",
-			"info_entity_bed": "角色的床在 (%s, %s, %s)",
-			"info_entity_reputation": "好感度：%s",
-			"info_entity_unbound": "角色未绑定结构",
-			"info_entity_feed": "投喂冷却: %s",
-			"info_structure_scanning": "扫描中",
-			"info_structure_abnormal": "发现%s个错误方块",
-			"info_loading": "加载中...",
-			"item_glass_bed": "显示角色的床的状态",
-			"item_glass_character": "显示角色的状态 ",
-			"item_glass_path": "显示角色寻路",
-			"item_wand_bed": "右键床重置角色",
-			"item_wand_character": "右键角色重置角色对玩家全局数据",
-			"item_wand_block": "右键方块显示所属结构信息",
-			"item_wand_structure": "潜行右键方块打开结构调试面板",
-			"msg_reset": "角色已重置"
+		"info": {
+			"bed_missing": "角色失联：%s",
+			"bed_present": "角色在 (%s, %s, %s)",
+			"bed_respawn": "角色重生中：%s",
+			"bed_unbound": "这个方块未被绑定到结构",
+			"entity_bed": "角色的床在 (%s, %s, %s)",
+			"entity_reputation": "好感度：%s",
+			"entity_unbound": "角色未绑定结构",
+			"entity_feed": "投喂冷却: %s",
+			"structure_scanning": "扫描中",
+			"structure_abnormal": "发现%s个错误方块",
+			"loading": "加载中..."
 		},
 		"flesh": {
 			"taste_half_youkai": "奇怪的味道...",
@@ -36,9 +28,17 @@
 			"flesh_youkai": "人肉"
 		},
 		"item": {
+			"glass_bed": "显示角色的床的状态",
+			"glass_character": "显示角色的状态 ",
+			"glass_path": "显示角色寻路",
+			"wand_bed": "右键床重置角色",
+			"wand_character": "右键角色重置角色对玩家全局数据",
+			"wand_block": "右键方块显示所属结构信息",
+			"wand_structure": "潜行右键方块打开结构调试面板",
 			"obtain": "获取方法: ",
 			"unknown": "???",
 			"usage": "用法: ",
+			"has_ability": "持有幻想乡身份的",
 			"obtain_fairy_ice": "由琪露诺制造。",
 			"usage_fairy_ice": "可以朝目标扔出。造成范围伤害并冻结。",
 			"obtain_frozen_frog": "琪露诺冻结青蛙时掉落。",
@@ -58,9 +58,25 @@
 			"usage_fairy_wings": "在%s状态下激活创造飞行"
 		},
 		"msg": {
+			"reset": "角色已重置",
 			"koishi_reimu": "灵梦：谁在那？",
 			"reimu_flesh": "灵梦：别吃这个。最后警告",
 			"reimu_warn": "灵梦：喝点茶清醒一下。最后警告"
+		},
+		"tab": {
+			"main_role": "%s (%s)",
+			"no_role": "普通人类(无身份)",
+			"role_progress": "%s - %s",
+			"title": "幻想乡身份"
+		},
+		"role_category": {
+			"fairy": "妖精",
+			"human": "人类",
+			"youkai": "妖怪"
+		},
+		"command": {
+			"success": "指令执行成功",
+			"invalid_role": "错误：非法身份ID"
 		}
 	},
 	"death.attack": {
