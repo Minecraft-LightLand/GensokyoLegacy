@@ -1,0 +1,6 @@
+{
+  "parent": "gensokyolegacy:custom/book_pile_2",
+  "textures": {
+    "books": "gensokyolegacy:block/books"
+  }
+}

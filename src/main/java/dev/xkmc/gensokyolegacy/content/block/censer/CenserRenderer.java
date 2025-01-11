@@ -11,7 +11,7 @@ public class CenserRenderer implements BlockEntityRenderer<CenserBlockEntity> {
 	}
 
 	@Override
-	public void render(CenserBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {
+	public void render(CenserBlockEntity be, float pTick, PoseStack pose, MultiBufferSource buffer, int light, int overlay) {
 
 	}
 

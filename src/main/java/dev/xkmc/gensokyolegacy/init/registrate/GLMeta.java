@@ -8,6 +8,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiAttackCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRolePlayAttachment;
+import dev.xkmc.gensokyolegacy.content.block.ritual.BlockMana;
 import dev.xkmc.gensokyolegacy.content.client.tab.TabRole;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
@@ -54,6 +55,8 @@ public class GLMeta {
 	public static final DataMapReg<Structure, StructureConfig> STRUCTURE_DATA =
 			GensokyoLegacy.REG.dataMap(DataMapType.builder(GensokyoLegacy.loc("structure_config"),
 					Registries.STRUCTURE, new CodecAdaptor<>(StructureConfig.class)).build());
+	public static final DataMapReg<Block, BlockMana> BLOCK_MANA =
+			GensokyoLegacy.REG.dataMap("block_mana", Registries.BLOCK, BlockMana.class);
 
 	private static final SR<StructureProcessorType<?>> PROCESSORS = SR.of(GensokyoLegacy.REG, Registries.STRUCTURE_PROCESSOR);
 	public static final Val<StructureProcessorType<SetDataProcessor>> SET_DATA = PROCESSORS.reg("set_data", () -> () -> SetDataProcessor.CODEC);

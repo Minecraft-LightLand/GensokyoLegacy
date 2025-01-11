@@ -9,6 +9,7 @@ import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedRenderer;
 import dev.xkmc.gensokyolegacy.content.block.censer.CenserBlock;
 import dev.xkmc.gensokyolegacy.content.block.censer.CenserBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.censer.CenserRenderer;
+import dev.xkmc.gensokyolegacy.content.block.deco.BooksBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
@@ -16,13 +17,17 @@ import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
 import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeFoliageBlock;
 import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeLeavesBlock;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
 import dev.xkmc.l2modularblock.core.DelegateBlock;
 import net.minecraft.core.Holder;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BedItem;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -30,6 +35,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootTable;
 
 import java.util.Locale;
@@ -66,6 +72,8 @@ public class GLBlocks {
 
 	public static final BlockEntry<DelegateBlock> CENSER;
 	public static final BlockEntityEntry<CenserBlockEntity> CENSER_BE;
+
+	public static final BlockEntry<DelegateBlock> BOOKS;
 
 	public static final BlockEntry<YoukaiBedBlock>[] BEDS;
 	public static final BlockEntityEntry<YoukaiBedBlockEntity> BE_BED;
@@ -108,6 +116,15 @@ public class GLBlocks {
 
 		CENSER_BE = GensokyoLegacy.REGISTRATE.blockEntity("censer", CenserBlockEntity::new)
 				.validBlock(CENSER).renderer(() -> CenserRenderer::new).register();
+
+		BOOKS = GensokyoLegacy.REGISTRATE.block("book_pile", p -> DelegateBlock.newBaseBlock(
+						BlockBehaviour.Properties.of().noOcclusion().strength(0F)
+								.mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)
+						, BlockTemplates.HORIZONTAL, new BooksBlock()))
+				.blockstate(BooksBlock::buildStates).loot(BooksBlock::buildLoot).simpleItem()
+				.recipe((ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapelessRecipeBuilder.shapeless(
+						RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
+				.register();
 
 		BEDS = new BlockEntry[Beds.values().length];
 		for (var e : Beds.values()) {

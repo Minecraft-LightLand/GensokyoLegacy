@@ -22,6 +22,8 @@ public class GLTagGen {
 	public static final TagKey<Item> TOUHOU_HAT = item("touhou_hat");
 	public static final TagKey<Item> TOUHOU_WINGS = item("touhou_wings");
 
+	public static final TagKey<Block> TOTEMS = block("ritual_totem");
+
 	public static final TagKey<EntityType<?>> FLESH_SOURCE = entity("flesh_source");
 	public static final TagKey<EntityType<?>> YOUKAI_IGNORE = entity("youkai_ignore");
 

@@ -285,7 +285,16 @@
   "advancements.gensokyolegacy.main.feed_reimu.title": "满足的灵梦",
   "advancements.gensokyolegacy.main.welcome_to_youkais_homecoming.description": "Welcome To Youkai's Homecoming",
   "advancements.gensokyolegacy.main.welcome_to_youkais_homecoming.title": "Youkai's Homecoming",
+  "block.gensokyolegacy.books": "Books",
   "effect.gensokyolegacy.youkai": "Youkai",
   "effect.gensokyolegacy.youkai.desc": "Prompt player into Youkai roles",
   "effect.gensokyolegacy.youkai.description": "Prompt player into Youkai roles",
+  "gensokyolegacy.configuration.blocks": "Blocks",
+  "gensokyolegacy.configuration.enableExtraCoolDown": "Extra Damage Cooldown",
+  "gensokyolegacy.configuration.enableExtraCoolDown.tooltip": "Enable extra damage cool down on some youkai",
+  "gensokyolegacy.configuration.mistletoeSpreadChance": "Mistletoe spread chance",
+  "gensokyolegacy.configuration.mistletoeSpreadChance.tooltip": " Default: 0.2\n Range: 0.0 ~ 1.0",
+  "gensokyolegacy.configuration.mistletoeSpreadToPersistentLeaves": "Whether mistletoe can spread to persistent leaves",
+  "gensokyolegacy.configuration.mistletoeSpreadToPersistentLeaves.tooltip": "",
+  "gensokyolegacy.item.has_ability": "gensokyo roles"
 }
