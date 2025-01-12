@@ -1,5 +1,5 @@
 {
-  "parent": "gensokyolegacy:custom/book_pile_1",
+  "parent": "gensokyolegacy:custom/books_1",
   "textures": {
     "books": "gensokyolegacy:block/books"
   }

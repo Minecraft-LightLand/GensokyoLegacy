@@ -78,8 +78,8 @@ public class BooksBlock implements ShapeBlockMethod, CreateBlockStateBlockMethod
 	public static void buildStates(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd) {
 		pvd.horizontalBlock(ctx.get(), state -> {
 			int variant = state.getValue(VARIANT);
-			String model = ctx.getName() + "_" + variant;
-			String id = variant > 0 ? model : ctx.getName();
+			String model = "books_" + variant;
+			String id = variant > 0 ? ctx.getName() + "_" + variant : ctx.getName();
 			return pvd.models().getBuilder("block/" + id)
 					.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("custom/" + model)))
 					.texture("books", pvd.modLoc("block/books"));
