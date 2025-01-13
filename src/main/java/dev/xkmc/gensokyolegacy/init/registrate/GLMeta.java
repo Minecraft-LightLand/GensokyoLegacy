@@ -9,27 +9,18 @@ import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiAttackCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRolePlayAttachment;
 import dev.xkmc.gensokyolegacy.content.block.ritual.BlockMana;
-import dev.xkmc.gensokyolegacy.content.client.tab.TabRole;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import dev.xkmc.gensokyolegacy.init.data.GLLang;
-import dev.xkmc.gensokyolegacy.init.data.structure.SetDataProcessor;
 import dev.xkmc.l2core.capability.player.PlayerCapabilityNetworkHandler;
 import dev.xkmc.l2core.init.reg.datapack.DataMapReg;
 import dev.xkmc.l2core.init.reg.simple.AttReg;
 import dev.xkmc.l2core.init.reg.simple.AttVal;
-import dev.xkmc.l2core.init.reg.simple.SR;
-import dev.xkmc.l2core.init.reg.simple.Val;
 import dev.xkmc.l2serial.serialization.codec.CodecAdaptor;
-import dev.xkmc.l2tabs.init.L2Tabs;
-import dev.xkmc.l2tabs.tabs.core.TabToken;
-import dev.xkmc.l2tabs.tabs.inventory.InvTabData;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 
 public class GLMeta {
@@ -57,12 +48,6 @@ public class GLMeta {
 					Registries.STRUCTURE, new CodecAdaptor<>(StructureConfig.class)).build());
 	public static final DataMapReg<Block, BlockMana> BLOCK_MANA =
 			GensokyoLegacy.REG.dataMap("block_mana", Registries.BLOCK, BlockMana.class);
-
-	private static final SR<StructureProcessorType<?>> PROCESSORS = SR.of(GensokyoLegacy.REG, Registries.STRUCTURE_PROCESSOR);
-	public static final Val<StructureProcessorType<SetDataProcessor>> SET_DATA = PROCESSORS.reg("set_data", () -> () -> SetDataProcessor.CODEC);
-
-	public static final Val<TabToken<InvTabData, TabRole>> TAB_ATTRIBUTE = SR.of(GensokyoLegacy.REG, L2Tabs.TABS.reg())
-			.reg("role", () -> L2Tabs.GROUP.registerTab(() -> TabRole::new, GLLang.TAB$TITLE.get()));
 
 	public static void register() {
 

@@ -20,7 +20,7 @@ import java.util.Locale;
 public enum GLSake implements IYHSake {
 	SCARLET_MIST(FoodType.BOTTLE, 0xFFEA6B88, List.of(
 			new EffectEntry(YHEffects.DRUNK, 1200, 1, 1),
-			new EffectEntry(GLEffects.VAMPIRE, 1, 1, 1)
+			new EffectEntry(GLEffects.VAMPIRE, 1, 3, 1)
 	), GLTagGen.FLESH_FOOD),
 	WIND_PRIESTESSES(FoodType.BOTTLE, 0xFF79E1CA, List.of(
 			new EffectEntry(YHEffects.DRUNK, 1200, 0, 1),

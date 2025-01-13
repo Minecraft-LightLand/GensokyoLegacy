@@ -1,6 +1,6 @@
 {
   "values": {
-    "gensokyolegacy:darkness": {
+    "gensokyolegacy:dark_youkai": {
       "attrs": [
         {
           "attr": "minecraft:generic.attack_damage",
@@ -16,9 +16,10 @@
           "start": 2,
           "value": -0.05
         }
-      ]
+      ],
+      "defence": []
     },
-    "gensokyolegacy:fairy": {
+    "gensokyolegacy:hell_fairy": {
       "attrs": [
         {
           "attr": "minecraft:generic.max_health",
@@ -40,6 +41,80 @@
           "op": "ADD_MULTIPLIED_TOTAL",
           "start": 2,
           "value": 0.5
+        }
+      ],
+      "defence": [
+        {
+          "base": 1.0,
+          "slope": 0.0,
+          "start": 3,
+          "tag": "#minecraft:is_fire"
+        }
+      ]
+    },
+    "gensokyolegacy:ice_fairy": {
+      "attrs": [
+        {
+          "attr": "minecraft:generic.max_health",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 0,
+          "value": -0.1
+        },
+        {
+          "attr": "minecraft:generic.attack_damage",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 0,
+          "value": -0.1
+        },
+        {
+          "attr": "l2damagetracker:regen",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 2,
+          "value": 0.5
+        }
+      ],
+      "defence": [
+        {
+          "base": 1.0,
+          "slope": 0.0,
+          "start": 3,
+          "tag": "#minecraft:is_freezing"
+        }
+      ]
+    },
+    "gensokyolegacy:nature_fairy": {
+      "attrs": [
+        {
+          "attr": "minecraft:generic.max_health",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 0,
+          "value": -0.1
+        },
+        {
+          "attr": "minecraft:generic.attack_damage",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 0,
+          "value": -0.1
+        },
+        {
+          "attr": "l2damagetracker:regen",
+          "base": 1,
+          "op": "ADD_MULTIPLIED_TOTAL",
+          "start": 2,
+          "value": 0.5
+        }
+      ],
+      "defence": [
+        {
+          "base": 1.0,
+          "slope": 0.0,
+          "start": 3,
+          "tag": "#gensokyolegacy:is_nature"
         }
       ]
     },
@@ -66,7 +141,8 @@
           "start": 2,
           "value": -0.05
         }
-      ]
+      ],
+      "defence": []
     }
   }
 }

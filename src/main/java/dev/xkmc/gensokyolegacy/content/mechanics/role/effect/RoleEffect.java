@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.mechanics.role.core;
+package dev.xkmc.gensokyolegacy.content.mechanics.role.effect;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRoleHolder;
 

@@ -25,7 +25,8 @@ public record RitualResult(List<BlockState> totems, int mana, int instability) {
 			double diff = angle[i] - prev - sep;
 			sum += diff * diff;
 		}
-		return new RitualResult(states, totalMana, (int) Math.round(sum / angle.length));
+		int inst = (int) Math.round(sum / angle.length);
+		return new RitualResult(states, totalMana - inst, inst);
 	}
 
 }

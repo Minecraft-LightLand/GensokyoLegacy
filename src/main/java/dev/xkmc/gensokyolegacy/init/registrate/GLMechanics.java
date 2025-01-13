@@ -8,10 +8,8 @@ import dev.xkmc.gensokyolegacy.content.mechanics.incense.simple.GlowingIncense;
 import dev.xkmc.gensokyolegacy.content.mechanics.incense.simple.HealIncense;
 import dev.xkmc.gensokyolegacy.content.mechanics.ritual.Ritual;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.core.Role;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleAttributeData;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.simple.IceFairyRole;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.simple.RumiaRole;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.simple.VampireRole;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.effect.RoleDataMap;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.simple.*;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.datapack.DataMapReg;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
@@ -28,13 +26,17 @@ public class GLMechanics {
 	public static final DataMapReg<Incense, IncenseData> INCENSE_DATA =
 			GensokyoLegacy.REG.dataMap(DataMapType.builder(GensokyoLegacy.loc("incense_data"),
 					INCENSE.key(), new CodecAdaptor<>(IncenseData.class)).build());
-	public static final DataMapReg<Role, RoleAttributeData> ROLE_ATTRIBUTE =
+	public static final DataMapReg<Role, RoleDataMap> ROLE_ATTRIBUTE =
 			GensokyoLegacy.REG.dataMap(DataMapType.builder(GensokyoLegacy.loc("role_attribute"),
-					ROLES.key(), new CodecAdaptor<>(RoleAttributeData.class)).build());
+					ROLES.key(), new CodecAdaptor<>(RoleDataMap.class)).build());
 
 	public static final Val<VampireRole> VAMPIRE = regRole("vampire", VampireRole::new);
-	public static final Val<RumiaRole> RUMIA = regRole("darkness", RumiaRole::new);
-	public static final Val<IceFairyRole> ICE_FAIRY = regRole("fairy", IceFairyRole::new);
+	public static final Val<RumiaRole> RUMIA = regRole("dark_youkai", RumiaRole::new);
+	public static final Val<NatureFairyRole> NATURE_FAIRY = regRole("nature_fairy", NatureFairyRole::new);
+	public static final Val<IceFairyRole> ICE_FAIRY = regRole("ice_fairy", IceFairyRole::new);
+	public static final Val<HellFairyRole> HELL_FAIRY = regRole("hell_fairy", HellFairyRole::new);
+	public static final Val<MaidenRole> MAIDEN = regRole("maiden", MaidenRole::new);
+	public static final Val<MagicianRole> MAGICIAN = regRole("magician", MagicianRole::new);
 
 	public static final IncenseEntry<HealIncense> HEAL = regIncense("heal_incense", HealIncense::new)
 			.dataMap(INCENSE_DATA.reg(), new IncenseData(8, 15, 0xffff0000)).register();
@@ -46,7 +48,7 @@ public class GLMechanics {
 			.dataMap(INCENSE_DATA.reg(), new IncenseData(6, 1, 0xff000000)).register();
 
 	public static <T extends Role> Val<T> regRole(String id, NonNullSupplier<T> sup) {
-		return new Val.Registrate<>(GensokyoLegacy.REGISTRATE.generic(ROLES, id, sup).register());
+		return new Val.Registrate<>(GensokyoLegacy.REGISTRATE.generic(ROLES, id, sup).defaultLang().register());
 	}
 
 	public static <T extends Incense> IncenseBuilder<T, L2Registrate> regIncense(String id, NonNullSupplier<T> sup) {

@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.mechanics.role.core;
+package dev.xkmc.gensokyolegacy.content.mechanics.role.effect;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.ai.attributes.Attribute;

@@ -1,0 +1,37 @@
+{
+  "type": "farmersdelight:add_item",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "attacker",
+      "predicate": {
+        "equipment": {
+          "mainhand": {
+            "items": "#farmersdelight:tools/knives"
+          }
+        }
+      }
+    },
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "flags": {
+          "is_on_fire": true
+        }
+      }
+    },
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "#gensokyolegacy:flesh_source"
+      }
+    },
+    {
+      "category": "YOUKAI",
+      "condition": "gensokyolegacy:role_category"
+    }
+  ],
+  "item": "gensokyolegacy:cooked_flesh"
+}

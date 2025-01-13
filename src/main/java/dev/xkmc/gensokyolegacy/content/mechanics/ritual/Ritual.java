@@ -9,4 +9,6 @@ public class Ritual extends NamedEntry<Ritual> {
 		super(GLMechanics.RITUAL);
 	}
 
+
+
 }

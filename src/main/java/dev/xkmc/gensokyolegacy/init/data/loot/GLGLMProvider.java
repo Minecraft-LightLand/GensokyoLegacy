@@ -1,9 +1,14 @@
 package dev.xkmc.gensokyolegacy.init.data.loot;
 
+import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleCategoryLootCondition;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleProgressLootCondition;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMechanics;
 import dev.xkmc.youkaishomecoming.mixin.AddItemModifierAccessor;
 import dev.xkmc.youkaishomecoming.mixin.AddLootTableModifierAccessor;
 import net.minecraft.advancements.critereon.*;
@@ -16,6 +21,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
@@ -44,6 +50,27 @@ public class GLGLMProvider extends GlobalLootModifierProvider {
 				killedByCirno(), frog(FrogVariant.WARM)));
 		add("cirno_frozen_frog_temperate", create(GLItems.FROZEN_FROG_TEMPERATE.get(), 1,
 				killedByCirno(), frog(FrogVariant.TEMPERATE)));
+
+		add("scavenging_flesh", create(GLFood.FLESH.item.get(), 1,
+				killedByKnife(), fire(false), isFleshSource(), killedByYoukai()));
+		add("scavenging_flesh_cooked", create(GLFood.COOKED_FLESH.item.get(), 1,
+				killedByKnife(), fire(true), isFleshSource(), killedByYoukai()));
+
+
+		add("rumia_scavenging_flesh", create(GLFood.FLESH.item.get(), 1,
+				killedByRumia(), fire(false), isFleshSource()));
+		add("rumia_scavenging_flesh_cooked", create(GLFood.COOKED_FLESH.item.get(), 1,
+				killedByRumia(), fire(true), isFleshSource()));
+		add("rumia_scavenging_skeleton_skull", create(Items.SKELETON_SKULL, 1,
+				killedByRumia(), entity(GLTagGen.SKULL_SOURCE)));
+		add("rumia_scavenging_wither_skeleton_skull", create(Items.WITHER_SKELETON_SKULL, 1,
+				killedByRumia(), entity(GLTagGen.WITHER_SOURCE)));
+		add("rumia_scavenging_zombie_head", create(Items.ZOMBIE_HEAD, 1,
+				killedByRumia(), entity(GLTagGen.ZOMBIE_SOURCE)));
+		add("rumia_scavenging_creeper_head", create(Items.CREEPER_HEAD, 1,
+				killedByRumia(), entity(GLTagGen.CREEPER_SOURCE)));
+		add("rumia_scavenging_piglin_head", create(Items.PIGLIN_HEAD, 1,
+				killedByRumia(), entity(GLTagGen.PIGLIN_SOURCE)));
 
 	}
 
@@ -98,19 +125,33 @@ public class GLGLMProvider extends GlobalLootModifierProvider {
 								.build()).build()).build();
 	}
 
+	private static LootItemCondition killedByRumia() {
+		return LootItemEntityPropertyCondition.hasProperties(
+				LootContext.EntityTarget.ATTACKER,
+				EntityPredicate.Builder.entity().equipment(
+						EntityEquipmentPredicate.Builder.equipment().head(
+										ItemPredicate.Builder.item().of(GLItems.RUMIA_HAIRBAND))
+								.build()).build()).build();
+	}
+
 	private static LootItemCondition killedByCirno() {
 		return LootItemEntityPropertyCondition.hasProperties(
 						LootContext.EntityTarget.ATTACKER,
 						EntityPredicate.Builder.entity().entityType(
 								EntityTypePredicate.of(GLEntities.CIRNO.get())))
-//				.or(LootItemEntityPropertyCondition.hasProperties(
-//						LootContext.EntityTarget.ATTACKER,
-//						EntityPredicate.Builder.entity().equipment(
-//								EntityEquipmentPredicate.Builder.equipment()
-//										.head(ItemPredicate.Builder.item()
-//												.of(YHItems.CIRNO_HAIRBAND.get())
-//												.build()).build()).build()))
+				.or(LootItemEntityPropertyCondition.hasProperties(
+						LootContext.EntityTarget.ATTACKER,
+						EntityPredicate.Builder.entity().equipment(
+								EntityEquipmentPredicate.Builder.equipment()
+										.head(ItemPredicate.Builder.item().of(GLItems.CIRNO_HAIRBAND.get())).build()
+						).build()))
+				.or(new RoleProgressLootCondition(GLMechanics.ICE_FAIRY.get(), 1000))
 				.build();
+	}
+
+
+	private static LootItemCondition killedByYoukai() {
+		return new RoleCategoryLootCondition(RoleCategory.YOUKAI);
 	}
 
 	private static LootItemCondition fire(boolean fire) {

@@ -282,5 +282,12 @@
   "item.gensokyolegacy.yukari_yakumo_spawn_egg": "Yukari Yakumo Spawn Egg",
   "itemGroup.gensokyolegacy.building_blocks": "Gensokyo Legacy - Building Blocks",
   "itemGroup.gensokyolegacy.food": "Gensokyo Legacy - Foods",
-  "itemGroup.gensokyolegacy.ingredients": "Gensokyo Legacy - Ingredients"
+  "itemGroup.gensokyolegacy.ingredients": "Gensokyo Legacy - Ingredients",
+  "role.gensokyolegacy.dark_youkai": "Dark Youkai",
+  "role.gensokyolegacy.hell_fairy": "Hell Fairy",
+  "role.gensokyolegacy.ice_fairy": "Ice Fairy",
+  "role.gensokyolegacy.magician": "Magician",
+  "role.gensokyolegacy.maiden": "Maiden",
+  "role.gensokyolegacy.nature_fairy": "Nature Fairy",
+  "role.gensokyolegacy.vampire": "Vampire"
 }

@@ -6,7 +6,6 @@ import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.event.ReimuEventHandlers;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMechanics;
 import dev.xkmc.youkaishomecoming.content.item.food.YHFoodItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -33,7 +32,7 @@ public class FleshFoodItem extends YHFoodItem {
 		if (old == null) return null;
 		int factor = 1;
 		if (entity instanceof Player player) {
-			double prog = RolePlayHandler.progress(player, GLMechanics.VAMPIRE.get());
+			double prog = RolePlayHandler.progress(player, RoleCategory.YOUKAI);
 			if (prog > 0)
 				factor++;
 			if (prog >= 1000)
@@ -60,7 +59,7 @@ public class FleshFoodItem extends YHFoodItem {
 	@Override
 	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
 		super.appendHoverText(stack, level, list, flag);
-		double prog = RolePlayHandler.progress(GLMechanics.VAMPIRE.get());
+		double prog = RolePlayHandler.progress(RoleCategory.YOUKAI);
 		if (prog >= 1000) {
 			list.add(GLLang.FLESH$TASTE_YOUKAI.get());
 		} else if (prog > 0) {

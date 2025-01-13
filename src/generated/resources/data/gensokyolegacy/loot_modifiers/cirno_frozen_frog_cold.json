@@ -2,11 +2,32 @@
   "type": "farmersdelight:add_item",
   "conditions": [
     {
-      "condition": "minecraft:entity_properties",
-      "entity": "attacker",
-      "predicate": {
-        "type": "gensokyolegacy:cirno"
-      }
+      "condition": "minecraft:any_of",
+      "terms": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "attacker",
+          "predicate": {
+            "type": "gensokyolegacy:cirno"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "attacker",
+          "predicate": {
+            "equipment": {
+              "head": {
+                "items": "gensokyolegacy:cirno_hairband"
+              }
+            }
+          }
+        },
+        {
+          "condition": "gensokyolegacy:role",
+          "progress": 1000,
+          "role": "gensokyolegacy:ice_fairy"
+        }
+      ]
     },
     {
       "condition": "minecraft:entity_properties",

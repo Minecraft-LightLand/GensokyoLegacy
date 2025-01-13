@@ -4,9 +4,9 @@ import dev.xkmc.l2core.serial.recipe.BaseRecipe;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 
 @SerialClass
-public abstract class AbstractCenserRecipe<T extends AbstractCenserRecipe<T>> extends BaseRecipe<T, AbstractCenserRecipe<?>, CenserItemContainer> {
+public abstract class CenserRecipe<T extends CenserRecipe<T>> extends BaseRecipe<T, CenserRecipe<?>, CenserItemContainer> {
 
-	public AbstractCenserRecipe(RecType<T, AbstractCenserRecipe<?>, CenserItemContainer> fac) {
+	public CenserRecipe(RecType<T, CenserRecipe<?>, CenserItemContainer> fac) {
 		super(fac);
 	}
 

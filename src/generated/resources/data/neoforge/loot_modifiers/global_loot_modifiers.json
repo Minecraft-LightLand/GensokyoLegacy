@@ -1,8 +1,17 @@
 {
   "entries": [
+    "gensokyolegacy:scavenging_flesh_cooked",
+    "gensokyolegacy:rumia_scavenging_creeper_head",
+    "gensokyolegacy:rumia_scavenging_flesh_cooked",
     "gensokyolegacy:cirno_frozen_frog_warm",
+    "gensokyolegacy:rumia_scavenging_skeleton_skull",
+    "gensokyolegacy:rumia_scavenging_wither_skeleton_skull",
+    "gensokyolegacy:rumia_scavenging_zombie_head",
     "gensokyolegacy:cirno_frozen_frog_cold",
-    "gensokyolegacy:cirno_frozen_frog_temperate"
+    "gensokyolegacy:cirno_frozen_frog_temperate",
+    "gensokyolegacy:scavenging_flesh",
+    "gensokyolegacy:rumia_scavenging_flesh",
+    "gensokyolegacy:rumia_scavenging_piglin_head"
   ],
   "replace": false
 }

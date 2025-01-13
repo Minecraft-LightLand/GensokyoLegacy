@@ -19,6 +19,7 @@ import dev.xkmc.gensokyolegacy.content.client.structure.StructureRepairToServer;
 import dev.xkmc.gensokyolegacy.content.food.compat.GLThirstCompat;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLFoodItems;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouMat;
+import dev.xkmc.gensokyolegacy.event.GLAttackListener;
 import dev.xkmc.gensokyolegacy.init.data.*;
 import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
@@ -30,6 +31,7 @@ import dev.xkmc.gensokyolegacy.init.network.PathDataToClient;
 import dev.xkmc.gensokyolegacy.init.registrate.*;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.simple.Reg;
+import dev.xkmc.l2damagetracker.contents.attack.AttackEventHandler;
 import dev.xkmc.l2serial.network.PacketHandler;
 import dev.xkmc.youkaishomecoming.content.item.fluid.SakeFluidWrapper;
 import net.minecraft.resources.ResourceLocation;
@@ -77,12 +79,14 @@ public class GensokyoLegacy {
 		GLRecipes.register();
 		TouhouMat.register();
 		GLMeta.register();
+		GLMisc.register();
 		GLBrains.register();
 		GLEffects.register();
 		GLSounds.register();
 		GLCriteriaTriggers.register();
 		GLModConfig.init();
 		TouhouSpellCards.registerSpells();
+		AttackEventHandler.register(1765, new GLAttackListener());
 		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
 			NeoForge.EVENT_BUS.register(TLMCompat.class);
 		}

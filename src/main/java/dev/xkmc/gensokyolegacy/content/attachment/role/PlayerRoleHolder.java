@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.attachment.role;
 
 import dev.xkmc.gensokyolegacy.content.mechanics.role.core.Role;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleStage;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +23,10 @@ public record PlayerRoleHolder(Player player, PlayerRolePlayAttachment root, Rol
 			data.advance(max, val);
 		root.cleanUp();
 		GLMeta.ABILITY.type().network.toClient(sp);
+	}
+
+	public RoleStage toStage() {
+		return new RoleStage(role(), data().getProgress() / 500);
 	}
 
 }

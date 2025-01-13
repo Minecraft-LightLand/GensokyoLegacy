@@ -40,7 +40,7 @@ public class PlayerRolePlayAttachment extends PlayerCapabilityTemplate<PlayerRol
 
 	private void tickActual(Player player, @Nullable PlayerRoleHolder holder) {
 		if (holder != null) {
-			var next = new RoleStage(holder.role(), holder.data().getProgress() / 500);
+			var next = holder.toStage();
 			if (previous == null || !previous.equals(next)) {
 				if (previous != null) {
 					var role = previous.role();

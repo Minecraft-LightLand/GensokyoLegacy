@@ -154,12 +154,6 @@
   "effect.gensokyolegacy.fairy": "妖精化",
   "effect.gensokyolegacy.fairy.desc": "让玩家加速进入妖精身份",
   "effect.gensokyolegacy.fairy.description": "让玩家加速进入妖精身份",
-  "effect.gensokyolegacy.vampire": "吸血鬼化",
-  "effect.gensokyolegacy.vampire.desc": "让玩家加速进入吸血鬼身份",
-  "effect.gensokyolegacy.vampire.description": "让玩家加速进入吸血鬼身份",
-  "effect.gensokyolegacy.rumia": "霄暗妖怪化",
-  "effect.gensokyolegacy.rumia.desc": "让玩家加速进入霄暗妖怪身份",
-  "effect.gensokyolegacy.rumia.description": "让玩家加速进入霄暗妖怪身份",
   "gensokyolegacy.configuration.danmakuHealOnHitTarget": "When danmaku hits target, heal youkai health by percentage of max health",
   "gensokyolegacy.configuration.danmakuHealOnHitTarget.tooltip": " Default: 0.2\n Range: 0.0 ~ 1.0",
   "gensokyolegacy.configuration.danmakuMinPHPDamage": "Minimum damage youkai danmaku will deal against non-player",
@@ -285,7 +279,6 @@
   "advancements.gensokyolegacy.main.feed_reimu.title": "满足的灵梦",
   "advancements.gensokyolegacy.main.welcome_to_youkais_homecoming.description": "Welcome To Youkai's Homecoming",
   "advancements.gensokyolegacy.main.welcome_to_youkais_homecoming.title": "Youkai's Homecoming",
-  "block.gensokyolegacy.books": "Books",
   "effect.gensokyolegacy.youkai": "Youkai",
   "effect.gensokyolegacy.youkai.desc": "Prompt player into Youkai roles",
   "effect.gensokyolegacy.youkai.description": "Prompt player into Youkai roles",
@@ -296,5 +289,9 @@
   "gensokyolegacy.configuration.mistletoeSpreadChance.tooltip": " Default: 0.2\n Range: 0.0 ~ 1.0",
   "gensokyolegacy.configuration.mistletoeSpreadToPersistentLeaves": "Whether mistletoe can spread to persistent leaves",
   "gensokyolegacy.configuration.mistletoeSpreadToPersistentLeaves.tooltip": "",
-  "gensokyolegacy.item.has_ability": "gensokyo roles"
+  "gensokyolegacy.item.has_ability": "gensokyo roles",
+  "block.gensokyolegacy.book_pile": "Book Pile",
+  "role.gensokyolegacy.darkness": "Darkness",
+  "role.gensokyolegacy.fairy": "Fairy",
+  "role.gensokyolegacy.vampire": "Vampire"
 }

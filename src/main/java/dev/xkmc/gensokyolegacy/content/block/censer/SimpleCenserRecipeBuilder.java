@@ -9,7 +9,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 
 public class SimpleCenserRecipeBuilder extends
-		BaseRecipeBuilder<SimpleCenserRecipeBuilder, SimpleCenserRecipe, AbstractCenserRecipe<?>, CenserItemContainer> {
+		BaseRecipeBuilder<SimpleCenserRecipeBuilder, SimpleCenserRecipe, CenserRecipe<?>, CenserItemContainer> {
 
 	public SimpleCenserRecipeBuilder(Incense result, int duration) {
 		super(GLRecipes.RS_CENSER.get(), result.asStack().getItem());

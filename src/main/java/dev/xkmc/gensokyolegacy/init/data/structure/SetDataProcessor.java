@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.init.data.structure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;
@@ -51,6 +51,6 @@ public class SetDataProcessor extends StructureProcessor {
 
 	@Override
 	protected StructureProcessorType<?> getType() {
-		return GLMeta.SET_DATA.get();
+		return GLMisc.SET_DATA.get();
 	}
 }

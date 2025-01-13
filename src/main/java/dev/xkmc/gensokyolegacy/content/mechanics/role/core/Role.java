@@ -1,9 +1,13 @@
 package dev.xkmc.gensokyolegacy.content.mechanics.role.core;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRoleHolder;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.effect.AttackEffect;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.effect.RoleDataMap;
+import dev.xkmc.gensokyolegacy.content.mechanics.role.effect.RoleEffect;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMechanics;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2core.init.reg.registrate.NamedEntry;
+import dev.xkmc.l2damagetracker.contents.attack.DamageData;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -43,7 +47,7 @@ public class Role extends NamedEntry<Role> {
 	}
 
 	@Nullable
-	private RoleAttributeData getData(Level level) {
+	private RoleDataMap getData(Level level) {
 		return GLMechanics.ROLE_ATTRIBUTE.get(level.registryAccess(), holder());
 	}
 
@@ -64,6 +68,30 @@ public class Role extends NamedEntry<Role> {
 			e.end(player, stage);
 		var attr = getData(player.player().level());
 		if (attr != null) attr.end(player, stage);
+	}
+
+	public boolean onAttack(DamageData.Attack cache, int stage) {
+		var attr = getData(cache.getTarget().level());
+		if (attr != null && attr.immune(cache, stage))
+			return true;
+		for (var e : effects[stage]) {
+			if (e instanceof AttackEffect att) {
+				if (att.immune(cache, stage)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public void onDamage(DamageData.Defence cache, int stage) {
+		var attr = getData(cache.getTarget().level());
+		if (attr != null) attr.onDamage(this, cache, stage);
+		for (var e : effects[stage]) {
+			if (e instanceof AttackEffect att) {
+				att.onDamage(this, cache, stage);
+			}
+		}
 	}
 
 }

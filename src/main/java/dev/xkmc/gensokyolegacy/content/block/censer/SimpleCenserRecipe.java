@@ -14,7 +14,7 @@ import net.neoforged.neoforge.common.util.RecipeMatcher;
 import java.util.ArrayList;
 
 @SerialClass
-public class SimpleCenserRecipe extends AbstractCenserRecipe<SimpleCenserRecipe> {
+public class SimpleCenserRecipe extends CenserRecipe<SimpleCenserRecipe> {
 
 	@SerialField
 	public ArrayList<Ingredient> ingredients = new ArrayList<>();

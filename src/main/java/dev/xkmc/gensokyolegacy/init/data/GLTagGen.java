@@ -27,6 +27,12 @@ public class GLTagGen {
 	public static final TagKey<EntityType<?>> FLESH_SOURCE = entity("flesh_source");
 	public static final TagKey<EntityType<?>> YOUKAI_IGNORE = entity("youkai_ignore");
 
+	public static final TagKey<EntityType<?>> SKULL_SOURCE = entity("drops_skeleton_skull");
+	public static final TagKey<EntityType<?>> WITHER_SOURCE = entity("drops_wither_skull");
+	public static final TagKey<EntityType<?>> ZOMBIE_SOURCE = entity("drops_zombie_head");
+	public static final TagKey<EntityType<?>> CREEPER_SOURCE = entity("drops_creeper_head");
+	public static final TagKey<EntityType<?>> PIGLIN_SOURCE = entity("drops_piglin_head");
+
 
 	public static void onBlockTagGen(RegistrateTagsProvider.IntrinsicImpl<Block> pvd) {
 		GLStructureTagGen.genBlockTag(pvd);
@@ -39,6 +45,12 @@ public class GLTagGen {
 	public static void onEntityTagGen(RegistrateTagsProvider.IntrinsicImpl<EntityType<?>> pvd) {
 		pvd.addTag(FLESH_SOURCE).add(EntityType.EVOKER, EntityType.PILLAGER, EntityType.VINDICATOR, EntityType.ILLUSIONER, EntityType.WITCH,
 				EntityType.VILLAGER, EntityType.WANDERING_TRADER, EntityType.PLAYER);
+
+		pvd.addTag(SKULL_SOURCE).add(EntityType.SKELETON, EntityType.STRAY);
+		pvd.addTag(WITHER_SOURCE).add(EntityType.WITHER_SKELETON, EntityType.WITHER);
+		pvd.addTag(ZOMBIE_SOURCE).add(EntityType.ZOMBIE, EntityType.ZOMBIE_VILLAGER, EntityType.HUSK, EntityType.DROWNED);
+		pvd.addTag(CREEPER_SOURCE).add(EntityType.CREEPER);
+		pvd.addTag(PIGLIN_SOURCE).add(EntityType.PIGLIN, EntityType.PIGLIN_BRUTE);
 
 		pvd.addTag(YOUKAI_IGNORE).add(EntityType.ENDER_DRAGON);
 	}

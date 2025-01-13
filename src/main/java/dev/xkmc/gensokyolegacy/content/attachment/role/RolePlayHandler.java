@@ -37,8 +37,19 @@ public class RolePlayHandler {
 		return progress(player, role);
 	}
 
+	public static double progress(RoleCategory role) {
+		var player = getPlayer();
+		if (player == null) return 0;
+		return progress(player, role);
+	}
+
 	public static int progress(Player player, Role role) {
 		var data = GLMeta.ABILITY.type().getOrCreate(player).getData(player, role);
+		return data == null ? 0 : data.data().getProgress();
+	}
+
+	public static int progress(Player player, RoleCategory role) {
+		var data = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player, role);
 		return data == null ? 0 : data.data().getProgress();
 	}
 
