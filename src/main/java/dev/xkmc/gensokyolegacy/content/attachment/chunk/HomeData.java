@@ -52,6 +52,7 @@ public class HomeData {
 			cacheBuilder.tick();
 			if (cacheBuilder.isDone()) {
 				cache = cacheBuilder.build();
+				holder.chunk().setUnsaved(true);
 			}
 		} else {
 			if (verifier == null) {
@@ -64,7 +65,9 @@ public class HomeData {
 					return;
 				}
 			}
-			verifier.tick();
+			if (verifier.tick()) {
+				holder.chunk().setUnsaved(true);
+			}
 		}
 	}
 

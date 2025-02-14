@@ -21,6 +21,7 @@ import dev.xkmc.gensokyolegacy.content.food.reg.GLFoodItems;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouMat;
 import dev.xkmc.gensokyolegacy.event.GLAttackListener;
 import dev.xkmc.gensokyolegacy.init.data.*;
+import dev.xkmc.gensokyolegacy.init.data.dimension.GLDimensionGen;
 import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureLootGen;
@@ -126,6 +127,7 @@ public class GensokyoLegacy {
 		REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, GLAdvGen::genAdv);
 		var init = REGISTRATE.getDataGenInitializer();
 		GLStructureGen.init(init);
+		GLDimensionGen.init(init);
 		new GLDamageTypes(REGISTRATE).generate();
 
 		var gen = event.getGenerator();

@@ -33,10 +33,11 @@ public class IntegrityVerifier {
 		return bound.getSize() == template.raster().length;
 	}
 
-	public void tick() {
+	public boolean tick() {
 		var rand = level.getRandom();
 		var pos = new BlockPos.MutableBlockPos();
 		int count = 0;
+		boolean detected = false;
 		for (int i = 0; i < PerformanceConstants.VERIFY_SCAN; i++) {
 			int step;
 			if (i % 2 == 0) {
@@ -59,10 +60,12 @@ public class IntegrityVerifier {
 			var pal = template.palette()[sid];
 			if (state.getBlock() != pal.getBlock()) {
 				process(pos, step, state, pal, inRoom);
+				detected = true;
 			}
 			if (count >= PerformanceConstants.VERIFY_FETCH)
-				return;
+				break;
 		}
+		return detected;
 	}
 
 	private void process(BlockPos pos, int step, BlockState current, BlockState ref, boolean inRoom) {
