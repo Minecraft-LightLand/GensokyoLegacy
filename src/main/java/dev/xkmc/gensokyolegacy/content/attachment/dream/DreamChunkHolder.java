@@ -19,35 +19,35 @@ public record DreamChunkHolder(LevelChunk chunk, DreamChunkAttachment data) {
 			chunk = im.getWrapped();
 		if (!(chunk instanceof LevelChunk c)) return null;
 		var data = GLMeta.DREAM.type().getOrCreate(c);
+		data.init(c);
 		return new DreamChunkHolder(c, data);
 	}
 
-	public void markDirty() {
-		chunk.setUnsaved(true);
-	}
-
 	public void tick() {
+		data.init(chunk);
 		data.tick(chunk);
 	}
 
 	public void alive(Level level, BlockPos pos) {
+		data.init(chunk);
 		int max = DreamChunkAttachment.MAX_STABILITY;
+		int maxSqr = max * max;
 		var sec = SectionPos.of(pos);
 		for (int x = -max; x <= max; x++) {
 			for (int z = -max; z <= max; z++) {
-				int val = max - Math.abs(x) - Math.abs(z);
-				if (val <= 0) continue;
+				int hor = x * x + z * z;
+				if (hor >= maxSqr) continue;
 				DreamChunkHolder holder;
 				if (x == 0 && z == 0) holder = this;
 				else holder = of(level, sec.x() + x, sec.z() + z);
 				if (holder == null) continue;
 				for (int y = -max; y <= max; y++) {
-					int sval = val - Math.abs(y);
-					if (sval <= 0) continue;
-					int index = y - holder.chunk.getMinSection();
+					int dist = hor + y * y;
+					if (dist >= maxSqr) continue;
+					int index = sec.getY() + y - holder.chunk.getMinSection();
 					if (index < 0 || index >= holder.data.sectionData.length) continue;
 					var data = holder.data.sectionData[index];
-					data.update(sval);
+					data.update(max - (int) Math.sqrt(dist));
 					holder.chunk.setUnsaved(true);
 				}
 			}
