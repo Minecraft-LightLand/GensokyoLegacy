@@ -28,16 +28,12 @@ public class GLNoiseGen {
 
 		var shiftedTemp = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, params.getOrThrow(Noises.TEMPERATURE));
 		var shiftedVege = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, params.getOrThrow(Noises.VEGETATION));
+		int top = data.minY + data.maxY - data.hill;
+		var shiftedDepth = DensityFunctions.yClampedGradient(data.maxY, data.lowBody, 1, 0);
 		var shiftedCont = DensityFunctions.interpolated(DensityFunctions.flatCache(DensityFunctions.max(
-				new DensityFunctions.ShiftedNoise(
-						DensityFunctions.zero(),
-						DensityFunctions.constant(data.minY + data.maxY - data.hill - 4),
-						DensityFunctions.zero(),
+				new DensityFunctions.ShiftedNoise(zero, DensityFunctions.constant(top - 4), zero,
 						1, 0, new DensityFunction.NoiseHolder(cont)),
-				new DensityFunctions.ShiftedNoise(
-						DensityFunctions.zero(),
-						DensityFunctions.constant(data.minY + data.maxY - data.hill - 24),
-						DensityFunctions.zero(),
+				new DensityFunctions.ShiftedNoise(zero, DensityFunctions.constant(top - 24), zero,
 						1, 0, new DensityFunction.NoiseHolder(cont))
 		)));
 		var router = new NoiseRouter(
@@ -49,7 +45,7 @@ public class GLNoiseGen {
 				shiftedVege, // vegetation
 				shiftedCont, // continents
 				zero, // erosion
-				zero, // depth
+				shiftedDepth, // depth
 				zero, // ridges
 				zero, // initial
 				data.slide(ctx, terrain), // final

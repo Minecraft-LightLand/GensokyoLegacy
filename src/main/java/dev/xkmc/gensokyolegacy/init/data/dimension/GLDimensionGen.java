@@ -97,10 +97,10 @@ public class GLDimensionGen {
 							biome.getOrThrow(GLBiomeGen.BIOME_DREAM), List.of()))));
 
 			var climate = new Climate.ParameterList<Holder<Biome>>(List.of(
-					Pair.of(point(0.3f), biome.get(GLBiomeGen.BIOME_MAINLAND).orElseThrow()),
-					Pair.of(point(0.1f), biome.get(GLBiomeGen.BIOME_EDGE).orElseThrow()),
-					Pair.of(point(0.0f), biome.get(GLBiomeGen.BIOME_ISLAND).orElseThrow()),
-					Pair.of(point(-0.1f), biome.get(GLBiomeGen.BIOME_VOID).orElseThrow())
+					Pair.of(point(0.9f, 1f, 0.6f, 1f, 0f), biome.get(GLBiomeGen.BIOME_MAINLAND).orElseThrow()),
+					Pair.of(point(0f, 1f, 0.4f, 1f, 0.1f), biome.get(GLBiomeGen.BIOME_EDGE).orElseThrow()),
+					Pair.of(point(0f, 1f, 0.1f, 0.3f, 0.1f), biome.get(GLBiomeGen.BIOME_ISLAND).orElseThrow()),
+					Pair.of(point(0f, 1f, -1f, 0f, 0.1f), biome.get(GLBiomeGen.BIOME_VOID).orElseThrow())
 			));
 			ctx.register(LEVEL_DREAMLAND, new LevelStem(dt.getOrThrow(DT_DREAMLAND), new NoiseBasedChunkGenerator(
 					MultiNoiseBiomeSource.createFromList(climate), noise.getOrThrow(NGS_DREAMLAND))));
@@ -108,15 +108,15 @@ public class GLDimensionGen {
 
 	}
 
-	private static Climate.ParameterPoint point(float cont) {
+	private static Climate.ParameterPoint point(float d0, float d1, float c0, float c1, float offset) {
 		return Climate.parameters(
-				0,
-				0,
-				cont,
-				0,
-				0,
-				0,
-				0
+				Climate.Parameter.point(0),
+				Climate.Parameter.point(0),
+				Climate.Parameter.span(c0, c1),
+				Climate.Parameter.point(0),
+				Climate.Parameter.span(d0, d1),
+				Climate.Parameter.point(0),
+				offset
 		);
 	}
 
