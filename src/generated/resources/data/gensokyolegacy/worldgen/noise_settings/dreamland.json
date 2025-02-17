@@ -16,33 +16,7 @@
   },
   "noise_router": {
     "barrier": 0.0,
-    "continents": {
-      "type": "minecraft:interpolated",
-      "argument": {
-        "type": "minecraft:flat_cache",
-        "argument": {
-          "type": "minecraft:max",
-          "argument1": {
-            "type": "minecraft:shifted_noise",
-            "noise": "gensokyolegacy:simple",
-            "shift_x": 0.0,
-            "shift_y": 60.0,
-            "shift_z": 0.0,
-            "xz_scale": 1.0,
-            "y_scale": 0.0
-          },
-          "argument2": {
-            "type": "minecraft:shifted_noise",
-            "noise": "gensokyolegacy:simple",
-            "shift_x": 0.0,
-            "shift_y": 40.0,
-            "shift_z": 0.0,
-            "xz_scale": 1.0,
-            "y_scale": 0.0
-          }
-        }
-      }
-    },
+    "continents": 0.0,
     "depth": {
       "type": "minecraft:y_clamped_gradient",
       "from_value": 1.0,
@@ -55,7 +29,7 @@
       "type": "minecraft:squeeze",
       "argument": {
         "type": "minecraft:mul",
-        "argument1": 0.64,
+        "argument1": 0.6399999856948853,
         "argument2": {
           "type": "minecraft:interpolated",
           "argument": {
@@ -77,7 +51,7 @@
                   "argument1": 0.234375,
                   "argument2": {
                     "type": "minecraft:add",
-                    "argument1": -23.4375,
+                    "argument1": -1.0,
                     "argument2": {
                       "type": "minecraft:mul",
                       "argument1": {
@@ -85,23 +59,69 @@
                         "from_value": 1.0,
                         "from_y": 64,
                         "to_value": 0.0,
-                        "to_y": 576
+                        "to_y": 128
                       },
                       "argument2": {
                         "type": "minecraft:add",
-                        "argument1": 23.4375,
+                        "argument1": 1.0,
                         "argument2": {
                           "type": "minecraft:add",
-                          "argument1": -0.39999999999999997,
+                          "argument1": -0.125,
                           "argument2": {
-                            "type": "minecraft:mul",
-                            "argument1": 1.0,
-                            "argument2": {
-                              "type": "minecraft:noise",
-                              "noise": "gensokyolegacy:simple",
-                              "xz_scale": 1.0,
-                              "y_scale": 1.0
-                            }
+                            "type": "gensokyolegacy:add_noise",
+                            "main": {
+                              "type": "minecraft:abs",
+                              "argument": {
+                                "type": "minecraft:mul",
+                                "argument1": {
+                                  "type": "minecraft:add",
+                                  "argument1": 0.0,
+                                  "argument2": {
+                                    "type": "minecraft:mul",
+                                    "argument1": 1.0,
+                                    "argument2": {
+                                      "type": "minecraft:noise",
+                                      "noise": "gensokyolegacy:simple_a",
+                                      "xz_scale": 1.0,
+                                      "y_scale": 1.0
+                                    }
+                                  }
+                                },
+                                "argument2": {
+                                  "type": "minecraft:add",
+                                  "argument1": 0.0,
+                                  "argument2": {
+                                    "type": "minecraft:mul",
+                                    "argument1": -1.0,
+                                    "argument2": {
+                                      "type": "minecraft:noise",
+                                      "noise": "gensokyolegacy:simple_b",
+                                      "xz_scale": 1.0,
+                                      "y_scale": 1.0
+                                    }
+                                  }
+                                }
+                              }
+                            },
+                            "noise": {
+                              "type": "minecraft:mul",
+                              "argument1": 0.5,
+                              "argument2": {
+                                "type": "minecraft:add",
+                                "argument1": 0.0,
+                                "argument2": {
+                                  "type": "minecraft:mul",
+                                  "argument1": 1.0,
+                                  "argument2": {
+                                    "type": "minecraft:noise",
+                                    "noise": "gensokyolegacy:simple_0",
+                                    "xz_scale": 1.0,
+                                    "y_scale": 1.0
+                                  }
+                                }
+                              }
+                            },
+                            "slope": 8.0
                           }
                         }
                       }
@@ -120,22 +140,16 @@
     "lava": 0.0,
     "ridges": 0.0,
     "temperature": {
-      "type": "minecraft:shifted_noise",
-      "noise": "minecraft:temperature",
-      "shift_x": "minecraft:shift_x",
-      "shift_y": 0.0,
-      "shift_z": "minecraft:shift_z",
-      "xz_scale": 0.25,
-      "y_scale": 0.0
+      "type": "minecraft:noise",
+      "noise": "gensokyolegacy:simple_a",
+      "xz_scale": 1.0,
+      "y_scale": 1.0
     },
     "vegetation": {
-      "type": "minecraft:shifted_noise",
-      "noise": "minecraft:vegetation",
-      "shift_x": "minecraft:shift_x",
-      "shift_y": 0.0,
-      "shift_z": "minecraft:shift_z",
-      "xz_scale": 0.25,
-      "y_scale": 0.0
+      "type": "minecraft:noise",
+      "noise": "gensokyolegacy:simple_b",
+      "xz_scale": 1.0,
+      "y_scale": 1.0
     },
     "vein_gap": 0.0,
     "vein_ridged": 0.0,

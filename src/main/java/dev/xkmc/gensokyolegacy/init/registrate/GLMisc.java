@@ -6,14 +6,19 @@ import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleCategoryLootCondi
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleProgressLootCondition;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
+import dev.xkmc.gensokyolegacy.init.data.dimension.AddNoise;
 import dev.xkmc.gensokyolegacy.init.data.structure.SetDataProcessor;
+import dev.xkmc.l2core.init.reg.simple.CdcReg;
+import dev.xkmc.l2core.init.reg.simple.CdcVal;
 import dev.xkmc.l2core.init.reg.simple.SR;
 import dev.xkmc.l2core.init.reg.simple.Val;
 import dev.xkmc.l2serial.serialization.codec.MapCodecAdaptor;
 import dev.xkmc.l2tabs.init.L2Tabs;
 import dev.xkmc.l2tabs.tabs.core.TabToken;
 import dev.xkmc.l2tabs.tabs.inventory.InvTabData;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
@@ -33,6 +38,8 @@ public class GLMisc {
 	public static final Val<LootItemConditionType> LIC_ANY_ROLE = LIC.reg("any_role",
 			() -> new LootItemConditionType(MapCodecAdaptor.of(HasRoleLootCondition.class)));
 
+	private static final CdcReg<DensityFunction> DF = CdcReg.of(GensokyoLegacy.REG, BuiltInRegistries.DENSITY_FUNCTION_TYPE);
+	public static final CdcVal<AddNoise> DF_ADD_NOISE = DF.reg("add_noise", AddNoise.CODEC);
 
 	public static void register() {
 

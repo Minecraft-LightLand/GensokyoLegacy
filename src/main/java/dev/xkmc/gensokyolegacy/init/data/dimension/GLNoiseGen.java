@@ -6,7 +6,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.*;
-import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 import java.util.List;
 
@@ -16,26 +15,22 @@ public class GLNoiseGen {
 	private static final ResourceKey<DensityFunction> SHIFT_Z = mcKey("shift_z");
 
 	public static NoiseGeneratorSettings islands(BootstrapContext<NoiseGeneratorSettings> ctx, SlideData data, SurfaceRules.RuleSource surface) {
-		var params = ctx.lookup(Registries.NOISE);
-		var densities = ctx.lookup(Registries.DENSITY_FUNCTION);
-
 		var zero = DensityFunctions.constant(0);
-		var shift_x = new DensityFunctions.HolderHolder(densities.getOrThrow(SHIFT_X));
-		var shift_z = new DensityFunctions.HolderHolder(densities.getOrThrow(SHIFT_Z));
 
-		var cont = ctx.lookup(Registries.NOISE).getOrThrow(data.param);
-		var terrain = DensityFunctions.mappedNoise(cont, -1 + data.sparse, 1 + data.sparse);
-
-		var shiftedTemp = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, params.getOrThrow(Noises.TEMPERATURE));
-		var shiftedVege = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, params.getOrThrow(Noises.VEGETATION));
-		int top = data.minY + data.maxY - data.hill;
+		var simple_a = ctx.lookup(Registries.NOISE).getOrThrow(GLDimensionGen.NP_SIMPLE_A);
+		var simple_b = ctx.lookup(Registries.NOISE).getOrThrow(GLDimensionGen.NP_SIMPLE_B);
+		var simple_0 = ctx.lookup(Registries.NOISE).getOrThrow(GLDimensionGen.NP_SIMPLE_0);
+		var terrain_a = DensityFunctions.mappedNoise(simple_a, -1, 1);
+		var terrain_b = DensityFunctions.mappedNoise(simple_b, 1, -1);
+		var terrain_0 = DensityFunctions.mappedNoise(simple_0, -1, 1);
+		var terrain_noise = DensityFunctions.mul(terrain_0, DensityFunctions.constant(data.noise));
+		var terrain_main = DensityFunctions.mul(terrain_a, terrain_b).abs();
+		var terrain = DensityFunctions.add(DensityFunctions.constant(data.sparse),
+				new AddNoise(terrain_main, terrain_noise, data.slope));
 		var shiftedDepth = DensityFunctions.yClampedGradient(data.maxY, data.lowBody, 1, 0);
-		var shiftedCont = DensityFunctions.interpolated(DensityFunctions.flatCache(DensityFunctions.max(
-				new DensityFunctions.ShiftedNoise(zero, DensityFunctions.constant(top - 4), zero,
-						1, 0, new DensityFunction.NoiseHolder(cont)),
-				new DensityFunctions.ShiftedNoise(zero, DensityFunctions.constant(top - 24), zero,
-						1, 0, new DensityFunction.NoiseHolder(cont))
-		)));
+		var shiftedTemp = DensityFunctions.noise(simple_a);
+		var shiftedVege = DensityFunctions.noise(simple_b);
+
 		var router = new NoiseRouter(
 				zero, // barrier
 				zero, // fluid flood
@@ -43,7 +38,7 @@ public class GLNoiseGen {
 				zero, // lava
 				shiftedTemp, // temperature
 				shiftedVege, // vegetation
-				shiftedCont, // continents
+				zero, // continents
 				zero, // erosion
 				shiftedDepth, // depth
 				zero, // ridges
@@ -69,9 +64,8 @@ public class GLNoiseGen {
 
 	public record SlideData(
 			int minY, int maxY, int hill, int margin,
-			double lerp0, int bottom, int lowBody, double lerp1,
-			double post, double sparse,
-			ResourceKey<NormalNoise.NoiseParameters> param
+			float lerp0, int bottom, int lowBody, float lerp1,
+			float post, float sparse, float noise, float slope
 	) {
 
 		public DensityFunction slide(BootstrapContext<NoiseGeneratorSettings> ctx, DensityFunction cont) {
