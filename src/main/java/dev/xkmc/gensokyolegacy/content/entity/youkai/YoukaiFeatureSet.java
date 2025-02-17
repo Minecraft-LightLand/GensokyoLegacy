@@ -11,7 +11,8 @@ package dev.xkmc.gensokyolegacy.content.entity.youkai;
 public record YoukaiFeatureSet(
 		boolean effectImmune, boolean damageFilter, boolean damageCoolDown,
 		boolean noTargetHealing, boolean trueDamageOnImmune, boolean hasBossBar,
-		int limiter, int nonDanmakuProtection, int noPlayerDiscardTime) {
+		int limiter, int nonDanmakuProtection, int noPlayerDiscardTime,
+		double maxSpeed) {
 
 	public static final YoukaiFeatureSet NONE = YoukaiFeatureSet.builder()
 			.limit(5, 1)
@@ -50,6 +51,7 @@ public record YoukaiFeatureSet(
 		private int limiter = 1;
 		private int nonDanmakuProtection = 1;
 		private int noPlayerDiscardTime = -1;
+		private double maxSpeed = 0.5;
 
 		public Builder markBoss() {
 			effectImmune = true;
@@ -89,7 +91,7 @@ public record YoukaiFeatureSet(
 					effectImmune, damageFilter, damageCoolDown,
 					noTargetHealing, trueDamageOnImmune, hasBossBar,
 					limiter, nonDanmakuProtection,
-					noPlayerDiscardTime
+					noPlayerDiscardTime, maxSpeed
 			);
 		}
 

@@ -47,9 +47,7 @@ public class YoukaiTargetContainer {
 	}
 
 	public boolean isValidTarget(LivingEntity e) {
-		return e.level() == youkai.level() && e.isAddedToLevel() &&
-				!e.isRemoved() && e.isAlive() &&
-				e.canBeSeenAsEnemy() && !e.getType().is(GLTagGen.YOUKAI_IGNORE);
+		return !youkai.invalidTarget(e) && e.canBeSeenAsEnemy() && !e.getType().is(GLTagGen.YOUKAI_IGNORE);
 	}
 
 	private boolean isValid(UUID id) {

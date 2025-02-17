@@ -11,6 +11,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.YoukaiNavigationControl;
+import dev.xkmc.gensokyolegacy.content.entity.foundation.DamageClampEntity;
 import dev.xkmc.gensokyolegacy.content.entity.module.*;
 import dev.xkmc.l2core.base.entity.SyncedData;
 import dev.xkmc.l2serial.serialization.codec.TagCodec;
@@ -329,7 +330,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		if (getTarget() == null || !getTarget().isAlive()) {
 			noTargetTime++;
 			boolean doHeal = getFeatures().noTargetHealing() && noTargetTime >= 20 && tickCount % 20 == 0;
-			doHeal |= getHealth() < getMaxHealth();
+			doHeal |= getCombatProgress() < getMaxHealth();
 			if (doHeal && getLastHurtByMob() instanceof Player player && player.getAbilities().instabuild) {
 				if (tickCount - getLastHurtByMobTimestamp() < 100) {
 					doHeal = false;

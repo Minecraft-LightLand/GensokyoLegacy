@@ -1,8 +1,10 @@
-package dev.xkmc.gensokyolegacy.content.entity.youkai;
+package dev.xkmc.gensokyolegacy.content.entity.foundation;
 
 import com.google.common.collect.Sets;
 import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
+import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
@@ -24,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collection;
 import java.util.Set;
 
+@SerialClass
 public class DamageClampEntity extends DamageRefactorEntity {
 
 	protected final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.NOTCHED_20);
@@ -68,12 +71,24 @@ public class DamageClampEntity extends DamageRefactorEntity {
 	@Override
 	public void tick() {
 		if (hurtCD < 1000) hurtCD++;
+		validateData();
 		super.tick();
 		if (!level().isClientSide()) {
 			if (getFeatures().effectImmune() && !getActiveEffectsMap().isEmpty()) {
 				removeAllEffects();
 			}
-			bossEvent.setProgress(getHealth() / getMaxHealth());
+			bossEvent.setProgress(getCombatProgress() / getMaxHealth());
+		}
+	}
+
+	@Override
+	public void validateData() {
+		super.validateData();
+		if (!level().isClientSide()) {
+			double maxSpeed = getFeatures().maxSpeed();
+			if (getDeltaMovement().length() > maxSpeed) {
+				setDeltaMovement(getDeltaMovement().normalize().scale(maxSpeed));
+			}
 		}
 	}
 
@@ -166,18 +181,21 @@ public class DamageClampEntity extends DamageRefactorEntity {
 
 	@Override
 	protected void hurtFinal(DamageSource source, float amount) {
+		if (!Float.isFinite(amount)) return;
 		amount = clampDamage(source, amount);
+		if (amount <= 0) return;
 		super.hurtFinal(source, amount);
 	}
 
 	@Override
 	public void setHealth(float val) {
+		if (!Float.isFinite(val)) return;
 		if (level().isClientSide() || !getFeatures().damageFilter()) {
-			super.setHealth(val);
+			setCombatProgress(val);
 		}
-		float health = getHealth();
+		float health = getCombatProgress();
 		if (tickCount > 5 && val <= health) return;
-		super.setHealth(val);
+		setCombatProgress(val);
 	}
 
 	public void heal(float original) {
@@ -188,7 +206,7 @@ public class DamageClampEntity extends DamageRefactorEntity {
 		var heal = EventHooks.onLivingHeal(this, original);
 		heal = Math.max(original, heal);
 		if (heal <= 0) return;
-		float f = getHealth();
+		float f = getCombatProgress();
 		if (f > 0) {
 			setHealth(f + heal);
 		}

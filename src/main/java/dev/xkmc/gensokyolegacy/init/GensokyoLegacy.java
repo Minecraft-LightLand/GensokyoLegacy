@@ -16,11 +16,13 @@ import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToCl
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoUpdateToClient;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureRepairToServer;
+import dev.xkmc.gensokyolegacy.content.entity.foundation.CombatToClient;
 import dev.xkmc.gensokyolegacy.content.food.compat.GLThirstCompat;
 import dev.xkmc.gensokyolegacy.content.food.reg.GLFoodItems;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouMat;
 import dev.xkmc.gensokyolegacy.event.GLAttackListener;
 import dev.xkmc.gensokyolegacy.init.data.*;
+import dev.xkmc.gensokyolegacy.init.data.dimension.GLBiomeGen;
 import dev.xkmc.gensokyolegacy.init.data.dimension.GLDimensionGen;
 import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
@@ -67,7 +69,8 @@ public class GensokyoLegacy {
 			e -> e.create(StructureInfoUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(StructureRepairToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
 			e -> e.create(FrogSyncPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
-			e -> e.create(KoishiStartPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
+			e -> e.create(KoishiStartPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(CombatToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
 	public GensokyoLegacy() {
@@ -127,6 +130,7 @@ public class GensokyoLegacy {
 		REGISTRATE.addDataGenerator(ProviderType.ADVANCEMENT, GLAdvGen::genAdv);
 		var init = REGISTRATE.getDataGenInitializer();
 		GLStructureGen.init(init);
+		GLBiomeGen.init(init);
 		GLDimensionGen.init(init);
 		new GLDamageTypes(REGISTRATE).generate();
 
