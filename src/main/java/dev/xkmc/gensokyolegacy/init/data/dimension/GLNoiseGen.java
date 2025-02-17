@@ -23,14 +23,23 @@ public class GLNoiseGen {
 		var shift_x = new DensityFunctions.HolderHolder(densities.getOrThrow(SHIFT_X));
 		var shift_z = new DensityFunctions.HolderHolder(densities.getOrThrow(SHIFT_Z));
 
-		var temp = params.getOrThrow(Noises.TEMPERATURE);
-		var vege = params.getOrThrow(Noises.VEGETATION);
 		var cont = ctx.lookup(Registries.NOISE).getOrThrow(data.param);
 		var terrain = DensityFunctions.mappedNoise(cont, -1 + data.sparse, 1 + data.sparse);
 
-		var shiftedTemp = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, temp);
-		var shiftedVege = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, vege);
-
+		var shiftedTemp = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, params.getOrThrow(Noises.TEMPERATURE));
+		var shiftedVege = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, params.getOrThrow(Noises.VEGETATION));
+		var shiftedCont = DensityFunctions.interpolated(DensityFunctions.flatCache(DensityFunctions.max(
+				new DensityFunctions.ShiftedNoise(
+						DensityFunctions.zero(),
+						DensityFunctions.constant(data.minY + data.maxY - data.hill - 4),
+						DensityFunctions.zero(),
+						1, 0, new DensityFunction.NoiseHolder(cont)),
+				new DensityFunctions.ShiftedNoise(
+						DensityFunctions.zero(),
+						DensityFunctions.constant(data.minY + data.maxY - data.hill - 24),
+						DensityFunctions.zero(),
+						1, 0, new DensityFunction.NoiseHolder(cont))
+		)));
 		var router = new NoiseRouter(
 				zero, // barrier
 				zero, // fluid flood
@@ -38,7 +47,7 @@ public class GLNoiseGen {
 				zero, // lava
 				shiftedTemp, // temperature
 				shiftedVege, // vegetation
-				terrain, // continents
+				shiftedCont, // continents
 				zero, // erosion
 				zero, // depth
 				zero, // ridges

@@ -1,13 +1,17 @@
 package dev.xkmc.gensokyolegacy.init.data.dimension;
 
+import com.mojang.datafixers.util.Pair;
 import com.tterrag.registrate.providers.DataProviderInitializer;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import it.unimi.dsi.fastutil.doubles.DoubleList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.biome.FixedBiomeSource;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Climate;
+import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -69,9 +73,17 @@ public class GLDimensionGen {
 					0.64, -0.4,
 					NP_SIMPLE
 			);
-			var surface = SurfaceRules.sequence(
-					SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
-							SurfaceRules.state(Blocks.DIRT.defaultBlockState()))
+			var surface = SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR,
+					SurfaceRules.sequence(
+							SurfaceRules.ifTrue(SurfaceRules.isBiome(GLBiomeGen.BIOME_MAINLAND),
+									SurfaceRules.state(Blocks.GOLD_BLOCK.defaultBlockState())),
+							SurfaceRules.ifTrue(SurfaceRules.isBiome(GLBiomeGen.BIOME_EDGE),
+									SurfaceRules.state(Blocks.IRON_BLOCK.defaultBlockState())),
+							SurfaceRules.ifTrue(SurfaceRules.isBiome(GLBiomeGen.BIOME_ISLAND),
+									SurfaceRules.state(Blocks.DIRT.defaultBlockState())),
+							SurfaceRules.ifTrue(SurfaceRules.isBiome(GLBiomeGen.BIOME_VOID),
+									SurfaceRules.state(Blocks.DIAMOND_BLOCK.defaultBlockState()))
+					)
 			);
 			ctx.register(NGS_DREAMLAND, GLNoiseGen.islands(ctx, data, surface));
 		});
@@ -83,11 +95,29 @@ public class GLDimensionGen {
 			ctx.register(LEVEL_DREAM, new LevelStem(dt.getOrThrow(DT_DREAM),
 					new FlatLevelSource(new FlatLevelGeneratorSettings(Optional.empty(),
 							biome.getOrThrow(GLBiomeGen.BIOME_DREAM), List.of()))));
+
+			var climate = new Climate.ParameterList<Holder<Biome>>(List.of(
+					Pair.of(point(0.3f), biome.get(GLBiomeGen.BIOME_MAINLAND).orElseThrow()),
+					Pair.of(point(0.1f), biome.get(GLBiomeGen.BIOME_EDGE).orElseThrow()),
+					Pair.of(point(0.0f), biome.get(GLBiomeGen.BIOME_ISLAND).orElseThrow()),
+					Pair.of(point(-0.1f), biome.get(GLBiomeGen.BIOME_VOID).orElseThrow())
+			));
 			ctx.register(LEVEL_DREAMLAND, new LevelStem(dt.getOrThrow(DT_DREAMLAND), new NoiseBasedChunkGenerator(
-					new FixedBiomeSource(biome.get(GLBiomeGen.BIOME_DREAMLAND).orElseThrow()),
-					noise.getOrThrow(NGS_DREAMLAND))));
+					MultiNoiseBiomeSource.createFromList(climate), noise.getOrThrow(NGS_DREAMLAND))));
 		});
 
+	}
+
+	private static Climate.ParameterPoint point(float cont) {
+		return Climate.parameters(
+				0,
+				0,
+				cont,
+				0,
+				0,
+				0,
+				0
+		);
 	}
 
 

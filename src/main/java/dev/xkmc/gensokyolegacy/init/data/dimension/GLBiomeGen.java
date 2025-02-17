@@ -15,7 +15,10 @@ public class GLBiomeGen {
 
 	public static final ResourceKey<Biome> BIOME_DREAM = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dream"));
 
-	public static final ResourceKey<Biome> BIOME_DREAMLAND = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland"));
+	public static final ResourceKey<Biome> BIOME_MAINLAND = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_mainland"));
+	public static final ResourceKey<Biome> BIOME_EDGE = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_edge"));
+	public static final ResourceKey<Biome> BIOME_ISLAND = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_island"));
+	public static final ResourceKey<Biome> BIOME_VOID = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_void"));
 
 	public static void init(DataProviderInitializer init) {
 		init.add(Registries.BIOME, (ctx) -> {
@@ -28,11 +31,30 @@ public class GLBiomeGen {
 					Musics.END
 			));
 
-			ctx.register(BIOME_DREAMLAND, biome(
+			ctx.register(BIOME_MAINLAND, biome(
 					new MobSpawnSettings.Builder(),
 					new BiomeGenerationSettings.Builder(pf, wc),
 					Musics.END
 			));
+
+			ctx.register(BIOME_EDGE, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc),
+					Musics.END
+			));
+
+			ctx.register(BIOME_ISLAND, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc),
+					Musics.END
+			));
+
+			ctx.register(BIOME_VOID, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc),
+					Musics.END
+			));
+
 		});
 	}
 
