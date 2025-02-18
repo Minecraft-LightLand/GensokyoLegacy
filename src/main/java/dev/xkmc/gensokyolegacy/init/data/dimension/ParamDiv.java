@@ -2,25 +2,25 @@ package dev.xkmc.gensokyolegacy.init.data.dimension;
 
 import net.minecraft.world.level.biome.Climate;
 
-public class GLParamDiv {
+public class ParamDiv {
 
-	public static GLParamDiv positive(float threshold) {
-		return new GLParamDiv(true, false, threshold);
+	public static ParamDiv positive(float threshold) {
+		return new ParamDiv(true, false, threshold);
 	}
 
-	public static GLParamDiv trinary(float threshold) {
-		return new GLParamDiv(false, true, threshold);
+	public static ParamDiv trinary(float threshold) {
+		return new ParamDiv(false, true, threshold);
 	}
 
-	public static GLParamDiv polar() {
-		return new GLParamDiv(false, false, 0);
+	public static ParamDiv polar() {
+		return new ParamDiv(false, false, 0);
 	}
 
 	private final boolean positive;
 	private final boolean trinary;
 	private final float threshold;
 
-	private GLParamDiv(boolean positive, boolean trinary, float threshold) {
+	private ParamDiv(boolean positive, boolean trinary, float threshold) {
 		this.positive = positive;
 		this.trinary = trinary;
 		this.threshold = threshold;

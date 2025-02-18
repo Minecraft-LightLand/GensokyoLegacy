@@ -5,11 +5,11 @@ import net.minecraft.world.level.levelgen.SurfaceRules;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GLSurfaceParent {
+public class SurfaceParent {
 
 	protected List<SurfaceRuleBuilder> surfaceList;
 
-	protected GLSurfaceParent(List<SurfaceRuleBuilder> surfaceList) {
+	protected SurfaceParent(List<SurfaceRuleBuilder> surfaceList) {
 		this.surfaceList = surfaceList;
 	}
 

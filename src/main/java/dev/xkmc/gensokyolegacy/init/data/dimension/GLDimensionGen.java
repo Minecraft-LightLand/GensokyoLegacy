@@ -35,11 +35,11 @@ public class GLDimensionGen {
 	public static final ResourceKey<LevelStem> LEVEL_DREAMLAND = ResourceKey.create(Registries.LEVEL_STEM, GensokyoLegacy.loc("dreamland"));
 
 	public static void init(DataProviderInitializer init) {
-		var biomeSet = new GLClimateBuilder(
-				GLParamDiv.positive(0.85f),
-				GLParamDiv.positive(0.35f),
-				GLParamDiv.trinary(0.35f),
-				GLParamDiv.polar()
+		var biomeSet = new ClimateBuilder(
+				ParamDiv.positive(0.85f),
+				ParamDiv.positive(0.35f),
+				ParamDiv.trinary(0.35f),
+				ParamDiv.polar()
 		);
 		{
 			var root = biomeSet.start();
@@ -101,14 +101,14 @@ public class GLDimensionGen {
 		});
 
 		init.add(Registries.NOISE_SETTINGS, (ctx) -> {
-			var data = new GLNoiseGen.SlideData(
+			var data = new NoiseBuilder.SlideData(
 					0, 64,
 					0, 512, -1500 / 64d,
 					4, 32, -15 / 64d,
 					0.64, -0.4, 0.5,
 					NP_SIMPLE
 			);
-			ctx.register(NGS_DREAMLAND, GLNoiseGen.islands(ctx, data, biomeSet.buildRules()));
+			ctx.register(NGS_DREAMLAND, NoiseBuilder.islands(ctx, data, biomeSet.buildRules()));
 		});
 
 		init.add(Registries.LEVEL_STEM, (ctx) -> {

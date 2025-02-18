@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise;
 
 import java.util.List;
 
-public class GLNoiseGen {
+public class NoiseBuilder {
 
 	private static final ResourceKey<DensityFunction> SHIFT_X = mcKey("shift_x");
 	private static final ResourceKey<DensityFunction> SHIFT_Z = mcKey("shift_z");

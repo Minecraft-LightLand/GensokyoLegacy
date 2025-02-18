@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class GLClimateBuilder extends GLSurfaceParent {
+public class ClimateBuilder extends SurfaceParent {
 
-	protected final GLParamDiv depth, cont, temp, vege;
+	protected final ParamDiv depth, cont, temp, vege;
 
 	private final List<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> climateList = new ArrayList<>();
 
-	public GLClimateBuilder(GLParamDiv depth, GLParamDiv cont, GLParamDiv temp, GLParamDiv vege) {
+	public ClimateBuilder(ParamDiv depth, ParamDiv cont, ParamDiv temp, ParamDiv vege) {
 		super(new ArrayList<>());
 		this.depth = depth;
 		this.cont = cont;
@@ -27,7 +27,7 @@ public class GLClimateBuilder extends GLSurfaceParent {
 		this.vege = vege;
 	}
 
-	public RangeBuilder<GLClimateBuilder> start() {
+	public RangeBuilder<ClimateBuilder> start() {
 		return new RangeBuilder<>(this, depth.all(), cont.all(), temp.all(), vege.all());
 	}
 
@@ -39,7 +39,7 @@ public class GLClimateBuilder extends GLSurfaceParent {
 		return new Climate.ParameterList<>(list);
 	}
 
-	public final class RangeBuilder<P extends GLSurfaceParent> extends GLSurfaceParent {
+	public final class RangeBuilder<P extends SurfaceParent> extends SurfaceParent {
 
 		private final P parent;
 		private final Climate.Parameter depthParam, contParam, tempParam, vegeParam;
@@ -56,19 +56,19 @@ public class GLClimateBuilder extends GLSurfaceParent {
 			this.vegeParam = vegeParam;
 		}
 
-		public RangeBuilder<RangeBuilder<P>> depth(Function<GLParamDiv, Climate.Parameter> func) {
+		public RangeBuilder<RangeBuilder<P>> depth(Function<ParamDiv, Climate.Parameter> func) {
 			return new RangeBuilder<>(this, func.apply(depth), contParam, tempParam, vegeParam);
 		}
 
-		public RangeBuilder<RangeBuilder<P>> cont(Function<GLParamDiv, Climate.Parameter> func) {
+		public RangeBuilder<RangeBuilder<P>> cont(Function<ParamDiv, Climate.Parameter> func) {
 			return new RangeBuilder<>(this, depthParam, func.apply(cont), tempParam, vegeParam);
 		}
 
-		public RangeBuilder<RangeBuilder<P>> temp(Function<GLParamDiv, Climate.Parameter> func) {
+		public RangeBuilder<RangeBuilder<P>> temp(Function<ParamDiv, Climate.Parameter> func) {
 			return new RangeBuilder<>(this, depthParam, contParam, func.apply(temp), vegeParam);
 		}
 
-		public RangeBuilder<RangeBuilder<P>> vege(Function<GLParamDiv, Climate.Parameter> func) {
+		public RangeBuilder<RangeBuilder<P>> vege(Function<ParamDiv, Climate.Parameter> func) {
 			return new RangeBuilder<>(this, depthParam, contParam, tempParam, func.apply(vege));
 		}
 
@@ -99,7 +99,7 @@ public class GLClimateBuilder extends GLSurfaceParent {
 
 	}
 
-	public class BiomeBuilder<P extends GLSurfaceParent> extends GLSurfaceParent {
+	public class BiomeBuilder<P extends SurfaceParent> extends SurfaceParent {
 
 		private final RangeBuilder<P> parent;
 		private final ResourceKey<Biome> biome;
@@ -128,7 +128,7 @@ public class GLClimateBuilder extends GLSurfaceParent {
 	}
 
 	public static Climate.Parameter point(float value) {
-		return GLParamDiv.span(value, value);
+		return ParamDiv.span(value, value);
 	}
 
 }

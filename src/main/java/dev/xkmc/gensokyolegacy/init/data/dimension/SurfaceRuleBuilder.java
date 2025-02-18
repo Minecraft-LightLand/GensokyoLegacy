@@ -8,10 +8,10 @@ import java.util.List;
 public class SurfaceRuleBuilder {
 
 	private final SurfaceRules.ConditionSource condition;
-	private final GLSurfaceParent self;
+	private final SurfaceParent self;
 	private final List<SurfaceRules.RuleSource> list;
 
-	SurfaceRuleBuilder(SurfaceRules.ConditionSource condition, GLSurfaceParent self) {
+	SurfaceRuleBuilder(SurfaceRules.ConditionSource condition, SurfaceParent self) {
 		this.condition = condition;
 		this.self = self;
 		this.list = new ArrayList<>();
