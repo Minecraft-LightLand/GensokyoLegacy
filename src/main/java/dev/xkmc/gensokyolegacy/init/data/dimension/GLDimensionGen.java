@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.init.data.dimension;
 
 import com.tterrag.registrate.providers.DataProviderInitializer;
+import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.worldgen.MazeChunkGenerator;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import it.unimi.dsi.fastutil.doubles.DoubleList;
 import net.minecraft.core.registries.Registries;
@@ -28,6 +29,9 @@ public class GLDimensionGen {
 
 	public static final ResourceKey<DimensionType> DT_DREAM = ResourceKey.create(Registries.DIMENSION_TYPE, GensokyoLegacy.loc("dream"));
 	public static final ResourceKey<LevelStem> LEVEL_DREAM = ResourceKey.create(Registries.LEVEL_STEM, GensokyoLegacy.loc("dream"));
+
+	public static final ResourceKey<DimensionType> DT_MAZE = ResourceKey.create(Registries.DIMENSION_TYPE, GensokyoLegacy.loc("maze"));
+	public static final ResourceKey<LevelStem> LEVEL_MAZE = ResourceKey.create(Registries.LEVEL_STEM, GensokyoLegacy.loc("maze"));
 
 	public static final ResourceKey<DimensionType> DT_DREAMLAND = ResourceKey.create(Registries.DIMENSION_TYPE, GensokyoLegacy.loc("dreamland"));
 	public static final ResourceKey<NormalNoise.NoiseParameters> NP_SIMPLE = ResourceKey.create(Registries.NOISE, GensokyoLegacy.loc("simple"));
@@ -86,6 +90,14 @@ public class GLDimensionGen {
 					BlockTags.INFINIBURN_OVERWORLD,
 					BuiltinDimensionTypes.END_EFFECTS, 0, spawn
 			));
+			ctx.register(DT_MAZE, new DimensionType(
+					OptionalLong.of(18000L),
+					false, false, false, false,
+					1, false, false,
+					0, 256, 256,
+					BlockTags.INFINIBURN_OVERWORLD,
+					BuiltinDimensionTypes.END_EFFECTS, 0, spawn
+			));
 			ctx.register(DT_DREAMLAND, new DimensionType(
 					OptionalLong.of(18000L),
 					false, false, false, false,
@@ -118,6 +130,8 @@ public class GLDimensionGen {
 			ctx.register(LEVEL_DREAM, new LevelStem(dt.getOrThrow(DT_DREAM),
 					new FlatLevelSource(new FlatLevelGeneratorSettings(Optional.empty(),
 							biome.getOrThrow(GLBiomeGen.BIOME_DREAM), List.of()))));
+			ctx.register(LEVEL_MAZE, new LevelStem(dt.getOrThrow(DT_MAZE),
+					new MazeChunkGenerator(biome.getOrThrow(GLBiomeGen.BIOME_DREAM))));
 			ctx.register(LEVEL_DREAMLAND, new LevelStem(dt.getOrThrow(DT_DREAMLAND), new NoiseBasedChunkGenerator(
 					MultiNoiseBiomeSource.createFromList(biomeSet.climate(biome)), noise.getOrThrow(NGS_DREAMLAND))));
 		});

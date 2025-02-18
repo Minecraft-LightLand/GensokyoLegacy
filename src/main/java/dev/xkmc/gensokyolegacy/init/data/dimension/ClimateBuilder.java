@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class ClimateBuilder extends SurfaceParent {
+public class ClimateBuilder extends SurfaceHolder {
 
 	protected final ParamDiv depth, cont, temp, vege;
 
@@ -39,7 +39,7 @@ public class ClimateBuilder extends SurfaceParent {
 		return new Climate.ParameterList<>(list);
 	}
 
-	public final class RangeBuilder<P extends SurfaceParent> extends SurfaceParent {
+	public final class RangeBuilder<P extends SurfaceHolder> extends SurfaceHolder {
 
 		private final P parent;
 		private final Climate.Parameter depthParam, contParam, tempParam, vegeParam;
@@ -99,7 +99,7 @@ public class ClimateBuilder extends SurfaceParent {
 
 	}
 
-	public class BiomeBuilder<P extends SurfaceParent> extends SurfaceParent {
+	public class BiomeBuilder<P extends SurfaceHolder> extends SurfaceHolder {
 
 		private final RangeBuilder<P> parent;
 		private final ResourceKey<Biome> biome;

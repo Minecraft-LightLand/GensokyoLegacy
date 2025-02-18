@@ -4,16 +4,21 @@ import dev.xkmc.gensokyolegacy.content.client.tab.TabRole;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.HasRoleLootCondition;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleCategoryLootCondition;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleProgressLootCondition;
+import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.worldgen.MazeChunkGenerator;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.data.structure.SetDataProcessor;
+import dev.xkmc.l2core.init.reg.simple.CdcReg;
+import dev.xkmc.l2core.init.reg.simple.CdcVal;
 import dev.xkmc.l2core.init.reg.simple.SR;
 import dev.xkmc.l2core.init.reg.simple.Val;
 import dev.xkmc.l2serial.serialization.codec.MapCodecAdaptor;
 import dev.xkmc.l2tabs.init.L2Tabs;
 import dev.xkmc.l2tabs.tabs.core.TabToken;
 import dev.xkmc.l2tabs.tabs.inventory.InvTabData;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
@@ -32,6 +37,9 @@ public class GLMisc {
 			() -> new LootItemConditionType(MapCodecAdaptor.of(RoleCategoryLootCondition.class)));
 	public static final Val<LootItemConditionType> LIC_ANY_ROLE = LIC.reg("any_role",
 			() -> new LootItemConditionType(MapCodecAdaptor.of(HasRoleLootCondition.class)));
+
+	private static final CdcReg<ChunkGenerator> CGR = CdcReg.of(GensokyoLegacy.REG, BuiltInRegistries.CHUNK_GENERATOR);
+	public static final CdcVal<MazeChunkGenerator> CG_MAZE = CGR.reg("maze", MazeChunkGenerator.CODEC);
 
 
 	public static void register() {

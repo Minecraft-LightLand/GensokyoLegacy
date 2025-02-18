@@ -1,0 +1,7 @@
+{
+  "type": "gensokyolegacy:maze",
+  "generator": {
+    "type": "gensokyolegacy:maze",
+    "biome": "gensokyolegacy:dream"
+  }
+}
