@@ -40,19 +40,20 @@ public class GLDimensionGen {
 
 	public static void init(DataProviderInitializer init) {
 		var biomeSet = new ClimateBuilder(
-				ParamDiv.positive(0.85f),
+				ParamDiv.trinary(0.5f),
 				ParamDiv.positive(0.35f),
 				ParamDiv.trinary(0.35f),
 				ParamDiv.polar()
 		);
 		{
-			var root = biomeSet.start();
-
-			var land = root.cont(e -> e.get(1))
+			var root = biomeSet.start()
 					.startRule(SurfaceRules.ON_FLOOR)
 					.addRule(SurfaceRules.state(Blocks.DIRT.defaultBlockState()));
 
-			var top = land.cont(e -> e.tip(0.7f)).depth(e -> e.get(1));
+			var low = root.depth(e -> e.not(1));
+			var land = low.cont(e -> e.get(1));
+
+			var top = root.cont(e -> e.tip(0.7f)).depth(e -> ParamDiv.span(-0.2f, 0.45f));
 
 			top.temp(e -> e.tip(0.65f)).biome(GLBiomeGen.BIOME_HOT, 0f)
 					.addRule(SurfaceRules.state(Blocks.GOLD_BLOCK.defaultBlockState()));
@@ -74,9 +75,11 @@ public class GLDimensionGen {
 			top.temp(e -> e.tip(-0.65f)).biome(GLBiomeGen.BIOME_COLD, 0f)
 					.addRule(SurfaceRules.state(Blocks.BLUE_ICE.defaultBlockState()));
 
-			root.cont(e -> e.get(0)).biome(GLBiomeGen.BIOME_VOID, 0.1f);
-			root.cont(e -> e.tip(0)).biome(GLBiomeGen.BIOME_ISLANDS, 0.05f);
-			root.cont(e -> e.tip(0)).depth(e -> e.tip(0.1f)).biome(GLBiomeGen.BIOME_DEEP_VOID, 0f);
+			low.cont(e -> e.get(0)).biome(GLBiomeGen.BIOME_VOID, 0.1f);
+			low.cont(e -> e.tip(0)).biome(GLBiomeGen.BIOME_ISLANDS, 0.05f);
+			low.cont(e -> e.tip(0)).depth(e -> e.tip(-0.9f)).biome(GLBiomeGen.BIOME_DEEP_VOID, 0f);
+
+			root.depth(e -> e.get(1)).biome(GLBiomeGen.BIOME_SKY, 0.05f);
 
 		}
 

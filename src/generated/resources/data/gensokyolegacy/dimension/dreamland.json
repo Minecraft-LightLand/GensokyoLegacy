@@ -13,8 +13,8 @@
               1.0
             ],
             "depth": [
-              0.9,
-              1.0
+              -0.2,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -37,8 +37,8 @@
               1.0
             ],
             "depth": [
-              0.0,
-              1.0
+              -1.0,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -61,8 +61,8 @@
               1.0
             ],
             "depth": [
-              0.0,
-              1.0
+              -1.0,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -85,8 +85,8 @@
               1.0
             ],
             "depth": [
-              0.0,
-              1.0
+              -1.0,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -109,8 +109,8 @@
               1.0
             ],
             "depth": [
-              0.0,
-              1.0
+              -1.0,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -133,8 +133,8 @@
               1.0
             ],
             "depth": [
-              0.0,
-              1.0
+              -1.0,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -157,8 +157,8 @@
               1.0
             ],
             "depth": [
-              0.9,
-              1.0
+              -0.2,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -181,8 +181,8 @@
               0.2999
             ],
             "depth": [
-              0.0,
-              1.0
+              -1.0,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -202,8 +202,8 @@
           "parameters": {
             "continentalness": 0.0,
             "depth": [
-              0.0,
-              1.0
+              -1.0,
+              0.45
             ],
             "erosion": 0.0,
             "humidity": [
@@ -223,8 +223,8 @@
           "parameters": {
             "continentalness": 0.0,
             "depth": [
-              0.0,
-              0.1
+              -1.0,
+              -0.9
             ],
             "erosion": 0.0,
             "humidity": [
@@ -232,6 +232,30 @@
               1.0
             ],
             "offset": 0.0,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "gensokyolegacy:dreamland_sky",
+          "parameters": {
+            "continentalness": [
+              0.0,
+              1.0
+            ],
+            "depth": [
+              0.55,
+              1.0
+            ],
+            "erosion": 0.0,
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.05,
             "temperature": [
               -1.0,
               1.0

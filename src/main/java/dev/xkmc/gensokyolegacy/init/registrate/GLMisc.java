@@ -4,8 +4,8 @@ import dev.xkmc.gensokyolegacy.content.client.tab.TabRole;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.HasRoleLootCondition;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleCategoryLootCondition;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleProgressLootCondition;
-import dev.xkmc.gensokyolegacy.content.worldgen.feature.EndIslandData;
-import dev.xkmc.gensokyolegacy.content.worldgen.feature.EndIslandFeature;
+import dev.xkmc.gensokyolegacy.content.worldgen.feature.FloatingIslandData;
+import dev.xkmc.gensokyolegacy.content.worldgen.feature.FloatingIslandFeature;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.worldgen.MazeChunkGenerator;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
@@ -45,7 +45,7 @@ public class GLMisc {
 	public static final CdcVal<MazeChunkGenerator> CG_MAZE = CGR.reg("maze", MazeChunkGenerator.CODEC);
 
 	private static final SR<Feature<?>> FR = SR.of(GensokyoLegacy.REG, BuiltInRegistries.FEATURE);
-	public static final Val<EndIslandFeature> F_ISLAND = FR.reg("island", () -> new EndIslandFeature(EndIslandData.CODEC));
+	public static final Val<FloatingIslandFeature> F_ISLAND = FR.reg("island", () -> new FloatingIslandFeature(FloatingIslandData.CODEC));
 
 
 	public static void register() {

@@ -29,7 +29,7 @@ public class NoiseBuilder {
 
 		var shiftedVege = DensityFunctions.shiftedNoise2d(shift_x, shift_z, data.biomeScale, params.getOrThrow(Noises.VEGETATION));
 		int top = data.minY + data.maxY - data.hill;
-		var shiftedDepth = DensityFunctions.yClampedGradient(data.maxY, data.lowBody, 1, 0);
+		var shiftedDepth = DensityFunctions.yClampedGradient(data.maxY * 2 - data.lowBody, data.lowBody, 1, -1);
 		var shiftedTemp = new DensityFunctions.ShiftedNoise(zero, DensityFunctions.constant(-4), zero, 1, 1,
 				new DensityFunction.NoiseHolder(cont));
 		var shiftedCont = DensityFunctions.interpolated(DensityFunctions.flatCache(DensityFunctions.max(

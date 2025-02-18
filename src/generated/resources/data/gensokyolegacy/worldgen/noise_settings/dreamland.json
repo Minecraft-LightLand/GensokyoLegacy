@@ -52,8 +52,8 @@
     "depth": {
       "type": "minecraft:y_clamped_gradient",
       "from_value": 1.0,
-      "from_y": 64,
-      "to_value": 0.0,
+      "from_y": 96,
+      "to_value": -1.0,
       "to_y": 32
     },
     "erosion": 0.0,

@@ -1,0 +1,11 @@
+{
+  "type": "gensokyolegacy:island",
+  "config": {
+    "maxRad": 6,
+    "minRad": 2,
+    "slope": 1.2,
+    "state": {
+      "Name": "minecraft:glass"
+    }
+  }
+}

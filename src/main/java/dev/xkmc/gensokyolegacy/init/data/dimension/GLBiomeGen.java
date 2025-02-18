@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.init.data.dimension;
 
 import com.tterrag.registrate.providers.DataProviderInitializer;
-import dev.xkmc.gensokyolegacy.content.worldgen.feature.EndIslandData;
+import dev.xkmc.gensokyolegacy.content.worldgen.feature.FloatingIslandData;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
 import net.minecraft.core.registries.Registries;
@@ -33,19 +33,24 @@ public class GLBiomeGen {
 	public static final ResourceKey<Biome> BIOME_COLD = biome("dreamland_cold");
 	public static final ResourceKey<Biome> BIOME_VOID = biome("dreamland_void");
 	public static final ResourceKey<Biome> BIOME_ISLANDS = biome("dreamland_islands");
+	public static final ResourceKey<Biome> BIOME_SKY = biome("dreamland_sky");
 	public static final ResourceKey<Biome> BIOME_DEEP_VOID = biome("dreamland_deep_void");
 
 	private static final ResourceKey<ConfiguredFeature<?, ?>> CF_ISLAND = configured("island");
 	private static final ResourceKey<ConfiguredFeature<?, ?>> CF_PLATFORM = configured("platform");
+	private static final ResourceKey<ConfiguredFeature<?, ?>> CF_CLOUD = configured("cloud");
 	private static final ResourceKey<PlacedFeature> PF_ISLAND = place("island");
 	private static final ResourceKey<PlacedFeature> PF_PLATFORM = place("platform");
+	private static final ResourceKey<PlacedFeature> PF_CLOUD = place("cloud");
 
 	public static void init(DataProviderInitializer init) {
 		init.add(Registries.CONFIGURED_FEATURE, (ctx) -> {
 			ctx.register(CF_ISLAND, new ConfiguredFeature<>(GLMisc.F_ISLAND.get(),
-					new EndIslandData(2, 4, 1.5f, Blocks.STONE.defaultBlockState())));
+					new FloatingIslandData(2, 4, 1.5f, Blocks.STONE.defaultBlockState())));
 			ctx.register(CF_PLATFORM, new ConfiguredFeature<>(GLMisc.F_ISLAND.get(),
-					new EndIslandData(3, 5, 2f, Blocks.OBSIDIAN.defaultBlockState())));
+					new FloatingIslandData(3, 5, 2f, Blocks.OBSIDIAN.defaultBlockState())));
+			ctx.register(CF_CLOUD, new ConfiguredFeature<>(GLMisc.F_ISLAND.get(),
+					new FloatingIslandData(2, 6, 1.2f, Blocks.GLASS.defaultBlockState())));
 		});
 
 		init.add(Registries.PLACED_FEATURE, (ctx) -> {
@@ -63,6 +68,13 @@ public class GLBiomeGen {
 					HeightRangePlacement.uniform(VerticalAnchor.absolute(4), VerticalAnchor.absolute(28)),
 					BiomeFilter.biome()
 			)));
+			ctx.register(PF_CLOUD, new PlacedFeature(cf.getOrThrow(CF_CLOUD), List.of(
+					RarityFilter.onAverageOnceEvery(32),
+					InSquarePlacement.spread(),
+					HeightRangePlacement.uniform(VerticalAnchor.absolute(80), VerticalAnchor.absolute(128)),
+					BiomeFilter.biome()
+			)));
+
 		});
 
 
@@ -128,6 +140,13 @@ public class GLBiomeGen {
 					new MobSpawnSettings.Builder(),
 					new BiomeGenerationSettings.Builder(pf, wc)
 							.addFeature(GenerationStep.Decoration.RAW_GENERATION, pf.getOrThrow(PF_ISLAND)),
+					Musics.END
+			));
+
+			ctx.register(BIOME_SKY, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc)
+							.addFeature(GenerationStep.Decoration.RAW_GENERATION, pf.getOrThrow(PF_CLOUD)),
 					Musics.END
 			));
 

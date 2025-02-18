@@ -8,14 +8,14 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 
-public class EndIslandFeature extends Feature<EndIslandData> {
+public class FloatingIslandFeature extends Feature<FloatingIslandData> {
 
-	public EndIslandFeature(Codec<EndIslandData> codec) {
+	public FloatingIslandFeature(Codec<FloatingIslandData> codec) {
 		super(codec);
 	}
 
 	@Override
-	public boolean place(FeaturePlaceContext<EndIslandData> ctx) {
+	public boolean place(FeaturePlaceContext<FloatingIslandData> ctx) {
 		WorldGenLevel worldgenlevel = ctx.level();
 		RandomSource rand = ctx.random();
 		BlockPos blockpos = ctx.origin();

@@ -39,6 +39,10 @@ public class ParamDiv {
 		return sign < 0 ? span(-1, -threshold - 0.05f) : span(threshold + 0.05f, 1);
 	}
 
+	public Climate.Parameter not(int sign) {
+		return sign > 0 ? span(-1, threshold - 0.05f) : span(-threshold + 0.05f, 1);
+	}
+
 	public Climate.Parameter all() {
 		return positive ? span(0, 1) : span(-1, 1);
 	}
