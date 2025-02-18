@@ -15,10 +15,15 @@ public class GLBiomeGen {
 
 	public static final ResourceKey<Biome> BIOME_DREAM = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dream"));
 
-	public static final ResourceKey<Biome> BIOME_MAINLAND = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_mainland"));
-	public static final ResourceKey<Biome> BIOME_EDGE = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_edge"));
-	public static final ResourceKey<Biome> BIOME_ISLAND = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_island"));
+	public static final ResourceKey<Biome> BIOME_HOT = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_hot"));
+	public static final ResourceKey<Biome> BIOME_WARM_A = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_warm_a"));
+	public static final ResourceKey<Biome> BIOME_WARM_B = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_warm_b"));
+	public static final ResourceKey<Biome> BIOME_TEMP = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_temperate"));
+	public static final ResourceKey<Biome> BIOME_COOL_A = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_cool_a"));
+	public static final ResourceKey<Biome> BIOME_COOL_B = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_cool_b"));
+	public static final ResourceKey<Biome> BIOME_COLD = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_cold"));
 	public static final ResourceKey<Biome> BIOME_VOID = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_void"));
+	public static final ResourceKey<Biome> BIOME_DEEP_VOID = ResourceKey.create(Registries.BIOME, GensokyoLegacy.loc("dreamland_deep_void"));
 
 	public static void init(DataProviderInitializer init) {
 		init.add(Registries.BIOME, (ctx) -> {
@@ -31,25 +36,55 @@ public class GLBiomeGen {
 					Musics.END
 			));
 
-			ctx.register(BIOME_MAINLAND, biome(
+			ctx.register(BIOME_HOT, biome(
 					new MobSpawnSettings.Builder(),
 					new BiomeGenerationSettings.Builder(pf, wc),
 					Musics.END
 			));
 
-			ctx.register(BIOME_EDGE, biome(
+			ctx.register(BIOME_WARM_A, biome(
 					new MobSpawnSettings.Builder(),
 					new BiomeGenerationSettings.Builder(pf, wc),
 					Musics.END
 			));
 
-			ctx.register(BIOME_ISLAND, biome(
+			ctx.register(BIOME_WARM_B, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc),
+					Musics.END
+			));
+
+			ctx.register(BIOME_TEMP, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc),
+					Musics.END
+			));
+
+			ctx.register(BIOME_COOL_A, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc),
+					Musics.END
+			));
+
+			ctx.register(BIOME_COOL_B, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc),
+					Musics.END
+			));
+
+			ctx.register(BIOME_COLD, biome(
 					new MobSpawnSettings.Builder(),
 					new BiomeGenerationSettings.Builder(pf, wc),
 					Musics.END
 			));
 
 			ctx.register(BIOME_VOID, biome(
+					new MobSpawnSettings.Builder(),
+					new BiomeGenerationSettings.Builder(pf, wc),
+					Musics.END
+			));
+
+			ctx.register(BIOME_DEEP_VOID, biome(
 					new MobSpawnSettings.Builder(),
 					new BiomeGenerationSettings.Builder(pf, wc),
 					Musics.END

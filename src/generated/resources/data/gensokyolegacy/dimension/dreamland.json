@@ -6,10 +6,10 @@
       "type": "minecraft:multi_noise",
       "biomes": [
         {
-          "biome": "gensokyolegacy:dreamland_mainland",
+          "biome": "gensokyolegacy:dreamland_hot",
           "parameters": {
             "continentalness": [
-              0.6,
+              0.7,
               1.0
             ],
             "depth": [
@@ -17,14 +17,20 @@
               1.0
             ],
             "erosion": 0.0,
-            "humidity": 0.0,
+            "humidity": [
+              -1.0,
+              1.0
+            ],
             "offset": 0.0,
-            "temperature": 0.0,
+            "temperature": [
+              0.65,
+              1.0
+            ],
             "weirdness": 0.0
           }
         },
         {
-          "biome": "gensokyolegacy:dreamland_edge",
+          "biome": "gensokyolegacy:dreamland_warm_a",
           "parameters": {
             "continentalness": [
               0.4,
@@ -35,27 +41,135 @@
               1.0
             ],
             "erosion": 0.0,
-            "humidity": 0.0,
+            "humidity": [
+              0.05,
+              1.0
+            ],
             "offset": 0.1,
-            "temperature": 0.0,
+            "temperature": [
+              0.4,
+              1.0
+            ],
             "weirdness": 0.0
           }
         },
         {
-          "biome": "gensokyolegacy:dreamland_island",
+          "biome": "gensokyolegacy:dreamland_warm_b",
           "parameters": {
             "continentalness": [
-              0.1,
-              0.3
+              0.4,
+              1.0
             ],
             "depth": [
               0.0,
               1.0
             ],
             "erosion": 0.0,
-            "humidity": 0.0,
+            "humidity": [
+              -1.0,
+              -0.05
+            ],
             "offset": 0.1,
-            "temperature": 0.0,
+            "temperature": [
+              0.4,
+              1.0
+            ],
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "gensokyolegacy:dreamland_temperate",
+          "parameters": {
+            "continentalness": [
+              0.4,
+              1.0
+            ],
+            "depth": [
+              0.0,
+              1.0
+            ],
+            "erosion": 0.0,
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.1,
+            "temperature": [
+              -0.2999,
+              0.2999
+            ],
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "gensokyolegacy:dreamland_cool_a",
+          "parameters": {
+            "continentalness": [
+              0.4,
+              1.0
+            ],
+            "depth": [
+              0.0,
+              1.0
+            ],
+            "erosion": 0.0,
+            "humidity": [
+              0.05,
+              1.0
+            ],
+            "offset": 0.1,
+            "temperature": [
+              -1.0,
+              -0.4
+            ],
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "gensokyolegacy:dreamland_cool_b",
+          "parameters": {
+            "continentalness": [
+              0.4,
+              1.0
+            ],
+            "depth": [
+              0.0,
+              1.0
+            ],
+            "erosion": 0.0,
+            "humidity": [
+              -1.0,
+              -0.05
+            ],
+            "offset": 0.1,
+            "temperature": [
+              -1.0,
+              -0.4
+            ],
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "gensokyolegacy:dreamland_cold",
+          "parameters": {
+            "continentalness": [
+              0.7,
+              1.0
+            ],
+            "depth": [
+              0.9,
+              1.0
+            ],
+            "erosion": 0.0,
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -1.0,
+              -0.65
+            ],
             "weirdness": 0.0
           }
         },
@@ -63,17 +177,41 @@
           "biome": "gensokyolegacy:dreamland_void",
           "parameters": {
             "continentalness": [
-              -1.0,
-              0.0
+              0.0,
+              0.2999
             ],
             "depth": [
               0.0,
               1.0
             ],
             "erosion": 0.0,
-            "humidity": 0.0,
+            "humidity": [
+              -1.0,
+              1.0
+            ],
             "offset": 0.1,
-            "temperature": 0.0,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "gensokyolegacy:dreamland_deep_void",
+          "parameters": {
+            "continentalness": 0.0,
+            "depth": 0.0,
+            "erosion": 0.0,
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
             "weirdness": 0.0
           }
         }

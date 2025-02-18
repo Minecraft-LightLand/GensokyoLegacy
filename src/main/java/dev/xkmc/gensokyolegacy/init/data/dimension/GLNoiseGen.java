@@ -24,17 +24,19 @@ public class GLNoiseGen {
 		var shift_z = new DensityFunctions.HolderHolder(densities.getOrThrow(SHIFT_Z));
 
 		var cont = ctx.lookup(Registries.NOISE).getOrThrow(data.param);
-		var terrain = DensityFunctions.mappedNoise(cont, -1 + data.sparse, 1 + data.sparse);
+		var terrain = DensityFunctions.add(DensityFunctions.constant(data.sparse),
+				DensityFunctions.mappedNoise(cont, -1, 1).abs());
 
-		var shiftedTemp = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, params.getOrThrow(Noises.TEMPERATURE));
-		var shiftedVege = DensityFunctions.shiftedNoise2d(shift_x, shift_z, 0.25, params.getOrThrow(Noises.VEGETATION));
+		var shiftedVege = DensityFunctions.shiftedNoise2d(shift_x, shift_z, data.biomeScale, params.getOrThrow(Noises.VEGETATION));
 		int top = data.minY + data.maxY - data.hill;
 		var shiftedDepth = DensityFunctions.yClampedGradient(data.maxY, data.lowBody, 1, 0);
+		var shiftedTemp = new DensityFunctions.ShiftedNoise(zero, DensityFunctions.constant(-4), zero, 1, 1,
+				new DensityFunction.NoiseHolder(cont));
 		var shiftedCont = DensityFunctions.interpolated(DensityFunctions.flatCache(DensityFunctions.max(
 				new DensityFunctions.ShiftedNoise(zero, DensityFunctions.constant(top - 4), zero,
-						1, 0, new DensityFunction.NoiseHolder(cont)),
+						1, 0, new DensityFunction.NoiseHolder(cont)).abs(),
 				new DensityFunctions.ShiftedNoise(zero, DensityFunctions.constant(top - 24), zero,
-						1, 0, new DensityFunction.NoiseHolder(cont))
+						1, 0, new DensityFunction.NoiseHolder(cont)).abs()
 		)));
 		var router = new NoiseRouter(
 				zero, // barrier
@@ -70,7 +72,7 @@ public class GLNoiseGen {
 	public record SlideData(
 			int minY, int maxY, int hill, int margin,
 			double lerp0, int bottom, int lowBody, double lerp1,
-			double post, double sparse,
+			double post, double sparse, double biomeScale,
 			ResourceKey<NormalNoise.NoiseParameters> param
 	) {
 
