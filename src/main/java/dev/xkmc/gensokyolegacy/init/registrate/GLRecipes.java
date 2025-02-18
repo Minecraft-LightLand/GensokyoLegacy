@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
-import dev.xkmc.gensokyolegacy.content.block.censer.CenserRecipe;
 import dev.xkmc.gensokyolegacy.content.block.censer.CenserItemContainer;
+import dev.xkmc.gensokyolegacy.content.block.censer.CenserRecipe;
 import dev.xkmc.gensokyolegacy.content.block.censer.SimpleCenserRecipe;
 import dev.xkmc.gensokyolegacy.content.block.ritual.RitualInput;
 import dev.xkmc.gensokyolegacy.content.block.ritual.RitualRecipe;

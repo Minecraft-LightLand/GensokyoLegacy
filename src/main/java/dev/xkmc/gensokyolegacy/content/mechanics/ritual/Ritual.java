@@ -10,5 +10,4 @@ public class Ritual extends NamedEntry<Ritual> {
 	}
 
 
-
 }

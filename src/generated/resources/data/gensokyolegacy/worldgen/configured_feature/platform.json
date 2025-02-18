@@ -1,0 +1,11 @@
+{
+  "type": "gensokyolegacy:island",
+  "config": {
+    "maxRad": 5,
+    "minRad": 3,
+    "slope": 2.0,
+    "state": {
+      "Name": "minecraft:obsidian"
+    }
+  }
+}

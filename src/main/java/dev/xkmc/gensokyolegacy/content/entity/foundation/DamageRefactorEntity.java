@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 public class DamageRefactorEntity extends PathfinderMob {
 
 	@SerialField
-	private CombatProgress combatProgress = new CombatProgress();
+	private final CombatProgress combatProgress = new CombatProgress();
 
 	protected DamageRefactorEntity(EntityType<? extends DamageRefactorEntity> entityType, Level level) {
 		super(entityType, level);

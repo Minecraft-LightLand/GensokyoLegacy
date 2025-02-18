@@ -1,0 +1,11 @@
+{
+  "type": "gensokyolegacy:island",
+  "config": {
+    "maxRad": 4,
+    "minRad": 2,
+    "slope": 1.5,
+    "state": {
+      "Name": "minecraft:stone"
+    }
+  }
+}

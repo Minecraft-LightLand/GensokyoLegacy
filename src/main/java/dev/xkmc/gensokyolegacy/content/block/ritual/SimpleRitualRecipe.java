@@ -46,9 +46,7 @@ public class SimpleRitualRecipe extends RitualRecipe<SimpleRitualRecipe> {
 			ItemStack stack = state.getBlock().asItem().getDefaultInstance();
 			if (!stack.isEmpty()) inputItems.add(stack);
 		}
-		if (RecipeMatcher.findMatches(inputBlocks, totemInput) == null)
-			return false;
-		return true;
+		return RecipeMatcher.findMatches(inputBlocks, totemInput) != null;
 	}
 
 	@Override

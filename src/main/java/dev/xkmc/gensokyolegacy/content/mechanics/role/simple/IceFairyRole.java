@@ -10,5 +10,4 @@ public class IceFairyRole extends Role {
 	}
 
 
-
 }

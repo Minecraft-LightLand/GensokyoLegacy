@@ -4,7 +4,7 @@ import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.dim3d.GenerationHelper;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.dim3d.MazeCell3D;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.dim3d.MazeWall3D;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.*;
-import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.TreeMap;
 
@@ -32,16 +32,23 @@ public class InfiniMaze {
 		wallMap.clear();
 	}
 
-	public CellLoaderChain getCell(BasePos pos) {
+	public CellLoaderChain getCell(@Nullable CellLoaderChain prev, BasePos pos) {
+		int scale = getMaxScale();
+		BasePos raw = new BasePos(pos.x() >> scale, pos.y() >> scale, pos.z() >> scale);
+		if (prev != null && prev.sameRoot(raw)) {
+			return prev.of(pos);
+		}
+		return getCellImpl(raw, pos);
+	}
+
+	public synchronized CellLoaderChain getCellImpl(BasePos rootPos, BasePos pos) {
 		if (helper.cellCount > config.cacheSize()) {
 			clearCache();
 		}
-		return new CellLoaderChain(getOrGenerateRootCell(pos), pos);
+		return new CellLoaderChain(rootPos, getOrGenerateRootCell(rootPos), pos);
 	}
 
-	private MazeCell3D getOrGenerateRootCell(BasePos pos) {
-		int scale = getMaxScale();
-		BasePos raw = new BasePos(pos.x() >> scale, pos.y() >> scale, pos.z() >> scale);
+	private MazeCell3D getOrGenerateRootCell(BasePos raw) {
 		var seed = helper.getRootCellSeed(config.seed(), raw);
 		return cellMap.computeIfAbsent(raw, k -> generateCell(raw, seed));
 	}

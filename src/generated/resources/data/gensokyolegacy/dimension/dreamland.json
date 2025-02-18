@@ -198,10 +198,34 @@
           }
         },
         {
+          "biome": "gensokyolegacy:dreamland_islands",
+          "parameters": {
+            "continentalness": 0.0,
+            "depth": [
+              0.0,
+              1.0
+            ],
+            "erosion": 0.0,
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.05,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
+            "weirdness": 0.0
+          }
+        },
+        {
           "biome": "gensokyolegacy:dreamland_deep_void",
           "parameters": {
             "continentalness": 0.0,
-            "depth": 0.0,
+            "depth": [
+              0.0,
+              0.1
+            ],
             "erosion": 0.0,
             "humidity": [
               -1.0,

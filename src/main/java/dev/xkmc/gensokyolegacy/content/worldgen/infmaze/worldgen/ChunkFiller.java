@@ -3,6 +3,7 @@ package dev.xkmc.gensokyolegacy.content.worldgen.infmaze.worldgen;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.dim3d.CubeEdge;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.dim3d.MazeCell3D;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.dim3d.MazeWall3D;
+import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.init.CellLoaderChain;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.init.InfiniMaze;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.*;
 import net.minecraft.core.BlockPos;
@@ -30,12 +31,14 @@ public class ChunkFiller {
 
 	public void fillChunk(InfiniMaze maze, ChunkPos pos, ChunkAccess access, RandomState random) {
 		Set<CellPos> complete = new TreeSet<>();
+		CellLoaderChain prev = null;
 		for (long y = 0; y < heightInCell; y++) {
 			for (long x = 0; x < xzCount; x++) {
 				for (long z = 0; z < xzCount; z++) {
 					long px = x | (long) pos.x * xzCount;
 					long pz = z | (long) pos.z * xzCount;
-					MazeCell3D cell = maze.getCell(new BasePos(px, y, pz)).load();
+					prev = maze.getCell(prev, new BasePos(px, y, pz));
+					MazeCell3D cell = prev.load();
 					if (complete.contains(cell.pos)) continue;
 					fillCell(cell, pos, access, random);
 					complete.add(cell.pos);

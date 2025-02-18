@@ -25,7 +25,7 @@ public class GLAttackListener implements AttackListener {
 	public boolean onAttack(DamageData.Attack cache) {
 		if (cache.getTarget() instanceof Player player) {
 			var role = GLMeta.ABILITY.type().getOrCreate(player).getMaxAbility(player, null);
-			if (role != null && role.role().onAttack(cache, role.toStage().stage())) return true;
+			return role != null && role.role().onAttack(cache, role.toStage().stage());
 		}
 		return false;
 	}

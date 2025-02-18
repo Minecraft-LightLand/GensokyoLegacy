@@ -2,7 +2,6 @@ package dev.xkmc.gensokyolegacy.content.mechanics.role.loot;
 
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
-import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;

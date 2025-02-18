@@ -51,7 +51,7 @@ public record YoukaiFeatureSet(
 		private int limiter = 1;
 		private int nonDanmakuProtection = 1;
 		private int noPlayerDiscardTime = -1;
-		private double maxSpeed = 0.5;
+		private final double maxSpeed = 0.5;
 
 		public Builder markBoss() {
 			effectImmune = true;

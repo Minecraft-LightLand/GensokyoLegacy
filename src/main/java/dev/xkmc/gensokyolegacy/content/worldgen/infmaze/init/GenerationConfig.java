@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.worldgen.infmaze.init;
 
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.dim3d.MazeCell3D;
-import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.MazeRandom;
 
 import javax.annotation.Nullable;
 import java.util.Random;

@@ -4,6 +4,8 @@ import dev.xkmc.gensokyolegacy.content.client.tab.TabRole;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.HasRoleLootCondition;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleCategoryLootCondition;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleProgressLootCondition;
+import dev.xkmc.gensokyolegacy.content.worldgen.feature.EndIslandData;
+import dev.xkmc.gensokyolegacy.content.worldgen.feature.EndIslandFeature;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.worldgen.MazeChunkGenerator;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
@@ -19,6 +21,7 @@ import dev.xkmc.l2tabs.tabs.inventory.InvTabData;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
@@ -40,6 +43,9 @@ public class GLMisc {
 
 	private static final CdcReg<ChunkGenerator> CGR = CdcReg.of(GensokyoLegacy.REG, BuiltInRegistries.CHUNK_GENERATOR);
 	public static final CdcVal<MazeChunkGenerator> CG_MAZE = CGR.reg("maze", MazeChunkGenerator.CODEC);
+
+	private static final SR<Feature<?>> FR = SR.of(GensokyoLegacy.REG, BuiltInRegistries.FEATURE);
+	public static final Val<EndIslandFeature> F_ISLAND = FR.reg("island", () -> new EndIslandFeature(EndIslandData.CODEC));
 
 
 	public static void register() {

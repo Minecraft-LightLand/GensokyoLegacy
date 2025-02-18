@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.block.ritual;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import dev.xkmc.gensokyolegacy.content.block.censer.CenserBlockEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;

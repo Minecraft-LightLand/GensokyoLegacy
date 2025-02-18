@@ -75,7 +75,8 @@ public class GLDimensionGen {
 					.addRule(SurfaceRules.state(Blocks.BLUE_ICE.defaultBlockState()));
 
 			root.cont(e -> e.get(0)).biome(GLBiomeGen.BIOME_VOID, 0.1f);
-			root.cont(e -> e.tip(0)).depth(e -> e.tip(0)).biome(GLBiomeGen.BIOME_DEEP_VOID, 0f);
+			root.cont(e -> e.tip(0)).biome(GLBiomeGen.BIOME_ISLANDS, 0.05f);
+			root.cont(e -> e.tip(0)).depth(e -> e.tip(0.1f)).biome(GLBiomeGen.BIOME_DEEP_VOID, 0f);
 
 		}
 
