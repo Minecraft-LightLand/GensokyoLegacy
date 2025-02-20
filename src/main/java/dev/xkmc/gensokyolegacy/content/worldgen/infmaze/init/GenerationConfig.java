@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.worldgen.infmaze.init;
 
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.dim3d.MazeCell3D;
+import net.minecraft.util.RandomSource;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -43,7 +44,8 @@ public final class GenerationConfig {
 	}
 
 	@Nullable
-	public CellContent getLeaf(Random random, MazeCell3D cell) {
+	public CellContent getLeaf(RandomSource random, MazeCell3D cell) {
 		return leaf.getLeaf(random, cell);
 	}
+
 }

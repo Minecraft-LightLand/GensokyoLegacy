@@ -2,6 +2,116 @@
   "type": "gensokyolegacy:maze",
   "generator": {
     "type": "gensokyolegacy:maze",
-    "biome": "gensokyolegacy:dream"
+    "biome": "gensokyolegacy:dream",
+    "blocks": {
+      "filler": {
+        "Name": "minecraft:stone"
+      },
+      "skeleton": {
+        "Name": "minecraft:obsidian"
+      }
+    },
+    "rooms": [
+      {
+        "type": "UP",
+        "rooms": [
+          {
+            "type": "gensokyolegacy:simple",
+            "ceiling": {
+              "Name": "minecraft:air"
+            },
+            "floor": {
+              "Name": "minecraft:slime_block"
+            },
+            "weight": 100
+          }
+        ],
+        "scale": 0
+      },
+      {
+        "type": "DOWN",
+        "rooms": [
+          {
+            "type": "gensokyolegacy:simple",
+            "ceiling": {
+              "Name": "minecraft:sea_lantern"
+            },
+            "floor": {
+              "Name": "minecraft:air"
+            },
+            "weight": 100
+          }
+        ],
+        "scale": 0
+      },
+      {
+        "type": "SIDE",
+        "rooms": [
+          {
+            "type": "gensokyolegacy:simple",
+            "ceiling": {
+              "Name": "minecraft:shroomlight"
+            },
+            "floor": {
+              "Name": "minecraft:moss_carpet"
+            },
+            "weight": 100
+          }
+        ],
+        "scale": 0
+      },
+      {
+        "type": "UP",
+        "rooms": [
+          {
+            "type": "gensokyolegacy:simple",
+            "ceiling": {
+              "Name": "minecraft:air"
+            },
+            "floor": {
+              "Name": "minecraft:slime_block"
+            },
+            "weight": 100
+          }
+        ],
+        "scale": 1
+      },
+      {
+        "type": "DOWN",
+        "rooms": [
+          {
+            "type": "gensokyolegacy:simple",
+            "ceiling": {
+              "Name": "minecraft:sea_lantern"
+            },
+            "floor": {
+              "Name": "minecraft:air"
+            },
+            "weight": 100
+          }
+        ],
+        "scale": 1
+      },
+      {
+        "type": "SIDE",
+        "rooms": [
+          {
+            "type": "gensokyolegacy:simple",
+            "ceiling": {
+              "Name": "minecraft:sea_lantern"
+            },
+            "floor": {
+              "Name": "minecraft:prismarine_brick_slab",
+              "Properties": {
+                "type": "bottom",
+                "waterlogged": "false"
+              }
+            },
+            "weight": 100
+          }
+        ],
+        "scale": 1
+      }
+    ]
   }
 }

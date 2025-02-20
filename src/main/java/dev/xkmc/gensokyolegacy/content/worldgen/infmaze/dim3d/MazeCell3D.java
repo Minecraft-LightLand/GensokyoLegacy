@@ -5,6 +5,7 @@ import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.CellPos;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.MazeAxis;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.MazeDirection;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.WallPos;
+import net.minecraft.util.RandomSource;
 
 public class MazeCell3D {
 
@@ -29,7 +30,16 @@ public class MazeCell3D {
 				openWall++;
 			}
 		}
-		content = openWall != 1 || pos.scale() > 0 ? null : helper.getLeaf(this, seed);
+		content = openWall != 1 ? null : helper.getLeaf(this, seed);
+	}
+
+
+	public RandomSource getFrameRandom() {
+		return helper.getContentRandom(seed);
+	}
+
+	public RandomSource getContentRandom() {
+		return helper.getContentRandom(seed);
 	}
 
 	/**

@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.init.data.dimension;
 import com.tterrag.registrate.providers.DataProviderInitializer;
 import dev.xkmc.gensokyolegacy.content.worldgen.feature.FloatingIslandData;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMisc;
+import dev.xkmc.gensokyolegacy.init.registrate.GLWorldGen;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
@@ -45,11 +45,11 @@ public class GLBiomeGen {
 
 	public static void init(DataProviderInitializer init) {
 		init.add(Registries.CONFIGURED_FEATURE, (ctx) -> {
-			ctx.register(CF_ISLAND, new ConfiguredFeature<>(GLMisc.F_ISLAND.get(),
+			ctx.register(CF_ISLAND, new ConfiguredFeature<>(GLWorldGen.F_ISLAND.get(),
 					new FloatingIslandData(2, 4, 1.5f, Blocks.STONE.defaultBlockState())));
-			ctx.register(CF_PLATFORM, new ConfiguredFeature<>(GLMisc.F_ISLAND.get(),
+			ctx.register(CF_PLATFORM, new ConfiguredFeature<>(GLWorldGen.F_ISLAND.get(),
 					new FloatingIslandData(3, 5, 2f, Blocks.OBSIDIAN.defaultBlockState())));
-			ctx.register(CF_CLOUD, new ConfiguredFeature<>(GLMisc.F_ISLAND.get(),
+			ctx.register(CF_CLOUD, new ConfiguredFeature<>(GLWorldGen.F_ISLAND.get(),
 					new FloatingIslandData(2, 6, 1.2f, Blocks.GLASS.defaultBlockState())));
 		});
 

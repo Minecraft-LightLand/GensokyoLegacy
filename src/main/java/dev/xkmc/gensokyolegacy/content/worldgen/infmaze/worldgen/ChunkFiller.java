@@ -10,12 +10,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.levelgen.RandomState;
 
 import java.util.Set;
 import java.util.TreeSet;
 
 public class ChunkFiller {
+
+	public enum Step {
+		FRAME, CONTENT
+	}
 
 	private final FrameConfig blocks;
 	private final int cellWidth;
@@ -29,7 +32,7 @@ public class ChunkFiller {
 		this.xzCount = 16 / cellWidth;
 	}
 
-	public void fillChunk(InfiniMaze maze, ChunkPos pos, ChunkAccess access, RandomState random) {
+	public void fillChunk(InfiniMaze maze, ChunkPos pos, ChunkAccess access, Step step) {
 		Set<CellPos> complete = new TreeSet<>();
 		CellLoaderChain prev = null;
 		for (long y = 0; y < heightInCell; y++) {
@@ -40,14 +43,30 @@ public class ChunkFiller {
 					prev = maze.getCell(prev, new BasePos(px, y, pz));
 					MazeCell3D cell = prev.load();
 					if (complete.contains(cell.pos)) continue;
-					fillCell(cell, pos, access, random);
+					if (step == Step.FRAME) {
+						fillCell(cell, pos, access);
+					} else {
+						fillCellContent(cell, pos, access);
+					}
 					complete.add(cell.pos);
 				}
 			}
 		}
 	}
 
-	private void fillCell(MazeCell3D cell, ChunkPos pos, ChunkAccess access, RandomState random) {
+	private void fillCellContent(MazeCell3D cell, ChunkPos pos, ChunkAccess access) {
+		if (cell.content == null) return;
+		BasePos c0 = new BasePos((long) pos.x << 4, 0, (long) pos.z << 4);
+		BasePos c1 = new BasePos((long) (pos.x + 1) << 4, (long) heightInCell * cellWidth, (long) (pos.z + 1) << 4);
+		BoundBox boxC = new BoundBox(c0, c1);
+		var p0 = cell.pos.pos().scale(cellWidth);
+		var w = (long) cellWidth << cell.pos.scale();
+		var p1 = p0.offset(w, w, w);
+		BoundBox box = new BoundBox(p0, p1);
+		cell.content.generate(box, boxC, access, cell.getContentRandom());
+	}
+
+	private void fillCell(MazeCell3D cell, ChunkPos pos, ChunkAccess access) {
 		BasePos c0 = new BasePos((long) pos.x << 4, 0, (long) pos.z << 4);
 		BasePos c1 = new BasePos((long) (pos.x + 1) << 4, (long) heightInCell * cellWidth, (long) (pos.z + 1) << 4);
 		BoundBox boxC = new BoundBox(c0, c1);
@@ -60,9 +79,6 @@ public class ChunkFiller {
 		for (MazeDirection dire : MazeDirection.values()) {
 			MazeWall3D wall = cell.getWall(dire);
 			fillWallRecursive(boxC, wall, cell.pos.scale() == 0 ? blocks.wall() : blocks.hard(), access);
-		}
-		if (cell.content != null) {
-			cell.content.generate(random, boxC, access);
 		}
 	}
 

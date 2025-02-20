@@ -1,7 +1,12 @@
 package dev.xkmc.gensokyolegacy.init.data.dimension;
 
 import com.tterrag.registrate.providers.DataProviderInitializer;
+import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.leaf.GateType;
+import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.leaf.LeafType;
+import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.leaf.RoomLeafManager;
+import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.worldgen.FrameConfig;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.worldgen.MazeChunkGenerator;
+import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.worldgen.SimpleRoomContent;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import it.unimi.dsi.fastutil.doubles.DoubleList;
 import net.minecraft.core.registries.Registries;
@@ -39,10 +44,12 @@ public class GLDimensionGen {
 	public static final ResourceKey<LevelStem> LEVEL_DREAMLAND = ResourceKey.create(Registries.LEVEL_STEM, GensokyoLegacy.loc("dreamland"));
 
 	public static void init(DataProviderInitializer init) {
+		float threshold = 0.4f;
+		float center = threshold + 0.25f;
 		var biomeSet = new ClimateBuilder(
 				ParamDiv.trinary(0.5f),
-				ParamDiv.positive(0.35f),
-				ParamDiv.trinary(0.35f),
+				ParamDiv.positive(threshold - 0.05f),
+				ParamDiv.trinary(threshold - 0.05f),
 				ParamDiv.polar()
 		);
 		{
@@ -53,9 +60,11 @@ public class GLDimensionGen {
 			var low = root.depth(e -> e.not(1));
 			var land = low.cont(e -> e.get(1));
 
-			var top = root.cont(e -> e.tip(0.7f)).depth(e -> ParamDiv.span(-0.2f, 0.45f));
+			var top = root
+					.cont(e -> e.tip(center + 0.05f))
+					.depth(e -> ParamDiv.span(-0.2f, 0.45f));
 
-			top.temp(e -> e.tip(0.65f)).biome(GLBiomeGen.BIOME_HOT, 0f)
+			top.temp(e -> e.tip(center)).biome(GLBiomeGen.BIOME_HOT, 0f)
 					.addRule(SurfaceRules.state(Blocks.GOLD_BLOCK.defaultBlockState()));
 
 			land.temp(e -> e.get(1))
@@ -72,7 +81,7 @@ public class GLDimensionGen {
 					.vege(e -> e.get(-1)).biome(GLBiomeGen.BIOME_COOL_B, 0.1f)
 					.addRule(SurfaceRules.state(Blocks.PACKED_ICE.defaultBlockState()));
 
-			top.temp(e -> e.tip(-0.65f)).biome(GLBiomeGen.BIOME_COLD, 0f)
+			top.temp(e -> e.tip(-center)).biome(GLBiomeGen.BIOME_COLD, 0f)
 					.addRule(SurfaceRules.state(Blocks.BLUE_ICE.defaultBlockState()));
 
 			low.cont(e -> e.get(0)).biome(GLBiomeGen.BIOME_VOID, 0.1f);
@@ -131,13 +140,42 @@ public class GLDimensionGen {
 			var dt = ctx.lookup(Registries.DIMENSION_TYPE);
 			var biome = ctx.lookup(Registries.BIOME);
 			var noise = ctx.lookup(Registries.NOISE_SETTINGS);
+
 			ctx.register(LEVEL_DREAM, new LevelStem(dt.getOrThrow(DT_DREAM),
 					new FlatLevelSource(new FlatLevelGeneratorSettings(Optional.empty(),
 							biome.getOrThrow(GLBiomeGen.BIOME_DREAM), List.of()))));
-			ctx.register(LEVEL_MAZE, new LevelStem(dt.getOrThrow(DT_MAZE),
-					new MazeChunkGenerator(biome.getOrThrow(GLBiomeGen.BIOME_DREAM))));
+
 			ctx.register(LEVEL_DREAMLAND, new LevelStem(dt.getOrThrow(DT_DREAMLAND), new NoiseBasedChunkGenerator(
 					MultiNoiseBiomeSource.createFromList(biomeSet.climate(biome)), noise.getOrThrow(NGS_DREAMLAND))));
+
+			{
+				var blocks = new FrameConfig(
+						Blocks.OBSIDIAN.defaultBlockState(),
+						Blocks.STONE.defaultBlockState()
+				);
+				var leaf = new RoomLeafManager.Builder().addCell(
+						new SimpleRoomContent(Blocks.MOSS_CARPET.defaultBlockState(), Blocks.SHROOMLIGHT.defaultBlockState()),
+						new LeafType(GateType.SIDE, 0), 100
+				).addCell(
+						new SimpleRoomContent(Blocks.PRISMARINE_BRICK_SLAB.defaultBlockState(), Blocks.SEA_LANTERN.defaultBlockState()),
+						new LeafType(GateType.SIDE, 1), 100
+				).addCell(
+						new SimpleRoomContent(Blocks.AIR.defaultBlockState(), Blocks.SEA_LANTERN.defaultBlockState()),
+						new LeafType(GateType.DOWN, 0), 100
+				).addCell(
+						new SimpleRoomContent(Blocks.AIR.defaultBlockState(), Blocks.SEA_LANTERN.defaultBlockState()),
+						new LeafType(GateType.DOWN, 1), 100
+				).addCell(
+						new SimpleRoomContent(Blocks.SLIME_BLOCK.defaultBlockState(), Blocks.AIR.defaultBlockState()),
+						new LeafType(GateType.UP, 0), 100
+				).addCell(
+						new SimpleRoomContent(Blocks.SLIME_BLOCK.defaultBlockState(), Blocks.AIR.defaultBlockState()),
+						new LeafType(GateType.UP, 1), 100
+				).build();
+				ctx.register(LEVEL_MAZE, new LevelStem(dt.getOrThrow(DT_MAZE),
+						new MazeChunkGenerator(biome.getOrThrow(GLBiomeGen.BIOME_DREAM),
+								blocks, leaf)));
+			}
 		});
 
 	}

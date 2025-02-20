@@ -4,6 +4,8 @@ import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.init.CellContent;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.init.GenerationConfig;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.BasePos;
 import dev.xkmc.gensokyolegacy.content.worldgen.infmaze.pos.MazeAxis;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -15,7 +17,7 @@ public class GenerationHelper {
 	private static final long[] SEEDS;
 
 	static {
-		int n = 15;
+		int n = 17;
 		SEEDS = new long[n];
 		Random r = new Random(SEED);
 		for (int i = 0; i < n; i++) {
@@ -51,7 +53,7 @@ public class GenerationHelper {
 	}
 
 	public int randomizeWallState(long seed) {
-		Random r = new Random(shift(seed, 23));
+		var r = new LegacyRandomSource(shift(seed, 23));
 		int pass = r.nextInt(4);
 		int ans = 1 << pass;
 		for (int i = 0; i < 4; i++) {
@@ -63,7 +65,7 @@ public class GenerationHelper {
 	}
 
 	public int randomizeCellInternalState(long seed) {
-		Random r = new Random(shift(seed, 25));
+		var r = new LegacyRandomSource(shift(seed, 25));
 		int tree = CubicTree.CUBES[r.nextInt(CubicTree.CUBES.length)];
 		int ans = 0;
 		for (int i = 0; i < 12; i++) {
@@ -81,14 +83,22 @@ public class GenerationHelper {
 	}
 
 	public void getChildrenSeeds(long seed, long[] toFill) {
-		Random r = new Random(seed);
+		var r = new LegacyRandomSource(seed);
 		for (int i = 0; i < toFill.length; i++) {
 			toFill[i] = shift(r.nextLong(), (i * 3 + 7) % 64);
 		}
 	}
 
+	public RandomSource getFrameRandom(long seed) {
+		return new LegacyRandomSource(shift(seed, 24) ^ SEEDS[15]);
+	}
+
+	public RandomSource getContentRandom(long seed) {
+		return new LegacyRandomSource(shift(seed, 26) ^ SEEDS[16]);
+	}
+
 	@Nullable
 	public CellContent getLeaf(MazeCell3D cell, long seed) {
-		return config.getLeaf(new Random(shift(seed, 27) ^ SEEDS[14]), cell);
+		return config.getLeaf(new LegacyRandomSource(shift(seed, 27) ^ SEEDS[14]), cell);
 	}
 }

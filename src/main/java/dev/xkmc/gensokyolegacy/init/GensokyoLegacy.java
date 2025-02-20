@@ -84,6 +84,7 @@ public class GensokyoLegacy {
 		TouhouMat.register();
 		GLMeta.register();
 		GLMisc.register();
+		GLWorldGen.register();
 		GLBrains.register();
 		GLEffects.register();
 		GLSounds.register();
