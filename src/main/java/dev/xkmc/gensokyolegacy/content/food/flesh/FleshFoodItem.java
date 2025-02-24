@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.food.flesh;
 
 import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
-import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
+import dev.xkmc.gensokyolegacy.init.food.GLFood;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.event.ReimuEventHandlers;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;

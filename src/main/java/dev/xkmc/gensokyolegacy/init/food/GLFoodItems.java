@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.food.reg;
+package dev.xkmc.gensokyolegacy.init.food;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;

@@ -1,8 +1,8 @@
 package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.RegistrateAdvancementProvider;
-import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
-import dev.xkmc.gensokyolegacy.content.food.reg.GLFoodItems;
+import dev.xkmc.gensokyolegacy.init.food.GLFood;
+import dev.xkmc.gensokyolegacy.init.food.GLFoodItems;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLCriteriaTriggers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;

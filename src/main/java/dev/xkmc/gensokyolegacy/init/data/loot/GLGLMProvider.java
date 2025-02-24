@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.init.data.loot;
 
-import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
+import dev.xkmc.gensokyolegacy.init.food.GLFood;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleCategoryLootCondition;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleProgressLootCondition;

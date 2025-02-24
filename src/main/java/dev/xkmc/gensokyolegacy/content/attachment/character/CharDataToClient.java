@@ -1,6 +1,5 @@
-package dev.xkmc.gensokyolegacy.init.network;
+package dev.xkmc.gensokyolegacy.content.attachment.character;
 
-import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterData;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2serial.network.SerialPacketBase;
 import net.minecraft.world.entity.EntityType;

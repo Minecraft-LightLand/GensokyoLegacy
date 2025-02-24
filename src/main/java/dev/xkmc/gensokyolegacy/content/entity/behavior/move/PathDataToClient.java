@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.init.network;
+package dev.xkmc.gensokyolegacy.content.entity.behavior.move;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.l2serial.network.SerialPacketBase;

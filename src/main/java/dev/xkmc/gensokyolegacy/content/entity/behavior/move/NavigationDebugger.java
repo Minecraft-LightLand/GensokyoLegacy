@@ -2,7 +2,6 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.move;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import dev.xkmc.gensokyolegacy.init.network.PathDataToClient;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EquipmentSlot;

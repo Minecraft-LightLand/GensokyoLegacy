@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.food.reg;
+package dev.xkmc.gensokyolegacy.init.food;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.food.reg;
+package dev.xkmc.gensokyolegacy.init.food;
 
 import dev.xkmc.gensokyolegacy.content.food.flesh.CannedFleshFoodItem;
 import dev.xkmc.gensokyolegacy.content.food.flesh.FleshFoodItem;

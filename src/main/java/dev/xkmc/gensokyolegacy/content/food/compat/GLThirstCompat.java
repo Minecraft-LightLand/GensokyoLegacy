@@ -1,8 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.food.compat;
 
 import dev.ghen.thirst.foundation.common.event.RegisterThirstValueEvent;
-import dev.xkmc.gensokyolegacy.content.food.reg.GLFood;
-import dev.xkmc.gensokyolegacy.content.food.reg.GLSake;
+import dev.xkmc.gensokyolegacy.init.food.GLFood;
+import dev.xkmc.gensokyolegacy.init.food.GLSake;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
