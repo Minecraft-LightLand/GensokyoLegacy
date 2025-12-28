@@ -13,6 +13,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
@@ -34,6 +35,10 @@ public class GLDimensionGen {
 
 	public static final ResourceKey<DimensionType> DT_DREAM = ResourceKey.create(Registries.DIMENSION_TYPE, GensokyoLegacy.loc("dream"));
 	public static final ResourceKey<LevelStem> LEVEL_DREAM = ResourceKey.create(Registries.LEVEL_STEM, GensokyoLegacy.loc("dream"));
+
+	public static final ResourceKey<DimensionType> DT_MIST = ResourceKey.create(Registries.DIMENSION_TYPE, GensokyoLegacy.loc("mist"));
+	public static final ResourceKey<NoiseGeneratorSettings> NGS_MIST = ResourceKey.create(Registries.NOISE_SETTINGS, GensokyoLegacy.loc("mist"));
+	public static final ResourceKey<LevelStem> LEVEL_MIST = ResourceKey.create(Registries.LEVEL_STEM, GensokyoLegacy.loc("mist"));
 
 	public static final ResourceKey<DimensionType> DT_MAZE = ResourceKey.create(Registries.DIMENSION_TYPE, GensokyoLegacy.loc("maze"));
 	public static final ResourceKey<LevelStem> LEVEL_MAZE = ResourceKey.create(Registries.LEVEL_STEM, GensokyoLegacy.loc("maze"));
@@ -119,6 +124,14 @@ public class GLDimensionGen {
 					BlockTags.INFINIBURN_OVERWORLD,
 					BuiltinDimensionTypes.END_EFFECTS, 0, spawn
 			));
+			ctx.register(DT_MIST, new DimensionType(
+					OptionalLong.of(18000L),
+					false, false, false, false,
+					1, false, false,
+					0, 256, 256,
+					BlockTags.INFINIBURN_OVERWORLD,
+					BuiltinDimensionTypes.END_EFFECTS, 0, spawn
+			));
 		});
 
 		init.add(Registries.NOISE, (ctx) -> {
@@ -126,14 +139,21 @@ public class GLDimensionGen {
 		});
 
 		init.add(Registries.NOISE_SETTINGS, (ctx) -> {
-			var data = new NoiseBuilder.SlideData(
+			ctx.register(NGS_DREAMLAND, NoiseBuilder.islands(ctx, new NoiseBuilder.SlideData(
 					0, 64,
 					0, 512, -1500 / 64d,
 					4, 32, -15 / 64d,
 					0.64, -0.4, 0.5,
 					NP_SIMPLE
-			);
-			ctx.register(NGS_DREAMLAND, NoiseBuilder.islands(ctx, data, biomeSet.buildRules()));
+			), biomeSet.buildRules()));
+
+			ctx.register(NGS_MIST, NoiseBuilder.mist(ctx, new NoiseBuilder.SlideData(
+					0, 128,
+					72, 184, -30 / 64d,
+					4, 32, -15 / 64d,
+					0.64, -0.2, 0.5,
+					NP_SIMPLE
+			), SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.state(Blocks.GRASS_BLOCK.defaultBlockState()))));
 		});
 
 		init.add(Registries.LEVEL_STEM, (ctx) -> {
@@ -147,6 +167,10 @@ public class GLDimensionGen {
 
 			ctx.register(LEVEL_DREAMLAND, new LevelStem(dt.getOrThrow(DT_DREAMLAND), new NoiseBasedChunkGenerator(
 					MultiNoiseBiomeSource.createFromList(biomeSet.climate(biome)), noise.getOrThrow(NGS_DREAMLAND))));
+
+			ctx.register(LEVEL_MIST, new LevelStem(dt.getOrThrow(DT_MIST), new NoiseBasedChunkGenerator(
+					new FixedBiomeSource(biome.getOrThrow(GLBiomeGen.BIOME_DREAM)),
+					noise.getOrThrow(NGS_MIST))));
 
 			{
 				var blocks = new FrameConfig(

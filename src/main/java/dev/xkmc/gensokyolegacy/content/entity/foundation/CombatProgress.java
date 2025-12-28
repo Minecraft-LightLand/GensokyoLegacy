@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.foundation;
 
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import dev.xkmc.youkaishomecoming.init.YoukaisHomecoming;
@@ -32,7 +33,7 @@ public class CombatProgress {
 		progress = amount;
 		if (progress != oldProgress && !e.level().isClientSide()) {
 			oldProgress = progress;
-			YoukaisHomecoming.HANDLER.toTrackingPlayers(new CombatToClient(e.getId(), this), e);
+			GensokyoLegacy.HANDLER.toTrackingPlayers(new CombatToClient(e.getId(), this), e);
 		}
 	}
 

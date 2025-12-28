@@ -14,6 +14,7 @@ public class NoiseBuilder {
 
 	private static final ResourceKey<DensityFunction> SHIFT_X = mcKey("shift_x");
 	private static final ResourceKey<DensityFunction> SHIFT_Z = mcKey("shift_z");
+	private static final ResourceKey<DensityFunction> END_3D = mcKey("end/base_3d_noise");
 
 	public static NoiseGeneratorSettings islands(BootstrapContext<NoiseGeneratorSettings> ctx, SlideData data, SurfaceRules.RuleSource surface) {
 		var params = ctx.lookup(Registries.NOISE);
@@ -50,7 +51,48 @@ public class NoiseBuilder {
 				shiftedDepth, // depth
 				zero, // ridges
 				zero, // initial
-				data.slide(ctx, terrain), // final
+				data.slide(terrain), // final
+				zero, // vein toggle
+				zero, // vein ridged
+				zero // vein gap
+		);
+
+		return new NoiseGeneratorSettings(
+				new NoiseSettings(0, 256, 2, 1),
+				Blocks.STONE.defaultBlockState(), Blocks.AIR.defaultBlockState(),
+				router, surface,
+				List.of(), -64, false,
+				false, false, true
+		);
+	}
+
+	public static NoiseGeneratorSettings mist(BootstrapContext<NoiseGeneratorSettings> ctx, SlideData data, SurfaceRules.RuleSource surface) {
+		var params = ctx.lookup(Registries.NOISE);
+		var densities = ctx.lookup(Registries.DENSITY_FUNCTION);
+
+		var zero = DensityFunctions.constant(0);
+		var shift_x = new DensityFunctions.HolderHolder(densities.getOrThrow(SHIFT_X));
+		var shift_z = new DensityFunctions.HolderHolder(densities.getOrThrow(SHIFT_Z));
+
+		var terrain =  DensityFunctions.add(DensityFunctions.constant(data.sparse),
+				new DensityFunctions.HolderHolder(ctx.lookup(Registries.DENSITY_FUNCTION).getOrThrow(END_3D)));
+
+		var shiftedVege = DensityFunctions.shiftedNoise2d(shift_x, shift_z, data.biomeScale, params.getOrThrow(Noises.VEGETATION));
+		var shiftedTemp = DensityFunctions.shiftedNoise2d(shift_x, shift_z, data.biomeScale, params.getOrThrow(Noises.TEMPERATURE));
+
+		var router = new NoiseRouter(
+				zero, // barrier
+				zero, // fluid flood
+				zero, // fluid spread
+				zero, // lava
+				shiftedTemp, // temperature
+				shiftedVege, // vegetation
+				zero, // continents
+				zero, // erosion
+				zero, // depth
+				zero, // ridges
+				zero, // initial
+				data.slide(terrain), // final
 				zero, // vein toggle
 				zero, // vein ridged
 				zero // vein gap
@@ -76,7 +118,7 @@ public class NoiseBuilder {
 			ResourceKey<NormalNoise.NoiseParameters> param
 	) {
 
-		public DensityFunction slide(BootstrapContext<NoiseGeneratorSettings> ctx, DensityFunction cont) {
+		public DensityFunction slide(DensityFunction cont) {
 
 			var topSlope = DensityFunctions.yClampedGradient(
 					minY + maxY - hill, minY + maxY + margin, 1, 0);

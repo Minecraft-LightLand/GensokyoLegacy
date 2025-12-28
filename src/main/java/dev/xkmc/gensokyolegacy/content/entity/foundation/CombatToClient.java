@@ -10,7 +10,7 @@ public record CombatToClient(
 	@Override
 	public void handle(Player player) {
 		if (player.level().getEntity(id) instanceof DamageClampEntity e) {
-
+			e.setCombatProgress(progress.getProgress());
 		}
 	}
 
