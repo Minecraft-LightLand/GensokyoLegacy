@@ -14,6 +14,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
+/**
+ * Registration util for Activity and Behavior.
+ * There are 2 kinds of activities: prioritized activities and scheduled activities.
+ * Start memory requirement of a prioritized activity will also be
+ * the start memory-absence requirement of all less prioritized activities,
+ * to ensure exclusiveness of activity start conditions and enforce priority.
+ * There are 3 kinds of behaviors: always, exclusive, and random.
+ * All always-type, 1 exclusive-type, and 1 random-type behaviors may execute simultaneously.
+ */
 public class TaskBoard {
 
 	private record ActivityEntry(Activity activity, @Nullable MemoryModuleType<?> memory, int priority) {
@@ -31,42 +40,77 @@ public class TaskBoard {
 	private final List<ExtendedSensor<? extends SmartYoukaiEntity>> sensors = new ArrayList<>();
 	private final Map<Class<?>, BehaviorEntry> map = new HashMap<>();
 
+	/**
+	 * Add an always-executing behavior to some activities
+	 */
 	public void addAlways(ExtendedBehaviour<?> behavior, Activity... activities) {
 		var entry = new BehaviorEntry(0, behavior, new LinkedHashSet<>(Set.of(activities)));
 		always.add(entry);
 		map.put(behavior.getClass(), entry);
 	}
 
-	public void addFirst(int priority, ExtendedBehaviour<?> behavior, Activity... activities) {
+	/**
+	 * Add an exclusive behavior to some activities.
+	 * Only 1 exclusive behavior can run at a time.
+	 * Behavior with the smallest priority number will run.
+	 */
+	public void addExclusive(int priority, ExtendedBehaviour<?> behavior, Activity... activities) {
 		var entry = new BehaviorEntry(priority, behavior, new LinkedHashSet<>(Set.of(activities)));
 		first.add(entry);
 		map.put(behavior.getClass(), entry);
 	}
 
+	/**
+	 * Add a randomly-executing behavior to some activities.
+	 * Randomly-executing behavior can run in parallel with exclusive behaviors,
+	 * but only 1 randomly executing behavior will execute at a time.
+	 */
 	public void addRandom(ExtendedBehaviour<?> behavior, Activity... activities) {
 		var entry = new BehaviorEntry(0, behavior, new LinkedHashSet<>(Set.of(activities)));
 		random.add(entry);
 		map.put(behavior.getClass(), entry);
 	}
 
+	/**
+	 * Add an existing behavior to an extra activity
+	 * */
 	public void addBehaviorActivity(Class<?> cls, Activity activity) {
 		map.get(cls).activities.add(activity);
 	}
 
+	/**
+	 * Add a sensor
+	 * */
 	public void addSensor(ExtendedSensor<? extends SmartYoukaiEntity> sensor) {
 		this.sensors.add(sensor);
 	}
 
+	/**
+	 * Register an activity as a scheduled activity.
+	 * If there is an associated memory type,
+	 * the activity will not be executed without presence of that memory.
+	 * */
 	public void addScheduledActivity(Activity activity, @Nullable MemoryModuleType<?> test) {
 		activities.put(activity, new ActivityEntry(activity, test, Integer.MAX_VALUE));
 	}
 
+	/**
+	 * Register an activity as a prioritized activity.
+	 * Activity with smaller priority number will be prioritized.
+	 * If there is an associated memory type,
+	 * the activity will not be executed without presence of that memory.
+	 * Memory type requirement of a prioritized activity will also be added to the list of
+	 * must-be-absent memory requirements of all other less prioritized activities.
+	 * */
 	public void addPrioritizedActivity(Activity activity, @Nullable MemoryModuleType<?> test, int priority) {
 		var e = new ActivityEntry(activity, test, priority);
 		activities.put(activity, e);
 		priorities.add(e);
 	}
 
+	/**
+	 * Finish constructing the task board and sort everything.
+	 * */
 	public void build() {
 		priorities.add(new ActivityEntry(Activity.FIGHT, MemoryModuleType.ATTACK_TARGET, 0));
 		priorities.sort(Comparator.comparingInt(e -> e.priority));

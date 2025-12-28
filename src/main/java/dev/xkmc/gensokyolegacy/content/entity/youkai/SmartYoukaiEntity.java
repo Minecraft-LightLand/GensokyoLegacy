@@ -72,12 +72,12 @@ public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<S
 		board.addAlways(new YoukaiFetchTargetTask<>(), GLBrains.TALK.get(), GLBrains.AT_HOME.get(), Activity.REST);
 		board.addAlways(new YoukaiSearchTargetTask<>(), Activity.IDLE, Activity.PLAY);
 		board.addAlways(new YoukaiVanishTask(), Activity.IDLE, Activity.PLAY);
-		board.addFirst(0, new YoukaiSleepTask(), Activity.REST);
-		board.addFirst(0, new YoukaiTalkTask<>(), GLBrains.TALK.get());
-		board.addFirst(100, new YoukaiGoHomeTask<>(), Activity.IDLE, GLBrains.AT_HOME.get());
-		board.addFirst(200, new YoukaiRepairHouseTask<>(), GLBrains.AT_HOME.get());
-		board.addFirst(1100, new SetPlayerLookTarget<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
-		board.addFirst(1200, new SetRandomLookTarget<>(), Activity.IDLE, Activity.PLAY);
+		board.addExclusive(0, new YoukaiSleepTask(), Activity.REST);
+		board.addExclusive(0, new YoukaiTalkTask<>(), GLBrains.TALK.get());
+		board.addExclusive(100, new YoukaiGoHomeTask<>(), Activity.IDLE, GLBrains.AT_HOME.get());
+		board.addExclusive(200, new YoukaiRepairHouseTask<>(), GLBrains.AT_HOME.get());
+		board.addExclusive(1100, new SetPlayerLookTarget<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addExclusive(1200, new SetRandomLookTarget<>(), Activity.IDLE, Activity.PLAY);
 
 		board.addRandom(new SetRandomWalkTarget<>().speedModifier(0.8f), Activity.IDLE, Activity.PLAY);
 		board.addRandom(new YoukaiStayInRoomTask<>().speedModifier(0.8f), GLBrains.AT_HOME.get());

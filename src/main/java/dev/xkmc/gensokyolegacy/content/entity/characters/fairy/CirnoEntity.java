@@ -62,9 +62,9 @@ public class CirnoEntity extends FairyEntity {
 	@Override
 	protected void constructTaskBoard(TaskBoard board) {
 		super.constructTaskBoard(board);
-		board.addFirst(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
-		board.addFirst(200, new ItemPickupTask(), Activity.IDLE, Activity.PLAY);
-		board.addFirst(250, new YoukaiHuntTask(6), GLBrains.HUNT.get());
+		board.addExclusive(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addExclusive(200, new ItemPickupTask(), Activity.IDLE, Activity.PLAY);
+		board.addExclusive(250, new YoukaiHuntTask(6), GLBrains.HUNT.get());
 
 		board.addRandom(new YoukaiCraftTask<>(this::doCraft, 60, 12000), GLBrains.AT_HOME.get());
 

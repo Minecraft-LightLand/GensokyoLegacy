@@ -51,8 +51,8 @@ public class RumiaEntity extends SmartYoukaiEntity {
 	@Override
 	protected void constructTaskBoard(TaskBoard board) {
 		super.constructTaskBoard(board);
-		board.addFirst(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
-		board.addFirst(0, new RumiaParalyzeGoal(), GLBrains.DOWN.get());
+		board.addExclusive(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addExclusive(0, new RumiaParalyzeGoal(), GLBrains.DOWN.get());
 
 		board.addSensor(new ItemTemptingSensor<RumiaEntity>().setRadius(16, 8)
 				.temptedWith((self, stack) -> stack.is(YHTagGen.DANGO)).setScanRate(e -> 20));//TODO
