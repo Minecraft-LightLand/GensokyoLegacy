@@ -25,7 +25,7 @@ import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import vectorwing.farmersdelight.common.tag.CommonTags;
 
-@EventBusSubscriber(modid = GensokyoLegacy.MODID, bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber(modid = GensokyoLegacy.MODID)
 public class GeneralEventHandlers {
 
 	@SubscribeEvent

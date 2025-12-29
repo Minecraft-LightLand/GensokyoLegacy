@@ -51,7 +51,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 @Mod(GensokyoLegacy.MODID)
-@EventBusSubscriber(modid = GensokyoLegacy.MODID, bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber(modid = GensokyoLegacy.MODID)
 public class GensokyoLegacy {
 
 	public static final String MODID = "gensokyolegacy";
