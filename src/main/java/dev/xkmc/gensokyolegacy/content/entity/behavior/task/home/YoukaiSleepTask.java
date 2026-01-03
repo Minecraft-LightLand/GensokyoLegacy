@@ -75,6 +75,10 @@ public class YoukaiSleepTask extends ExtendedBehaviour<YoukaiEntity> {
 			BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
 			entity.getNavigation().stop();
 			var state = entity.level().getBlockState(pos.pos());
+			if (!state.hasProperty(BedBlock.PART)) {
+				pos = null;
+				return;
+			}
 			if (state.getValue(BedBlock.PART) == BedPart.HEAD) {
 				entity.startSleeping(pos.pos().relative(state.getValue(BedBlock.FACING).getOpposite()));
 			} else {
