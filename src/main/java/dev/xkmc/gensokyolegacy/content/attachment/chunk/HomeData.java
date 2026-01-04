@@ -19,6 +19,13 @@ public class HomeData {
 
 	private StructureStart start;
 	private StructurePiece piece;
+	// For manually created structures (e.g., via StructureWand), store bounds directly
+	@SerialField
+	private BlockPos rootPos;
+	@SerialField
+	private BoundingBox pieceBounds;
+	@SerialField
+	private BoundingBox startBounds;
 	private StructureCache.Builder cacheBuilder;
 	private IntegrityVerifier verifier;
 
@@ -33,18 +40,37 @@ public class HomeData {
 
 	public boolean checkInit(HomeHolder holder) {
 		if (piece == null) {
+			// First try to initialize from vanilla structure system
 			var structure = holder.level().registryAccess().holderOrThrow(holder.key().getStructure()).value();
 			var start = holder.level().structureManager().getStructureWithPieceAt(holder.key().pos(), structure);
-			if (start.getStructure() != structure) return false;
-			if (start.getPieces().isEmpty()) return false;
-			this.start = start;
-			piece = start.getPieces().getFirst();
+			if (start.getStructure() == structure && !start.getPieces().isEmpty()) {
+				this.start = start;
+				piece = start.getPieces().getFirst();
+				return true;
+			}
+
+			if (rootPos == null || pieceBounds == null || startBounds == null) {
+				var pos = holder.key().pos();
+				var radius = 7; // 15x15x15 search radius from StructureWand
+				this.rootPos = pos;
+				this.pieceBounds = new BoundingBox(
+						pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
+						pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius
+				);
+				// Start bounds should be larger (inflated by 12 as used in getTotalBound)
+				this.startBounds = new BoundingBox(
+						pos.getX() - radius - 12, pos.getY() - radius - 12, pos.getZ() - radius - 12,
+						pos.getX() + radius + 12, pos.getY() + radius + 12, pos.getZ() + radius + 12
+				);
+			}
+			// For manually created structures, check if bounds are already set
+			return true;
 		}
 		return true;
 	}
 
 	public void tick(HomeHolder holder) {
-		if (piece == null) return;
+		if (piece == null && (rootPos == null || pieceBounds == null || startBounds == null)) return;
 		if (cache == null) {
 			if (cacheBuilder == null) {
 				cacheBuilder = new StructureCache.Builder(holder.level(), getHouseBound(holder.config()));
@@ -72,11 +98,14 @@ public class HomeData {
 	}
 
 	public BlockPos getRoot() {
-		return piece.getLocatorPosition();
+		if (piece != null) {
+			return piece.getLocatorPosition();
+		}
+		return rootPos;
 	}
 
 	public BoundingBox getRoomBound(StructureConfig config) {
-		var bound = piece.getBoundingBox();
+		var bound = piece != null ? piece.getBoundingBox() : pieceBounds;
 		return new BoundingBox(
 				bound.minX() + config.xzRoomShrink(),
 				bound.minY() + config.floorRoomShrink(),
@@ -88,7 +117,7 @@ public class HomeData {
 	}
 
 	public BoundingBox getHouseBound(StructureConfig config) {
-		var bound = piece.getBoundingBox();
+		var bound = piece != null ? piece.getBoundingBox() : pieceBounds;
 		return new BoundingBox(
 				bound.minX() + config.xzHouseShrink(),
 				bound.minY() + config.floorHouseShrink(),
@@ -100,7 +129,10 @@ public class HomeData {
 	}
 
 	public BoundingBox getTotalBound() {
-		return start.getBoundingBox().inflatedBy(-12);
+		if (start != null) {
+			return start.getBoundingBox().inflatedBy(-12);
+		}
+		return startBounds.inflatedBy(-12);
 	}
 
 	@Nullable
@@ -131,5 +163,33 @@ public class HomeData {
 		return new StructureInfoUpdateToClient(key,
 				abnormal.air.size(), abnormal.primary.size(), abnormal.secondary.size()
 		);
+	}
+
+	public void init(HomeHolder holder) {
+		if (piece != null) return;
+		if (rootPos != null) return; // Already initialized manually
+
+		// Try to initialize from vanilla structure system first
+		var structure = holder.level().registryAccess().holderOrThrow(holder.key().getStructure()).value();
+		var start = holder.level().structureManager().getStructureWithPieceAt(holder.key().pos(), structure);
+		if (start.getStructure() == structure && !start.getPieces().isEmpty()) {
+			this.start = start;
+			piece = start.getPieces().getFirst();
+		} else {
+			// For manually created structures (e.g., via StructureWand),
+			// set up bounds directly
+			var pos = holder.key().pos();
+			var radius = 7; // 15x15x15 search radius from StructureWand
+			this.rootPos = pos;
+			this.pieceBounds = new BoundingBox(
+					pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
+					pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius
+			);
+			// Start bounds should be larger (inflated by 12 as used in getTotalBound)
+			this.startBounds = new BoundingBox(
+					pos.getX() - radius - 12, pos.getY() - radius - 12, pos.getZ() - radius - 12,
+					pos.getX() + radius + 12, pos.getY() + radius + 12, pos.getZ() + radius + 12
+			);
+		}
 	}
 }

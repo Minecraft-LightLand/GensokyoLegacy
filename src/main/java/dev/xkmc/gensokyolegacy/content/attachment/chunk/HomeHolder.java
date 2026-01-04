@@ -32,6 +32,19 @@ public record HomeHolder(
 	@Nullable
 	public static HomeHolder find(ServerLevel sl, BlockPos pos) {
 		if (!sl.isLoaded(pos)) return null;
+
+		// First, check for manually created structures in StructureAttachment
+		var chunk = sl.getChunkAt(pos);
+		var attachment = chunk.getData(GLMeta.STRUCTURE.get());
+		for (var key : attachment.data.keySet()) {
+			var holder = of(sl, key);
+			if (holder != null) {
+				holder.data.init(holder);
+				return holder;
+			}
+		}
+
+		// If not found, check for world-generated structures
 		var manager = sl.structureManager();
 		var map = manager.getAllStructuresAt(pos);
 		var reg = sl.registryAccess().registryOrThrow(Registries.STRUCTURE);
