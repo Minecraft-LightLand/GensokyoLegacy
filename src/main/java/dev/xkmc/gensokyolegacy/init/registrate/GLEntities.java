@@ -4,9 +4,7 @@ import com.tterrag.registrate.util.entry.EntityEntry;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.FairyEntity;
-import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.MaidenEntity;
-import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuEntity;
-import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuRenderer;
+import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.*;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.misc.FairyIce;
@@ -25,7 +23,8 @@ public class GLEntities {
 	public static final EntityEntry<ReimuEntity> REIMU;
 	public static final EntityEntry<CirnoEntity> CIRNO;
 
-	public static final EntityEntry<MaidenEntity> SANAE, MARISA;
+	public static final EntityEntry<MaidenEntity> SANAE;
+	public static final EntityEntry<MarisaEntity> MARISA;
 	public static final EntityEntry<GeneralYoukaiEntity> MYSTIA;
 	public static final EntityEntry<BossYoukaiEntity> YUKARI, KOISHI;
 	public static final EntityEntry<FairyEntity> SUNNY, LUNA, STAR;
@@ -94,10 +93,10 @@ public class GLEntities {
 					.register();
 
 			MARISA = GensokyoLegacy.REGISTRATE
-					.entity("kirisame_marisa", MaidenEntity::new, MobCategory.MONSTER)
+					.entity("kirisame_marisa", MarisaEntity::new, MobCategory.MONSTER)
 					.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
 					.attributes(BossYoukaiEntity::createAttributes)
-					.renderer(() -> GeneralYoukaiRenderer::new)
+					.renderer(() -> MarisaRenderer::new)
 					.spawnEgg(0x52403C, 0xFAF2EF).build()
 					.loot(EntityLootGen::marisa)
 					.register();

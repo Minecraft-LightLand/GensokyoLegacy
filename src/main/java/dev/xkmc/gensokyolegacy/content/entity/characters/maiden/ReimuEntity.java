@@ -8,9 +8,16 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 @SerialClass
-public class ReimuEntity extends MaidenEntity {
+public class ReimuEntity extends MaidenEntity implements GeoEntity {
+	protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
+
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public ReimuEntity(EntityType<? extends ReimuEntity> pEntityType, Level pLevel) {
 		super(pEntityType, pLevel);
@@ -29,4 +36,17 @@ public class ReimuEntity extends MaidenEntity {
 		}
 	}
 
+	protected <E extends ReimuEntity> PlayState idleAnimController(final AnimationState<E> event) {
+		return event.setAndContinue(IDLE);
+	}
+
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(new AnimationController<>(this, "Flying", 5, this::idleAnimController));
+	}
+
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
+	}
 }
