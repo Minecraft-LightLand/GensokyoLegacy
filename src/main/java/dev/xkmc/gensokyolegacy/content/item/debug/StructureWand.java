@@ -40,9 +40,8 @@ public class StructureWand extends Item {
             HomeHolder holder = HomeHolder.find(level, pos);
             var chunk = level.getChunkAt(pos);
             if (holder == null) {
-                // Create a default holder using cirno_nest structure
                 StructureKey key = new StructureKey(
-                        GensokyoLegacy.loc("cirno_nest"),
+                        GensokyoLegacy.loc("custom_structure"),
                         level.dimension().location(),
                         pos
                 );
