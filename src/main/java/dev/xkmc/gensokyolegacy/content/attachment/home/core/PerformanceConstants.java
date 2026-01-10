@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.attachment.chunk;
+package dev.xkmc.gensokyolegacy.content.attachment.home.core;
 
 public class PerformanceConstants {
 

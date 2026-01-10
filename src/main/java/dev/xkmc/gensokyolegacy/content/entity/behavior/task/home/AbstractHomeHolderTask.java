@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;

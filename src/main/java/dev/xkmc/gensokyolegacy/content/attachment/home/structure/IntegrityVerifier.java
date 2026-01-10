@@ -1,6 +1,8 @@
-package dev.xkmc.gensokyolegacy.content.attachment.chunk;
+package dev.xkmc.gensokyolegacy.content.attachment.home.structure;
 
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.PerformanceConstants;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.StructureBound;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

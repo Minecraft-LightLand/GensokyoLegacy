@@ -1,6 +1,10 @@
-package dev.xkmc.gensokyolegacy.content.attachment.chunk;
+package dev.xkmc.gensokyolegacy.content.attachment.home.structure;
 
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.HomeSearchUtil;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.IFixableHomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.PerformanceConstants;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.StructureAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToClient;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
@@ -24,7 +28,7 @@ public record HomeHolder(
 ) implements IFixableHomeHolder {
 
 	@Nullable
-	static HomeHolder of(ServerLevel level, StructureKey key) {
+	public static HomeHolder of(ServerLevel level, StructureKey key) {
 		if (!level.isLoaded(key.pos())) return null;
 		var config = level.registryAccess().holderOrThrow(key.getStructure()).getData(GLMeta.STRUCTURE_DATA.reg());
 		if (config == null) {
@@ -42,7 +46,7 @@ public record HomeHolder(
 	}
 
 	@Nullable
-	static HomeHolder find(ServerLevel sl, BlockPos pos) {
+	public static HomeHolder find(ServerLevel sl, BlockPos pos) {
 		if (!sl.isLoaded(pos)) return null;
 
 		// First, check for manually created structures in StructureAttachment

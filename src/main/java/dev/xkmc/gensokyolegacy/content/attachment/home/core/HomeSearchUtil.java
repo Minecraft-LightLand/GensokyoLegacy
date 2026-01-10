@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.attachment.chunk;
+package dev.xkmc.gensokyolegacy.content.attachment.home.core;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.youkaishomecoming.content.block.furniture.ChairEntity;

@@ -1,10 +1,10 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
 import com.mojang.datafixers.util.Pair;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.BlockFix;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.FixStage;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.IFixableHomeHolder;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.PerformanceConstants;
+import dev.xkmc.gensokyolegacy.content.attachment.home.structure.BlockFix;
+import dev.xkmc.gensokyolegacy.content.attachment.home.structure.FixStage;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.IFixableHomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.PerformanceConstants;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;

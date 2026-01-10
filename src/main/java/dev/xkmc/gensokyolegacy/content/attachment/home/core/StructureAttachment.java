@@ -1,5 +1,6 @@
-package dev.xkmc.gensokyolegacy.content.attachment.chunk;
+package dev.xkmc.gensokyolegacy.content.attachment.home.core;
 
+import dev.xkmc.gensokyolegacy.content.attachment.home.structure.HomeData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.l2core.capability.attachment.GeneralCapabilityTemplate;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;

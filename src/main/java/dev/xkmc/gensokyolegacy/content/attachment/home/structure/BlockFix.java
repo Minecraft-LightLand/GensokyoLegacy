@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.attachment.chunk;
+package dev.xkmc.gensokyolegacy.content.attachment.home.structure;
 
 import dev.xkmc.gensokyolegacy.content.block.base.ICustomFixBlock;
 import net.minecraft.core.BlockPos;

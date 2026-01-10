@@ -1,8 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.item.debug;
 
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeData;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeSearchUtil;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.home.structure.HomeData;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.HomeSearchUtil;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;

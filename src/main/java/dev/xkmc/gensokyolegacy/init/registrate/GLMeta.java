@@ -1,7 +1,7 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterAttachment;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.StructureAttachment;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.StructureAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;

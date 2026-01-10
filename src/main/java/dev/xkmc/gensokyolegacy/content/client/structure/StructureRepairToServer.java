@@ -1,9 +1,9 @@
 package dev.xkmc.gensokyolegacy.content.client.structure;
 
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.FixStage;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.IFixableHomeHolder;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.PerformanceConstants;
+import dev.xkmc.gensokyolegacy.content.attachment.home.structure.FixStage;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.IFixableHomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.IHomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.PerformanceConstants;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.l2core.events.SchedulerHandler;
 import dev.xkmc.l2serial.network.SerialPacketBase;

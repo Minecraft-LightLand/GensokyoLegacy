@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.client.structure;
 
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.FixStage;
+import dev.xkmc.gensokyolegacy.content.attachment.home.structure.FixStage;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.Minecraft;
 
