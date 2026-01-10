@@ -27,7 +27,9 @@ public record CustomHomeHolder(
 		var att = chunk.getData(GLMeta.STRUCTURE.get());
 		var home = new CustomHomeData();
 		att.custom.put(pos, home);
-		return new CustomHomeHolder(level, chunk, StructureKey.custom(level.dimension(), pos), att, home);
+		var ans = new CustomHomeHolder(level, chunk, StructureKey.custom(level.dimension(), pos), att, home);
+		home.checkInit(ans);
+		return ans;
 	}
 
 

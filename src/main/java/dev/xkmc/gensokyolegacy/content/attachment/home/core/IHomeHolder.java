@@ -5,6 +5,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.home.structure.StructureHomeHo
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2serial.network.SimplePacketBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -29,8 +30,18 @@ public interface IHomeHolder {
 		if (!sl.isLoaded(pos)) return null;
 
 		// First, check for manually created structures in StructureAttachment
-		var ans = CustomHomeHolder.of(sl, pos);
-		if (ans != null) return ans;
+		int r = 1;
+		for (int ix = -r; ix <= r; ix++) {
+			for (int iz = -r; iz <= r; iz++) {
+				var chunk = sl.getChunkAt(pos.offset(ix * 16, 0, iz * 16));
+				var att = chunk.getData(GLMeta.STRUCTURE.get());
+				for (var pair : att.custom.entrySet()) {
+					if (pair.getValue().getTotalBound().isInside(pos)) {
+						return new CustomHomeHolder(sl, chunk, StructureKey.custom(sl.dimension(), pair.getKey()), att, pair.getValue());
+					}
+				}
+			}
+		}
 
 		// If not found, check for world-generated structures
 		var manager = sl.structureManager();

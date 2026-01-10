@@ -1,11 +1,11 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterAttachment;
-import dev.xkmc.gensokyolegacy.content.attachment.home.core.StructureAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.dream.DreamChunkAttachment;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.StructureAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiAttackCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRolePlayAttachment;
@@ -16,11 +16,14 @@ import dev.xkmc.l2core.init.reg.datapack.DataMapReg;
 import dev.xkmc.l2core.init.reg.simple.AttReg;
 import dev.xkmc.l2core.init.reg.simple.AttVal;
 import dev.xkmc.l2serial.serialization.codec.CodecAdaptor;
+import dev.xkmc.l2serial.serialization.custom_handler.CodecHandler;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 
@@ -52,7 +55,7 @@ public class GLMeta {
 			GensokyoLegacy.REG.dataMap("block_mana", Registries.BLOCK, BlockMana.class);
 
 	public static void register() {
-
+		new CodecHandler<>(BoundingBox.class, BoundingBox.CODEC, ByteBufCodecs.fromCodecWithRegistries(BoundingBox.CODEC));
 	}
 
 }

@@ -40,8 +40,8 @@ public class CustomHomeData {
 	}
 
 	public void tick(CustomHomeHolder holder) {
-		if (rootPos == null || pieceBounds == null) {
-		}
+		if (rootPos == null || pieceBounds == null) return;
+
 	}
 
 	public BlockPos getRoot() {
