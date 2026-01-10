@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
 import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
@@ -52,9 +53,7 @@ public class YoukaiGoHomeTask<E extends SmartYoukaiEntity> extends ExtendedBehav
 
 	protected @Nullable Vec3 getTargetPos(ServerLevel sl, E entity) {
 		if (entity.isWithinRestriction()) return null;
-		var key = StructureKey.of(entity);
-		if (key.isEmpty()) return null;
-		HomeHolder home = HomeHolder.of(sl, key.get());
+		IHomeHolder home = IHomeHolder.of(sl, entity);
 		if (home == null) {
 			return BedRefData.of(sl, entity).map(BedRefData::getBedPos)
 					.map(BlockPos::getCenter).orElse(null);

@@ -3,6 +3,7 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.BlockFix;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.FixStage;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.IFixableHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.PerformanceConstants;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import net.minecraft.server.level.ServerLevel;
@@ -35,7 +36,8 @@ public class YoukaiRepairHouseTask<E extends SmartYoukaiEntity> extends Abstract
 	@Override
 	protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
 		if (!super.checkExtraStartConditions(level, entity)) return false;
-		var ans = home.popFix(1, FixStage.ALL);
+		if (!(home instanceof IFixableHomeHolder fixable))return false;
+		var ans = fixable.popFix(1, FixStage.ALL);
 		if (ans.isEmpty()) return false;
 		toFix = ans.getFirst();
 		return true;
@@ -59,8 +61,8 @@ public class YoukaiRepairHouseTask<E extends SmartYoukaiEntity> extends Abstract
 			entity.swing(InteractionHand.MAIN_HAND);
 			toFix.fix(level);
 			walkEnd = 0;
-			if (!entity.hasPlayerNearby() && home.isBroken()) {
-				home.doFix(PerformanceConstants.COMMAND_PLACE_STEP, FixStage.ALL);
+			if (!entity.hasPlayerNearby() && home instanceof IFixableHomeHolder fixable && fixable.isBroken()) {
+				fixable.doFix(PerformanceConstants.COMMAND_PLACE_STEP, FixStage.ALL);
 			}
 			return false;
 		}

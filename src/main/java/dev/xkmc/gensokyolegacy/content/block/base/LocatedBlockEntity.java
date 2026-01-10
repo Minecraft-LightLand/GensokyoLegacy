@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.block.base;
 
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.l2core.base.tile.BaseBlockEntity;
@@ -29,9 +29,9 @@ public class LocatedBlockEntity extends BaseBlockEntity implements TickableBlock
 		if (level instanceof ServerLevel sl) {
 			if (!located) {
 				located = true;
-				var home = HomeHolder.find(sl, getBlockPos());
+				var home = IHomeHolder.find(sl, getBlockPos());
 				var bed = BedData.of(getBlockState().getBlock());
-				if (home != null && bed != null && home.config().entities().contains(bed.type()))
+				if (home != null && bed != null && home.supportEntity(bed.type()))
 					key = home.key();
 			}
 		}

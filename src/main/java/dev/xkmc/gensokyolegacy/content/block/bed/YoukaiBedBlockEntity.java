@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.block.bed;
 
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
@@ -40,7 +41,7 @@ public class YoukaiBedBlockEntity extends LocatedBlockEntity implements IDebugIn
 						IndexStorage.get(sl).getOrCreate(key).data().blockTick(sl, data, this, key);
 					}
 				}
-				var home = HomeHolder.of(sl, key);
+				var home = IHomeHolder.of(sl, key);
 				if (home != null) {
 					home.tick();
 				}

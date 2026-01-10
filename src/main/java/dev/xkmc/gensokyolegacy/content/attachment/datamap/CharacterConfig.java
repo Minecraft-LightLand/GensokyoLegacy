@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.attachment.datamap;
 
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
@@ -35,7 +36,7 @@ public record CharacterConfig(
 	public YoukaiEntity create(EntityType<?> type, ServerLevel sl, BlockPos pos, StructureKey key) {
 		var ans = type.create(sl);
 		if (!(ans instanceof YoukaiEntity youkai)) return null;
-		var home = HomeHolder.of(sl, key);
+		var home = IHomeHolder.of(sl, key);
 		if (home == null) return null;
 		var center = home.getWanderCenter();
 		if (center == null) return null;

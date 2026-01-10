@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
-import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -13,7 +12,7 @@ import java.util.function.BiFunction;
 
 public abstract class AbstractHomeHolderTask<E extends SmartYoukaiEntity> extends ExtendedBehaviour<E> {
 
-	protected HomeHolder home;
+	protected IHomeHolder home;
 	protected BiFunction<E, Vec3, Float> speedModifier = (entity, targetPos) -> 1f;
 
 	public AbstractHomeHolderTask<E> speedModifier(float modifier) {
@@ -35,9 +34,7 @@ public abstract class AbstractHomeHolderTask<E extends SmartYoukaiEntity> extend
 	}
 
 	private void updateHome(ServerLevel level, E entity) {
-		this.home = StructureKey.of(entity)
-				.map(e -> HomeHolder.of(level, e))
-				.orElse(null);
+		this.home = IHomeHolder.of(level, entity);
 	}
 
 	@Override

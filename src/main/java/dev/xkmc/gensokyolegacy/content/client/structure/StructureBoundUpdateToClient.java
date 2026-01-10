@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.client.structure;
 
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.network.SerialPacketBase;
@@ -15,13 +16,9 @@ public record StructureBoundUpdateToClient(
 
 	public static void clickBlockInServer(Player player, BlockPos pos) {
 		if (!(player instanceof ServerPlayer sp)) return;
-		var home = HomeHolder.find(sp.serverLevel(), pos);
+		var home = IHomeHolder.find(sp.serverLevel(), pos);
 		if (home == null || !home.isValid()) return;
-		GensokyoLegacy.HANDLER.toClientPlayer(new StructureBoundUpdateToClient(
-				home.key(), home.data().getTotalBound(),
-				home.data().getHouseBound(home.config()),
-				home.data().getRoomBound(home.config())
-		), sp);
+		GensokyoLegacy.HANDLER.toClientPlayer(home.toBoundPacket(), sp);
 	}
 
 	public StructureBoundUpdateToClient(StructureKey key, BoundingBox structure, BoundingBox house, BoundingBox room) {
