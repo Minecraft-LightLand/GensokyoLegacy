@@ -1,8 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.block.bed;
 
-import dev.xkmc.gensokyolegacy.content.attachment.home.core.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
+import dev.xkmc.gensokyolegacy.content.attachment.home.core.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.IndexStorage;
 import dev.xkmc.gensokyolegacy.content.block.base.IDebugInfoBlockEntity;
@@ -36,7 +36,7 @@ public class YoukaiBedBlockEntity extends LocatedBlockEntity implements IDebugIn
 				var data = BedData.of(getBlockState().getBlock());
 				if (data != null) {
 					var config = CharacterConfig.of(data.type());
-					if (config != null && config.structure().equals(key.structure())) {
+					if (config != null && key.support(config)) {
 						IndexStorage.get(sl).getOrCreate(key).data().blockTick(sl, data, this, key);
 					}
 				}
@@ -58,7 +58,7 @@ public class YoukaiBedBlockEntity extends LocatedBlockEntity implements IDebugIn
 		if (data == null) return;
 		var sl = sp.serverLevel();
 		var config = CharacterConfig.of(data.type());
-		if (config == null || !config.structure().equals(key.getStructure().location())) return;
+		if (config == null || !key.support(config)) return;
 		var bed = BedRefData.of(sl, key, data.type());
 		if (bed == null) return;
 		bed.onDebugClick(sp, config);

@@ -62,7 +62,9 @@ public interface IHomeHolder {
 
 	@Nullable
 	static IHomeHolder of(ServerLevel sl, StructureKey key) {
-		return StructureHomeHolder.of(sl, key);
+		var ans = StructureHomeHolder.of(sl, key);
+		if (ans != null) return ans;
+		return CustomHomeHolder.of(sl, key.pos());
 	}
 
 	StructureKey key();

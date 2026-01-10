@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.attachment.index;
 
+import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -36,4 +37,7 @@ public record StructureKey(ResourceLocation structure, ResourceLocation dim, Blo
 		return ResourceKey.create(Registries.DIMENSION, dim);
 	}
 
+	public boolean support(CharacterConfig config) {
+		return structure.equals(CUSTOM) || !config.structure().equals(structure);
+	}
 }

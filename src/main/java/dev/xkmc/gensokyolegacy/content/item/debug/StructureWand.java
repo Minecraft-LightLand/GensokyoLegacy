@@ -62,7 +62,7 @@ public class StructureWand extends Item {
 			}
 
 			// Find the structure at this position
-			CustomHomeHolder holder = CustomHomeHolder.create(level, bed.get());
+			CustomHomeHolder holder = CustomHomeHolder.create(level, pos);
 			if (holder == null) return InteractionResult.FAIL;
 
 			// Create new HomeData and put it into StructureAttachment
