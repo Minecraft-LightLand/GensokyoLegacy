@@ -42,14 +42,10 @@ public class StructureWand extends Item {
 
 			// Check if there's at least one container and one chair in 15x15x15 area
 			var bed = hasBlockInArea(level, pos, (sl, p) ->
-					sl.getBlockEntity(p) instanceof YoukaiBedBlockEntity be &&
+					sl.getBlockEntity(p) instanceof YoukaiBedBlockEntity be && !be.linked() &&
 							be.getBlockState().getValue(BedBlock.PART) == BedPart.HEAD);
-			if (bed.isEmpty() || !(level.getBlockEntity(bed.get()) instanceof YoukaiBedBlockEntity be)) {
-				sp.sendSystemMessage(Component.literal("Youkai Bed not found!"));
-				return InteractionResult.FAIL;
-			}
-			if (be.linked()) {
-				sp.sendSystemMessage(Component.literal("Youkai Bed is already linked to a structure!"));
+			if (bed.isEmpty()) {
+				sp.sendSystemMessage(Component.literal("Free Youkai Bed not found!"));
 				return InteractionResult.FAIL;
 			}
 			var container = hasBlockInArea(level, pos, HomeSearchUtil::isValidChest);
@@ -71,7 +67,6 @@ public class StructureWand extends Item {
 			attachment.custom.put(pos, homeData);
 			homeData.checkInit(holder);
 			holder.chunk().setUnsaved(true);
-			be.linkTo(holder.key());
 			sp.sendSystemMessage(Component.literal("Home registered successfully!"));
 			return InteractionResult.SUCCESS;
 		}
