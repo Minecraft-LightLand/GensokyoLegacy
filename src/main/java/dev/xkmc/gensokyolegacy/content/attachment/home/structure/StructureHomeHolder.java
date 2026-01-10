@@ -12,7 +12,6 @@ import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2serial.network.SimplePacketBase;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -22,15 +21,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.LinkedHashSet;
 import java.util.List;
 
-public record HomeHolder(
+public record StructureHomeHolder(
 		ServerLevel level, LevelChunk chunk, StructureKey key,
-		StructureConfig config, StructureAttachment attachment, HomeData data
+		StructureConfig config, StructureAttachment attachment, StructureHomeData data
 ) implements IFixableHomeHolder {
 
 	@Nullable
-	public static HomeHolder of(ServerLevel level, StructureKey key) {
+	public static StructureHomeHolder of(ServerLevel level, StructureKey key) {
 		if (!level.isLoaded(key.pos())) return null;
-		var config = level.registryAccess().holderOrThrow(key.getStructure()).getData(GLMeta.STRUCTURE_DATA.reg());
+		var structure = level.registryAccess().holder(key.getStructure());
+		if (structure.isEmpty()) return null;
+		var config = structure.get().getData(GLMeta.STRUCTURE_DATA.reg());
 		if (config == null) {
 			LinkedHashSet<EntityType<?>> entities = new LinkedHashSet<>();
 			entities.add(GLEntities.CIRNO.get());
@@ -41,39 +42,8 @@ public record HomeHolder(
 		}
 		var chunk = level.getChunkAt(key.pos());
 		var att = chunk.getData(GLMeta.STRUCTURE.get());
-		var home = att.data.computeIfAbsent(key, k -> new HomeData());
-		return new HomeHolder(level, chunk, key, config, att, home);
-	}
-
-	@Nullable
-	public static HomeHolder find(ServerLevel sl, BlockPos pos) {
-		if (!sl.isLoaded(pos)) return null;
-
-		// First, check for manually created structures in StructureAttachment
-		var chunk = sl.getChunkAt(pos);
-		var attachment = chunk.getData(GLMeta.STRUCTURE.get());
-		for (var key : attachment.data.keySet()) {
-			var holder = of(sl, key);
-			if (holder != null) {
-				holder.data.init(holder);
-				return holder;
-			}
-		}
-
-		// If not found, check for world-generated structures
-		var manager = sl.structureManager();
-		var map = manager.getAllStructuresAt(pos);
-		var reg = sl.registryAccess().registryOrThrow(Registries.STRUCTURE);
-		for (var e : map.keySet()) {
-			var start = manager.getStructureWithPieceAt(pos, e);
-			if (!start.isValid()) continue;
-			var id = reg.getHolder(reg.getId(start.getStructure()));
-			if (id.isEmpty()) continue;
-			if (start.getPieces().isEmpty()) continue;
-			var root = start.getPieces().getFirst().getLocatorPosition();
-			return of(sl, new StructureKey(id.get().key(), sl.dimension(), root));
-		}
-		return null;
+		var home = att.data.computeIfAbsent(key, k -> new StructureHomeData());
+		return new StructureHomeHolder(level, chunk, key, config, att, home);
 	}
 
 	public boolean isValid() {

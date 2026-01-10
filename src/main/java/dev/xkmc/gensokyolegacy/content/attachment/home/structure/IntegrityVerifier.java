@@ -22,7 +22,7 @@ public class IntegrityVerifier {
 	private final BoundingBox roomBound;
 	private final AbnormalCache abnormal;
 
-	public IntegrityVerifier(HomeHolder holder, BoundingBox house, BoundingBox room, StructureCache template, AbnormalCache set) {
+	public IntegrityVerifier(StructureHomeHolder holder, BoundingBox house, BoundingBox room, StructureCache template, AbnormalCache set) {
 		this.level = holder.level();
 		this.config = holder.config();
 		this.roomBound = room;

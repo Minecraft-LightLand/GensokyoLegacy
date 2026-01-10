@@ -1,10 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.item.debug;
 
-import dev.xkmc.gensokyolegacy.content.attachment.home.structure.HomeData;
 import dev.xkmc.gensokyolegacy.content.attachment.home.core.HomeSearchUtil;
-import dev.xkmc.gensokyolegacy.content.attachment.home.core.IHomeHolder;
-import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
-import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
+import dev.xkmc.gensokyolegacy.content.attachment.home.custom.CustomHomeData;
+import dev.xkmc.gensokyolegacy.content.attachment.home.custom.CustomHomeHolder;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -36,22 +34,9 @@ public class StructureWand extends Item {
 	public InteractionResult useOn(UseOnContext context) {
 		if (context.getPlayer() instanceof ServerPlayer serverPlayer && context.getLevel() instanceof ServerLevel level) {
 			var pos = context.getClickedPos();
-
 			// Find the structure at this position
-			IHomeHolder holder = IHomeHolder.find(level, pos);
-			var chunk = level.getChunkAt(pos);
-			if (holder == null) {
-				StructureKey key = new StructureKey(
-						GensokyoLegacy.loc("custom_structure"),
-						level.dimension().location(),
-						pos
-				);
-				holder = IHomeHolder.of(level, key);
-				if (holder == null) {
-					serverPlayer.sendSystemMessage(Component.literal("Failed to create structure holder."));
-					return InteractionResult.FAIL;
-				}
-			}
+			CustomHomeHolder holder = CustomHomeHolder.create(level, pos);
+			if (holder == null) return InteractionResult.FAIL;
 
 			// Check if there's at least one container and one chair in 15x15x15 area
 			boolean hasContainer = hasBlockInArea(level, pos, HomeSearchUtil::isValidChest);
@@ -59,16 +44,16 @@ public class StructureWand extends Item {
 
 			if (hasContainer && hasChair) {
 				// Create new HomeData and put it into StructureAttachment
-				var attachment = chunk.getData(GLMeta.STRUCTURE.get());
-				var homeData = new HomeData();
-				attachment.data.put(holder.key(), homeData);
-				homeData.init(holder);
-				chunk.setUnsaved(true);
+				var attachment = holder.chunk().getData(GLMeta.STRUCTURE.get());
+				var homeData = new CustomHomeData();
+				attachment.custom.put(pos, homeData);
+				homeData.checkInit(holder);
+				holder.chunk().setUnsaved(true);
 
-				serverPlayer.sendSystemMessage(net.minecraft.network.chat.Component.literal("Home registered successfully!"));
+				serverPlayer.sendSystemMessage(Component.literal("Home registered successfully!"));
 				return InteractionResult.SUCCESS;
 			} else {
-				serverPlayer.sendSystemMessage(net.minecraft.network.chat.Component.literal(
+				serverPlayer.sendSystemMessage(Component.literal(
 						"Missing required blocks. Container: " + hasContainer + ", Chair: " + hasChair));
 				return InteractionResult.FAIL;
 			}
@@ -96,4 +81,5 @@ public class StructureWand extends Item {
 		}
 		return false;
 	}
+
 }

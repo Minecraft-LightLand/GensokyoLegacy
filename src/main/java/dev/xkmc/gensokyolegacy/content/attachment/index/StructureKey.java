@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.attachment.index;
 
 import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -12,6 +13,12 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import java.util.Optional;
 
 public record StructureKey(ResourceLocation structure, ResourceLocation dim, BlockPos pos) {
+
+	public static final ResourceLocation CUSTOM = GensokyoLegacy.loc("custom_structure");
+
+	public static StructureKey custom(ResourceKey<Level> dim, BlockPos pos) {
+		return new StructureKey(CUSTOM, dim.location(), pos);
+	}
 
 	public StructureKey(ResourceKey<Structure> structure, ResourceKey<Level> dim, BlockPos pos) {
 		this(structure.location(), dim.location(), pos);

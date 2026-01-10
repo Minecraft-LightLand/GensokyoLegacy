@@ -16,17 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SerialClass
-public class HomeData {
+public class StructureHomeData {
 
 	private StructureStart start;
 	private StructurePiece piece;
-	// For manually created structures (e.g., via StructureWand), store bounds directly
-	@SerialField
-	private BlockPos rootPos;
-	@SerialField
-	private BoundingBox pieceBounds;
-	@SerialField
-	private BoundingBox startBounds;
 	private StructureCache.Builder cacheBuilder;
 	private IntegrityVerifier verifier;
 
@@ -39,39 +32,20 @@ public class HomeData {
 	@SerialField
 	private StructureCache cache;
 
-	public boolean checkInit(HomeHolder holder) {
+	public boolean checkInit(StructureHomeHolder holder) {
 		if (piece == null) {
-			// First try to initialize from vanilla structure system
 			var structure = holder.level().registryAccess().holderOrThrow(holder.key().getStructure()).value();
 			var start = holder.level().structureManager().getStructureWithPieceAt(holder.key().pos(), structure);
 			if (start.getStructure() == structure && !start.getPieces().isEmpty()) {
 				this.start = start;
 				piece = start.getPieces().getFirst();
-				return true;
 			}
-
-			if (rootPos == null || pieceBounds == null || startBounds == null) {
-				var pos = holder.key().pos();
-				var radius = 7; // 15x15x15 search radius from StructureWand
-				this.rootPos = pos;
-				this.pieceBounds = new BoundingBox(
-						pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
-						pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius
-				);
-				// Start bounds should be larger (inflated by 12 as used in getTotalBound)
-				this.startBounds = new BoundingBox(
-						pos.getX() - radius - 12, pos.getY() - radius - 12, pos.getZ() - radius - 12,
-						pos.getX() + radius + 12, pos.getY() + radius + 12, pos.getZ() + radius + 12
-				);
-			}
-			// For manually created structures, check if bounds are already set
-			return true;
 		}
 		return true;
 	}
 
-	public void tick(HomeHolder holder) {
-		if (piece == null && (rootPos == null || pieceBounds == null || startBounds == null)) return;
+	public void tick(StructureHomeHolder holder) {
+		if (piece == null) return;
 		if (cache == null) {
 			if (cacheBuilder == null) {
 				cacheBuilder = new StructureCache.Builder(holder.level(), getHouseBound(holder.config()));
@@ -99,14 +73,11 @@ public class HomeData {
 	}
 
 	public BlockPos getRoot() {
-		if (piece != null) {
-			return piece.getLocatorPosition();
-		}
-		return rootPos;
+		return piece.getLocatorPosition();
 	}
 
 	public BoundingBox getRoomBound(StructureConfig config) {
-		var bound = piece != null ? piece.getBoundingBox() : pieceBounds;
+		var bound = piece.getBoundingBox();
 		return new BoundingBox(
 				bound.minX() + config.xzRoomShrink(),
 				bound.minY() + config.floorRoomShrink(),
@@ -118,7 +89,7 @@ public class HomeData {
 	}
 
 	public BoundingBox getHouseBound(StructureConfig config) {
-		var bound = piece != null ? piece.getBoundingBox() : pieceBounds;
+		var bound = piece.getBoundingBox();
 		return new BoundingBox(
 				bound.minX() + config.xzHouseShrink(),
 				bound.minY() + config.floorHouseShrink(),
@@ -130,20 +101,17 @@ public class HomeData {
 	}
 
 	public BoundingBox getTotalBound() {
-		if (start != null) {
-			return start.getBoundingBox().inflatedBy(-12);
-		}
-		return startBounds.inflatedBy(-12);
+		return start.getBoundingBox().inflatedBy(-12);
 	}
 
 	@Nullable
-	public BlockPos getContainerAround(HomeHolder holder, BlockPos center, int rxz, int ry, int trail) {
+	public BlockPos getContainerAround(StructureHomeHolder holder, BlockPos center, int rxz, int ry, int trail) {
 		return HomeSearchUtil.searchBlock(containers, HomeSearchUtil::isValidChest,
 				getRoomBound(holder.config()), holder.level(), center, rxz, ry, trail);
 	}
 
 	@Nullable
-	public BlockPos getChairAround(HomeHolder holder, BlockPos center, int rxz, int ry, int trail) {
+	public BlockPos getChairAround(StructureHomeHolder holder, BlockPos center, int rxz, int ry, int trail) {
 		return HomeSearchUtil.searchBlock(chairs, HomeSearchUtil::isValidChair,
 				getRoomBound(holder.config()), holder.level(), center, rxz, ry, trail);
 	}
@@ -166,31 +134,4 @@ public class HomeData {
 		);
 	}
 
-	public void init(HomeHolder holder) {
-		if (piece != null) return;
-		if (rootPos != null) return; // Already initialized manually
-
-		// Try to initialize from vanilla structure system first
-		var structure = holder.level().registryAccess().holderOrThrow(holder.key().getStructure()).value();
-		var start = holder.level().structureManager().getStructureWithPieceAt(holder.key().pos(), structure);
-		if (start.getStructure() == structure && !start.getPieces().isEmpty()) {
-			this.start = start;
-			piece = start.getPieces().getFirst();
-		} else {
-			// For manually created structures (e.g., via StructureWand),
-			// set up bounds directly
-			var pos = holder.key().pos();
-			var radius = 7; // 15x15x15 search radius from StructureWand
-			this.rootPos = pos;
-			this.pieceBounds = new BoundingBox(
-					pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
-					pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius
-			);
-			// Start bounds should be larger (inflated by 12 as used in getTotalBound)
-			this.startBounds = new BoundingBox(
-					pos.getX() - radius - 12, pos.getY() - radius - 12, pos.getZ() - radius - 12,
-					pos.getX() + radius + 12, pos.getY() + radius + 12, pos.getZ() + radius + 12
-			);
-		}
-	}
 }
