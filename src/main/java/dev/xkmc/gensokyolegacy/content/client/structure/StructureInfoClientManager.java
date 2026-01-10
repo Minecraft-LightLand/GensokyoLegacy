@@ -18,25 +18,34 @@ public class StructureInfoClientManager {
 	static StructureKey key;
 	static StructureBoundUpdateToClient data;
 	static StructureInfoUpdateToClient info;
+	static BlockPos hoverPos;
 
 	static long lastTime = 0;
 
 	public static void tooltip(List<Component> lines, long gameTime, BlockPos pos) {
 		if (level == null || data == null) return;
 		if (!data.house().toBox().isInside(pos)) return;
+		hoverPos = pos;
 		if (gameTime > lastTime + 20) {
 			lastTime = gameTime;
 			InfoUpdateClientManager.requestStructure(key);
 		}
 		if (info == null) {
 			lines.add(GLLang.INFO$LOADING.get().withStyle(ChatFormatting.GRAY));
+		} else if (info.key().isCustom()) {
+			lines.add(Component.literal("Custom Structure").withStyle(ChatFormatting.GRAY));//TODO
 		} else if (info.remove() < 0) {
 			lines.add(GLLang.INFO$STRUCTURE_SCANNING.get().withStyle(ChatFormatting.GRAY));
-
 		} else {
 			int total = info.remove() + info.primary() + info.secondary();
 			lines.add(GLLang.INFO$STRUCTURE_ABNORMAL.get(total).withStyle(ChatFormatting.GRAY));
 		}
+	}
+
+	public static void clearStructure(){
+		key = null;
+		data = null;
+		info = null;
 	}
 
 	public static void setStructure(StructureBoundUpdateToClient packet) {

@@ -41,4 +41,8 @@ public class IndexStorage extends BaseSavedData<IndexStorage> {
 		return new StructureRef(this, key, structureData.computeIfAbsent(key, k -> new StructureRefData()));
 	}
 
+	public void remove(StructureKey key) {
+		structureData.remove(key);
+	}
+
 }

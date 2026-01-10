@@ -3,6 +3,7 @@ package dev.xkmc.gensokyolegacy.content.item.debug;
 import dev.xkmc.gensokyolegacy.content.attachment.home.core.HomeSearchUtil;
 import dev.xkmc.gensokyolegacy.content.attachment.home.custom.CustomHomeData;
 import dev.xkmc.gensokyolegacy.content.attachment.home.custom.CustomHomeHolder;
+import dev.xkmc.gensokyolegacy.content.attachment.home.custom.RoomVerifier;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import net.minecraft.core.BlockPos;
@@ -60,6 +61,9 @@ public class StructureWand extends Item {
 			// Find the structure at this position
 			CustomHomeHolder holder = CustomHomeHolder.create(level, pos);
 			if (holder == null) return InteractionResult.FAIL;
+			var box = new RoomVerifier(level, sp).run(pos);
+			if (box == null) return InteractionResult.FAIL;
+			holder.data().setBound(pos, box);
 
 			// Create new HomeData and put it into StructureAttachment
 			var attachment = holder.chunk().getData(GLMeta.STRUCTURE.get());

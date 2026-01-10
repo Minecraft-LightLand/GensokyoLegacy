@@ -19,7 +19,7 @@ public class CustomHomeData {
 	@SerialField
 	private BlockPos rootPos;
 	@SerialField
-	private BoundingBox pieceBounds;
+	private BoundingBox roomBound;
 
 	@SerialField
 	private final List<BlockPos> containers = new ArrayList<>();
@@ -27,21 +27,19 @@ public class CustomHomeData {
 	private final List<BlockPos> chairs = new ArrayList<>();
 
 	public boolean checkInit(CustomHomeHolder holder) {
-		if (rootPos == null || pieceBounds == null) {
-			var pos = holder.key().pos();
-			var radius = 7; // 15x15x15 search radius from StructureWand
-			this.rootPos = pos;
-			this.pieceBounds = new BoundingBox(
-					pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
-					pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius
-			);
+		if (rootPos == null || roomBound == null) {
+			return false;
 		}
 		return true;
 	}
 
-	public void tick(CustomHomeHolder holder) {
-		if (rootPos == null || pieceBounds == null) return;
+	public void setBound(BlockPos pos, BoundingBox box) {
+		rootPos = pos;
+		roomBound = box;
+	}
 
+	public void tick(CustomHomeHolder holder) {
+		if (rootPos == null || roomBound == null) return;
 	}
 
 	public BlockPos getRoot() {
@@ -49,15 +47,15 @@ public class CustomHomeData {
 	}
 
 	public BoundingBox getRoomBound() {
-		return pieceBounds;
+		return roomBound;
 	}
 
 	public BoundingBox getHouseBound() {
-		return pieceBounds;
+		return roomBound.inflatedBy(1);
 	}
 
 	public BoundingBox getTotalBound() {
-		return pieceBounds;
+		return roomBound.inflatedBy(1);
 	}
 
 	public boolean isOutside(Level level, BlockPos ans) {

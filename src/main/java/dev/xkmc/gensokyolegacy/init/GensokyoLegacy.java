@@ -12,10 +12,7 @@ import dev.xkmc.gensokyolegacy.content.client.debug.BlockInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.BlockRequestToServer;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterInfoToClient;
 import dev.xkmc.gensokyolegacy.content.client.debug.CharacterRequestToServer;
-import dev.xkmc.gensokyolegacy.content.client.structure.StructureBoundUpdateToClient;
-import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoRequestToServer;
-import dev.xkmc.gensokyolegacy.content.client.structure.StructureInfoUpdateToClient;
-import dev.xkmc.gensokyolegacy.content.client.structure.StructureRepairToServer;
+import dev.xkmc.gensokyolegacy.content.client.structure.*;
 import dev.xkmc.gensokyolegacy.content.entity.foundation.CombatToClient;
 import dev.xkmc.gensokyolegacy.content.food.compat.GLThirstCompat;
 import dev.xkmc.gensokyolegacy.init.food.GLFoodItems;
@@ -49,10 +46,14 @@ import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(GensokyoLegacy.MODID)
 @EventBusSubscriber(modid = GensokyoLegacy.MODID)
 public class GensokyoLegacy {
+
+	public static final Logger LOGGER = LogManager.getLogger();
 
 	public static final String MODID = "gensokyolegacy";
 	public static final Reg REG = new Reg(MODID);
@@ -68,6 +69,7 @@ public class GensokyoLegacy {
 			e -> e.create(StructureInfoRequestToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
 			e -> e.create(StructureInfoUpdateToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(StructureRepairToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
+			e -> e.create(StructureEditToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
 			e -> e.create(FrogSyncPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(KoishiStartPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(CombatToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
