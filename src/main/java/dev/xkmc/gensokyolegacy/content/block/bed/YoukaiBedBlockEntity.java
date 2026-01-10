@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.block.bed;
 
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;

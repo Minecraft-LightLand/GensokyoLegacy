@@ -1,6 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.attachment.datamap;
 
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.module.HomeModule;

@@ -36,7 +36,7 @@ public class YoukaiRepairHouseTask<E extends SmartYoukaiEntity> extends Abstract
 	@Override
 	protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
 		if (!super.checkExtraStartConditions(level, entity)) return false;
-		if (!(home instanceof IFixableHomeHolder fixable))return false;
+		if (!(home instanceof IFixableHomeHolder fixable)) return false;
 		var ans = fixable.popFix(1, FixStage.ALL);
 		if (ans.isEmpty()) return false;
 		toFix = ans.getFirst();

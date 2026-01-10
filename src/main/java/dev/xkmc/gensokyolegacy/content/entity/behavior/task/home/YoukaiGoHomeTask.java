@@ -1,10 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
 import com.mojang.datafixers.util.Pair;
-import dev.xkmc.gensokyolegacy.content.attachment.chunk.HomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.chunk.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
-import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

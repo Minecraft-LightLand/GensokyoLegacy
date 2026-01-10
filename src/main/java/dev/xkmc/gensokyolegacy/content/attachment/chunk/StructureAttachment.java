@@ -13,6 +13,6 @@ import java.util.Map;
 public class StructureAttachment extends GeneralCapabilityTemplate<LevelChunk, StructureAttachment> {
 
 	@SerialField
-    public final Map<StructureKey, HomeData> data = new LinkedHashMap<>();
+	public final Map<StructureKey, HomeData> data = new LinkedHashMap<>();
 
 }
