@@ -12,7 +12,6 @@ import dev.xkmc.gensokyolegacy.init.data.GLDamageTypes;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.DamageTypeTags;
@@ -28,6 +27,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.Tags;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
@@ -54,7 +54,8 @@ public class RumiaEntity extends SmartYoukaiEntity {
         board.addExclusive(0, new RumiaParalyzeGoal(), GLBrains.DOWN.get());
 
         board.addSensor(new ItemTemptingSensor<RumiaEntity>().setRadius(16, 8)
-                .temptedWith((self, stack) -> stack.is(YHTagGen.DANGO)).setScanRate(e -> 20));//TODO
+                .temptedWith((self, stack) -> stack.is(Tags.Items.FOODS_COOKED_MEAT))
+                .setScanRate(e -> 20));//TODO rumia food
 
         board.addPrioritizedActivity(GLBrains.DOWN.get(), GLBrains.MEM_DOWN.get(), -100);
     }

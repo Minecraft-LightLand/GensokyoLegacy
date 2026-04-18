@@ -179,15 +179,13 @@ dependencies {
     implementation jarJar(group: 'net.tslat.smartbrainlib', name: 'SmartBrainLib-neoforge-1.21.1', version: "[1.16.1,)")
     implementation jarJar(group: 'software.bernie.geckolib', name: 'geckolib-neoforge-1.21.1', version: "[4.6.6,)")
 
-    implementation "curse.maven:farmers-delight-398521:5566383"
-    implementation "dev.xkmc:youkaisfeasts:${youkaisfeasts_ver}"
+    //implementation "curse.maven:farmers-delight-398521:5566383"
+    //implementation "dev.xkmc:youkaisfeasts:${youkaisfeasts_ver}"
 
     implementation "mezz.jei:jei-${jei_minecraft_version}:${jei_version}"
 
-    compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+    implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     implementation "curse.maven:better-advancements-272515:5511371"
-    implementation "dev.xkmc:cuisinedelight:1.2.3-slim"
     implementation "curse.maven:touhou-little-maid-355044:5896992"
     implementation "curse.maven:jade-324717:5976517"
-    compileOnly "curse.maven:thirst-was-taken-679270:5568715"
 }

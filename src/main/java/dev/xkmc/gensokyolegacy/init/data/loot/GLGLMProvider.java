@@ -7,7 +7,7 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMechanics;
-import dev.xkmc.youkaishomecoming.mixin.AddItemModifierAccessor;
+import dev.xkmc.l2core.serial.loot.AddItemModifier;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -21,8 +21,6 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
-import vectorwing.farmersdelight.common.loot.modifier.AddItemModifier;
-import vectorwing.farmersdelight.common.tag.ModTags;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -38,11 +36,11 @@ public class GLGLMProvider extends GlobalLootModifierProvider {
 
     @Override
     protected void start() {
-        add("cirno_frozen_frog_cold", create(GLItems.FROZEN_FROG_COLD.get(), 1,
+        add("cirno_frozen_frog_cold", create(GLItems.FROZEN_FROG_COLD.get(),
                 killedByCirno(), frog(FrogVariant.COLD)));
-        add("cirno_frozen_frog_warm", create(GLItems.FROZEN_FROG_WARM.get(), 1,
+        add("cirno_frozen_frog_warm", create(GLItems.FROZEN_FROG_WARM.get(),
                 killedByCirno(), frog(FrogVariant.WARM)));
-        add("cirno_frozen_frog_temperate", create(GLItems.FROZEN_FROG_TEMPERATE.get(), 1,
+        add("cirno_frozen_frog_temperate", create(GLItems.FROZEN_FROG_TEMPERATE.get(),
                 killedByCirno(), frog(FrogVariant.TEMPERATE)));
 
 
@@ -77,15 +75,6 @@ public class GLGLMProvider extends GlobalLootModifierProvider {
                 LootContext.EntityTarget.THIS,
                 EntityPredicate.Builder.entity().entityType(
                         EntityTypePredicate.of(tag))).build();
-    }
-
-    private static LootItemCondition killedByKnife() {
-        return LootItemEntityPropertyCondition.hasProperties(
-                LootContext.EntityTarget.ATTACKER,
-                EntityPredicate.Builder.entity().equipment(
-                        EntityEquipmentPredicate.Builder.equipment().mainhand(
-                                        ItemPredicate.Builder.item().of(ModTags.KNIVES))
-                                .build()).build()).build();
     }
 
     private static LootItemCondition killedByRumia() {
@@ -123,10 +112,8 @@ public class GLGLMProvider extends GlobalLootModifierProvider {
                         EntityFlagsPredicate.Builder.flags().setOnFire(fire)).build()).build();
     }
 
-    private static AddItemModifier create(Item item, int count, LootItemCondition... conditions) {
-        var ans = AddItemModifierAccessor.create(conditions, item, count);
-        assert ans != null;
-        return ans;
+    private static AddItemModifier create(Item item, LootItemCondition... conditions) {
+        return new AddItemModifier(item, null, conditions);
     }
 
 }

@@ -7,11 +7,11 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import vectorwing.farmersdelight.common.registry.ModItems;
 
 import java.util.EnumMap;
 import java.util.List;
@@ -19,12 +19,12 @@ import java.util.Locale;
 import java.util.function.Supplier;
 
 public enum TouhouMat {
-	SUWAKO_HAT(60, 10, 2, 3, () -> Ingredient.of(ModItems.CANVAS.get()), SoundEvents.ARMOR_EQUIP_LEATHER),
-	STRAW_HAT(10, 1, 0, 0, () -> Ingredient.of(ModItems.CANVAS.get()), SoundEvents.ARMOR_EQUIP_LEATHER),
+	SUWAKO_HAT(60, 10, 2, 3, () -> Ingredient.of(ItemTags.WOOL), SoundEvents.ARMOR_EQUIP_LEATHER),
+	STRAW_HAT(10, 1, 0, 0, () -> Ingredient.of(ItemTags.WOOL), SoundEvents.ARMOR_EQUIP_LEATHER),
 	KOISHI_HAT(60, 10, 4, 3, () -> Ingredient.of(Items.IRON_INGOT), SoundEvents.ARMOR_EQUIP_IRON),
-	RUMIA_HAIRBAND(60, 10, 0, 0, () -> Ingredient.of(ModItems.CANVAS.get()), SoundEvents.ARMOR_EQUIP_LEATHER),
-	REIMU_HAIRBAND(60, 10, 2, 0, () -> Ingredient.of(ModItems.CANVAS.get()), SoundEvents.ARMOR_EQUIP_LEATHER),
-	CIRNO_HAIRBAND(60, 10, 0, 0, () -> Ingredient.of(ModItems.CANVAS.get()), SoundEvents.ARMOR_EQUIP_LEATHER),
+	RUMIA_HAIRBAND(60, 10, 0, 0, () -> Ingredient.of(ItemTags.WOOL), SoundEvents.ARMOR_EQUIP_LEATHER),
+	REIMU_HAIRBAND(60, 10, 2, 0, () -> Ingredient.of(ItemTags.WOOL), SoundEvents.ARMOR_EQUIP_LEATHER),
+	CIRNO_HAIRBAND(60, 10, 0, 0, () -> Ingredient.of(ItemTags.WOOL), SoundEvents.ARMOR_EQUIP_LEATHER),
 	;
 
 	private static final int[] DURABILITY = {13, 15, 16, 11};
