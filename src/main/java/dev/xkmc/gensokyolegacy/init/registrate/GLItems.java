@@ -4,7 +4,6 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import dev.xkmc.danmakuapi.content.item.SpellItem;
 import dev.xkmc.danmakuapi.init.data.DanmakuTagGen;
 import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeBranch;
 import dev.xkmc.gensokyolegacy.content.client.model.*;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuModel;
@@ -13,7 +12,6 @@ import dev.xkmc.gensokyolegacy.content.item.character.*;
 import dev.xkmc.gensokyolegacy.content.item.debug.DebugGlasses;
 import dev.xkmc.gensokyolegacy.content.item.debug.DebugWand;
 import dev.xkmc.gensokyolegacy.content.item.debug.StructureWand;
-import dev.xkmc.gensokyolegacy.content.item.ingredient.BloodBottleItem;
 import dev.xkmc.gensokyolegacy.content.item.ingredient.FairyIceItem;
 import dev.xkmc.gensokyolegacy.content.item.ingredient.FrozenFrogItem;
 import dev.xkmc.gensokyolegacy.content.spell.item.*;
@@ -22,13 +20,11 @@ import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.l2core.init.reg.simple.DCReg;
 import dev.xkmc.l2core.init.reg.simple.DCVal;
-import dev.xkmc.youkaishomecoming.content.item.fluid.BottledFluid;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 
 public class GLItems {
@@ -37,8 +33,6 @@ public class GLItems {
 
     public static final ItemEntry<FairyIceItem> FAIRY_ICE_CRYSTAL;
     public static final ItemEntry<FrozenFrogItem> FROZEN_FROG_COLD, FROZEN_FROG_WARM, FROZEN_FROG_TEMPERATE;
-    public static final ItemEntry<MistletoeBranch> MISTLETOE_BRANCH;
-    public static final BottledFluid<BloodBottleItem> BLOOD_BOTTLE;
 
     public static final ItemEntry<SpellItem> REIMU_SPELL, MARISA_SPELL, SANAE_SPELL, YUKARI_SPELL_BUTTERFLY, YUKARI_SPELL_LASER, MYSTIA_SPELL;
 
@@ -79,10 +73,6 @@ public class GLItems {
                         p -> new FrozenFrogItem(p.stacksTo(16), FrogVariant.TEMPERATE))
                 .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/ingredient/" + ctx.getName())))
                 .register();
-        MISTLETOE_BRANCH = reg.item("mistletoe_branch", MistletoeBranch::new)
-                .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/ingredient/" + ctx.getName())))
-                .register();
-        BLOOD_BOTTLE = new BottledFluid<>(reg, "blood", 0xff772221, () -> Items.GLASS_BOTTLE, "ingredient", BloodBottleItem::new);
 
         // spell cards
         {

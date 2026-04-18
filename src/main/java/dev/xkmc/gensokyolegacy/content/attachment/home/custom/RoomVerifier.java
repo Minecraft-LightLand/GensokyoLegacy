@@ -39,7 +39,7 @@ public class RoomVerifier {
 
 		private BlockData(BlockPos pos, BlockState state) {
 			this.pos = pos;
-			this.state = state;
+			this.state = state;//TODO block state to result should be cached
 		}
 
 		public boolean culling(Direction dir) {
@@ -54,7 +54,7 @@ public class RoomVerifier {
 			}
 			boolean xs = bounds.minX == 0 && bounds.maxX == 1;
 			boolean ys = bounds.minY == 0 && bounds.maxY == 1;
-			boolean zs = bounds.minZ == 0 && bounds.maxZ == 1;
+			boolean zs = bounds.minZ == 0 && bounds.maxZ == 1;//TODO wrong implementation
 			if (xs && zs) {
 				if (bounds.minY == 0) cull |= 1 << Direction.DOWN.get3DDataValue();
 				if (bounds.maxY == 1) cull |= 1 << Direction.UP.get3DDataValue();

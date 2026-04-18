@@ -5,12 +5,12 @@ import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import dev.xkmc.gensokyolegacy.content.block.deco.VerticalSlabBlock;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
+import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
-import dev.xkmc.youkaishomecoming.content.block.variants.VerticalSlabBlock;
-import dev.xkmc.youkaishomecoming.init.data.YHTagGen;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -110,7 +110,7 @@ public class GLDecoBlocks {
 			vertical = reg.block(id + "_vertical_slab", p ->
 							new VerticalSlabBlock(prop))
 					.blockstate((ctx, pvd) -> VerticalSlabBlock.buildBlockState(ctx, pvd, side, side))
-					.tag(YHTagGen.VERTICAL_SLAB, tool).item().build()
+					.tag(GLTagGen.VERTICAL_SLAB, tool).item().build()
 					.recipe(this::genVertical).register();
 		}
 

@@ -9,7 +9,6 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLDamageTypes;
-import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
@@ -36,116 +35,116 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
 @SerialClass
 public class RumiaEntity extends SmartYoukaiEntity {
 
-	private static final EntityDimensions FALL = EntityDimensions.scalable(1.7f, 0.4f);
-	private static final ResourceLocation EXRUMIA = GensokyoLegacy.loc("ex_rumia");
+    private static final EntityDimensions FALL = EntityDimensions.scalable(1.7f, 0.4f);
+    private static final ResourceLocation EXRUMIA = GensokyoLegacy.loc("ex_rumia");
 
-	@SerialField
-	public final RumiaStateMachine state = new RumiaStateMachine(this);
+    @SerialField
+    public final RumiaStateMachine state = new RumiaStateMachine(this);
 
-	public RumiaEntity(EntityType<? extends RumiaEntity> pEntityType, Level pLevel) {
-		super(pEntityType, pLevel, 8);
-		setPersistenceRequired();
-		sources.mobAttack = GLDamageTypes::rumia;
-	}
+    public RumiaEntity(EntityType<? extends RumiaEntity> pEntityType, Level pLevel) {
+        super(pEntityType, pLevel, 8);
+        setPersistenceRequired();
+        sources.mobAttack = GLDamageTypes::rumia;
+    }
 
-	@Override
-	protected void constructTaskBoard(TaskBoard board) {
-		super.constructTaskBoard(board);
-		board.addExclusive(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
-		board.addExclusive(0, new RumiaParalyzeGoal(), GLBrains.DOWN.get());
+    @Override
+    protected void constructTaskBoard(TaskBoard board) {
+        super.constructTaskBoard(board);
+        board.addExclusive(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+        board.addExclusive(0, new RumiaParalyzeGoal(), GLBrains.DOWN.get());
 
-		board.addSensor(new ItemTemptingSensor<RumiaEntity>().setRadius(16, 8)
-				.temptedWith((self, stack) -> stack.is(YHTagGen.DANGO)).setScanRate(e -> 20));//TODO
+        board.addSensor(new ItemTemptingSensor<RumiaEntity>().setRadius(16, 8)
+                .temptedWith((self, stack) -> stack.is(YHTagGen.DANGO)).setScanRate(e -> 20));//TODO
 
-		board.addPrioritizedActivity(GLBrains.DOWN.get(), GLBrains.MEM_DOWN.get(), -100);
-	}
+        board.addPrioritizedActivity(GLBrains.DOWN.get(), GLBrains.MEM_DOWN.get(), -100);
+    }
 
-	@SuppressWarnings({"rawtypes", "unchecked", "unsafe"})
-	@Override
-	public BrainActivityGroup<? extends SmartYoukaiEntity> getFightTasks() {
-		return new BrainActivityGroup(Activity.FIGHT).priority(10).behaviours(
-				new YoukaiUpdateTargetTask(),
-				new RumiaAttackTask()
-		).onlyStartWithMemoryStatus(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT);
-	}
+    @SuppressWarnings({"rawtypes", "unchecked", "unsafe"})
+    @Override
+    public BrainActivityGroup<? extends SmartYoukaiEntity> getFightTasks() {
+        return new BrainActivityGroup(Activity.FIGHT).priority(10).behaviours(
+                new YoukaiUpdateTargetTask(),
+                new RumiaAttackTask()
+        ).onlyStartWithMemoryStatus(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT);
+    }
 
-	public static AttributeSupplier.Builder createAttributes() {
-		return YoukaiEntity.createAttributes()
-				.add(Attributes.MAX_HEALTH, 40)
-				.add(Attributes.ATTACK_DAMAGE, 6);
-	}
+    public static AttributeSupplier.Builder createAttributes() {
+        return YoukaiEntity.createAttributes()
+                .add(Attributes.MAX_HEALTH, 40)
+                .add(Attributes.ATTACK_DAMAGE, 6);
+    }
 
-	@Override
-	public YoukaiFeatureSet getFeatures() {
-		return isEx() ? YoukaiFeatureSet.BOSS : YoukaiFeatureSet.NONE;
-	}
+    @Override
+    public YoukaiFeatureSet getFeatures() {
+        return isEx() ? YoukaiFeatureSet.BOSS : YoukaiFeatureSet.NONE;
+    }
 
-	@Override
-	protected YoukaiCombatManager createCombatManager() {
-		return new RumiaCombatManager(this);
-	}
+    @Override
+    protected YoukaiCombatManager createCombatManager() {
+        return new RumiaCombatManager(this);
+    }
 
-	@Override
-	public void aiStep() {
-		super.aiStep();
-		state.tick();
-	}
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        state.tick();
+    }
 
-	public boolean isCharged() {
-		return state != null && isAlive() && state.isCharged();
-	}
+    public boolean isCharged() {
+        return state != null && isAlive() && state.isCharged();
+    }
 
-	public boolean isBlocked() {
-		return state != null && isAlive() && state.isBlocked();
-	}
+    public boolean isBlocked() {
+        return state != null && isAlive() && state.isBlocked();
+    }
 
-	public boolean isEx() {
-		return getFlag(YoukaiFlags.POWERED);
-	}
+    public boolean isEx() {
+        return getFlag(YoukaiFlags.POWERED);
+    }
 
-	public void setEx(boolean ex) {
-		var hp = getAttribute(Attributes.MAX_HEALTH);
-		var atk = getAttribute(Attributes.ATTACK_DAMAGE);
-		assert hp != null && atk != null;
-		if (ex) {
-			hp.addPermanentModifier(new AttributeModifier(EXRUMIA, 4, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-			atk.addPermanentModifier(new AttributeModifier(EXRUMIA, 1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
-		} else {
-			hp.removeModifier(EXRUMIA);
-			atk.removeModifier(EXRUMIA);
-		}
-		setHealth(getMaxHealth());
-		setFlag(YoukaiFlags.POWERED, ex);
-	}
+    public void setEx(boolean ex) {
+        var hp = getAttribute(Attributes.MAX_HEALTH);
+        var atk = getAttribute(Attributes.ATTACK_DAMAGE);
+        assert hp != null && atk != null;
+        if (ex) {
+            hp.addPermanentModifier(new AttributeModifier(EXRUMIA, 4, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+            atk.addPermanentModifier(new AttributeModifier(EXRUMIA, 1, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+        } else {
+            hp.removeModifier(EXRUMIA);
+            atk.removeModifier(EXRUMIA);
+        }
+        setHealth(getMaxHealth());
+        setFlag(YoukaiFlags.POWERED, ex);
+    }
 
-	@Override
-	public void knockback(double pStrength, double pX, double pZ) {
-		if (isCharged()) return;
-		super.knockback(pStrength, pX, pZ);
-	}
+    @Override
+    public void knockback(double pStrength, double pX, double pZ) {
+        if (isCharged()) return;
+        super.knockback(pStrength, pX, pZ);
+    }
 
-	@Override
-	protected void actuallyHurt(DamageSource source, float amount) {
-		boolean isVoid = source.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
-		if (!isVoid && !isEx() && amount >= getMaxHealth()) {
-			if (GLModConfig.SERVER.exRumiaConversion.get())
-				setEx(true);
-		}
-		if (source.getEntity() instanceof LivingEntity le) {
-			state.onHurt(le, amount);
-		}
-		super.actuallyHurt(source, amount);
-	}
+    @Override
+    protected void actuallyHurt(DamageSource source, float amount) {
+        boolean isVoid = source.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
+        if (!isVoid && !isEx() && amount >= getMaxHealth()) {
+            //if (GLModConfig.SERVER.exRumiaConversion.get())
+            setEx(true);
+        }
+        if (source.getEntity() instanceof LivingEntity le) {
+            state.onHurt(le, amount);
+        }
+        super.actuallyHurt(source, amount);
+    }
 
-	@Override
-	public EntityDimensions getDefaultDimensions(Pose pPose) {
-		return isBlocked() ? FALL.scale(getScale()) : super.getDefaultDimensions(pPose);
-	}
+    @Override
+    public EntityDimensions getDefaultDimensions(Pose pPose) {
+        return isBlocked() ? FALL.scale(getScale()) : super.getDefaultDimensions(pPose);
+    }
 
-	public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
-		if (DATA_FLAGS_ID.equals(pKey)) {
-			this.refreshDimensions();
-		}
-	}
+    public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
+        if (DATA_FLAGS_ID.equals(pKey)) {
+            this.refreshDimensions();
+        }
+    }
 
 }
