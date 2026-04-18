@@ -4,11 +4,9 @@ import dev.xkmc.gensokyolegacy.content.attachment.character.CharacterAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.CharacterConfig;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.StructureConfig;
-import dev.xkmc.gensokyolegacy.content.attachment.dream.DreamChunkAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.home.core.StructureAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiAttackCapability;
-import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRolePlayAttachment;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.capability.player.PlayerCapabilityNetworkHandler;
 import dev.xkmc.l2core.init.reg.datapack.DataMapReg;
@@ -32,12 +30,8 @@ public class GLMeta {
 
     public static final AttVal.PlayerVal<CharacterAttachment> CHAR = ATT.player("character_data",
             CharacterAttachment.class, CharacterAttachment::new, PlayerCapabilityNetworkHandler::new);
-    public static final AttVal.PlayerVal<PlayerRolePlayAttachment> ABILITY = ATT.player("role_play",
-            PlayerRolePlayAttachment.class, PlayerRolePlayAttachment::new, PlayerCapabilityNetworkHandler::new);
     public static final AttVal.CapVal<LevelChunk, StructureAttachment> STRUCTURE = ATT.entity("structure_data",
             StructureAttachment.class, StructureAttachment::new, LevelChunk.class, e -> true);
-    public static final AttVal.CapVal<LevelChunk, DreamChunkAttachment> DREAM = ATT.entity("dream_chunk",
-            DreamChunkAttachment.class, DreamChunkAttachment::new, LevelChunk.class, e -> true);
     public static final AttVal.PlayerVal<KoishiAttackCapability> KOISHI_ATTACK = ATT.player("koishi_attack",
             KoishiAttackCapability.class, KoishiAttackCapability::new, PlayerCapabilityNetworkHandler::new);
     public static final AttVal.CapVal<Frog, FrogGodCapability> FROG_GOD = ATT.entity("frog_god",

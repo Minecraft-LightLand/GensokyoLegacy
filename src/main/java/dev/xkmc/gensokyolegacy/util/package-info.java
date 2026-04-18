@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.mechanics.role.core;
+package dev.xkmc.gensokyolegacy.util;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

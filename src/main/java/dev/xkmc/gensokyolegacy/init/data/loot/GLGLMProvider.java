@@ -1,12 +1,8 @@
 package dev.xkmc.gensokyolegacy.init.data.loot;
 
-import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleCategoryLootCondition;
-import dev.xkmc.gensokyolegacy.content.mechanics.role.loot.RoleProgressLootCondition;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMechanics;
 import dev.xkmc.l2core.serial.loot.AddItemModifier;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
@@ -97,13 +93,8 @@ public class GLGLMProvider extends GlobalLootModifierProvider {
                                 EntityEquipmentPredicate.Builder.equipment()
                                         .head(ItemPredicate.Builder.item().of(GLItems.CIRNO_HAIRBAND.get())).build()
                         ).build()))
-                .or(new RoleProgressLootCondition(GLMechanics.ICE_FAIRY.get(), 1000))
+                //.or(new RoleProgressLootCondition(GLMechanics.ICE_FAIRY.get(), 1000))
                 .build();
-    }
-
-
-    private static LootItemCondition killedByYoukai() {
-        return new RoleCategoryLootCondition(RoleCategory.YOUKAI);
     }
 
     private static LootItemCondition fire(boolean fire) {

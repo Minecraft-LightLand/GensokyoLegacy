@@ -1,9 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.item.character;
 
-import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import dev.xkmc.gensokyolegacy.init.data.GLLang;
-import dev.xkmc.gensokyolegacy.init.registrate.GLMechanics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,39 +22,39 @@ import java.util.List;
 
 public class CirnoHairbandItem extends TouhouHatItem {
 
-	public CirnoHairbandItem(Properties properties) {
-		super(properties, TouhouMat.CIRNO_HAIRBAND);
-	}
+    public CirnoHairbandItem(Properties properties) {
+        super(properties, TouhouMat.CIRNO_HAIRBAND);
+    }
 
-	@Override
-	public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-		return GensokyoLegacy.loc("textures/entity/cirno.png");
-	}
+    @Override
+    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+        return GensokyoLegacy.loc("textures/entity/cirno.png");
+    }
 
-	@Override
-	protected void tick(ItemStack stack, Level level, Player player) {
-		if (player.tickCount % 20 == 0)
-			GLMechanics.ICE_FAIRY.get().startOrAdvance(player, 2000, 20);
-	}
+    @Override
+    protected void tick(ItemStack stack, Level level, Player player) {
+        //if (player.tickCount % 20 == 0)
+        //	GLMechanics.ICE_FAIRY.get().startOrAdvance(player, 2000, 20);
+    }
 
-	@Override
-	public void onHurtTarget(ItemStack head, DamageSource source, LivingEntity target) {
-		if (source.is(Tags.DamageTypes.IS_MAGIC)) {
-			target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
-			if (target.canFreeze()) {
-				target.setTicksFrozen(target.getTicksFrozen() + 120);
-			}
-		}
-	}
+    @Override
+    public void onHurtTarget(ItemStack head, DamageSource source, LivingEntity target) {
+        if (source.is(Tags.DamageTypes.IS_MAGIC)) {
+            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
+            if (target.canFreeze()) {
+                target.setTicksFrozen(target.getTicksFrozen() + 120);
+            }
+        }
+    }
 
-	@Override
-	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-		RolePlayHandler.addTooltips(list, GLLang.ITEM$USAGE_CIRNO_HAIRBAND.get(GLMechanics.ICE_FAIRY.get().getName()), null);
-	}
+    @Override
+    public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
+        //RolePlayHandler.addTooltips(list, GLLang.ITEM$USAGE_CIRNO_HAIRBAND.get(GLMechanics.ICE_FAIRY.get().getName()), null);
+    }
 
-	@Override
-	public boolean support(DyeColor color) {
-		return color == DyeColor.LIGHT_BLUE;
-	}
+    @Override
+    public boolean support(DyeColor color) {
+        return color == DyeColor.LIGHT_BLUE;
+    }
 
 }
