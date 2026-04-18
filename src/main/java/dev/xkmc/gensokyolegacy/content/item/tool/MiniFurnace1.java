@@ -134,6 +134,8 @@ public class MiniFurnace1 extends Item implements InvClickItem {
 		public Entry match(ServerPlayer sp, State state, int s0, int s1) {
 			if (recipe == null) return null;
 			ItemStack in = sp.getInventory().getItem(s0);
+			if (in.isEmpty()) return null;
+			if (!in.isStackable() && !in.getComponentsPatch().isEmpty()) return null;
 			ItemStack out = sp.getInventory().getItem(s1);
 			var opt = sp.serverLevel().getServer().getRecipeManager().byKey(recipe);
 			if (opt.isEmpty()) return null;

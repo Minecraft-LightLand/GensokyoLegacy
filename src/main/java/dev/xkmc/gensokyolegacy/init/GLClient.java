@@ -49,7 +49,7 @@ public class GLClient {
 
 	@SubscribeEvent
 	public static void addDeco(RegisterItemDecorationsEvent event) {
-		event.register(GLItems.MINI_FURNACE_1.get(), new FurnaceItemDeco());
+		//event.register(GLItems.MINI_FURNACE_1.get(), new FurnaceItemDeco());
 	}
 
 	@SubscribeEvent
