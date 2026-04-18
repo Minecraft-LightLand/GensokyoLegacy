@@ -1,18 +1,3 @@
 {
-  "values": {
-    "gensokyolegacy:cirno": {
-      "discardTime": 12000,
-      "noPlayerVanishTime": 600,
-      "respawnTime": 18000,
-      "structure": "gensokyolegacy:cirno_nest",
-      "wanderRadius": 8
-    },
-    "gensokyolegacy:hakurei_reimu": {
-      "discardTime": 12000,
-      "noPlayerVanishTime": 600,
-      "respawnTime": 24000,
-      "structure": "gensokyolegacy:hakurei_shrine",
-      "wanderRadius": 8
-    }
-  }
+  "values": {}
 }

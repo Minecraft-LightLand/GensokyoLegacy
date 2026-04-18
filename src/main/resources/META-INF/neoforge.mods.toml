@@ -22,15 +22,3 @@ type = "required"
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.${ mod_id }]]
-modId="farmersdelight"
-mandatory=true
-versionRange="${project.farmersdelight_version_range}"
-ordering="AFTER"
-side="BOTH"
-[[dependencies.${ mod_id }]]
-modId = "youkaishomecoming"
-type = "required"
-versionRange = "${project.youkaishomecoming_version_range}"
-ordering = "NONE"
-side = "BOTH"

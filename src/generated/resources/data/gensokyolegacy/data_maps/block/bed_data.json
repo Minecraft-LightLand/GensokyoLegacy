@@ -1,13 +1,3 @@
 {
-  "values": {
-    "gensokyolegacy:cirno_bed": {
-      "type": "gensokyolegacy:cirno"
-    },
-    "gensokyolegacy:donation_box": {
-      "type": "gensokyolegacy:hakurei_reimu"
-    },
-    "gensokyolegacy:reimu_bed": {
-      "type": "gensokyolegacy:hakurei_reimu"
-    }
-  }
+  "values": {}
 }

@@ -16,6 +16,7 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.loot.EntityLootGen;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.item.CreativeModeTabs;
 
 public class GLEntities {
 
@@ -33,6 +34,8 @@ public class GLEntities {
 	public static final EntityEntry<FairyIce> FAIRY_ICE;
 
 	static {
+
+		GensokyoLegacy.REGISTRATE.defaultCreativeTab(CreativeModeTabs.OP_BLOCKS);
 
 		{
 

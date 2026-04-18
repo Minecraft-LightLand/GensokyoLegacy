@@ -19,11 +19,11 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.l2core.init.reg.simple.DCReg;
-import dev.xkmc.l2core.init.reg.simple.DCVal;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Rarity;
 
@@ -49,8 +49,6 @@ public class GLItems {
     public static final ItemEntry<StructureWand> STRUCTURE_WAND;
 
     private static final DCReg DC = DCReg.of(GensokyoLegacy.REG);
-    public static final DCVal<Integer> INCENSE_DUR = DC.intVal("incense_duration");
-    public static final DCVal<Integer> INCENSE_RAD = DC.intVal("incense_radius");
 
     static {
         var reg = GensokyoLegacy.REGISTRATE;
@@ -73,6 +71,21 @@ public class GLItems {
                         p -> new FrozenFrogItem(p.stacksTo(16), FrogVariant.TEMPERATE))
                 .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/ingredient/" + ctx.getName())))
                 .register();
+
+        DEBUG_GLASSES = reg.item("debug_glasses", p -> new DebugGlasses(p.stacksTo(1)))
+                .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/debug/" + ctx.getName())))
+                .defaultLang().register();
+
+        DEBUG_WAND = reg.item("debug_wand", p -> new DebugWand(p.stacksTo(1)))
+                .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/debug/" + ctx.getName())))
+                .defaultLang().register();
+
+        STRUCTURE_WAND = reg.item("structure_wand", p -> new StructureWand(p.stacksTo(1)))
+                .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/debug/" + ctx.getName())))
+                .defaultLang().register();
+        GLBlocks.register();
+
+        reg.defaultCreativeTab(CreativeModeTabs.OP_BLOCKS);
 
         // spell cards
         {
@@ -185,18 +198,6 @@ public class GLItems {
 
         }
 
-        DEBUG_GLASSES = reg.item("debug_glasses", p -> new DebugGlasses(p.stacksTo(1)))
-                .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/debug/" + ctx.getName())))
-                .defaultLang().register();
-
-        DEBUG_WAND = reg.item("debug_wand", p -> new DebugWand(p.stacksTo(1)))
-                .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/debug/" + ctx.getName())))
-                .defaultLang().register();
-
-        STRUCTURE_WAND = reg.item("structure_wand", p -> new StructureWand(p.stacksTo(1)))
-                .model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/debug/" + ctx.getName())))
-                .defaultLang().register();
-        GLBlocks.register();
     }
 
     public static void register() {

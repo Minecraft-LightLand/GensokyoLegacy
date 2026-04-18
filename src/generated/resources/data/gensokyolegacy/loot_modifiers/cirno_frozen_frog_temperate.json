@@ -1,5 +1,5 @@
 {
-  "type": "farmersdelight:add_item",
+  "type": "l2core:add_item",
   "conditions": [
     {
       "condition": "minecraft:any_of",
@@ -21,11 +21,6 @@
               }
             }
           }
-        },
-        {
-          "condition": "gensokyolegacy:role",
-          "progress": 1000,
-          "role": "gensokyolegacy:ice_fairy"
         }
       ]
     },
