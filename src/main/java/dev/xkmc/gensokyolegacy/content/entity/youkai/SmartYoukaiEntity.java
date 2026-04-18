@@ -41,173 +41,173 @@ import java.util.Map;
 @SerialClass
 public class SmartYoukaiEntity extends YoukaiEntity implements SmartBrainOwner<SmartYoukaiEntity> {
 
-    private TaskBoard board;
+	private TaskBoard board;
 
-    public SmartYoukaiEntity(EntityType<? extends YoukaiEntity> pEntityType, Level pLevel, int maxSize) {
-        super(pEntityType, pLevel, maxSize);
-    }
+	public SmartYoukaiEntity(EntityType<? extends YoukaiEntity> pEntityType, Level pLevel, int maxSize) {
+		super(pEntityType, pLevel, maxSize);
+	}
 
-    public boolean hasPlayerNearby() {
-        return getBrain().getMemory(MemoryModuleType.NEAREST_PLAYERS)
-                .map(List::size).orElse(0) > 0;
-    }
+	public boolean hasPlayerNearby() {
+		return getBrain().getMemory(MemoryModuleType.NEAREST_PLAYERS)
+				.map(List::size).orElse(0) > 0;
+	}
 
-    public Activity getActivity() {
-        return getBrain().getActiveNonCoreActivity().orElse(Activity.IDLE);
-    }
+	public Activity getActivity() {
+		return getBrain().getActiveNonCoreActivity().orElse(Activity.IDLE);
+	}
 
-    // setup
+	// setup
 
-    @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
-        tickBrain(this);
-    }
+	@Override
+	protected void customServerAiStep() {
+		super.customServerAiStep();
+		tickBrain(this);
+	}
 
-    @Override
-    protected Brain.Provider<?> brainProvider() {
-        return new SmartBrainProvider<>(this);
-    }
+	@Override
+	protected Brain.Provider<?> brainProvider() {
+		return new SmartBrainProvider<>(this);
+	}
 
-    protected void constructTaskBoard(TaskBoard board) {
-        board.addAlways(new YoukaiFetchTargetTask<>(), GLBrains.TALK.get(), GLBrains.AT_HOME.get(), Activity.REST);
-        board.addAlways(new YoukaiSearchTargetTask<>(), Activity.IDLE, Activity.PLAY);
-        board.addAlways(new YoukaiVanishTask(), Activity.IDLE, Activity.PLAY);
-        board.addExclusive(0, new YoukaiSleepTask(), Activity.REST);
-        board.addExclusive(0, new YoukaiTalkTask<>(), GLBrains.TALK.get());
-        board.addExclusive(100, new YoukaiGoHomeTask<>(), Activity.IDLE, GLBrains.AT_HOME.get());
-        board.addExclusive(200, new YoukaiRepairHouseTask<>(), GLBrains.AT_HOME.get());
-        board.addExclusive(1100, new SetPlayerLookTarget<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
-        board.addExclusive(1200, new SetRandomLookTarget<>(), Activity.IDLE, Activity.PLAY);
+	protected void constructTaskBoard(TaskBoard board) {
+		board.addAlways(new YoukaiFetchTargetTask<>(), GLBrains.TALK.get(), GLBrains.AT_HOME.get(), Activity.REST);
+		board.addAlways(new YoukaiSearchTargetTask<>(), Activity.IDLE, Activity.PLAY);
+		board.addAlways(new YoukaiVanishTask(), Activity.IDLE, Activity.PLAY);
+		board.addExclusive(0, new YoukaiSleepTask(), Activity.REST);
+		board.addExclusive(0, new YoukaiTalkTask<>(), GLBrains.TALK.get());
+		board.addExclusive(100, new YoukaiGoHomeTask<>(), Activity.IDLE, GLBrains.AT_HOME.get());
+		board.addExclusive(200, new YoukaiRepairHouseTask<>(), GLBrains.AT_HOME.get());
+		board.addExclusive(1100, new SetPlayerLookTarget<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addExclusive(1200, new SetRandomLookTarget<>(), Activity.IDLE, Activity.PLAY);
 
-        board.addRandom(new SetRandomWalkTarget<>().speedModifier(0.8f), Activity.IDLE, Activity.PLAY);
-        board.addRandom(new YoukaiStayInRoomTask<>().speedModifier(0.8f), GLBrains.AT_HOME.get());
-        board.addRandom(new YoukaiStayNearHouseTask<>().speedModifier(0.8f)
-                .cooldownFor(e -> e.getRandom().nextInt(200, 400)), Activity.IDLE);
-        board.addRandom(new YoukaiSitTask<>().speedModifier(0.8f)
-                .cooldownFor(e -> e.getRandom().nextInt(200, 400))
-                .runFor(e -> e.getRandom().nextInt(100, 200)), GLBrains.AT_HOME.get());
-        board.addRandom(new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60)),
-                Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addRandom(new SetRandomWalkTarget<>().speedModifier(0.8f), Activity.IDLE, Activity.PLAY);
+		board.addRandom(new YoukaiStayInRoomTask<>().speedModifier(0.8f), GLBrains.AT_HOME.get());
+		board.addRandom(new YoukaiStayNearHouseTask<>().speedModifier(0.8f)
+				.cooldownFor(e -> e.getRandom().nextInt(200, 400)), Activity.IDLE);
+		board.addRandom(new YoukaiSitTask<>().speedModifier(0.8f)
+				.cooldownFor(e -> e.getRandom().nextInt(200, 400))
+				.runFor(e -> e.getRandom().nextInt(100, 200)), GLBrains.AT_HOME.get());
+		board.addRandom(new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60)),
+				Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
 
-        board.addSensor(new NearbyPlayersSensor<SmartYoukaiEntity>().setRadius(32).setScanRate(e -> 5));
-        board.addSensor(new NearbyLivingEntitySensor<SmartYoukaiEntity>().setRadius(32)
-                .setScanRate(self -> self.isAggressive() || self.hasPlayerNearby() ? 10 : 20));
-        board.addSensor(new YoukaiUpdateHomeSensor<SmartYoukaiEntity>().setScanRate(e -> 80));
+		board.addSensor(new NearbyPlayersSensor<SmartYoukaiEntity>().setRadius(32).setScanRate(e -> 5));
+		board.addSensor(new NearbyLivingEntitySensor<SmartYoukaiEntity>().setRadius(32)
+				.setScanRate(self -> self.isAggressive() || self.hasPlayerNearby() ? 10 : 20));
+		board.addSensor(new YoukaiUpdateHomeSensor<SmartYoukaiEntity>().setScanRate(e -> 80));
 
-        board.addScheduledActivity(Activity.REST, MemoryModuleType.HOME);
-        board.addScheduledActivity(GLBrains.AT_HOME.get(), MemoryModuleType.HOME);
-        board.addScheduledActivity(Activity.PLAY, null);
-        board.addScheduledActivity(Activity.IDLE, null);
-        board.addPrioritizedActivity(GLBrains.TALK.get(), GLBrains.MEM_TALK.get(), 100);
-    }
+		board.addScheduledActivity(Activity.REST, MemoryModuleType.HOME);
+		board.addScheduledActivity(GLBrains.AT_HOME.get(), MemoryModuleType.HOME);
+		board.addScheduledActivity(Activity.PLAY, null);
+		board.addScheduledActivity(Activity.IDLE, null);
+		board.addPrioritizedActivity(GLBrains.TALK.get(), GLBrains.MEM_TALK.get(), 100);
+	}
 
-    private void checkBoard() {
-        if (board == null) {
-            board = new TaskBoard();
-            constructTaskBoard(board);
-            board.build();
-        }
-    }
+	private void checkBoard() {
+		if (board == null) {
+			board = new TaskBoard();
+			constructTaskBoard(board);
+			board.build();
+		}
+	}
 
-    //brain
+	//brain
 
-    @Override
-    public final List<ExtendedSensor<? extends SmartYoukaiEntity>> getSensors() {
-        checkBoard();
-        return board.getSensors();
-    }
+	@Override
+	public final List<ExtendedSensor<? extends SmartYoukaiEntity>> getSensors() {
+		checkBoard();
+		return board.getSensors();
+	}
 
-    @Override
-    public BrainActivityGroup<? extends SmartYoukaiEntity> getCoreTasks() {
-        return BrainActivityGroup.coreTasks(
-                new LookAtTarget<>()
-                        .stopIf(LivingEntity::isSleeping)
-                        .runFor(entity -> entity.getRandom().nextIntBetweenInclusive(40, 300)),
-                new YoukaiMoveTask<>(),
-                new YoukaiSwimTask(0.8f),
-                new YoukaiSmartDoorTask<>()
-        );
-    }
+	@Override
+	public BrainActivityGroup<? extends SmartYoukaiEntity> getCoreTasks() {
+		return BrainActivityGroup.coreTasks(
+				new LookAtTarget<>()
+						.stopIf(LivingEntity::isSleeping)
+						.runFor(entity -> entity.getRandom().nextIntBetweenInclusive(40, 300)),
+				new YoukaiMoveTask<>(),
+				new YoukaiSwimTask(0.8f),
+				new YoukaiSmartDoorTask<>()
+		);
+	}
 
-    @Override
-    public BrainActivityGroup<? extends SmartYoukaiEntity> getFightTasks() {
-        return BrainActivityGroup.fightTasks(
-                new YoukaiUpdateTargetTask<>(),
-                new YoukaiAttackTask<>(16),
-                new StrafeTarget<>()
-        );
-    }
+	@Override
+	public BrainActivityGroup<? extends SmartYoukaiEntity> getFightTasks() {
+		return BrainActivityGroup.fightTasks(
+				new YoukaiUpdateTargetTask<>(),
+				new YoukaiAttackTask<>(16),
+				new StrafeTarget<>()
+		);
+	}
 
-    @Override
-    public Map<Activity, BrainActivityGroup<? extends SmartYoukaiEntity>> getAdditionalTasks() {
-        checkBoard();
-        return board.buildActivityMap();
-    }
+	@Override
+	public Map<Activity, BrainActivityGroup<? extends SmartYoukaiEntity>> getAdditionalTasks() {
+		checkBoard();
+		return board.buildActivityMap();
+	}
 
-    @Override
-    public List<Activity> getActivityPriorities() {
-        checkBoard();
-        return board.getActivityPriorities();
-    }
+	@Override
+	public List<Activity> getActivityPriorities() {
+		checkBoard();
+		return board.getActivityPriorities();
+	}
 
-    @Override
-    public @Nullable SmartBrainSchedule getSchedule() {
-        return new DefaultedSmartBrainSchedule()
-                .activityAt(10, GLBrains.AT_HOME.get())
-                .activityAt(2000, Activity.IDLE)
-                .activityAt(4000, Activity.PLAY)
-                .activityAt(8000, Activity.IDLE)
-                .activityAt(10000, GLBrains.AT_HOME.get())
-                .activityAt(12000, Activity.REST);
-    }
+	@Override
+	public @Nullable SmartBrainSchedule getSchedule() {
+		return new DefaultedSmartBrainSchedule()
+				.activityAt(10, GLBrains.AT_HOME.get())
+				.activityAt(2000, Activity.IDLE)
+				.activityAt(4000, Activity.PLAY)
+				.activityAt(8000, Activity.IDLE)
+				.activityAt(10000, GLBrains.AT_HOME.get())
+				.activityAt(12000, Activity.REST);
+	}
 
-    // misc
+	// misc
 
-    public String getBrainDebugInfo() {
-        var behaviors = getBrain().getRunningBehaviors();
-        StringBuilder ans = new StringBuilder();
-        for (var e : behaviors) {
-            if (e instanceof GroupBehaviour g) {
-                var arr = g.debugString().split(" ");
-                if (arr.length > 1)
-                    ans.append("\n-").append(arr[1]);
-            } else ans.append("\n-").append(e.debugString());
-        }
-        return getBrain().getActiveNonCoreActivity().map(Activity::getName).orElse("") + ans;
-    }
+	public String getBrainDebugInfo() {
+		var behaviors = getBrain().getRunningBehaviors();
+		StringBuilder ans = new StringBuilder();
+		for (var e : behaviors) {
+			if (e instanceof GroupBehaviour g) {
+				var arr = g.debugString().split(" ");
+				if (arr.length > 1)
+					ans.append("\n-").append(arr[1]);
+			} else ans.append("\n-").append(e.debugString());
+		}
+		return getBrain().getActiveNonCoreActivity().map(Activity::getName).orElse("") + ans;
+	}
 
-    @Override
-    public boolean mayInteract(Player player) {
-        if (!super.mayInteract(player)) return false;
-        if (level().isClientSide()) {
-            return !isSleeping() && !isAggressive();
-        }
-        var act = getActivity();
-        return act != Activity.REST && act != Activity.FIGHT;
-    }
+	@Override
+	public boolean mayInteract(Player player) {
+		if (!super.mayInteract(player)) return false;
+		if (level().isClientSide()) {
+			return !isSleeping() && !isAggressive();
+		}
+		var act = getActivity();
+		return act != Activity.REST && act != Activity.FIGHT;
+	}
 
-    @Override
-    public void setTalkTo(@Nullable ServerPlayer player, int time) {
-        if (player == null) {
-            BrainUtils.clearMemory(this, GLBrains.MEM_TALK.get());
-            return;
-        }
-        getNavigation().stop();
-        BrainUtils.clearMemory(this, MemoryModuleType.WALK_TARGET);
-        if (time < 0)
-            BrainUtils.setMemory(this, GLBrains.MEM_TALK.get(), player);
-        else getBrain().setMemoryWithExpiry(GLBrains.MEM_TALK.get(), player, time);
-    }
+	@Override
+	public void setTalkTo(@Nullable ServerPlayer player, int time) {
+		if (player == null) {
+			BrainUtils.clearMemory(this, GLBrains.MEM_TALK.get());
+			return;
+		}
+		getNavigation().stop();
+		BrainUtils.clearMemory(this, MemoryModuleType.WALK_TARGET);
+		if (time < 0)
+			BrainUtils.setMemory(this, GLBrains.MEM_TALK.get(), player);
+		else getBrain().setMemoryWithExpiry(GLBrains.MEM_TALK.get(), player, time);
+	}
 
-    @Override
-    public boolean isTarget(LivingEntity e) {
-        return targets.contains(e);
-    }
+	@Override
+	public boolean isTarget(LivingEntity e) {
+		return targets.contains(e);
+	}
 
-    @Override
-    public AABB getBoundingBoxForDanmaku() {
-        return getBoundingBox();
-    }
+	@Override
+	public AABB getBoundingBoxForDanmaku() {
+		return getBoundingBox();
+	}
 
 }

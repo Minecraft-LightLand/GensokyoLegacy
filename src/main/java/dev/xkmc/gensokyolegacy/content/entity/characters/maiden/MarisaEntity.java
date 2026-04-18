@@ -13,38 +13,38 @@ import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class MarisaEntity extends MaidenEntity implements GeoEntity {
-    protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
+	protected static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
 
-    private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
-    public MarisaEntity(EntityType<? extends MaidenEntity> pEntityType, Level pLevel) {
-        super(pEntityType, pLevel);
-    }
+	public MarisaEntity(EntityType<? extends MaidenEntity> pEntityType, Level pLevel) {
+		super(pEntityType, pLevel);
+	}
 
-    @Override
-    public YoukaiFeatureSet getFeatures() {
-        return YoukaiFeatureSet.MAIDEN;
-    }
+	@Override
+	public YoukaiFeatureSet getFeatures() {
+		return YoukaiFeatureSet.MAIDEN;
+	}
 
-    @Override
-    protected void onKilledBy(LivingEntity le, DamageSource source) {
-        super.onKilledBy(le, source);
-        if (!source.is(DanmakuDamageTypes.DANMAKU_TYPE)) {
-            TouhouConditionalSpawns.triggetYukari(le, position());
-        }
-    }
+	@Override
+	protected void onKilledBy(LivingEntity le, DamageSource source) {
+		super.onKilledBy(le, source);
+		if (!source.is(DanmakuDamageTypes.DANMAKU_TYPE)) {
+			TouhouConditionalSpawns.triggetYukari(le, position());
+		}
+	}
 
-    protected <E extends MarisaEntity> PlayState idleAnimController(final AnimationState<E> event) {
-        return event.setAndContinue(IDLE);
-    }
+	protected <E extends MarisaEntity> PlayState idleAnimController(final AnimationState<E> event) {
+		return event.setAndContinue(IDLE);
+	}
 
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "Flying", 5, this::idleAnimController));
-    }
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(new AnimationController<>(this, "Flying", 5, this::idleAnimController));
+	}
 
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return this.geoCache;
-    }
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
+	}
 }

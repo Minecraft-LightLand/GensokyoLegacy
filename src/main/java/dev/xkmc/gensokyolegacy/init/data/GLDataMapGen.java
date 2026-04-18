@@ -5,8 +5,8 @@ import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
 
 public class GLDataMapGen {
 
-    public static void dataMapGen(RegistrateDataMapProvider pvd) {
-        GLStructureGen.dataMap(pvd);
-    }
+	public static void dataMapGen(RegistrateDataMapProvider pvd) {
+		GLStructureGen.dataMap(pvd);
+	}
 
 }

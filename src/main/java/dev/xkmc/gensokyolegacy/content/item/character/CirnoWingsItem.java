@@ -8,13 +8,13 @@ import java.util.List;
 
 public class CirnoWingsItem extends TouhouWingsItem {
 
-    public CirnoWingsItem(Properties pProperties) {
-        super(pProperties);
-    }
+	public CirnoWingsItem(Properties pProperties) {
+		super(pProperties);
+	}
 
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-        //list.add(GLLang.ITEM$USAGE_FAIRY_WINGS.get(GLMechanics.ICE_FAIRY.get().getName()));
-    }
+	@Override
+	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
+		//list.add(GLLang.ITEM$USAGE_FAIRY_WINGS.get(GLMechanics.ICE_FAIRY.get().getName()));
+	}
 
 }

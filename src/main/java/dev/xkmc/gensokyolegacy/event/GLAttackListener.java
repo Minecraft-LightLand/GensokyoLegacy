@@ -16,28 +16,28 @@ import net.minecraft.world.item.ItemStack;
 public class GLAttackListener implements AttackListener {
 
 
-    @Override
-    public void onDamage(DamageData.Defence data) {
-        if (data.getSource().is(DanmakuDamageTypes.DANMAKU) && data.getSource().getEntity() instanceof YoukaiEntity) {
-            LivingEntity le = data.getTarget();
-            double min = le instanceof Player ?
-                    GLModConfig.SERVER.danmakuPlayerPHPDamage.get() :
-                    GLModConfig.SERVER.danmakuMinPHPDamage.get();
-            data.addDealtModifier(DamageModifier.nonlinearMiddle(460,
-                    f -> Math.max(f, le.getMaxHealth() * (float) min),
-                    GensokyoLegacy.loc("youkai_damage")
-            ));
-        }
-    }
+	@Override
+	public void onDamage(DamageData.Defence data) {
+		if (data.getSource().is(DanmakuDamageTypes.DANMAKU) && data.getSource().getEntity() instanceof YoukaiEntity) {
+			LivingEntity le = data.getTarget();
+			double min = le instanceof Player ?
+					GLModConfig.SERVER.danmakuPlayerPHPDamage.get() :
+					GLModConfig.SERVER.danmakuMinPHPDamage.get();
+			data.addDealtModifier(DamageModifier.nonlinearMiddle(460,
+					f -> Math.max(f, le.getMaxHealth() * (float) min),
+					GensokyoLegacy.loc("youkai_damage")
+			));
+		}
+	}
 
-    @Override
-    public void onDamageFinalized(DamageData.DefenceMax data) {
-        var attacker = data.getAttacker();
-        if (attacker == null) return;
-        ItemStack head = attacker.getItemBySlot(EquipmentSlot.HEAD);
-        if (head.getItem() instanceof TouhouHatItem hat) {
-            hat.onHurtTarget(head, data.getSource(), data.getTarget());
-        }
-    }
+	@Override
+	public void onDamageFinalized(DamageData.DefenceMax data) {
+		var attacker = data.getAttacker();
+		if (attacker == null) return;
+		ItemStack head = attacker.getItemBySlot(EquipmentSlot.HEAD);
+		if (head.getItem() instanceof TouhouHatItem hat) {
+			hat.onHurtTarget(head, data.getSource(), data.getTarget());
+		}
+	}
 
 }

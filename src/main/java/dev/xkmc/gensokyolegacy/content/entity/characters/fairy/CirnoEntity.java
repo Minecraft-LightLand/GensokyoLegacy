@@ -29,79 +29,79 @@ import java.util.List;
 @SerialClass
 public class CirnoEntity extends FairyEntity {
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return GeneralYoukaiEntity.createAttributes()
-                .add(Attributes.MAX_HEALTH, 40)
-                .add(Attributes.ATTACK_DAMAGE, 6);
-    }
+	public static AttributeSupplier.Builder createAttributes() {
+		return GeneralYoukaiEntity.createAttributes()
+				.add(Attributes.MAX_HEALTH, 40)
+				.add(Attributes.ATTACK_DAMAGE, 6);
+	}
 
-    public CirnoEntity(EntityType<? extends CirnoEntity> type, Level level) {
-        super(type, level);
-    }
+	public CirnoEntity(EntityType<? extends CirnoEntity> type, Level level) {
+		super(type, level);
+	}
 
-    @Override
-    public boolean canFreeze() {
-        return false;
-    }
+	@Override
+	public boolean canFreeze() {
+		return false;
+	}
 
-    @Override
-    protected YoukaiCombatManager createCombatManager() {
-        return new CirnoCombatManager(this);
-    }
+	@Override
+	protected YoukaiCombatManager createCombatManager() {
+		return new CirnoCombatManager(this);
+	}
 
-    @Override
-    protected List<AbstractYoukaiModule> createModules() {
-        return List.of(
-                new HomeModule(this),
-                new FeedModule(this),
-                new TalkModule(this),
-                new CountPickupModule(this, e -> e.getItem() instanceof FrozenFrogItem)
-        );
-    }
+	@Override
+	protected List<AbstractYoukaiModule> createModules() {
+		return List.of(
+				new HomeModule(this),
+				new FeedModule(this),
+				new TalkModule(this),
+				new CountPickupModule(this, e -> e.getItem() instanceof FrozenFrogItem)
+		);
+	}
 
-    @Override
-    protected void constructTaskBoard(TaskBoard board) {
-        super.constructTaskBoard(board);
-        board.addExclusive(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
-        board.addExclusive(200, new ItemPickupTask(), Activity.IDLE, Activity.PLAY);
-        board.addExclusive(250, new YoukaiHuntTask(6), GLBrains.HUNT.get());
+	@Override
+	protected void constructTaskBoard(TaskBoard board) {
+		super.constructTaskBoard(board);
+		board.addExclusive(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addExclusive(200, new ItemPickupTask(), Activity.IDLE, Activity.PLAY);
+		board.addExclusive(250, new YoukaiHuntTask(6), GLBrains.HUNT.get());
 
-        board.addRandom(new YoukaiCraftTask<>(this::doCraft, 60, 12000), GLBrains.AT_HOME.get());
+		board.addRandom(new YoukaiCraftTask<>(this::doCraft, 60, 12000), GLBrains.AT_HOME.get());
 
-        board.addBehaviorActivity(YoukaiSearchTargetTask.class, GLBrains.HUNT.get());
+		board.addBehaviorActivity(YoukaiSearchTargetTask.class, GLBrains.HUNT.get());
 
-        board.addSensor(new ItemTemptingSensor<CirnoEntity>().setRadius(16, 8)
-                .temptedWith((self, stack) -> stack.is(Items.CAKE))//TODO cirno food
-                .setScanRate(e -> 20));
+		board.addSensor(new ItemTemptingSensor<CirnoEntity>().setRadius(16, 8)
+				.temptedWith((self, stack) -> stack.is(Items.CAKE))//TODO cirno food
+				.setScanRate(e -> 20));
 
-        board.addSensor(new NearbyItemsSensor<CirnoEntity>().setRadius(18, 6)
-                .setScanRate(e -> e.playOrHunt() ? 20 : 60));
-        board.addSensor(new YoukaiFindPreySensor<>(CirnoEntity::playOrHunt));
+		board.addSensor(new NearbyItemsSensor<CirnoEntity>().setRadius(18, 6)
+				.setScanRate(e -> e.playOrHunt() ? 20 : 60));
+		board.addSensor(new YoukaiFindPreySensor<>(CirnoEntity::playOrHunt));
 
-        board.addPrioritizedActivity(GLBrains.HUNT.get(), GLBrains.MEM_PREY.get(), 200);
-    }
+		board.addPrioritizedActivity(GLBrains.HUNT.get(), GLBrains.MEM_PREY.get(), 200);
+	}
 
-    private boolean playOrHunt() {
-        var a = getActivity();
-        return a == Activity.PLAY || a == GLBrains.HUNT.get();
-    }
+	private boolean playOrHunt() {
+		var a = getActivity();
+		return a == Activity.PLAY || a == GLBrains.HUNT.get();
+	}
 
-    private ItemStack doCraft(boolean simulate) {
-        var module = getModule(CountPickupModule.class);
-        if (module.isEmpty()) return ItemStack.EMPTY;
-        if (module.get().getCount() < 3) return ItemStack.EMPTY;
-        if (!simulate) {
-            module.get().consume(3);
-        }
-        return GLItems.FAIRY_ICE_CRYSTAL.asStack();
-    }
+	private ItemStack doCraft(boolean simulate) {
+		var module = getModule(CountPickupModule.class);
+		if (module.isEmpty()) return ItemStack.EMPTY;
+		if (module.get().getCount() < 3) return ItemStack.EMPTY;
+		if (!simulate) {
+			module.get().consume(3);
+		}
+		return GLItems.FAIRY_ICE_CRYSTAL.asStack();
+	}
 
-    @Override
-    public String getBrainDebugInfo() {
-        int frogPickup = getModule(CountPickupModule.class)
-                .map(CountPickupModule::getCount).orElse(0);
-        if (frogPickup == 0) return super.getBrainDebugInfo();
-        return super.getBrainDebugInfo() + "\n" + frogPickup + " frogs";
-    }
+	@Override
+	public String getBrainDebugInfo() {
+		int frogPickup = getModule(CountPickupModule.class)
+				.map(CountPickupModule::getCount).orElse(0);
+		if (frogPickup == 0) return super.getBrainDebugInfo();
+		return super.getBrainDebugInfo() + "\n" + frogPickup + " frogs";
+	}
 
 }

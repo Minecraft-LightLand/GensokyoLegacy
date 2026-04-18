@@ -35,83 +35,83 @@ import java.util.Locale;
 
 public class GLBlocks {
 
-    public enum Beds {
-        CIRNO(Blocks.BLUE_BED),
-        RUMIA(Blocks.BLUE_BED),
-        REIMU(Blocks.RED_BED);
+	public enum Beds {
+		CIRNO(Blocks.BLUE_BED),
+		RUMIA(Blocks.BLUE_BED),
+		REIMU(Blocks.RED_BED);
 
-        private final BedBlock template;
-        private final DyeColor wool;
+		private final BedBlock template;
+		private final DyeColor wool;
 
-        Beds(Block template) {
-            this.template = (BedBlock) template;
-            this.wool = this.template.getColor();
-        }
+		Beds(Block template) {
+			this.template = (BedBlock) template;
+			this.wool = this.template.getColor();
+		}
 
-        public YoukaiBedBlock get() {
-            return BEDS[ordinal()].get();
-        }
+		public YoukaiBedBlock get() {
+			return BEDS[ordinal()].get();
+		}
 
-        public Holder<Block> holder() {
-            return BEDS[ordinal()];
-        }
-    }
+		public Holder<Block> holder() {
+			return BEDS[ordinal()];
+		}
+	}
 
-    public static final BlockEntry<DonationBoxBlock> DONATION_BOX;
-    public static final BlockEntityEntry<DonationBoxBlockEntity> DONATION_BOX_BE;
+	public static final BlockEntry<DonationBoxBlock> DONATION_BOX;
+	public static final BlockEntityEntry<DonationBoxBlockEntity> DONATION_BOX_BE;
 
 
-    public static final BlockEntry<DelegateBlock> BOOKS;
+	public static final BlockEntry<DelegateBlock> BOOKS;
 
-    public static final BlockEntry<YoukaiBedBlock>[] BEDS;
-    public static final BlockEntityEntry<YoukaiBedBlockEntity> BE_BED;
+	public static final BlockEntry<YoukaiBedBlock>[] BEDS;
+	public static final BlockEntityEntry<YoukaiBedBlockEntity> BE_BED;
 
-    static {
+	static {
 
-        DONATION_BOX = GensokyoLegacy.REGISTRATE.block("donation_box", p -> new DonationBoxBlock(
-                        BlockBehaviour.Properties.of().noLootTable().strength(2.0F).sound(SoundType.WOOD)
-                                .mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS),
-                        BlockTemplates.HORIZONTAL, new DoubleBlockHorizontal(), new DonationShape(), DonationBoxBlock.TE
-                )).blockstate(DonationBoxBlock::buildStates)
-                .simpleItem()
-                .loot((pvd, block) -> pvd.add(block, LootTable.lootTable()))
-                .register();
+		DONATION_BOX = GensokyoLegacy.REGISTRATE.block("donation_box", p -> new DonationBoxBlock(
+						BlockBehaviour.Properties.of().noLootTable().strength(2.0F).sound(SoundType.WOOD)
+								.mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS),
+						BlockTemplates.HORIZONTAL, new DoubleBlockHorizontal(), new DonationShape(), DonationBoxBlock.TE
+				)).blockstate(DonationBoxBlock::buildStates)
+				.simpleItem()
+				.loot((pvd, block) -> pvd.add(block, LootTable.lootTable()))
+				.register();
 
-        DONATION_BOX_BE = GensokyoLegacy.REGISTRATE.blockEntity("donation_box", DonationBoxBlockEntity::new)
-                .validBlock(DONATION_BOX)
-                .register();
+		DONATION_BOX_BE = GensokyoLegacy.REGISTRATE.blockEntity("donation_box", DonationBoxBlockEntity::new)
+				.validBlock(DONATION_BOX)
+				.register();
 
-        BOOKS = GensokyoLegacy.REGISTRATE.block("book_pile", p -> DelegateBlock.newBaseBlock(
-                        BlockBehaviour.Properties.of().noOcclusion().strength(0F)
-                                .mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)
-                        , BlockTemplates.HORIZONTAL, new BooksBlock()))
-                .blockstate(BooksBlock::buildStates).loot(BooksBlock::buildLoot).simpleItem()
-                .recipe((ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapelessRecipeBuilder.shapeless(
-                        RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
-                .register();
+		BOOKS = GensokyoLegacy.REGISTRATE.block("book_pile", p -> DelegateBlock.newBaseBlock(
+						BlockBehaviour.Properties.of().noOcclusion().strength(0F)
+								.mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)
+						, BlockTemplates.HORIZONTAL, new BooksBlock()))
+				.blockstate(BooksBlock::buildStates).loot(BooksBlock::buildLoot).simpleItem()
+				.recipe((ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapelessRecipeBuilder.shapeless(
+						RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
+				.register();
 
-        BEDS = new BlockEntry[Beds.values().length];
-        for (var e : Beds.values()) {
-            String name = e.name().toLowerCase(Locale.ROOT);
-            BEDS[e.ordinal()] = GensokyoLegacy.REGISTRATE.block(name + "_bed", YoukaiBedBlock::new)
-                    .initialProperties(() -> e.template)
-                    .blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(), pvd.models().getExistingFile(pvd.mcLoc("block/bed"))))
-                    .item(BedItem::new)
-                    .model((ctx, pvd) -> pvd.withExistingParent(ctx.getName(), pvd.mcLoc("item/template_bed"))
-                            .texture("particle", pvd.mcLoc("block/" + e.wool.getName() + "_wool")))
-                    .clientExtension(() -> () -> GLBEWLR.EXTENSIONS)
-                    .build()
-                    .loot(YoukaiBedBlock::buildLoot)
-                    .register();
-        }
-        BE_BED = GensokyoLegacy.REGISTRATE.blockEntity("youkai_bed", YoukaiBedBlockEntity::new)
-                .renderer(() -> YoukaiBedRenderer::new)
-                .validBlocks(BEDS)
-                .register();
-    }
+		BEDS = new BlockEntry[Beds.values().length];
+		for (var e : Beds.values()) {
+			String name = e.name().toLowerCase(Locale.ROOT);
+			BEDS[e.ordinal()] = GensokyoLegacy.REGISTRATE.block(name + "_bed", YoukaiBedBlock::new)
+					.initialProperties(() -> e.template)
+					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(), pvd.models().getExistingFile(pvd.mcLoc("block/bed"))))
+					.item(BedItem::new)
+					.model((ctx, pvd) -> pvd.withExistingParent(ctx.getName(), pvd.mcLoc("item/template_bed"))
+							.texture("particle", pvd.mcLoc("block/" + e.wool.getName() + "_wool")))
+					.clientExtension(() -> () -> GLBEWLR.EXTENSIONS)
+					.build()
+					.loot(YoukaiBedBlock::buildLoot)
+					.register();
+		}
+		BE_BED = GensokyoLegacy.REGISTRATE.blockEntity("youkai_bed", YoukaiBedBlockEntity::new)
+				.renderer(() -> YoukaiBedRenderer::new)
+				.validBlocks(BEDS)
+				.register();
+	}
 
-    public static void register() {
+	public static void register() {
 
-    }
+	}
 
 }

@@ -2,8 +2,13 @@ package dev.xkmc.gensokyolegacy.content.attachment.home.custom;
 
 public class ClusterBitSet {
 
-	private boolean[][][] data;
-	private int x0, y0, z0, dx, dy, dz;
+	private final boolean[][][] data;
+	private final int x0;
+	private final int y0;
+	private final int z0;
+	private final int dx;
+	private final int dy;
+	private final int dz;
 
 	public ClusterBitSet(RoomData room) {
 		x0 = room.bound.minX();

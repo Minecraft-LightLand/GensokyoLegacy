@@ -20,29 +20,29 @@ import java.util.List;
 
 public class RumiaHairbandItem extends TouhouHatItem {
 
-    public RumiaHairbandItem(Properties properties) {
-        super(properties, TouhouMat.RUMIA_HAIRBAND);
-    }
+	public RumiaHairbandItem(Properties properties) {
+		super(properties, TouhouMat.RUMIA_HAIRBAND);
+	}
 
-    @Override
-    protected void addModifiers(ItemAttributeModifiers.Builder builder) {
-        builder.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(GensokyoLegacy.loc("rumia_hairband"), 0.25,
-                AttributeModifier.Operation.ADD_MULTIPLIED_BASE), EquipmentSlotGroup.HEAD);
-    }
+	@Override
+	protected void addModifiers(ItemAttributeModifiers.Builder builder) {
+		builder.add(Attributes.ATTACK_DAMAGE, new AttributeModifier(GensokyoLegacy.loc("rumia_hairband"), 0.25,
+				AttributeModifier.Operation.ADD_MULTIPLIED_BASE), EquipmentSlotGroup.HEAD);
+	}
 
-    @Override
-    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-        return GensokyoLegacy.loc("textures/entity/rumia.png");
-    }
+	@Override
+	public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+		return GensokyoLegacy.loc("textures/entity/rumia.png");
+	}
 
-    @Override
-    protected void tick(ItemStack stack, Level level, Player player) {
-        //	if (player.tickCount % 20 == 0) GLMechanics.RUMIA.get().startOrAdvance(player, 2000, 20);
-    }
+	@Override
+	protected void tick(ItemStack stack, Level level, Player player) {
+		//	if (player.tickCount % 20 == 0) GLMechanics.RUMIA.get().startOrAdvance(player, 2000, 20);
+	}
 
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-        //RolePlayHandler.addTooltips(list, GLLang.ITEM$OBTAIN_RUMIA_HAIRBAND.get(), GLLang.ITEM$USAGE_RUMIA_HAIRBAND.get(GLMechanics.RUMIA.get().getName()));
-    }
+	@Override
+	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
+		//RolePlayHandler.addTooltips(list, GLLang.ITEM$OBTAIN_RUMIA_HAIRBAND.get(), GLLang.ITEM$USAGE_RUMIA_HAIRBAND.get(GLMechanics.RUMIA.get().getName()));
+	}
 
 }

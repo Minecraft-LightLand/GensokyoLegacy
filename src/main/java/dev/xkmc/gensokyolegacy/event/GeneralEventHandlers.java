@@ -18,29 +18,29 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 @EventBusSubscriber(modid = GensokyoLegacy.MODID)
 public class GeneralEventHandlers {
 
-    @SubscribeEvent
-    public static void onShieldBlock(LivingShieldBlockEvent event) {
-        if (event.getDamageSource().is(GLDamageTypes.KOISHI)) {
-            if (event.getEntity() instanceof Player player) {
-                GLMeta.KOISHI_ATTACK.type().getOrCreate(player).onBlock(player);
-            }
-        }
-    }
+	@SubscribeEvent
+	public static void onShieldBlock(LivingShieldBlockEvent event) {
+		if (event.getDamageSource().is(GLDamageTypes.KOISHI)) {
+			if (event.getEntity() instanceof Player player) {
+				GLMeta.KOISHI_ATTACK.type().getOrCreate(player).onBlock(player);
+			}
+		}
+	}
 
-    @SubscribeEvent
-    public static void startTracking(PlayerEvent.StartTracking event) {
-        if (event.getTarget() instanceof Frog frog) {
-            FrogGodCapability.startTracking(frog, event.getEntity());
-        }
-    }
+	@SubscribeEvent
+	public static void startTracking(PlayerEvent.StartTracking event) {
+		if (event.getTarget() instanceof Frog frog) {
+			FrogGodCapability.startTracking(frog, event.getEntity());
+		}
+	}
 
-    @SubscribeEvent
-    public static void onDanmakuDamageType(DanmakuDamageEvent event) {
-        var le = event.getUser();
-        ItemStack stack = le.getItemBySlot(EquipmentSlot.HEAD);
-        if (stack.getItem() instanceof TouhouHatItem hat) {
-            event.setSource(hat.modifyDamageType(stack, le, event.getBullet(), event.getSource()));
-        }
-    }
+	@SubscribeEvent
+	public static void onDanmakuDamageType(DanmakuDamageEvent event) {
+		var le = event.getUser();
+		ItemStack stack = le.getItemBySlot(EquipmentSlot.HEAD);
+		if (stack.getItem() instanceof TouhouHatItem hat) {
+			event.setSource(hat.modifyDamageType(stack, le, event.getBullet(), event.getSource()));
+		}
+	}
 
 }

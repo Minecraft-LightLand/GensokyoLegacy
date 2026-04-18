@@ -36,7 +36,8 @@ public class CustomHomeData {
 	}
 
 	public void tick(CustomHomeHolder holder) {
-		if (rootPos == null || room == null) return;
+		if (rootPos == null || room == null) {
+		}
 	}
 
 	public BlockPos getRoot() {

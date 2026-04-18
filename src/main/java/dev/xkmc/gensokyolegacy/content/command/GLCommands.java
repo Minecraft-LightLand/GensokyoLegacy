@@ -12,17 +12,17 @@ import net.neoforged.neoforge.event.RegisterCommandsEvent;
 @EventBusSubscriber(modid = GensokyoLegacy.MODID)
 public class GLCommands {
 
-    @SubscribeEvent
-    public static void register(RegisterCommandsEvent event) {
-    }
+	@SubscribeEvent
+	public static void register(RegisterCommandsEvent event) {
+	}
 
 
-    protected static LiteralArgumentBuilder<CommandSourceStack> literal(String str) {
-        return LiteralArgumentBuilder.literal(str);
-    }
+	protected static LiteralArgumentBuilder<CommandSourceStack> literal(String str) {
+		return LiteralArgumentBuilder.literal(str);
+	}
 
-    protected static <T> RequiredArgumentBuilder<CommandSourceStack, T> argument(String name, ArgumentType<T> type) {
-        return RequiredArgumentBuilder.argument(name, type);
-    }
+	protected static <T> RequiredArgumentBuilder<CommandSourceStack, T> argument(String name, ArgumentType<T> type) {
+		return RequiredArgumentBuilder.argument(name, type);
+	}
 
 }

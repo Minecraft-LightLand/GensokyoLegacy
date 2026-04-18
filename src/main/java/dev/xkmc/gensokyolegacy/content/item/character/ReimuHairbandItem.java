@@ -18,23 +18,23 @@ import java.util.List;
 
 public class ReimuHairbandItem extends TouhouHatItem {
 
-    public ReimuHairbandItem(Properties properties) {
-        super(properties, TouhouMat.REIMU_HAIRBAND);
-    }
+	public ReimuHairbandItem(Properties properties) {
+		super(properties, TouhouMat.REIMU_HAIRBAND);
+	}
 
-    @Override
-    public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
-        return GensokyoLegacy.loc("textures/entity/reimu.png");
-    }
+	@Override
+	public @Nullable ResourceLocation getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, ArmorMaterial.Layer layer, boolean innerModel) {
+		return GensokyoLegacy.loc("textures/entity/reimu.png");
+	}
 
-    @Override
-    public DamageSource modifyDamageType(ItemStack stack, LivingEntity le, IDanmakuEntity danmaku, DamageSource type) {
-        return DanmakuDamageTypes.abyssal(danmaku);
-    }
+	@Override
+	public DamageSource modifyDamageType(ItemStack stack, LivingEntity le, IDanmakuEntity danmaku, DamageSource type) {
+		return DanmakuDamageTypes.abyssal(danmaku);
+	}
 
-    @Override
-    public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
-        //RolePlayHandler.addTooltips(list, GLLang.ITEM$OBTAIN_REIMU_HAIRBAND.get(), GLLang.ITEM$USAGE_REIMU_HAIRBAND.get());
-    }
+	@Override
+	public void appendHoverText(ItemStack stack, TooltipContext level, List<Component> list, TooltipFlag flag) {
+		//RolePlayHandler.addTooltips(list, GLLang.ITEM$OBTAIN_REIMU_HAIRBAND.get(), GLLang.ITEM$USAGE_REIMU_HAIRBAND.get());
+	}
 
 }

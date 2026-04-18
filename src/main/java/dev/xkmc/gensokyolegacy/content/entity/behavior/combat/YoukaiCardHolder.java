@@ -24,93 +24,93 @@ import org.jetbrains.annotations.Nullable;
 
 public record YoukaiCardHolder(YoukaiEntity self) implements CardHolder {
 
-    private Vec3 position() {
-        return self.position();
-    }
+	private Vec3 position() {
+		return self.position();
+	}
 
-    @Nullable
-    private LivingEntity getTarget() {
-        var target = self.getTarget();
-        if (target == null || !self.targets.isValidTarget(target)) {
-            if (self instanceof SmartYoukaiEntity smart) {
-                if (BrainUtils.hasMemory(smart, GLBrains.MEM_PREY.get())) {
-                    return BrainUtils.getMemory(smart, GLBrains.MEM_PREY.get());
-                }
-            }
-            return null;
-        }
-        return target;
-    }
+	@Nullable
+	private LivingEntity getTarget() {
+		var target = self.getTarget();
+		if (target == null || !self.targets.isValidTarget(target)) {
+			if (self instanceof SmartYoukaiEntity smart) {
+				if (BrainUtils.hasMemory(smart, GLBrains.MEM_PREY.get())) {
+					return BrainUtils.getMemory(smart, GLBrains.MEM_PREY.get());
+				}
+			}
+			return null;
+		}
+		return target;
+	}
 
-    private Level level() {
-        return self.level();
-    }
+	private Level level() {
+		return self.level();
+	}
 
-    private float getDamage() {
-        return (float) self.getAttributeValue(Attributes.ATTACK_DAMAGE);
-    }
+	private float getDamage() {
+		return (float) self.getAttributeValue(Attributes.ATTACK_DAMAGE);
+	}
 
 
-    @Override
-    public DamageSource getDanmakuDamageSource(IDanmakuEntity danmaku) {
-        if (self.spellCard != null) return self.spellCard.card.getDanmakuDamageSource(danmaku);
-        return DanmakuDamageTypes.danmaku(danmaku);
-    }
+	@Override
+	public DamageSource getDanmakuDamageSource(IDanmakuEntity danmaku) {
+		if (self.spellCard != null) return self.spellCard.card.getDanmakuDamageSource(danmaku);
+		return DanmakuDamageTypes.danmaku(danmaku);
+	}
 
-    @Override
-    public Vec3 center() {
-        return position().add(0, self.getBbHeight() / 2, 0);
-    }
+	@Override
+	public Vec3 center() {
+		return position().add(0, self.getBbHeight() / 2, 0);
+	}
 
-    @Override
-    public Vec3 forward() {
-        var target = target();
-        if (target != null) {
-            return target.subtract(center()).normalize();
-        }
-        return self.getForward();
-    }
+	@Override
+	public Vec3 forward() {
+		var target = target();
+		if (target != null) {
+			return target.subtract(center()).normalize();
+		}
+		return self.getForward();
+	}
 
-    @Override
-    public @Nullable Vec3 target() {
-        var le = getTarget();
-        if (le == null) return null;
-        return le.position().add(0, le.getBbHeight() / 2, 0);
-    }
+	@Override
+	public @Nullable Vec3 target() {
+		var le = getTarget();
+		if (le == null) return null;
+		return le.position().add(0, le.getBbHeight() / 2, 0);
+	}
 
-    @Override
-    public @Nullable Vec3 targetVelocity() {
-        var le = getTarget();
-        if (le == null) return null;
-        return le.getDeltaMovement();
-    }
+	@Override
+	public @Nullable Vec3 targetVelocity() {
+		var le = getTarget();
+		if (le == null) return null;
+		return le.getDeltaMovement();
+	}
 
-    @Override
-    public RandomSource random() {
-        return self.getRandom();
-    }
+	@Override
+	public RandomSource random() {
+		return self.getRandom();
+	}
 
-    @Override
-    public ItemBulletEntity prepareDanmaku(int life, Vec3 vec, DanmakuBullet type, DyeColor color) {
-        ItemBulletEntity danmaku = new ItemBulletEntity(DanmakuEntities.ITEM_DANMAKU.get(), self, level());
-        danmaku.setPos(center());
-        danmaku.setItem(type.get(color).asStack());
-        danmaku.setup(getDamage(), life, true, true, vec);
-        return danmaku;
-    }
+	@Override
+	public ItemBulletEntity prepareDanmaku(int life, Vec3 vec, DanmakuBullet type, DyeColor color) {
+		ItemBulletEntity danmaku = new ItemBulletEntity(DanmakuEntities.ITEM_DANMAKU.get(), self, level());
+		danmaku.setPos(center());
+		danmaku.setItem(type.get(color).asStack());
+		danmaku.setup(getDamage(), life, true, true, vec);
+		return danmaku;
+	}
 
-    @Override
-    public ItemLaserEntity prepareLaser(int life, Vec3 pos, Vec3 vec, float len, DanmakuLaser type, DyeColor color) {
-        ItemLaserEntity danmaku = new ItemLaserEntity(DanmakuEntities.ITEM_LASER.get(), self, level());
-        danmaku.setItem(type.get(color).asStack());
-        danmaku.setup(getDamage(), life, len, true, vec);
-        danmaku.setPos(pos);
-        return danmaku;
-    }
+	@Override
+	public ItemLaserEntity prepareLaser(int life, Vec3 pos, Vec3 vec, float len, DanmakuLaser type, DyeColor color) {
+		ItemLaserEntity danmaku = new ItemLaserEntity(DanmakuEntities.ITEM_LASER.get(), self, level());
+		danmaku.setItem(type.get(color).asStack());
+		danmaku.setup(getDamage(), life, len, true, vec);
+		danmaku.setPos(pos);
+		return danmaku;
+	}
 
-    @Override
-    public void shoot(SimplifiedProjectile danmaku) {
-        level().addFreshEntity(danmaku);
-    }
+	@Override
+	public void shoot(SimplifiedProjectile danmaku) {
+		level().addFreshEntity(danmaku);
+	}
 
 }

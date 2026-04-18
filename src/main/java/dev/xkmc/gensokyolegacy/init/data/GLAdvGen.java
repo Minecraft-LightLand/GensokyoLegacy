@@ -10,12 +10,12 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.Optional;
 
 public class GLAdvGen {
-    public static final ResourceLocation KOISHI_FIRST = GensokyoLegacy.loc("koishi_first");
+	public static final ResourceLocation KOISHI_FIRST = GensokyoLegacy.loc("koishi_first");
 
-    public static void genAdv(RegistrateAdvancementProvider pvd) {
-        pvd.accept(Advancement.Builder.advancement().addCriterion("koishi_first",
-                GLCriteriaTriggers.KOISHI_FIRST.get().createCriterion(new PlayerTrigger.TriggerInstance(Optional.empty()))
-        ).build(KOISHI_FIRST));
-    }
+	public static void genAdv(RegistrateAdvancementProvider pvd) {
+		pvd.accept(Advancement.Builder.advancement().addCriterion("koishi_first",
+				GLCriteriaTriggers.KOISHI_FIRST.get().createCriterion(new PlayerTrigger.TriggerInstance(Optional.empty()))
+		).build(KOISHI_FIRST));
+	}
 
 }

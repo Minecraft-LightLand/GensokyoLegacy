@@ -3,11 +3,13 @@ package dev.xkmc.gensokyolegacy.init;
 import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TLMRenderHandler;
 import dev.xkmc.gensokyolegacy.content.client.debug.DebugOverlay;
+import dev.xkmc.gensokyolegacy.content.client.deco.FurnaceItemDeco;
 import dev.xkmc.gensokyolegacy.content.client.model.*;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.BlackBallModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaModel;
+import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -26,6 +28,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterClientReloadListenersEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterItemDecorationsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.common.NeoForge;
 
@@ -42,6 +45,11 @@ public class GLClient {
 	@SubscribeEvent
 	public static void addGuiLayer(RegisterGuiLayersEvent event) {
 		event.registerAbove(VanillaGuiLayers.CROSSHAIR, GensokyoLegacy.loc("debug"), new DebugOverlay());
+	}
+
+	@SubscribeEvent
+	public static void addDeco(RegisterItemDecorationsEvent event) {
+		event.register(GLItems.MINI_FURNACE_1.get(), new FurnaceItemDeco());
 	}
 
 	@SubscribeEvent

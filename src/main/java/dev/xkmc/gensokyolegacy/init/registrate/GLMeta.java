@@ -26,27 +26,27 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType;
 
 public class GLMeta {
 
-    private static final AttReg ATT = AttReg.of(GensokyoLegacy.REG);
+	private static final AttReg ATT = AttReg.of(GensokyoLegacy.REG);
 
-    public static final AttVal.PlayerVal<CharacterAttachment> CHAR = ATT.player("character_data",
-            CharacterAttachment.class, CharacterAttachment::new, PlayerCapabilityNetworkHandler::new);
-    public static final AttVal.CapVal<LevelChunk, StructureAttachment> STRUCTURE = ATT.entity("structure_data",
-            StructureAttachment.class, StructureAttachment::new, LevelChunk.class, e -> true);
-    public static final AttVal.PlayerVal<KoishiAttackCapability> KOISHI_ATTACK = ATT.player("koishi_attack",
-            KoishiAttackCapability.class, KoishiAttackCapability::new, PlayerCapabilityNetworkHandler::new);
-    public static final AttVal.CapVal<Frog, FrogGodCapability> FROG_GOD = ATT.entity("frog_god",
-            FrogGodCapability.class, FrogGodCapability::new, Frog.class, e -> true);
+	public static final AttVal.PlayerVal<CharacterAttachment> CHAR = ATT.player("character_data",
+			CharacterAttachment.class, CharacterAttachment::new, PlayerCapabilityNetworkHandler::new);
+	public static final AttVal.CapVal<LevelChunk, StructureAttachment> STRUCTURE = ATT.entity("structure_data",
+			StructureAttachment.class, StructureAttachment::new, LevelChunk.class, e -> true);
+	public static final AttVal.PlayerVal<KoishiAttackCapability> KOISHI_ATTACK = ATT.player("koishi_attack",
+			KoishiAttackCapability.class, KoishiAttackCapability::new, PlayerCapabilityNetworkHandler::new);
+	public static final AttVal.CapVal<Frog, FrogGodCapability> FROG_GOD = ATT.entity("frog_god",
+			FrogGodCapability.class, FrogGodCapability::new, Frog.class, e -> true);
 
-    public static final DataMapReg<Block, BedData> BED_DATA =
-            GensokyoLegacy.REG.dataMap("bed_data", Registries.BLOCK, BedData.class);
-    public static final DataMapReg<EntityType<?>, CharacterConfig> ENTITY_DATA =
-            GensokyoLegacy.REG.dataMap("character_config", Registries.ENTITY_TYPE, CharacterConfig.class);
-    public static final DataMapReg<Structure, StructureConfig> STRUCTURE_DATA =
-            GensokyoLegacy.REG.dataMap(DataMapType.builder(GensokyoLegacy.loc("structure_config"),
-                    Registries.STRUCTURE, new CodecAdaptor<>(StructureConfig.class)).build());
+	public static final DataMapReg<Block, BedData> BED_DATA =
+			GensokyoLegacy.REG.dataMap("bed_data", Registries.BLOCK, BedData.class);
+	public static final DataMapReg<EntityType<?>, CharacterConfig> ENTITY_DATA =
+			GensokyoLegacy.REG.dataMap("character_config", Registries.ENTITY_TYPE, CharacterConfig.class);
+	public static final DataMapReg<Structure, StructureConfig> STRUCTURE_DATA =
+			GensokyoLegacy.REG.dataMap(DataMapType.builder(GensokyoLegacy.loc("structure_config"),
+					Registries.STRUCTURE, new CodecAdaptor<>(StructureConfig.class)).build());
 
-    public static void register() {
-        new CodecHandler<>(BoundingBox.class, BoundingBox.CODEC, ByteBufCodecs.fromCodecWithRegistries(BoundingBox.CODEC));
-    }
+	public static void register() {
+		new CodecHandler<>(BoundingBox.class, BoundingBox.CODEC, ByteBufCodecs.fromCodecWithRegistries(BoundingBox.CODEC));
+	}
 
 }
