@@ -82,9 +82,9 @@ public class GLItems {
 
 		// tools
 		{
-			MINI_FURNACE_1 = reg.item("mini_furnace_1", MiniFurnace1::new)
+			MINI_FURNACE_1 = reg.item("mini_hakkero_prototype", MiniFurnace1::new)
 					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/tool/" + ctx.getName())))
-					.register();
+					.lang("Mini Hakkero [Prototype]").register();
 		}
 
 

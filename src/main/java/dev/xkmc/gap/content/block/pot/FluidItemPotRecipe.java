@@ -1,0 +1,99 @@
+package dev.xkmc.gap.content.block.pot;
+
+import dev.xkmc.l2serial.serialization.marker.SerialClass;
+import dev.xkmc.l2serial.serialization.marker.SerialField;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.FluidStack;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
+@SerialClass
+public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends BasePotRecipe<T> {
+
+    @SerialField
+    public List<Ingredient> itemInput = new ArrayList<>();
+
+    @SerialField
+    public List<PotFluidIngredient> fluidInput = new ArrayList<>();
+
+    @SerialField
+    public List<ItemStack> itemOutput = new ArrayList<>();
+
+    @SerialField
+    public List<FluidStack> fluidOutput = new ArrayList<>();
+
+    public boolean allowOtherItems = true, allowOtherFluids = true;
+
+    public FluidItemPotRecipe(RecType<T, BasePotRecipe<?>, PotRecipeInput> fac) {
+        super(fac);
+    }
+
+    @Override
+    public boolean matches(PotRecipeInput input, Level level) {
+        // test for invalid fluids
+        for (var ing : fluidInput) {
+            for (var f : input.be().fluids.getAsList()) {
+                if (f.isEmpty()) continue;
+                if (ing.fluid().test(f) && f.getAmount() > ing.max())
+                    return false;
+            }
+        }
+        // test for valid fluids
+        Set<Fluid> containedFluid = new LinkedHashSet<>();
+        List<FluidStack> availableFluids = new ArrayList<>();
+        for (var f : input.be().fluids.getAsList()) {
+            if (f.isEmpty()) continue;
+            containedFluid.add(f.getFluid());
+            availableFluids.add(f.copy());
+        }
+        for (var ing : fluidInput) {
+            int toDrain = ing.min();
+            for (var f : availableFluids) {
+                if (ing.fluid().test(f)) {
+                    containedFluid.remove(f.getFluid());
+                    if (toDrain > 0) {
+                        int drain = Math.min(toDrain, f.getAmount());
+                        f.shrink(drain);
+                        toDrain -= drain;
+                    }
+                }
+            }
+            // some ingredient has insufficient fluid
+            if (toDrain > 0) return false;
+        }
+        if (!allowOtherFluids && !containedFluid.isEmpty()) return false;
+
+        Set<Item> containedItems = new LinkedHashSet<>();
+        List<ItemStack> availableItems = new ArrayList<>();
+        for (int i = 0; i < input.size(); i++) {
+            var stack = input.getItem(i);
+            if (stack.isEmpty()) continue;
+            containedItems.add(stack.getItem());
+            availableItems.add(stack);
+        }
+        for (var ing : itemInput) {
+            boolean found = false;
+            for (var stack : availableItems) {
+                if (ing.test(stack)) {
+                    containedItems.remove(stack.getItem());
+                    if (!found) {
+                        stack.shrink(1);
+                        found = true;
+                    }
+                }
+            }
+            // some ingredient not matched
+            if (!found) return false;
+        }
+        if (!allowOtherItems && !containedItems.isEmpty()) return false;
+        return true;
+    }
+
+}
