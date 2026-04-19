@@ -2,12 +2,14 @@ package dev.xkmc.gap.content.block.pot;
 
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -37,6 +39,7 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends BasePot
 
     @Override
     public boolean matches(PotRecipeInput input, Level level) {
+        if (!super.matches(input, level)) return false;
         // test for invalid fluids
         for (var ing : fluidInput) {
             for (var f : input.be().fluids.getAsList()) {
@@ -76,7 +79,7 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends BasePot
             var stack = input.getItem(i);
             if (stack.isEmpty()) continue;
             containedItems.add(stack.getItem());
-            availableItems.add(stack);
+            availableItems.add(stack.copy());
         }
         for (var ing : itemInput) {
             boolean found = false;
@@ -96,4 +99,51 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends BasePot
         return true;
     }
 
+    @Override
+    public ItemStack assemble(PotRecipeInput input, HolderLookup.Provider pvd) {
+
+        // test for valid fluids
+        List<FluidStack> availableFluids = new ArrayList<>();
+        for (var f : input.be().fluids.getAsList()) {
+            if (f.isEmpty()) continue;
+            availableFluids.add(f);
+        }
+        for (var ing : fluidInput) {
+            int toDrain = ing.min();
+            for (var f : availableFluids) {
+                if (ing.fluid().test(f)) {
+                    if (toDrain > 0) {
+                        int drain = Math.min(toDrain, f.getAmount());
+                        f.shrink(drain);
+                        toDrain -= drain;
+                    }
+                }
+            }
+        }
+        List<ItemStack> availableItems = new ArrayList<>();
+        for (int i = 0; i < input.size(); i++) {
+            var stack = input.getItem(i);
+            if (stack.isEmpty()) continue;
+            availableItems.add(stack);
+        }
+        for (var ing : itemInput) {
+            boolean found = false;
+            for (var stack : availableItems) {
+                if (ing.test(stack)) {
+                    if (!found) {
+                        stack.shrink(1);
+                        found = true;
+                    }
+                }
+            }
+        }
+        for (var e : itemOutput) {
+            input.be().items.addItem(e.copy());
+        }
+        for (var e : fluidOutput) {
+            input.be().fluids.fill(e.copy(), IFluidHandler.FluidAction.EXECUTE);
+        }
+        input.be().notifyTile();
+        return super.assemble(input, pvd);
+    }
 }

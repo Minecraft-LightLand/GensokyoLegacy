@@ -15,7 +15,7 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
     public final PotItemHandler items = new PotItemHandler();
 
     @SerialField
-    public final PotTank fluids = new PotTank();
+    public final PotTank fluids = new PotTank(1250);
 
     public PotBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -27,7 +27,6 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
     public void notifyTile() {
 
     }
-
 
 
 }

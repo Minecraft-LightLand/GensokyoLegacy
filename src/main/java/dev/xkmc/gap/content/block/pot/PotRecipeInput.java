@@ -3,7 +3,7 @@ package dev.xkmc.gap.content.block.pot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
 
-public record PotRecipeInput(PotBlockEntity be) implements RecipeInput {
+public record PotRecipeInput(PotBlockEntity be, PotHeatState heat, PotRecipeTriggerType trigger) implements RecipeInput {
 
     @Override
     public ItemStack getItem(int i) {
