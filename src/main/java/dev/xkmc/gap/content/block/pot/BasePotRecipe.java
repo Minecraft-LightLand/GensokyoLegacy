@@ -19,10 +19,15 @@ public abstract class BasePotRecipe<T extends BasePotRecipe<T>> extends BaseReci
         super(fac);
     }
 
+    public boolean mayContinueUse(PotHeatState input) {
+        if (input.ordinal() < heat.ordinal()) return false;
+        return true;
+    }
+
     @Override
     public boolean matches(PotRecipeInput input, Level level) {
         if (input.heat().ordinal() < heat.ordinal()) return false;
-        if (input.trigger() != trigger) return false;
+        if (input.trigger() == PotRecipeTriggerType.ALL || input.trigger() != trigger) return false;
         return true;
     }
 
