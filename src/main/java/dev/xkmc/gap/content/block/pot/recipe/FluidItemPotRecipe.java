@@ -50,6 +50,10 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends PotReci
 					return false;
 			}
 		}
+		for (var f : fluidOutput) {
+			var fill = input.be().fluids.fill(f, IFluidHandler.FluidAction.SIMULATE);
+			if (fill != f.getAmount()) return false;
+		}
 		// test for valid fluids
 		Set<Fluid> containedFluid = new LinkedHashSet<>();
 		List<FluidStack> availableFluids = new ArrayList<>();
@@ -127,17 +131,20 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends PotReci
 			if (stack.isEmpty()) continue;
 			availableItems.add(stack);
 		}
+		List<ItemStack> consumedItems = new ArrayList<>();
 		for (var ing : itemInput) {
 			boolean found = false;
 			for (var stack : availableItems) {
 				if (ing.test(stack)) {
 					if (!found) {
+						consumedItems.add(stack.copyWithCount(1));
 						stack.shrink(1);
 						found = true;
 					}
 				}
 			}
 		}
+		input.be().history.add(consumedItems);
 		for (var e : itemOutput) {
 			input.be().items.addItem(e.copy());
 		}

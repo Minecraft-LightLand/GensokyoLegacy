@@ -30,8 +30,11 @@ import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.simple.Reg;
 import dev.xkmc.l2damagetracker.contents.attack.AttackEventHandler;
 import dev.xkmc.l2serial.network.PacketHandler;
+import dev.xkmc.l2serial.serialization.custom_handler.Handlers;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
@@ -72,6 +75,7 @@ public class GensokyoLegacy {
 	);
 
 	public GensokyoLegacy() {
+		Handlers.enableVanilla(Fluid.class, BuiltInRegistries.FLUID);
 		GLDecoBlocks.register();
 		GLItems.register();
 		GLEntities.register();

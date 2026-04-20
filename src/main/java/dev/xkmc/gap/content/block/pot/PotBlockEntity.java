@@ -21,10 +21,13 @@ import java.util.Map;
 public class PotBlockEntity extends BaseBlockEntity implements BaseContainerListener, TickableBlockEntity {
 
 	@SerialField
-	public final PotItemHandler items = new PotItemHandler();
+	public final PotItemHandler items = new PotItemHandler().setMax(1);
 
 	@SerialField
 	public final PotTank fluids = new PotTank(1250);
+
+	@SerialField
+	public final IngredientHistory history = new IngredientHistory();
 
 	@SerialField
 	protected final Map<ResourceLocation, PotRecipeProgress> matchedRecipe = new LinkedHashMap<>();
@@ -35,6 +38,7 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
 		super(type, pos, state);
 		items.add(this);
 		fluids.add(this);
+		fluids.setLevelAccess(() -> level);
 	}
 
 	@Override

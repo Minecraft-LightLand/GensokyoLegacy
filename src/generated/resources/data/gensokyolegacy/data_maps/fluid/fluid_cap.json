@@ -1,0 +1,40 @@
+{
+  "values": {
+    "gensokyolegacy:earth_canceller": {
+      "canceller": {
+        "fluid": "gensokyolegacy:earth_essence"
+      },
+      "max": 10
+    },
+    "gensokyolegacy:earth_essence": {
+      "canceller": {
+        "fluid": "gensokyolegacy:earth_canceller"
+      },
+      "max": 10
+    },
+    "gensokyolegacy:hydro_essence": {
+      "canceller": {
+        "fluid": "gensokyolegacy:pyro_essence"
+      },
+      "max": 10
+    },
+    "gensokyolegacy:metal_essence": {
+      "canceller": {
+        "fluid": "gensokyolegacy:nature_essence"
+      },
+      "max": 10
+    },
+    "gensokyolegacy:nature_essence": {
+      "canceller": {
+        "fluid": "gensokyolegacy:metal_essence"
+      },
+      "max": 10
+    },
+    "gensokyolegacy:pyro_essence": {
+      "canceller": {
+        "fluid": "gensokyolegacy:hydro_essence"
+      },
+      "max": 10
+    }
+  }
+}
