@@ -1,5 +1,8 @@
-package dev.xkmc.gap.content.block.pot;
+package dev.xkmc.gap.content.block.pot.recipe;
 
+import dev.xkmc.gap.content.block.pot.PotBlockEntity;
+import dev.xkmc.gap.content.block.pot.PotHeatState;
+import dev.xkmc.gap.content.block.pot.PotRecipeTriggerType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;
 

@@ -1,7 +1,6 @@
 package dev.xkmc.gap.content.block.pot.recipe;
 
 import dev.xkmc.gap.content.block.pot.PotHeatState;
-import dev.xkmc.gap.content.block.pot.PotRecipeInput;
 import dev.xkmc.gap.content.block.pot.PotRecipeTriggerType;
 import dev.xkmc.gap.init.registrate.GapRegistries;
 import dev.xkmc.l2core.serial.recipe.BaseRecipeBuilder;

@@ -1,7 +1,5 @@
 package dev.xkmc.gap.content.block.pot.recipe;
 
-import dev.xkmc.gap.content.block.pot.PotFluidIngredient;
-import dev.xkmc.gap.content.block.pot.PotRecipeInput;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.HolderLookup;

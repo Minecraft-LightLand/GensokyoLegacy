@@ -1,8 +1,10 @@
 package dev.xkmc.gap.content.block.pot;
 
+import dev.xkmc.gap.content.block.pot.recipe.PotRecipeInput;
 import dev.xkmc.gap.init.registrate.GapRegistries;
 import dev.xkmc.l2core.base.tile.BaseBlockEntity;
 import dev.xkmc.l2core.base.tile.BaseContainerListener;
+import dev.xkmc.l2core.base.tile.BaseTank;
 import dev.xkmc.l2modularblock.tile_api.TickableBlockEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
@@ -11,6 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -18,7 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @SerialClass
-public class PotBlockEntity extends BaseBlockEntity implements BaseContainerListener, TickableBlockEntity {
+public class PotBlockEntity extends BaseBlockEntity implements BaseContainerListener, TickableBlockEntity, FluidItemTile {
 
 	@SerialField
 	public final PotItemHandler items = new PotItemHandler().setMax(1);
@@ -84,6 +87,16 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider pvd) {
 		super.loadAdditional(tag, pvd);
 		shouldCheckRecipe = true;
+	}
+
+	@Override
+	public BaseTank getFluidHandler() {
+		return fluids;
+	}
+
+	@Override
+	public SimpleContainer getItemHandler() {
+		return items;
 	}
 
 }
