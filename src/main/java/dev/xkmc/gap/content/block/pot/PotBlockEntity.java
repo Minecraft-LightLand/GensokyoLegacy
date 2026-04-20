@@ -1,5 +1,6 @@
 package dev.xkmc.gap.content.block.pot;
 
+import dev.xkmc.gap.init.registrate.GapRegistries;
 import dev.xkmc.l2core.base.tile.BaseBlockEntity;
 import dev.xkmc.l2core.base.tile.BaseContainerListener;
 import dev.xkmc.l2modularblock.tile_api.TickableBlockEntity;
@@ -19,54 +20,66 @@ import java.util.Map;
 @SerialClass
 public class PotBlockEntity extends BaseBlockEntity implements BaseContainerListener, TickableBlockEntity {
 
-    @SerialField
-    public final PotItemHandler items = new PotItemHandler();
+	@SerialField
+	public final PotItemHandler items = new PotItemHandler();
 
-    @SerialField
-    public final PotTank fluids = new PotTank(1250);
+	@SerialField
+	public final PotTank fluids = new PotTank(1250);
 
-    @SerialField
-    protected final Map<ResourceLocation, PotRecipeProgress> matchedRecipe = new LinkedHashMap<>();
+	@SerialField
+	protected final Map<ResourceLocation, PotRecipeProgress> matchedRecipe = new LinkedHashMap<>();
 
-    private boolean shouldCheckRecipe = true;
+	private boolean shouldCheckRecipe = true;
 
-    public PotBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
-        super(type, pos, state);
-        items.add(this);
-        fluids.add(this);
-    }
+	public PotBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+		super(type, pos, state);
+		items.add(this);
+		fluids.add(this);
+	}
 
-    @Override
-    public void tick() {
-        var level = getLevel();
-        if (level instanceof ServerLevel sl) {
-            if (shouldCheckRecipe) {
-                shouldCheckRecipe = false;
-                checkRecipe(sl, PotRecipeTriggerType.NONE);
-            }
-            matchedRecipe.entrySet().removeIf(e -> e.getValue().removeOnUpdate(sl, this, e.getKey()));
-        }
-    }
+	@Override
+	public void tick() {
+		var level = getLevel();
+		if (level instanceof ServerLevel sl) {
+			if (shouldCheckRecipe) {
+				shouldCheckRecipe = false;
+				checkHeatRecipe(sl);
+			}
+			matchedRecipe.entrySet().removeIf(e -> e.getValue().removeOnUpdate(sl, this, e.getKey()));
+		}
+	}
 
-    public void checkRecipe(ServerLevel level, PotRecipeTriggerType type) {
-        matchedRecipe.entrySet().removeIf(e -> e.getValue().removeOnValidate(level, this, e.getKey()));
-        //TODO check for new recipes
-    }
+	public boolean stir(ServerLevel level) {
+		var cont = new PotRecipeInput(this, getHeat(), PotRecipeTriggerType.STIR);
+		var opt = level.getRecipeManager().getRecipeFor(GapRegistries.RT_POT.get(), cont, level);
+		if (opt.isEmpty()) return false;
+		opt.get().value().assemble(cont, level.registryAccess());
+		return true;
+	}
 
-    public PotHeatState getHeat() {
-        return PotHeatState.NONE; // TODO
-    }
+	public void checkHeatRecipe(ServerLevel level) {
+		matchedRecipe.entrySet().removeIf(e -> e.getValue().removeOnValidate(level, this, e.getKey()));
+		var cont = new PotRecipeInput(this, getHeat(), PotRecipeTriggerType.STIR);
+		var opt = level.getRecipeManager().getRecipeFor(GapRegistries.RT_POT.get(), cont, level);
+		if (opt.isEmpty()) return;
+		if (matchedRecipe.containsKey(opt.get().id())) return;
+		matchedRecipe.put(opt.get().id(), new PotRecipeProgress(opt.get()));
+	}
 
-    @Override
-    public void notifyTile() {
-        shouldCheckRecipe = true;
-        sync();
-    }
+	public PotHeatState getHeat() {
+		return PotHeatState.NONE; // TODO
+	}
 
-    @Override
-    public void loadAdditional(CompoundTag tag, HolderLookup.Provider pvd) {
-        super.loadAdditional(tag, pvd);
-        shouldCheckRecipe = true;
-    }
+	@Override
+	public void notifyTile() {
+		shouldCheckRecipe = true;
+		sync();
+	}
+
+	@Override
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider pvd) {
+		super.loadAdditional(tag, pvd);
+		shouldCheckRecipe = true;
+	}
 
 }

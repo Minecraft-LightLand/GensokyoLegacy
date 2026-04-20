@@ -17,133 +17,132 @@ import java.util.List;
 import java.util.Set;
 
 @SerialClass
-public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends BasePotRecipe<T> {
+public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends PotRecipe<T> {
 
-    @SerialField
-    public List<Ingredient> itemInput = new ArrayList<>();
+	@SerialField
+	public List<Ingredient> itemInput = new ArrayList<>();
 
-    @SerialField
-    public List<PotFluidIngredient> fluidInput = new ArrayList<>();
+	@SerialField
+	public List<PotFluidIngredient> fluidInput = new ArrayList<>();
 
-    @SerialField
-    public List<ItemStack> itemOutput = new ArrayList<>();
+	@SerialField
+	public List<ItemStack> itemOutput = new ArrayList<>();
 
-    @SerialField
-    public List<FluidStack> fluidOutput = new ArrayList<>();
+	@SerialField
+	public List<FluidStack> fluidOutput = new ArrayList<>();
 
-    public boolean allowOtherItems = true, allowOtherFluids = true;
+	public boolean allowOtherItems = true, allowOtherFluids = true;
 
-    public FluidItemPotRecipe(RecType<T, BasePotRecipe<?>, PotRecipeInput> fac) {
-        super(fac);
-    }
+	public FluidItemPotRecipe(RecType<T, PotRecipe<?>, PotRecipeInput> fac) {
+		super(fac);
+	}
 
-    @Override
-    public boolean matches(PotRecipeInput input, Level level) {
-        if (!super.matches(input, level)) return false;
-        // test for invalid fluids
-        for (var ing : fluidInput) {
-            for (var f : input.be().fluids.getAsList()) {
-                if (f.isEmpty()) continue;
-                if (ing.fluid().test(f) && f.getAmount() > ing.max())
-                    return false;
-            }
-        }
-        // test for valid fluids
-        Set<Fluid> containedFluid = new LinkedHashSet<>();
-        List<FluidStack> availableFluids = new ArrayList<>();
-        for (var f : input.be().fluids.getAsList()) {
-            if (f.isEmpty()) continue;
-            containedFluid.add(f.getFluid());
-            availableFluids.add(f.copy());
-        }
-        for (var ing : fluidInput) {
-            int toDrain = ing.min();
-            for (var f : availableFluids) {
-                if (ing.fluid().test(f)) {
-                    containedFluid.remove(f.getFluid());
-                    if (toDrain > 0) {
-                        int drain = Math.min(toDrain, f.getAmount());
-                        f.shrink(drain);
-                        toDrain -= drain;
-                    }
-                }
-            }
-            // some ingredient has insufficient fluid
-            if (toDrain > 0) return false;
-        }
-        if (!allowOtherFluids && !containedFluid.isEmpty()) return false;
+	@Override
+	public boolean matches(PotRecipeInput input, Level level) {
+		if (!super.matches(input, level)) return false;
+		// test for invalid fluids
+		for (var ing : fluidInput) {
+			for (var f : input.be().fluids.getAsList()) {
+				if (f.isEmpty()) continue;
+				if (ing.fluid().test(f) && f.getAmount() > ing.max())
+					return false;
+			}
+		}
+		// test for valid fluids
+		Set<Fluid> containedFluid = new LinkedHashSet<>();
+		List<FluidStack> availableFluids = new ArrayList<>();
+		for (var f : input.be().fluids.getAsList()) {
+			if (f.isEmpty()) continue;
+			containedFluid.add(f.getFluid());
+			availableFluids.add(f.copy());
+		}
+		for (var ing : fluidInput) {
+			int toDrain = ing.min();
+			for (var f : availableFluids) {
+				if (ing.fluid().test(f)) {
+					containedFluid.remove(f.getFluid());
+					if (toDrain > 0) {
+						int drain = Math.min(toDrain, f.getAmount());
+						f.shrink(drain);
+						toDrain -= drain;
+					}
+				}
+			}
+			// some ingredient has insufficient fluid
+			if (toDrain > 0) return false;
+		}
+		if (!allowOtherFluids && !containedFluid.isEmpty()) return false;
 
-        Set<Item> containedItems = new LinkedHashSet<>();
-        List<ItemStack> availableItems = new ArrayList<>();
-        for (int i = 0; i < input.size(); i++) {
-            var stack = input.getItem(i);
-            if (stack.isEmpty()) continue;
-            containedItems.add(stack.getItem());
-            availableItems.add(stack.copy());
-        }
-        for (var ing : itemInput) {
-            boolean found = false;
-            for (var stack : availableItems) {
-                if (ing.test(stack)) {
-                    containedItems.remove(stack.getItem());
-                    if (!found) {
-                        stack.shrink(1);
-                        found = true;
-                    }
-                }
-            }
-            // some ingredient not matched
-            if (!found) return false;
-        }
-        if (!allowOtherItems && !containedItems.isEmpty()) return false;
-        return true;
-    }
+		Set<Item> containedItems = new LinkedHashSet<>();
+		List<ItemStack> availableItems = new ArrayList<>();
+		for (int i = 0; i < input.size(); i++) {
+			var stack = input.getItem(i);
+			if (stack.isEmpty()) continue;
+			containedItems.add(stack.getItem());
+			availableItems.add(stack.copy());
+		}
+		for (var ing : itemInput) {
+			boolean found = false;
+			for (var stack : availableItems) {
+				if (ing.test(stack)) {
+					containedItems.remove(stack.getItem());
+					if (!found) {
+						stack.shrink(1);
+						found = true;
+					}
+				}
+			}
+			// some ingredient not matched
+			if (!found) return false;
+		}
+		return allowOtherItems || containedItems.isEmpty();
+	}
 
-    @Override
-    public ItemStack assemble(PotRecipeInput input, HolderLookup.Provider pvd) {
+	@Override
+	public ItemStack assemble(PotRecipeInput input, HolderLookup.Provider pvd) {
 
-        // test for valid fluids
-        List<FluidStack> availableFluids = new ArrayList<>();
-        for (var f : input.be().fluids.getAsList()) {
-            if (f.isEmpty()) continue;
-            availableFluids.add(f);
-        }
-        for (var ing : fluidInput) {
-            int toDrain = ing.min();
-            for (var f : availableFluids) {
-                if (ing.fluid().test(f)) {
-                    if (toDrain > 0) {
-                        int drain = Math.min(toDrain, f.getAmount());
-                        f.shrink(drain);
-                        toDrain -= drain;
-                    }
-                }
-            }
-        }
-        List<ItemStack> availableItems = new ArrayList<>();
-        for (int i = 0; i < input.size(); i++) {
-            var stack = input.getItem(i);
-            if (stack.isEmpty()) continue;
-            availableItems.add(stack);
-        }
-        for (var ing : itemInput) {
-            boolean found = false;
-            for (var stack : availableItems) {
-                if (ing.test(stack)) {
-                    if (!found) {
-                        stack.shrink(1);
-                        found = true;
-                    }
-                }
-            }
-        }
-        for (var e : itemOutput) {
-            input.be().items.addItem(e.copy());
-        }
-        for (var e : fluidOutput) {
-            input.be().fluids.fill(e.copy(), IFluidHandler.FluidAction.EXECUTE);
-        }
-        input.be().notifyTile();
-        return super.assemble(input, pvd);
-    }
+		// test for valid fluids
+		List<FluidStack> availableFluids = new ArrayList<>();
+		for (var f : input.be().fluids.getAsList()) {
+			if (f.isEmpty()) continue;
+			availableFluids.add(f);
+		}
+		for (var ing : fluidInput) {
+			int toDrain = ing.min();
+			for (var f : availableFluids) {
+				if (ing.fluid().test(f)) {
+					if (toDrain > 0) {
+						int drain = Math.min(toDrain, f.getAmount());
+						f.shrink(drain);
+						toDrain -= drain;
+					}
+				}
+			}
+		}
+		List<ItemStack> availableItems = new ArrayList<>();
+		for (int i = 0; i < input.size(); i++) {
+			var stack = input.getItem(i);
+			if (stack.isEmpty()) continue;
+			availableItems.add(stack);
+		}
+		for (var ing : itemInput) {
+			boolean found = false;
+			for (var stack : availableItems) {
+				if (ing.test(stack)) {
+					if (!found) {
+						stack.shrink(1);
+						found = true;
+					}
+				}
+			}
+		}
+		for (var e : itemOutput) {
+			input.be().items.addItem(e.copy());
+		}
+		for (var e : fluidOutput) {
+			input.be().fluids.fill(e.copy(), IFluidHandler.FluidAction.EXECUTE);
+		}
+		input.be().notifyTile();
+		return super.assemble(input, pvd);
+	}
 }
