@@ -1,0 +1,36 @@
+{
+  "type": "gensokyolegacy:pot",
+  "duration": 0,
+  "fluidInput": [
+    {
+      "cost": 1,
+      "fluid": {
+        "fluid": "gensokyolegacy:pyro_essence"
+      },
+      "max": 1000,
+      "min": 1
+    },
+    {
+      "cost": 1,
+      "fluid": {
+        "fluid": "gensokyolegacy:metal_essence"
+      },
+      "max": 1000,
+      "min": 1
+    }
+  ],
+  "fluidOutput": [],
+  "heat": "NONE",
+  "itemInput": [
+    {
+      "item": "minecraft:apple"
+    }
+  ],
+  "itemOutput": [
+    {
+      "count": 1,
+      "id": "minecraft:enchanted_golden_apple"
+    }
+  ],
+  "trigger": "STIR"
+}

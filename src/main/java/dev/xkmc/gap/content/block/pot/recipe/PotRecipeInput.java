@@ -21,7 +21,7 @@ public record PotRecipeInput(PotBlockEntity be, PotHeatState heat,
 
 	@Override
 	public boolean isEmpty() {
-		return !be.items.isEmpty() && !be.fluids.isEmpty();
+		return be.items.isEmpty() && be.fluids.isEmpty();
 	}
 
 }

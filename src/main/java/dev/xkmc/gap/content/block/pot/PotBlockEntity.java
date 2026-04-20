@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -87,6 +88,12 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider pvd) {
 		super.loadAdditional(tag, pvd);
 		shouldCheckRecipe = true;
+	}
+
+	public void dumpInventory() {
+		if (level == null) return;
+		Containers.dropContents(level, this.getBlockPos().above(), items);
+		notifyTile();
 	}
 
 	@Override

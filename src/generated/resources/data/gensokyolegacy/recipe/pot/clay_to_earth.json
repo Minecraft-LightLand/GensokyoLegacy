@@ -1,0 +1,28 @@
+{
+  "type": "gensokyolegacy:pot",
+  "duration": 0,
+  "fluidInput": [
+    {
+      "cost": 0,
+      "fluid": {
+        "fluid": "minecraft:water"
+      },
+      "max": 1000,
+      "min": 250
+    }
+  ],
+  "fluidOutput": [
+    {
+      "amount": 1,
+      "id": "gensokyolegacy:earth_essence"
+    }
+  ],
+  "heat": "NONE",
+  "itemInput": [
+    {
+      "item": "minecraft:clay"
+    }
+  ],
+  "itemOutput": [],
+  "trigger": "STIR"
+}

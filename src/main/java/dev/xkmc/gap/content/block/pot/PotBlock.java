@@ -70,7 +70,7 @@ public class PotBlock implements UseWithoutItemBlockMethod, UseItemOnBlockMethod
 		if (level.getBlockEntity(pos) instanceof PotBlockEntity be) {
 			if (player.isShiftKeyDown()) {
 				if (!level.isClientSide()) {
-					be.items.clear();
+					be.dumpInventory();
 				}
 				return InteractionResult.SUCCESS;
 			}
