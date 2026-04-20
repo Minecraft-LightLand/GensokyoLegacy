@@ -23,6 +23,14 @@ public class PotRenderer implements BlockEntityRenderer<PotBlockEntity> {
 
 	@Override
 	public void render(PotBlockEntity be, float pTick, PoseStack pose, MultiBufferSource buffer, int light, int overlay) {
+		float h = 0;
+		FluidStack fluid = be.fluids.getFluidInTank(0);
+		if (!fluid.isEmpty()) {
+			h = 12f / 16 * fluid.getAmount() / 1000;
+			FluidRenderer.renderFluidBox(fluid, 3f / 16, 2f / 16, 3f / 16,
+					13f / 16, 2f / 16 + h, 13f / 16,
+					buffer, pose, light, false, 0);
+		}
 		List<ItemStack> list = be.items.getAsList();
 		int i = (int) be.getBlockPos().asLong();
 
@@ -30,7 +38,7 @@ public class PotRenderer implements BlockEntityRenderer<PotBlockEntity> {
 			ItemStack stack = list.get(j);
 			if (!stack.isEmpty()) {
 				pose.pushPose();
-				pose.translate(0.5F, 3f / 16, 0.5F);
+				pose.translate(0.5F, h + 3f / 16, 0.5F);
 				pose.mulPose(Axis.YP.rotationDegrees(j * 45));
 				pose.mulPose(Axis.XP.rotationDegrees(70.0F));
 				float dist = 2f / 16;
@@ -39,13 +47,6 @@ public class PotRenderer implements BlockEntityRenderer<PotBlockEntity> {
 				this.itemRenderer.renderStatic(stack, ItemDisplayContext.FIXED, light, overlay, pose, buffer, be.getLevel(), i + j);
 				pose.popPose();
 			}
-		}
-		FluidStack fluid = be.fluids.getFluidInTank(0);
-		if (!fluid.isEmpty()) {
-			float h = 12f / 16 * fluid.getAmount() / 1000;
-			FluidRenderer.renderFluidBox(fluid, 3f / 16, 2f / 16, 3f / 16,
-					13f / 16, 2f / 16 + h, 13f / 16,
-					buffer, pose, light, false, 0);
 		}
 	}
 

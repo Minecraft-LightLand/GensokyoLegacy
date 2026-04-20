@@ -54,7 +54,7 @@ public class PotTank extends BaseTank {
 					if (mayCancel <= 0) return 0;
 					if (action.execute()) {
 						old.shrink(mayCancel);
-
+						setChanged();
 					}
 					amount -= mayCancel;
 					filled += mayCancel;
@@ -71,6 +71,7 @@ public class PotTank extends BaseTank {
 				if (mayFill <= 0) return 0;
 				if (action.execute()) {
 					old.grow(mayFill);
+					setChanged();
 				}
 				return filled + mayFill;
 			}

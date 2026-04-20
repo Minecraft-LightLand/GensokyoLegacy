@@ -11,12 +11,14 @@ import dev.xkmc.l2modularblock.mult.UseWithoutItemBlockMethod;
 import dev.xkmc.l2modularblock.one.ShapeBlockMethod;
 import dev.xkmc.l2modularblock.type.BlockMethod;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -51,6 +53,12 @@ public class PotBlock implements UseWithoutItemBlockMethod, UseItemOnBlockMethod
 			if (stack.isEmpty()) {
 				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 			} else {
+				if (stack.is(Items.STICK)) {
+					if (level instanceof ServerLevel sl) {
+						be.stir(sl);
+					}
+					return ItemInteractionResult.SUCCESS;
+				}
 				return FluidItemTile.addFluidOrItem(be, stack, level, pos, player, hand, hit);
 			}
 		}

@@ -112,7 +112,7 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends PotReci
 			availableFluids.add(f);
 		}
 		for (var ing : fluidInput) {
-			int toDrain = ing.min();
+			int toDrain = ing.cost();
 			for (var f : availableFluids) {
 				if (ing.fluid().test(f)) {
 					if (toDrain > 0) {
