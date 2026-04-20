@@ -1,5 +1,6 @@
 package dev.xkmc.gap.content.block.pot;
 
+import dev.xkmc.gap.content.block.pot.recipe.PotRecipe;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.resources.ResourceLocation;

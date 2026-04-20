@@ -1,8 +1,8 @@
 package dev.xkmc.gap.init.registrate;
 
-import dev.xkmc.gap.content.block.pot.PotRecipe;
+import dev.xkmc.gap.content.block.pot.recipe.PotRecipe;
 import dev.xkmc.gap.content.block.pot.PotRecipeInput;
-import dev.xkmc.gap.content.block.pot.SimplePotRecipe;
+import dev.xkmc.gap.content.block.pot.recipe.SimplePotRecipe;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.simple.SR;
 import dev.xkmc.l2core.init.reg.simple.Val;

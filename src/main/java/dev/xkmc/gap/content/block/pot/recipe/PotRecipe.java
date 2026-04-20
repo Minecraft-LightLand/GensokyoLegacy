@@ -1,5 +1,8 @@
-package dev.xkmc.gap.content.block.pot;
+package dev.xkmc.gap.content.block.pot.recipe;
 
+import dev.xkmc.gap.content.block.pot.PotHeatState;
+import dev.xkmc.gap.content.block.pot.PotRecipeInput;
+import dev.xkmc.gap.content.block.pot.PotRecipeTriggerType;
 import dev.xkmc.l2core.serial.recipe.BaseRecipe;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;

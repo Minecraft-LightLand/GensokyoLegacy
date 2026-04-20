@@ -2,6 +2,8 @@ package dev.xkmc.gensokyolegacy.init;
 
 import com.github.tartaricacid.touhoulittlemaid.TouhouLittleMaid;
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.alchemy.init.AlchemyRegistries;
+import dev.xkmc.gap.init.registrate.GapRegistries;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TLMCompat;
 import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouSpellCards;
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataToClient;
@@ -85,6 +87,10 @@ public class GensokyoLegacy {
 		GLCriteriaTriggers.register();
 		GLModConfig.init();
 		TouhouSpellCards.registerSpells();
+
+		GapRegistries.register();
+		AlchemyRegistries.register();
+
 		new GLClickHandler(loc("main"));
 		AttackEventHandler.register(1765, new GLAttackListener());
 		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
