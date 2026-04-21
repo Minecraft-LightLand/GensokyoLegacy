@@ -2,18 +2,22 @@ package dev.xkmc.gap.init.registrate;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import dev.xkmc.gap.content.block.bellow.BellowBlock;
+import dev.xkmc.gap.content.block.bellow.BellowBlockEntity;
 import dev.xkmc.gap.content.block.pot.PotBlock;
 import dev.xkmc.gap.content.block.pot.PotBlockEntity;
 import dev.xkmc.gap.content.block.pot.PotRenderer;
 import dev.xkmc.gap.content.block.pot.recipe.PotRecipe;
 import dev.xkmc.gap.content.block.pot.recipe.PotRecipeInput;
 import dev.xkmc.gap.content.block.pot.recipe.SimplePotRecipe;
+import dev.xkmc.gap.content.block.stove.StoveBlock;
 import dev.xkmc.gap.content.data.FluidCap;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.datapack.DataMapReg;
 import dev.xkmc.l2core.init.reg.simple.SR;
 import dev.xkmc.l2core.init.reg.simple.Val;
 import dev.xkmc.l2core.serial.recipe.BaseRecipe;
+import dev.xkmc.l2modularblock.core.BlockTemplates;
 import dev.xkmc.l2modularblock.core.DelegateBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.BlockTags;
@@ -35,8 +39,9 @@ public class GapRegistries {
 	public static final DataMapReg<Fluid, FluidCap> FLUID_CAP =
 			GensokyoLegacy.REG.dataMap("fluid_cap", Registries.FLUID, FluidCap.class);
 
-	public static final BlockEntry<DelegateBlock> POT;
+	public static final BlockEntry<DelegateBlock> POT, STOVE, BELLOW;
 	public static final BlockEntityEntry<PotBlockEntity> POT_BE;
+	public static final BlockEntityEntry<BellowBlockEntity> BELLOW_BE;
 
 	static {
 		var reg = GensokyoLegacy.REGISTRATE;
@@ -46,8 +51,26 @@ public class GapRegistries {
 				.blockstate(PotBlock::buildModel)
 				.simpleItem().tag(BlockTags.MINEABLE_WITH_PICKAXE)
 				.register();
+
 		POT_BE = reg.blockEntity("pot", PotBlockEntity::new)
 				.validBlock(POT).renderer(() -> PotRenderer::new).register();
+
+		STOVE = reg.block("stove", p ->
+						DelegateBlock.newBaseBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE),
+								BlockTemplates.HORIZONTAL))
+				.blockstate(StoveBlock::buildModel)
+				.simpleItem().tag(BlockTags.MINEABLE_WITH_PICKAXE, GapTagGen.HEAT_SOURCE)
+				.register();
+
+		BELLOW = reg.block("bellow", p ->
+						DelegateBlock.newBaseBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS),
+								BlockTemplates.HORIZONTAL, BlockTemplates.TRIGGER, new BellowBlock(), BellowBlock.TE))
+				.blockstate(BellowBlock::buildModel)
+				.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
+				.register();
+
+		BELLOW_BE = reg.blockEntity("bellow", BellowBlockEntity::new)
+				.validBlock(BELLOW).register();
 	}
 
 	public static void register() {

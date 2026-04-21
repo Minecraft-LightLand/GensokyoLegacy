@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.init.data;
 
 import com.tterrag.registrate.providers.RegistrateItemTagsProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
+import dev.xkmc.gap.init.registrate.GapTagGen;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureTagGen;
 import net.minecraft.core.registries.Registries;
@@ -37,6 +38,7 @@ public class GLTagGen {
 
 	public static void onBlockTagGen(RegistrateTagsProvider.IntrinsicImpl<Block> pvd) {
 		GLStructureTagGen.genBlockTag(pvd);
+		GapTagGen.genBlocks(pvd);
 	}
 
 	public static void onItemTagGen(RegistrateItemTagsProvider pvd) {

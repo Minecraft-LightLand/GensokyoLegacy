@@ -1,7 +1,9 @@
 package dev.xkmc.gap.content.block.pot;
 
+import dev.xkmc.gap.content.block.bellow.BellowBlockEntity;
 import dev.xkmc.gap.content.block.pot.recipe.PotRecipeInput;
 import dev.xkmc.gap.init.registrate.GapRegistries;
+import dev.xkmc.gap.init.registrate.GapTagGen;
 import dev.xkmc.l2core.base.tile.BaseBlockEntity;
 import dev.xkmc.l2core.base.tile.BaseContainerListener;
 import dev.xkmc.l2core.base.tile.BaseTank;
@@ -9,6 +11,7 @@ import dev.xkmc.l2modularblock.tile_api.TickableBlockEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +20,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,6 +41,7 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
 	protected final Map<ResourceLocation, PotRecipeProgress> matchedRecipe = new LinkedHashMap<>();
 
 	private boolean shouldCheckRecipe = true;
+	private PotHeatState heatCache = null;
 
 	public PotBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
 		super(type, pos, state);
@@ -47,6 +52,8 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
 
 	@Override
 	public void tick() {
+		heatCache = null;
+		heatCache = getHeat();
 		var level = getLevel();
 		if (level instanceof ServerLevel sl) {
 			if (shouldCheckRecipe) {
@@ -75,7 +82,20 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
 	}
 
 	public PotHeatState getHeat() {
-		return PotHeatState.NONE; // TODO
+		if (heatCache != null) return heatCache;
+		if (level == null) return PotHeatState.NONE;
+		var below = level.getBlockState(getBlockPos().below());
+		if (!below.is(GapTagGen.HEAT_SOURCE)) return PotHeatState.NONE;
+		for (int i = 0; i < 4; i++) {
+			var dir = Direction.from2DDataValue(i);
+			var next = getBlockPos().below().relative(dir);
+			if (level.getBlockEntity(next) instanceof BellowBlockEntity be && be.isBlowing() &&
+					be.getBlockState().getValue(BlockStateProperties.HORIZONTAL_FACING) == dir.getOpposite()
+			) {
+				return PotHeatState.BOILING;
+			}
+		}
+		return PotHeatState.HEATED;
 	}
 
 	@Override
