@@ -81,10 +81,10 @@ public class PotBlock implements UseWithoutItemBlockMethod, UseItemOnBlockMethod
 	public static void buildModel(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd) {
 		pvd.simpleBlock(ctx.get(), pvd.models().getBuilder("block/fermentation_tank")
 				.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("custom/utensil/fermentation_tank")))
-				.texture("side", pvd.modLoc("block/utensil/fermentation_tank_side"))
-				.texture("top", pvd.modLoc("block/utensil/fermentation_tank_top"))
-				.texture("bottom", pvd.modLoc("block/utensil/fermentation_tank_bottom"))
-				.texture("inside", pvd.modLoc("block/utensil/fermentation_tank_inside"))
+				.texture("side", pvd.modLoc("block/utensil/iron_stockpot_side"))
+				.texture("top", pvd.modLoc("block/utensil/iron_stockpot_top"))
+				.texture("bottom", pvd.modLoc("block/utensil/iron_stockpot_bottom"))
+				.texture("inside", pvd.modLoc("block/utensil/iron_stockpot_inside"))
 				.renderType("cutout"));
 	}
 
