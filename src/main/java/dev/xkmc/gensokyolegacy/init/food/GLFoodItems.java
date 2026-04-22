@@ -50,7 +50,8 @@ public class GLFoodItems {
 					.loot(FleshFeastBlock::builtLoot)
 					.register();
 
-			RED_VELVET = new CakeEntry(reg, "red_velvet", MapColor.COLOR_RED, GLFoodType.FLESH, 1, 0.8f, true);
+			//FIXME allow registrate param
+			RED_VELVET = new CakeEntry("red_velvet", MapColor.COLOR_RED, GLFoodType.FLESH, 1, 0.8f, true);
 		}
 		GLDish.register();
 		GLSake.register();

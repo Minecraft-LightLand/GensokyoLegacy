@@ -4,7 +4,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.role.RolePlayHandler;
 import dev.xkmc.gensokyolegacy.content.mechanics.role.core.RoleCategory;
 import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.youkaishomecoming.content.item.fluid.SakeBottleItem;
-import dev.xkmc.youkaishomecoming.content.item.fluid.SakeFluid;
+import dev.xkmc.youkaishomecoming.content.item.fluid.YHFluid;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 
 public class BloodBottleItem extends SakeBottleItem {
 
-	public BloodBottleItem(Supplier<SakeFluid> fluid, Properties pProperties) {
+	public BloodBottleItem(Supplier<YHFluid> fluid, Properties pProperties) {
 		super(fluid, pProperties);
 	}
 

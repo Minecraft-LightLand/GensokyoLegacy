@@ -9,7 +9,6 @@ import dev.xkmc.gensokyolegacy.content.attachment.home.core.StructureAttachment;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.KoishiAttackCapability;
 import dev.xkmc.gensokyolegacy.content.attachment.role.PlayerRolePlayAttachment;
-import dev.xkmc.gensokyolegacy.content.block.ritual.BlockMana;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.capability.player.PlayerCapabilityNetworkHandler;
 import dev.xkmc.l2core.init.reg.datapack.DataMapReg;
@@ -51,8 +50,6 @@ public class GLMeta {
 	public static final DataMapReg<Structure, StructureConfig> STRUCTURE_DATA =
 			GensokyoLegacy.REG.dataMap(DataMapType.builder(GensokyoLegacy.loc("structure_config"),
 					Registries.STRUCTURE, new CodecAdaptor<>(StructureConfig.class)).build());
-	public static final DataMapReg<Block, BlockMana> BLOCK_MANA =
-			GensokyoLegacy.REG.dataMap("block_mana", Registries.BLOCK, BlockMana.class);
 
 	public static void register() {
 		new CodecHandler<>(BoundingBox.class, BoundingBox.CODEC, ByteBufCodecs.fromCodecWithRegistries(BoundingBox.CODEC));

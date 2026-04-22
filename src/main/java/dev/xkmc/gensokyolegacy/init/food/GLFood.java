@@ -1,7 +1,6 @@
 package dev.xkmc.gensokyolegacy.init.food;
 
 import com.tterrag.registrate.util.entry.ItemEntry;
-import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEffects;
 import dev.xkmc.youkaishomecoming.compat.diet.DietTagGen;
@@ -70,7 +69,8 @@ public enum GLFood implements ItemLike {
 		String id = "food/simple/";
 		if (type == FoodType.BOTTLE) id = "food/bottle/";
 		if (type instanceof GLFoodType.FleshFoodType) id = "food/flesh/";
-		item = type.build(GensokyoLegacy.REGISTRATE, id, name, nutrition, sat, tags, effs);
+		//FIXME allow registrate param
+		item = type.build(id, name, nutrition, sat, tags, effs);
 	}
 
 	@SafeVarargs

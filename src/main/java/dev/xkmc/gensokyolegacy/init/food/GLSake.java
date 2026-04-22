@@ -17,7 +17,7 @@ import net.minecraft.world.item.Items;
 import java.util.List;
 import java.util.Locale;
 
-public enum GLSake implements IYHSake {
+public enum GLSake implements IYHFluidHolder {
 	SCARLET_MIST(FoodType.BOTTLE, 0xFFEA6B88, List.of(
 			new EffectEntry(YHEffects.DRUNK, 1200, 1, 1),
 			new EffectEntry(GLEffects.VAMPIRE, 1, 3, 1)
@@ -29,16 +29,17 @@ public enum GLSake implements IYHSake {
 
 	public final int color;
 
-	public final FluidEntry<SakeFluid> fluid;
+	public final FluidEntry<YHFluid> fluid;
 	public final ItemEntry<Item> item;
 
 	@SafeVarargs
 	GLSake(FoodType type, int color, List<EffectEntry> effs, TagKey<Item>... tags) {
 		this.color = color;
 		String name = name().toLowerCase(Locale.ROOT);
-		fluid = BottledFluid.water(GensokyoLegacy.REGISTRATE, name, (p, s, f) -> new SakeFluidType(p, s, f, this), p -> new SakeFluid(p, this))
+		//FIXME allow registrate param
+		fluid = BottledFluid.water( name, (p, s, f) -> new YHFluidType(p, s, f, this), p -> new YHFluid(p, this))
 				.defaultLang().register();
-		item = type.build(GensokyoLegacy.REGISTRATE, p -> new SakeBottleItem(fluid, p), "sake/", name, 0, 0, tags, effs);
+		item = type.build(p -> new SakeBottleItem(fluid, p), "sake/", name, 0, 0, tags, effs);
 	}
 
 	@Override
@@ -52,8 +53,13 @@ public enum GLSake implements IYHSake {
 	}
 
 	@Override
-	public FluidEntry<? extends SakeFluid> fluid() {
-		return fluid;
+	public Item asItem() {
+		return item.get();
+	}
+
+	@Override
+	public YHFluid source() {
+		return fluid.getSource();
 	}
 
 	@SuppressWarnings("deprecation")

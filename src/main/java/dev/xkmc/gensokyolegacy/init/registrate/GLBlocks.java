@@ -6,16 +6,11 @@ import dev.xkmc.gensokyolegacy.content.block.bed.GLBEWLR;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlock;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedRenderer;
-import dev.xkmc.gensokyolegacy.content.block.censer.CenserBlock;
-import dev.xkmc.gensokyolegacy.content.block.censer.CenserBlockEntity;
-import dev.xkmc.gensokyolegacy.content.block.censer.CenserRenderer;
 import dev.xkmc.gensokyolegacy.content.block.deco.BooksBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
 import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
-import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeFoliageBlock;
-import dev.xkmc.gensokyolegacy.content.block.mistletoe.MistletoeLeavesBlock;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
@@ -23,8 +18,6 @@ import dev.xkmc.l2modularblock.core.DelegateBlock;
 import net.minecraft.core.Holder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BedItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
@@ -64,14 +57,8 @@ public class GLBlocks {
 		}
 	}
 
-	public static final BlockEntry<MistletoeLeavesBlock> MISTLETOE_LEAVES;
-	public static final BlockEntry<DelegateBlock> MISTLETOE_FOLIAGE;
-
 	public static final BlockEntry<DonationBoxBlock> DONATION_BOX;
 	public static final BlockEntityEntry<DonationBoxBlockEntity> DONATION_BOX_BE;
-
-	public static final BlockEntry<DelegateBlock> CENSER;
-	public static final BlockEntityEntry<CenserBlockEntity> CENSER_BE;
 
 	public static final BlockEntry<DelegateBlock> BOOKS;
 
@@ -79,22 +66,6 @@ public class GLBlocks {
 	public static final BlockEntityEntry<YoukaiBedBlockEntity> BE_BED;
 
 	static {
-
-		MISTLETOE_LEAVES = GensokyoLegacy.REGISTRATE.block("mistletoe_leaves", p ->
-						new MistletoeLeavesBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)))
-				.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(), pvd.models().withExistingParent(ctx.getName(), "block/leaves")
-						.texture("all", pvd.modLoc("block/" + ctx.getName()))))
-				.loot(MistletoeLeavesBlock::buildLeavesLoot)
-				.tag(BlockTags.LEAVES, BlockTags.MINEABLE_WITH_HOE)
-				.item().tag(ItemTags.LEAVES).build()
-				.register();
-
-		MISTLETOE_FOLIAGE = GensokyoLegacy.REGISTRATE.block("mistletoe_foliage", p -> MistletoeFoliageBlock.create())
-				.blockstate(MistletoeFoliageBlock::buildModels)
-				.loot(MistletoeLeavesBlock::buildFoliageLoot)
-				.tag(BlockTags.MINEABLE_WITH_HOE)
-				.item().build()
-				.register();
 
 		DONATION_BOX = GensokyoLegacy.REGISTRATE.block("donation_box", p -> new DonationBoxBlock(
 						BlockBehaviour.Properties.of().noLootTable().strength(2.0F).sound(SoundType.WOOD)
@@ -108,14 +79,6 @@ public class GLBlocks {
 		DONATION_BOX_BE = GensokyoLegacy.REGISTRATE.blockEntity("donation_box", DonationBoxBlockEntity::new)
 				.validBlock(DONATION_BOX)
 				.register();
-
-		CENSER = GensokyoLegacy.REGISTRATE.block("censer", p -> CenserBlock.create())
-				.blockstate(CenserBlock::buildStates)
-				.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-				.simpleItem().register();
-
-		CENSER_BE = GensokyoLegacy.REGISTRATE.blockEntity("censer", CenserBlockEntity::new)
-				.validBlock(CENSER).renderer(() -> CenserRenderer::new).register();
 
 		BOOKS = GensokyoLegacy.REGISTRATE.block("book_pile", p -> DelegateBlock.newBaseBlock(
 						BlockBehaviour.Properties.of().noOcclusion().strength(0F)
