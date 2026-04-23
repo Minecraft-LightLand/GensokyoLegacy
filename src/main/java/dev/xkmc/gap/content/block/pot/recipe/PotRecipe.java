@@ -38,6 +38,8 @@ public abstract class PotRecipe<T extends PotRecipe<T>> extends BaseRecipe<T, Po
 		return ItemStack.EMPTY;
 	}
 
+	public abstract RecipeProgressData start(PotRecipeInput input, HolderLookup.Provider pvd) ;
+
 	@Override
 	public ItemStack getResultItem(HolderLookup.Provider pvd) {
 		return ItemStack.EMPTY;

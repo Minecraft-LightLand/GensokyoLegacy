@@ -24,6 +24,7 @@ import org.jetbrains.annotations.Nullable;
 public interface FluidItemTile {
 
 	static ItemInteractionResult addFluidOrItem(FluidItemTile be, ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!be.mayModify()) return ItemInteractionResult.FAIL;
 		// fill water from bottle
 		if (stack.is(Items.POTION)) {
 			var potion = stack.get(DataComponents.POTION_CONTENTS);
@@ -46,10 +47,11 @@ public interface FluidItemTile {
 	}
 
 	static ItemInteractionResult addItem(FluidItemTile be, ItemStack stack, Level level, BlockPos pos) {
+		if (!be.mayModify()) return ItemInteractionResult.FAIL;
 		ItemStack copy = stack.copyWithCount(1);
 		if (be.getItemHandler().canAddItem(copy)) {
 			if (level instanceof ServerLevel sl) {
-				ItemStack remain = be.getItemHandler().addItem(copy);
+				ItemStack remain = be.addItem(copy);
 				if (remain.isEmpty()) {
 					stack.shrink(1);
 					be.notifyTile();
@@ -59,6 +61,14 @@ public interface FluidItemTile {
 			return ItemInteractionResult.SUCCESS;
 		}
 		return ItemInteractionResult.CONSUME;
+	}
+
+	default boolean mayModify() {
+		return true;
+	}
+
+	default ItemStack addItem(ItemStack copy) {
+		return getItemHandler().addItem(copy);
 	}
 
 	BaseTank getFluidHandler();

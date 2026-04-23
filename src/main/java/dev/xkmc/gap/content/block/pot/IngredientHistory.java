@@ -11,8 +11,12 @@ public class IngredientHistory {
 
 	public final List<ItemStack> items = new ArrayList<>();
 
-	public void add(List<ItemStack> list) {
-		items.addAll(list);
+	public void add(ItemStack stack) {
+		items.add(stack);
+	}
+
+	public void clear() {
+		items.clear();
 	}
 
 }

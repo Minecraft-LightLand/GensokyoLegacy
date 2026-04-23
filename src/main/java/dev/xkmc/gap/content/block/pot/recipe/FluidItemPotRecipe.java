@@ -103,10 +103,10 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends PotReci
 	}
 
 	@Override
-	public ItemStack assemble(PotRecipeInput input, HolderLookup.Provider pvd) {
-
+	public RecipeProgressData start(PotRecipeInput input, HolderLookup.Provider pvd) {
 		// test for valid fluids
 		List<FluidStack> availableFluids = new ArrayList<>();
+		ArrayList<FluidStack> consumedFluids = new ArrayList<>();
 		for (var f : input.be().fluids.getAsList()) {
 			if (f.isEmpty()) continue;
 			availableFluids.add(f);
@@ -117,6 +117,7 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends PotReci
 				if (ing.fluid().test(f)) {
 					if (toDrain > 0) {
 						int drain = Math.min(toDrain, f.getAmount());
+						consumedFluids.add(f.copyWithAmount(drain));
 						f.shrink(drain);
 						toDrain -= drain;
 					}
@@ -129,7 +130,7 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends PotReci
 			if (stack.isEmpty()) continue;
 			availableItems.add(stack);
 		}
-		List<ItemStack> consumedItems = new ArrayList<>();
+		ArrayList<ItemStack> consumedItems = new ArrayList<>();
 		for (var ing : itemInput) {
 			boolean found = false;
 			for (var stack : availableItems) {
@@ -142,14 +143,7 @@ public class FluidItemPotRecipe<T extends FluidItemPotRecipe<T>> extends PotReci
 				}
 			}
 		}
-		input.be().history.add(consumedItems);
-		for (var e : itemOutput) {
-			input.be().items.addItem(e.copy());
-		}
-		for (var e : fluidOutput) {
-			input.be().fluids.fill(e.copy(), IFluidHandler.FluidAction.EXECUTE);
-		}
 		input.be().notifyTile();
-		return super.assemble(input, pvd);
+		return new RecipeProgressData(consumedItems, consumedFluids, new ArrayList<>(itemOutput), new ArrayList<>(fluidOutput));
 	}
 }

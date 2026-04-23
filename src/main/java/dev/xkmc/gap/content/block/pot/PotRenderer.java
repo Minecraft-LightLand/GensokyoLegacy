@@ -23,19 +23,18 @@ public class PotRenderer implements BlockEntityRenderer<PotBlockEntity> {
 
 	@Override
 	public void render(PotBlockEntity be, float pTick, PoseStack pose, MultiBufferSource buffer, int light, int overlay) {
+		var items = be.getItemsForRender();
+		var fluids = be.getFluidsForRender();
 		float h = 0;
-		FluidStack fluid = be.fluids.getFluidInTank(0);
-		if (!fluid.isEmpty()) {
-			h = 12f / 16 * fluid.getAmount() / 1000;
-			FluidRenderer.renderFluidBox(fluid, 3f / 16, 2f / 16, 3f / 16,
+		if (!fluids.isEmpty() && !fluids.getFirst().isEmpty()) {
+			h = 12f / 16 * fluids.getFirst().getAmount() / 1000;
+			FluidRenderer.renderFluidBox(fluids.getFirst(), 3f / 16, 2f / 16, 3f / 16,
 					13f / 16, 2f / 16 + h, 13f / 16,
 					buffer, pose, light, false, 0);
 		}
-		List<ItemStack> list = be.items.getAsList();
 		int i = (int) be.getBlockPos().asLong();
-
-		for (int j = 0; j < list.size(); ++j) {
-			ItemStack stack = list.get(j);
+		for (int j = 0; j < items.size(); ++j) {
+			ItemStack stack = items.get(j);
 			if (!stack.isEmpty()) {
 				pose.pushPose();
 				pose.translate(0.5F, h + 3f / 16, 0.5F);

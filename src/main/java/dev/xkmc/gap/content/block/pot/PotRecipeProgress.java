@@ -1,7 +1,7 @@
 package dev.xkmc.gap.content.block.pot;
 
 import dev.xkmc.gap.content.block.pot.recipe.PotRecipe;
-import dev.xkmc.gap.content.block.pot.recipe.PotRecipeInput;
+import dev.xkmc.gap.content.block.pot.recipe.RecipeProgressData;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.resources.ResourceLocation;
@@ -15,15 +15,19 @@ public class PotRecipeProgress {
 	@SerialField
 	public int time, maxTime;
 
+	@SerialField
+	public RecipeProgressData data;
+
 	@Nullable
 	public PotRecipe<?> recipeCache;
 
 	public PotRecipeProgress() {
 	}
 
-	public PotRecipeProgress(RecipeHolder<? extends PotRecipe<?>> holder) {
+	public PotRecipeProgress(RecipeHolder<? extends PotRecipe<?>> holder, RecipeProgressData data) {
 		recipeCache = holder.value();
 		maxTime = recipeCache.getDuration();
+		this.data = data;
 	}
 
 	private void validateCache(ServerLevel level, ResourceLocation id) {
@@ -38,23 +42,11 @@ public class PotRecipeProgress {
 	public boolean removeOnUpdate(ServerLevel level, PotBlockEntity be, ResourceLocation id) {
 		validateCache(level, id);
 		if (recipeCache == null) return true;
-		if (!recipeCache.mayContinueUse(be.getHeat())) return true;
+		if (!recipeCache.mayContinueUse(be.getHeat())) return false;
 		time++;
 		if (time < maxTime) return false;
-		var content = new PotRecipeInput(be, be.getHeat(), PotRecipeTriggerType.NONE);
-		if (recipeCache.matches(content, level)) {
-			recipeCache.assemble(content, level.registryAccess());
-		}
+		data.execute(be);
 		return true;
 	}
-
-	public boolean removeOnValidate(ServerLevel level, PotBlockEntity be, ResourceLocation id) {
-		validateCache(level, id);
-		if (recipeCache == null) return true;
-		if (!recipeCache.mayContinueUse(be.getHeat())) return true;
-		var content = new PotRecipeInput(be, be.getHeat(), PotRecipeTriggerType.NONE);
-		return !recipeCache.matches(content, level);
-	}
-
 
 }
