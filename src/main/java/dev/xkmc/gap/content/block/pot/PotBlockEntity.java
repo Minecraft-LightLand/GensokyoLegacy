@@ -170,13 +170,17 @@ public class PotBlockEntity extends BaseBlockEntity implements BaseContainerList
 	public List<FluidStack> getFluidsForRender() {
 		List<FluidStack> ans = new ArrayList<>();
 		for (var e : fluids.getAsList()) {
-			if (!e.isEmpty())
-				ans.add(e);
+			if (e.isEmpty()) continue;
+			var cap = fluids.getCap(e);
+			if (cap != null && cap.hide()) continue;
+			ans.add(e);
 		}
 		for (var ent : matchedRecipe.values()) {
 			for (var e : ent.data.consumedFluids()) {
-				if (!e.isEmpty())
-					ans.add(e);
+				if (e.isEmpty()) continue;
+				var cap = fluids.getCap(e);
+				if (cap != null && cap.hide()) continue;
+				ans.add(e);
 			}
 		}
 		return ans;

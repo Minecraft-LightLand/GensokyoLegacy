@@ -1,7 +1,6 @@
 package dev.xkmc.alchemy.content.element;
 
 import com.tterrag.registrate.providers.RegistrateDataMapProvider;
-import dev.xkmc.alchemy.content.fluid.MixableFluid;
 import dev.xkmc.gap.content.data.FluidCanceller;
 import dev.xkmc.gap.content.data.FluidCap;
 import dev.xkmc.gap.init.registrate.GapRegistries;
@@ -33,8 +32,8 @@ public class AlchemyElementAxis {
 
 	public void regDataMap(RegistrateDataMapProvider pvd) {
 		pvd.builder(GapRegistries.FLUID_CAP.reg())
-				.add(getPos(), new FluidCap(10, new FluidCanceller(getNeg())), false)
-				.add(getNeg(), new FluidCap(10, new FluidCanceller(getPos())), false);
+				.add(getPos(), new FluidCap(10, true, new FluidCanceller(getNeg())), false)
+				.add(getNeg(), new FluidCap(10, true, new FluidCanceller(getPos())), false);
 	}
 
 }
