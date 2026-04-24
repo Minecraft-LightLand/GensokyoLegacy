@@ -14,10 +14,7 @@ import dev.xkmc.gensokyolegacy.content.item.debug.DebugWand;
 import dev.xkmc.gensokyolegacy.content.item.debug.StructureWand;
 import dev.xkmc.gensokyolegacy.content.item.ingredient.FairyIceItem;
 import dev.xkmc.gensokyolegacy.content.item.ingredient.FrozenFrogItem;
-import dev.xkmc.gensokyolegacy.content.item.tool.CentiPickaxe;
-import dev.xkmc.gensokyolegacy.content.item.tool.Dowser;
-import dev.xkmc.gensokyolegacy.content.item.tool.MermaidPearl;
-import dev.xkmc.gensokyolegacy.content.item.tool.MiniFurnace1;
+import dev.xkmc.gensokyolegacy.content.item.tool.*;
 import dev.xkmc.gensokyolegacy.content.spell.item.*;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
@@ -53,6 +50,7 @@ public class GLItems {
 	public static final ItemEntry<CentiPickaxe> CENTIPICKAXE;
 	public static final ItemEntry<Dowser> DOWSER;
 	public static final ItemEntry<MermaidPearl> MERMAID_PEARL;
+	public static final ItemEntry<CatBell> CAT_BELL;
 
 	public static final ItemEntry<DebugGlasses> DEBUG_GLASSES;
 	public static final ItemEntry<DebugWand> DEBUG_WAND;
@@ -104,6 +102,10 @@ public class GLItems {
 			MERMAID_PEARL = reg.item("mermaid_pearl", MermaidPearl::new)
 					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/tool/" + ctx.getName())))
 					.lang("Mermaid's Pearl").register();
+
+			CAT_BELL = reg.item("cat_bell", CatBell::new)
+					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/tool/" + ctx.getName())))
+					.lang("Cat Bell").register();
 		}
 
 

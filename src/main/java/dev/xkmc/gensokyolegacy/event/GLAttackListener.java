@@ -10,11 +10,23 @@ import dev.xkmc.l2damagetracker.contents.attack.DamageData;
 import dev.xkmc.l2damagetracker.contents.attack.DamageModifier;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 public class GLAttackListener implements AttackListener {
 
+	@Override
+	public boolean onAttack(DamageData.Attack cache) {
+		if (cache.getTarget() instanceof Cat cat) {
+			if (cat.isPassenger() && cat.getVehicle() instanceof Player sp) {
+				if (cat.getTags().contains("CatBell")) {
+					return true;
+				}
+			}
+		}
+		return AttackListener.super.onAttack(cache);
+	}
 
 	@Override
 	public void onDamage(DamageData.Defence data) {
