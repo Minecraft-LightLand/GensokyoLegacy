@@ -7,6 +7,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -14,6 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
 import java.util.OptionalDouble;
+import java.util.Set;
 
 public class StructureOutlineRenderer {
 
@@ -59,6 +61,12 @@ public class StructureOutlineRenderer {
 		}
 	}
 
+	public static void renderPosSet(PoseStack pose, Vec3 camera, Set<BlockPos> pos) {
+		var buffer = Minecraft.getInstance().renderBuffers().bufferSource();
+		var outline = buffer.getBuffer(LineRenderType.OUTLINE);
+		renderPos(pose, outline, pos, camera.toVector3f(), 1, 1, 1, 1, 0);
+	}
+
 	private static void renderBox(
 			PoseStack pose, VertexConsumer vc, IStructureBound.Box box,
 			Vector3f pos, float r, float g, float b, float a, float offset
@@ -67,6 +75,18 @@ public class StructureOutlineRenderer {
 				box.x0() - offset, box.y0() - offset, box.z0() - offset,
 				box.x1() + offset + 1, box.y1() + offset + 1, box.z1() + offset + 1,
 				-pos.x, -pos.y, -pos.z, r, g, b, a);
+	}
+
+	private static void renderPos(
+			PoseStack pose, VertexConsumer vc, Set<BlockPos> box,
+			Vector3f pos, float r, float g, float b, float a, float offset
+	) {
+		for (var e : box) {
+			renderCube(pose, vc,
+					e.getX() - offset, e.getY() - offset, e.getZ() - offset,
+					e.getX() + offset + 1, e.getY() + offset + 1, e.getZ() + offset + 1,
+					-pos.x, -pos.y, -pos.z, r, g, b, a);
+		}
 	}
 
 	public static void renderCube(

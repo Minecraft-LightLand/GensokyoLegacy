@@ -17,6 +17,7 @@ import dev.xkmc.gensokyolegacy.content.client.structure.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.move.PathDataToClient;
 import dev.xkmc.gensokyolegacy.content.entity.foundation.CombatToClient;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouMat;
+import dev.xkmc.gensokyolegacy.content.item.tool.Dowser;
 import dev.xkmc.gensokyolegacy.event.GLAttackListener;
 import dev.xkmc.gensokyolegacy.event.GLClickHandler;
 import dev.xkmc.gensokyolegacy.init.data.*;
@@ -74,7 +75,9 @@ public class GensokyoLegacy {
 			e -> e.create(StructureEditToServer.class, PacketHandler.NetDir.PLAY_TO_SERVER),
 			e -> e.create(FrogSyncPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(KoishiStartPacket.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
-			e -> e.create(CombatToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
+			e -> e.create(CombatToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+
+			e -> e.create(Dowser.DowserToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
 	public GensokyoLegacy() {

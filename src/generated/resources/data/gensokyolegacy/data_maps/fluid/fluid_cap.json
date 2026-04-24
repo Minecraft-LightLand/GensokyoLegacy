@@ -4,36 +4,42 @@
       "canceller": {
         "fluid": "gensokyolegacy:earth_essence"
       },
+      "hide": true,
       "max": 10
     },
     "gensokyolegacy:earth_essence": {
       "canceller": {
         "fluid": "gensokyolegacy:earth_canceller"
       },
+      "hide": true,
       "max": 10
     },
     "gensokyolegacy:hydro_essence": {
       "canceller": {
         "fluid": "gensokyolegacy:pyro_essence"
       },
+      "hide": true,
       "max": 10
     },
     "gensokyolegacy:metal_essence": {
       "canceller": {
         "fluid": "gensokyolegacy:nature_essence"
       },
+      "hide": true,
       "max": 10
     },
     "gensokyolegacy:nature_essence": {
       "canceller": {
         "fluid": "gensokyolegacy:metal_essence"
       },
+      "hide": true,
       "max": 10
     },
     "gensokyolegacy:pyro_essence": {
       "canceller": {
         "fluid": "gensokyolegacy:hydro_essence"
       },
+      "hide": true,
       "max": 10
     }
   }
