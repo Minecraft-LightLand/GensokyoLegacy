@@ -16,6 +16,7 @@ import dev.xkmc.gensokyolegacy.content.item.ingredient.FairyIceItem;
 import dev.xkmc.gensokyolegacy.content.item.ingredient.FrozenFrogItem;
 import dev.xkmc.gensokyolegacy.content.item.tool.CentiPickaxe;
 import dev.xkmc.gensokyolegacy.content.item.tool.Dowser;
+import dev.xkmc.gensokyolegacy.content.item.tool.MermaidPearl;
 import dev.xkmc.gensokyolegacy.content.item.tool.MiniFurnace1;
 import dev.xkmc.gensokyolegacy.content.spell.item.*;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -51,6 +52,7 @@ public class GLItems {
 	public static final ItemEntry<MiniFurnace1> MINI_FURNACE_1;
 	public static final ItemEntry<CentiPickaxe> CENTIPICKAXE;
 	public static final ItemEntry<Dowser> DOWSER;
+	public static final ItemEntry<MermaidPearl> MERMAID_PEARL;
 
 	public static final ItemEntry<DebugGlasses> DEBUG_GLASSES;
 	public static final ItemEntry<DebugWand> DEBUG_WAND;
@@ -93,11 +95,15 @@ public class GLItems {
 			CENTIPICKAXE = reg.item("centipickaxe", CentiPickaxe::new)
 					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/tool/" + ctx.getName())))
 					.tab(TAB.key(), (a, b) -> b.accept(a.get().getDefaultInstance(b.getParameters().holders())))
-					.lang("Centipickaxe").register();
+					.lang("Centipeck").register();
 
 			DOWSER = reg.item("dowser", Dowser::new)
 					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/tool/" + ctx.getName())))
 					.lang("Dowser").register();
+
+			MERMAID_PEARL = reg.item("mermaid_pearl", MermaidPearl::new)
+					.model((ctx, pvd) -> pvd.generated(ctx, pvd.modLoc("item/tool/" + ctx.getName())))
+					.lang("Mermaid's Pearl").register();
 		}
 
 
