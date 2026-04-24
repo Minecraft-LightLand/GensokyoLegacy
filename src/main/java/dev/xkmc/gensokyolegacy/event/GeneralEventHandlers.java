@@ -6,6 +6,7 @@ import dev.xkmc.gensokyolegacy.content.item.character.TouhouHatItem;
 import dev.xkmc.gensokyolegacy.content.item.tool.CatBell;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLDamageTypes;
+import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,6 +19,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 @EventBusSubscriber(modid = GensokyoLegacy.MODID)
@@ -59,6 +61,14 @@ public class GeneralEventHandlers {
 					}
 				}
 			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void onLivingInteraction(PlayerInteractEvent.EntityInteract event) {
+		if (event.getTarget() instanceof Cat cat && event.getItemStack().is(GLItems.CAT_BELL)) {
+			event.setCancellationResult(GLItems.CAT_BELL.get().interactLivingEntity(event.getItemStack(), event.getEntity(), cat, event.getHand()));
+			event.setCanceled(true);
 		}
 	}
 

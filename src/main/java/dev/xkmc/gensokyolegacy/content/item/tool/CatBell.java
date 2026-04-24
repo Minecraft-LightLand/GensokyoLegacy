@@ -25,10 +25,13 @@ public class CatBell extends Item {
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity le, InteractionHand usedHand) {
 		if (le instanceof Cat cat) {
 			if (cat.getOwner() != player) return InteractionResult.FAIL;
+			if (player.hasPassenger(e -> e instanceof Cat))
+				return InteractionResult.FAIL;
 			if (player instanceof ServerPlayer sp) {
 				cat.addTag("CatBell");
 				cat.startRiding(player, true);
 				GensokyoLegacy.HANDLER.toClientPlayer(new MountToClient(cat.getId(), player.getId(), true), sp);
+				player.getCooldowns().addCooldown(this, 20);
 			}
 			return InteractionResult.SUCCESS;
 		}
