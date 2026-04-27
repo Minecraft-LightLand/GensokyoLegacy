@@ -1,5 +1,8 @@
 package dev.xkmc.gensokyolegacy.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import dev.xkmc.gensokyolegacy.event.GLGeneralEventHandlers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEffects;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
@@ -23,6 +26,11 @@ public abstract class LivingEntityMixin {
 		if (self instanceof Player player && hasEffect(GLEffects.UNCONSCIOUS)) {
 			cir.setReturnValue(false);
 		}
+	}
+
+	@WrapOperation(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getGravity()D"))
+	public double gensokyoLegacy$gravity(LivingEntity instance, Operation<Double> original) {
+		return GLGeneralEventHandlers.getGravity(instance, original.call(instance));
 	}
 
 }

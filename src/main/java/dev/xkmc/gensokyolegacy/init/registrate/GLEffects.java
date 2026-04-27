@@ -23,6 +23,10 @@ public class GLEffects {
 			() -> new EmptyEffect(MobEffectCategory.BENEFICIAL, 0xFF9AC0CD),
 			"You can only count to 9.");
 
+	public static final LegacyHolder<MobEffect> FLOATING = genEffect("floating",
+			() -> new EmptyEffect(MobEffectCategory.BENEFICIAL, 0xFF9AC0CD),
+			"You can float");
+
 	private static <T extends MobEffect> LegacyHolder<MobEffect> genEffect(String name, NonNullSupplier<T> sup, String desc) {
 		return new SimpleEntry<>(GensokyoLegacy.REGISTRATE.effect(name, sup, desc).lang(MobEffect::getDescriptionId).register());
 	}
