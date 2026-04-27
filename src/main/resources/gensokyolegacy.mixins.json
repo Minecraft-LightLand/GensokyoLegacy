@@ -10,7 +10,8 @@
 		"ShootTongueMixin"
 	],
 	"client": [
-		"AbstractContainerScreenMixin"
+		"AbstractContainerScreenMixin",
+		"GuiGraphicsMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -19,6 +19,10 @@ public class GLEffects {
 			() -> new EmptyEffect(MobEffectCategory.BENEFICIAL, -5522492),
 			"You won't be targeted by mobs. Terminates when you attack or open loot chests.");
 
+	public static final LegacyHolder<MobEffect> BAKA = genEffect("baka",
+			() -> new EmptyEffect(MobEffectCategory.BENEFICIAL, 0xFF9AC0CD),
+			"You can only count to 9.");
+
 	private static <T extends MobEffect> LegacyHolder<MobEffect> genEffect(String name, NonNullSupplier<T> sup, String desc) {
 		return new SimpleEntry<>(GensokyoLegacy.REGISTRATE.effect(name, sup, desc).lang(MobEffect::getDescriptionId).register());
 	}

@@ -187,4 +187,5 @@ dependencies {
     implementation "curse.maven:better-advancements-272515:5511371"
     implementation "curse.maven:touhou-little-maid-355044:5896992"
     implementation "curse.maven:jade-324717:5976517"
+    implementation "curse.maven:sodium-394468:6382651"
 }
