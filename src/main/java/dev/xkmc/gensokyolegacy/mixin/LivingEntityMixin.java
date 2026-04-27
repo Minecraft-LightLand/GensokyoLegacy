@@ -33,4 +33,9 @@ public abstract class LivingEntityMixin {
 		return GLGeneralEventHandlers.getGravity(instance, original.call(instance));
 	}
 
+	@WrapOperation(method = "getFrictionInfluencedSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFlyingSpeed()F"))
+	public float doublegensokyoLegacy$flyingSpeed(LivingEntity instance, Operation<Float> original) {
+		return GLGeneralEventHandlers.getFlyingSpeed(instance, original.call(instance));
+	}
+
 }

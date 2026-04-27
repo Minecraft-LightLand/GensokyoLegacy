@@ -4,6 +4,7 @@ import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,7 +22,7 @@ public class GLGeneralEventHandlers {
 
 	public static double getGravity(LivingEntity le, double original) {
 		var ins = le.getEffect(GLEffects.FLOATING);
-		if (ins != null) {
+		if (ins != null && !le.onGround() && !le.isShiftKeyDown()) {
 			int h = 2;
 			double dist;
 			if (le.onGround()) dist = 0;
@@ -35,4 +36,14 @@ public class GLGeneralEventHandlers {
 		}
 		return original;
 	}
+
+	public static float getFlyingSpeed(LivingEntity le, float original) {
+		if (le.onGround() || le instanceof Player player && player.getAbilities().flying) return original;
+		var ins = le.getEffect(GLEffects.FLOATING);
+		if (ins != null) {
+			return Math.max(le.getSpeed() * 1f, original);
+		}
+		return original;
+	}
+
 }
