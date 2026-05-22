@@ -3,6 +3,8 @@ package dev.xkmc.gensokyolegacy.init.data.structure;
 import com.tterrag.registrate.providers.DataProviderInitializer;
 import com.tterrag.registrate.providers.RegistrateDataMapProvider;
 import dev.xkmc.gensokyolegacy.content.attachment.datamap.BedData;
+import dev.xkmc.gensokyolegacy.init.registrate.GLBlocks;
+import dev.xkmc.gensokyolegacy.init.registrate.GLEntities;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -36,6 +38,10 @@ public class GLStructureGen {
 			}
 			structureReg.add(e.id(), config.build(), false);
 		}
+
+		bedReg.add(GLBlocks.BEDS[GLBlocks.Beds.CIRNO.ordinal()], new BedData(GLEntities.CIRNO.get()), false);
+		bedReg.add(GLBlocks.BEDS[GLBlocks.Beds.REIMU.ordinal()], new BedData(GLEntities.REIMU.get()), false);
+		bedReg.add(GLBlocks.BEDS[GLBlocks.Beds.RUMIA.ordinal()], new BedData(GLEntities.RUMIA.get()), false);
 	}
 
 	public static void init(DataProviderInitializer init) {

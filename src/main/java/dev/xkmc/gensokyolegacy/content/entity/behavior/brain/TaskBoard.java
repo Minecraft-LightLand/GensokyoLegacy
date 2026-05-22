@@ -1,15 +1,17 @@
-package dev.xkmc.gensokyolegacy.content.entity.behavior.task.core;
+package dev.xkmc.gensokyolegacy.content.entity.behavior.brain;
 
-import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.behavior.BehaviorControl;
+import net.minecraft.world.entity.ai.behavior.GateBehavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.schedule.Activity;
-import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
-import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
-import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
-import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
-import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import net.minecraft.world.entity.schedule.Schedule;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -28,7 +30,7 @@ public class TaskBoard {
 	private record ActivityEntry(Activity activity, @Nullable MemoryModuleType<?> memory, int priority) {
 	}
 
-	private record BehaviorEntry(int priority, ExtendedBehaviour<?> behavior, Set<Activity> activities) {
+	private record BehaviorEntry(int priority, BehaviorControl<?> behavior, Set<Activity> activities) {
 	}
 
 	private final Map<Activity, ActivityEntry> activities = new LinkedHashMap<>();
@@ -37,16 +39,30 @@ public class TaskBoard {
 	private final List<BehaviorEntry> always = new ArrayList<>();
 	private final List<BehaviorEntry> first = new ArrayList<>();
 	private final List<BehaviorEntry> random = new ArrayList<>();
-	private final List<ExtendedSensor<? extends SmartYoukaiEntity>> sensors = new ArrayList<>();
+	private final List<Sensor<?>> sensors = new ArrayList<>();
 	private final Map<Class<?>, BehaviorEntry> map = new HashMap<>();
+	private final Set<MemoryModuleType<?>> memories = new LinkedHashSet<>();
+
+	private Schedule schedule = null;
+
+	private void addMemories(BehaviorControl<?> ctrl) {
+		if (ctrl instanceof Behavior<?> beh) {
+			memories.addAll(beh.entryCondition.keySet());
+		}
+	}
+
+	public Set<MemoryModuleType<?>> memories() {
+		return memories;
+	}
 
 	/**
 	 * Add an always-executing behavior to some activities
 	 */
-	public void addAlways(ExtendedBehaviour<?> behavior, Activity... activities) {
+	public void addAlways(BehaviorControl<?> behavior, Activity... activities) {
 		var entry = new BehaviorEntry(0, behavior, new LinkedHashSet<>(Set.of(activities)));
 		always.add(entry);
 		map.put(behavior.getClass(), entry);
+		addMemories(behavior);
 	}
 
 	/**
@@ -54,10 +70,11 @@ public class TaskBoard {
 	 * Only 1 exclusive behavior can run at a time.
 	 * Behavior with the smallest priority number will run.
 	 */
-	public void addExclusive(int priority, ExtendedBehaviour<?> behavior, Activity... activities) {
+	public void addExclusive(int priority, BehaviorControl<?> behavior, Activity... activities) {
 		var entry = new BehaviorEntry(priority, behavior, new LinkedHashSet<>(Set.of(activities)));
 		first.add(entry);
 		map.put(behavior.getClass(), entry);
+		addMemories(behavior);
 	}
 
 	/**
@@ -65,10 +82,11 @@ public class TaskBoard {
 	 * Randomly-executing behavior can run in parallel with exclusive behaviors,
 	 * but only 1 randomly executing behavior will execute at a time.
 	 */
-	public void addRandom(ExtendedBehaviour<?> behavior, Activity... activities) {
+	public void addRandom(BehaviorControl<?> behavior, Activity... activities) {
 		var entry = new BehaviorEntry(0, behavior, new LinkedHashSet<>(Set.of(activities)));
 		random.add(entry);
 		map.put(behavior.getClass(), entry);
+		addMemories(behavior);
 	}
 
 	/**
@@ -81,7 +99,7 @@ public class TaskBoard {
 	/**
 	 * Add a sensor
 	 */
-	public void addSensor(ExtendedSensor<? extends SmartYoukaiEntity> sensor) {
+	public void addSensor(Sensor<?> sensor) {
 		this.sensors.add(sensor);
 	}
 
@@ -108,11 +126,15 @@ public class TaskBoard {
 		priorities.add(e);
 	}
 
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
+	}
+
 	/**
 	 * Finish constructing the task board and sort everything.
 	 */
 	public void build() {
-		priorities.add(new ActivityEntry(Activity.FIGHT, MemoryModuleType.ATTACK_TARGET, 0));
+		addPrioritizedActivity(Activity.FIGHT, MemoryModuleType.ATTACK_TARGET, 0);
 		priorities.sort(Comparator.comparingInt(e -> e.priority));
 		first.sort(Comparator.comparingInt(e -> e.priority));
 		for (var e : priorities) {
@@ -120,63 +142,75 @@ public class TaskBoard {
 		}
 	}
 
-	public List<ExtendedSensor<? extends SmartYoukaiEntity>> getSensors() {
+	public List<Sensor<?>> getSensors() {
 		return sensors;
 	}
 
-	public Map<Activity, BrainActivityGroup<? extends SmartYoukaiEntity>> buildActivityMap() {
-		Map<Activity, BrainActivityGroup<? extends SmartYoukaiEntity>> ans = new LinkedHashMap<>();
-		for (var ent : activities.entrySet()) {
-			ans.put(ent.getKey(), buildActivityGroup(ent.getValue()));
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public void buildBrain(SmartBrain<?> brain) {
+		var list = new ArrayList<Activity>();
+		list.add(Activity.CORE);
+		for (var e : priorities) {
+			list.add(e.activity);
 		}
-		return ans;
-	}
-
-	public List<Activity> getActivityPriorities() {
-		return priority;
-	}
-
-	private BrainActivityGroup<SmartYoukaiEntity> buildActivityGroup(ActivityEntry act) {
-		var entry = new BrainActivityGroup<SmartYoukaiEntity>(act.activity)
-				.priority(10).behaviours(fetch(act.activity));
-		if (act.priority() == Integer.MAX_VALUE) {
-			for (var a : priorities) {
-				if (a.memory() == null) continue;
-				entry.onlyStartWithMemoryStatus(a.memory(), MemoryStatus.VALUE_ABSENT);
+		for (var e : activities.entrySet()) {
+			if (e.getValue().priority == Integer.MAX_VALUE) {
+				list.add(e.getKey());
 			}
 		}
-		if (act.memory() != null) {
-			entry.onlyStartWithMemoryStatus(act.memory(), MemoryStatus.VALUE_PRESENT);
+		int index = 0;
+		Set<MemoryModuleType<?>> previous = new LinkedHashSet<>();
+		for (var act : list) {
+			var behaviors = fetch(act);
+			var copy = new ArrayList();
+			for (var e : behaviors) {
+				copy.add(Pair.of(index++, e));
+			}
+			Set<Pair<MemoryModuleType<?>, MemoryStatus>> current = new LinkedHashSet<>();
+			for (var e : previous) {
+				current.add(Pair.of(e, MemoryStatus.VALUE_ABSENT));
+			}
+			var entry = activities.get(act);
+			if (entry != null) {
+				var mem = entry.memory();
+				if (mem != null) {
+					if (entry.priority < Integer.MAX_VALUE) previous.add(mem);
+					current.add(Pair.of(mem, MemoryStatus.VALUE_PRESENT));
+				}
+			}
+			brain.setPriorityActivities(priority);
+			brain.addActivityWithConditions(act, ImmutableList.copyOf(copy), current);
 		}
-		return entry;
+		if (schedule != null)
+			brain.setSchedule(schedule);
 	}
 
-	@SuppressWarnings("unchecked")
-	private Behavior<? super SmartYoukaiEntity>[] fetch(Activity activity) {
-		List<ExtendedBehaviour<?>> subFirst = new ArrayList<>();
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	private List<BehaviorControl<?>> fetch(Activity activity) {
+		List<Pair<BehaviorControl<?>, Integer>> subFirst = new ArrayList<>();
 		for (var e : first) {
 			if (e.activities.contains(activity))
-				subFirst.add(e.behavior);
+				subFirst.add(Pair.of(e.behavior, 100));
 		}
-		List<ExtendedBehaviour<?>> subRandom = new ArrayList<>();
+		List<Pair<BehaviorControl<?>, Integer>> subRandom = new ArrayList<>();
 		for (var e : random) {
 			if (e.activities.contains(activity))
-				subRandom.add(e.behavior);
+				subRandom.add(Pair.of(e.behavior, 100));
 		}
-		List<Behavior<?>> behaviors = new ArrayList<>();
+		List<BehaviorControl<?>> behaviors = new ArrayList<>();
 		for (var e : always) {
 			if (e.activities.contains(activity))
 				behaviors.add(e.behavior);
 		}
 		if (subFirst.size() > 1)
-			behaviors.add(new FirstApplicableBehaviour<>(subFirst.toArray(ExtendedBehaviour[]::new)));
+			behaviors.add(new GateBehavior(ImmutableMap.of(), ImmutableSet.of(), GateBehavior.OrderPolicy.ORDERED, GateBehavior.RunningPolicy.RUN_ONE, subFirst));
 		else if (subFirst.size() == 1)
-			behaviors.add(subFirst.getFirst());
+			behaviors.add(subFirst.getFirst().getFirst());
 		if (subRandom.size() > 1)
-			behaviors.add(new OneRandomBehaviour<>(subRandom.toArray(ExtendedBehaviour[]::new)));
+			behaviors.add(new GateBehavior(ImmutableMap.of(), ImmutableSet.of(), GateBehavior.OrderPolicy.SHUFFLED, GateBehavior.RunningPolicy.RUN_ONE, subRandom));
 		else if (subRandom.size() == 1)
-			behaviors.add(subRandom.getFirst());
-		return behaviors.toArray(Behavior[]::new);
+			behaviors.add(subRandom.getFirst().getFirst());
+		return behaviors;
 	}
 
 }

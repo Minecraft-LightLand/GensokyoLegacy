@@ -14,7 +14,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.smartbrainlib.util.BrainUtils;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
 
 @SerialClass
 public class RumiaStateMachine {

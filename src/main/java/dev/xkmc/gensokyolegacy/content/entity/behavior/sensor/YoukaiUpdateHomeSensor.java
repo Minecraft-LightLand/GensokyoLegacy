@@ -3,27 +3,24 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.sensor;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.attachment.index.StructureKey;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
-import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.sensing.SensorType;
-import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
-import net.tslat.smartbrainlib.util.BrainUtils;
+import net.minecraft.world.entity.ai.sensing.Sensor;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-public class YoukaiUpdateHomeSensor<E extends YoukaiEntity> extends ExtendedSensor<E> {
+public class YoukaiUpdateHomeSensor<E extends YoukaiEntity> extends Sensor<E> {
 
-	@Override
-	public List<MemoryModuleType<?>> memoriesUsed() {
-		return List.of(MemoryModuleType.HOME);
+	public YoukaiUpdateHomeSensor() {
+		super(80);
 	}
 
 	@Override
-	public SensorType<YoukaiUpdateHomeSensor<?>> type() {
-		return GLBrains.SN_HOME.get();
+	public Set<MemoryModuleType<?>> requires() {
+		return Set.of(MemoryModuleType.HOME);
 	}
 
 	@Override

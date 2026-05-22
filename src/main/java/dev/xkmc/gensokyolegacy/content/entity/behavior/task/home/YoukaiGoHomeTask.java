@@ -1,34 +1,28 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.home.core.IHomeHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
-import net.tslat.smartbrainlib.object.MemoryTest;
-import net.tslat.smartbrainlib.util.BrainUtils;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Map;
 
-public class YoukaiGoHomeTask<E extends SmartYoukaiEntity> extends ExtendedBehaviour<E> {
-
-	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(3)
-			.noMemory(MemoryModuleType.WALK_TARGET)
-			.hasMemory(MemoryModuleType.HOME)
-			.noMemory(MemoryModuleType.ATTACK_TARGET);
+public class YoukaiGoHomeTask<E extends SmartYoukaiEntity> extends Behavior<E> {
 
 	public YoukaiGoHomeTask() {
-	}
-
-	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-		return MEMORY_REQUIREMENTS;
+		super(Map.of(
+				MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.HOME, MemoryStatus.VALUE_PRESENT,
+				MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT
+		));
 	}
 
 	@Override

@@ -1,33 +1,29 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.home.core.HomeSearchUtil;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
-import net.tslat.smartbrainlib.object.MemoryTest;
-import net.tslat.smartbrainlib.util.BrainUtils;
 
-import java.util.List;
+import java.util.Map;
 
 public class YoukaiSitTask<E extends SmartYoukaiEntity> extends AbstractHomeHolderTask<E> {
 
-	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(4)
-			.noMemory(MemoryModuleType.WALK_TARGET)
-			.hasMemory(MemoryModuleType.HOME)
-			.noMemory(MemoryModuleType.ATTACK_TARGET)
-			.usesMemory(MemoryModuleType.LOOK_TARGET);
-
 	private BlockPos chair;
 
-	@Override
-	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-		return MEMORY_REQUIREMENTS;
+	public YoukaiSitTask(int minDur, int maxDur) {
+		super(Map.of(
+				MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.HOME, MemoryStatus.VALUE_PRESENT,
+				MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED
+		),minDur, maxDur);
 	}
 
 	@Override
@@ -48,7 +44,6 @@ public class YoukaiSitTask<E extends SmartYoukaiEntity> extends AbstractHomeHold
 
 	@Override
 	protected boolean canStillUse(ServerLevel level, E entity, long gameTime) {
-		if (stopCondition.test(entity)) return false;
 		if (!home.isValid()) return false;
 		if (!HomeSearchUtil.isValidChair(level, chair)) return false;
 		if (entity.isPassenger()) return true;
@@ -62,11 +57,11 @@ public class YoukaiSitTask<E extends SmartYoukaiEntity> extends AbstractHomeHold
 	}
 
 	@Override
-	protected void stop(E entity) {
+	protected void stop(ServerLevel level, E entity, long gameTime) {
 		if (entity.isPassenger())
 			entity.stopRiding();
 		chair = null;
-		super.stop(entity);
+		super.stop(level, entity, gameTime);
 	}
 
 }

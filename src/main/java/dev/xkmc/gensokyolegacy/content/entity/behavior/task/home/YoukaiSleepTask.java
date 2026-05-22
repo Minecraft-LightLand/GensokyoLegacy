@@ -1,42 +1,38 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.properties.BedPart;
-import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
-import net.tslat.smartbrainlib.object.MemoryTest;
-import net.tslat.smartbrainlib.util.BrainUtils;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Map;
 
-public class YoukaiSleepTask extends ExtendedBehaviour<YoukaiEntity> {
-
-	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(3)
-			.hasMemory(MemoryModuleType.HOME)
-			.noMemory(MemoryModuleType.WALK_TARGET)
-			.noMemory(MemoryModuleType.ATTACK_TARGET);
+public class YoukaiSleepTask extends Behavior<YoukaiEntity> {
 
 	@Nullable
 	private GlobalPos pos = null;
 	private long desperateSleepyTime = 0;
 	private long nextOkStartTime = 0;
 
-	@Override
-	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-		return MEMORY_REQUIREMENTS;
+	public YoukaiSleepTask() {
+		super(Map.of(
+				MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.HOME, MemoryStatus.VALUE_PRESENT,
+				MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT
+		));
 	}
 
 	@Override
-	protected boolean shouldKeepRunning(YoukaiEntity entity) {
+	protected boolean canStillUse(ServerLevel level, YoukaiEntity entity, long gameTime) {
 		return entity.getBrain().isActive(Activity.REST);
 	}
 

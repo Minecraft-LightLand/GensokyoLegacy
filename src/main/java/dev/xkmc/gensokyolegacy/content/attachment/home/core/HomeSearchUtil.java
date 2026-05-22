@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.ai.util.RandomPos;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
@@ -32,7 +33,8 @@ public class HomeSearchUtil {
 	}
 
 	public static boolean isValidChair(ServerLevel sl, BlockPos pos) {
-		return false;//sl.getBlockState(pos).getBlock() instanceof WoodChairBlock; TODO chair handling
+		return sl.getBlockState(pos).getBlock() instanceof StairBlock;
+		//sl.getBlockState(pos).getBlock() instanceof WoodChairBlock; TODO chair handling
 	}
 
 	public static void put(ServerLevel level, BlockPos chest, Function<Boolean, ItemStack> doCraft) {

@@ -175,7 +175,7 @@ dependencies {
     implementation jarJar(group: 'dev.xkmc', name: 'fast_projectile_api', version: "[${fast_projectile_api_ver},)")
     implementation jarJar(group: 'dev.xkmc', name: 'danmaku_api', version: "[${danmaku_api_ver},)")
     implementation jarJar(group: 'dev.xkmc', name: 'l2library', version: "[${l2library_ver},)")
-    implementation jarJar(group: 'net.tslat.smartbrainlib', name: 'SmartBrainLib-neoforge-1.21.1', version: "[1.16.1,)")
+    //implementation jarJar(group: 'net.tslat.smartbrainlib', name: 'SmartBrainLib-neoforge-1.21.1', version: "[1.16.1,)")
     implementation jarJar(group: 'software.bernie.geckolib', name: 'geckolib-neoforge-1.21.1', version: "[4.6.6,)")
 
     //implementation "curse.maven:farmers-delight-398521:5566383"
