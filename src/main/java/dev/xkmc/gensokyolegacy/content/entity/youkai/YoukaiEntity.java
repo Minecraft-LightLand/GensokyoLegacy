@@ -1,12 +1,5 @@
 package dev.xkmc.gensokyolegacy.content.entity.youkai;
 
-import dev.xkmc.danmakuapi.api.IDanmakuEntity;
-import dev.xkmc.danmakuapi.api.IYoukaiEntity;
-import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
-import dev.xkmc.danmakuapi.content.spell.spellcard.SpellCardWrapper;
-import dev.xkmc.danmakuapi.init.registrate.DanmakuEntities;
-import dev.xkmc.danmakuapi.init.registrate.DanmakuItems;
-import dev.xkmc.fastprojectileapi.spellcircle.SpellCircleHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.character.CharDataHolder;
 import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.*;
@@ -23,17 +16,18 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
@@ -41,10 +35,8 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.NeoForge;
 import org.jetbrains.annotations.Nullable;
@@ -54,7 +46,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @SerialClass
-public abstract class YoukaiEntity extends DamageClampEntity implements SpellCircleHolder, IYoukaiEntity {
+public abstract class YoukaiEntity extends DamageClampEntity /*implements SpellCircleHolder, IYoukaiEntity*/ {
 
 	private static <T> EntityDataAccessor<T> defineId(EntityDataSerializer<T> ser) {
 		return SynchedEntityData.defineId(YoukaiEntity.class, ser);
@@ -74,8 +66,8 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	@SerialField
 	public final YoukaiTargetContainer targets;
 
-	@SerialField
-	public SpellCardWrapper spellCard;
+	//@SerialField
+	//public SpellCardWrapper spellCard;
 
 	@SerialField
 	protected int noTargetTime, noPlayerTime;
@@ -83,7 +75,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	protected final YoukaiSourceOverride sources = new YoukaiSourceOverride(level().registryAccess());
 	protected final YoukaiModuleHolder modules = new YoukaiModuleHolder(createModules());
 
-	public final YoukaiCardHolder cardHolder = new YoukaiCardHolder(this);
+	//public final YoukaiCardHolder cardHolder = new YoukaiCardHolder(this);
 	public final YoukaiCombatManager combatManager = createCombatManager();
 	public final YoukaiNavigationControl navCtrl = new YoukaiNavigationControl(this);
 
@@ -125,8 +117,8 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		tag.putInt("Age", tickCount);
 		var cdc = new TagCodec(level().registryAccess());
 		tag.put("auto-serial", Objects.requireNonNull(cdc.toTag(new CompoundTag(), this)));
-		if (hasRestriction()) {
-			var data = cdc.valueToTag(RestrictData.class, new RestrictData(getRestrictCenter(), getRestrictRadius()));
+		if (hasHome()) {
+			var data = cdc.valueToTag(RestrictData.class, new RestrictData(getHomePosition(), getHomeRadius()));
 			if (data != null) tag.put("Restrict", data);
 		}
 		data().write(level().registryAccess(), tag, entityData);
@@ -286,7 +278,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 
 	@Override
 	protected void actuallyHurt(DamageSource source, float amount) {
-		if (spellCard != null) spellCard.hurt(cardHolder, source, amount);
+		//if (spellCard != null) spellCard.hurt(cardHolder, source, amount);
 		getData(source.getEntity()).ifPresent(e -> e.onHurt(source, amount));
 		actuallyHurtImpl(source, amount);
 	}
@@ -363,13 +355,13 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	}
 
 	protected void tickSpell() {
-		if (spellCard != null) {
+		/*if (spellCard != null) {
 			if (isAggressive() && shouldShowSpellCircle()) {
 				spellCard.tick(cardHolder);
 			} else {
 				spellCard.reset();
 			}
-		}
+		}*/
 	}
 
 	public boolean shouldIgnore(LivingEntity e) {
@@ -406,6 +398,12 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		return isHostileTo(le) || combatManager.targetKind(le).isPrey() || combatManager.shouldHurtInnocent(le);
 	}
 
+	@Override
+	public LivingEntity self() {
+		return super.self();
+	}
+
+	/*
 	public final void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku) {
 		combatManager.onDanmakuHit(e, danmaku);
 	}
@@ -413,11 +411,6 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 	@Override
 	public void onDanmakuImmune(LivingEntity e, IDanmakuEntity danmaku, DamageSource source) {
 		combatManager.onDanmakuImmune(e, danmaku, source);
-	}
-
-	@Override
-	public LivingEntity self() {
-		return super.self();
 	}
 
 	@Override
@@ -442,7 +435,8 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		level().addFreshEntity(danmaku);
 	}
 
-	// misc
+	public void initSpellCard() {
+	}
 
 	@Nullable
 	@Override
@@ -451,8 +445,10 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
 	}
 
-	public void initSpellCard() {
-	}
+	 */
+
+	// misc
+
 
 	public void startSleeping(BlockPos pos) {
 		if (this.isPassenger()) {
@@ -462,7 +458,7 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		this.setPos(pos.getX() + 0.5, pos.getY() + 0.6875, pos.getZ() + 0.5);
 		this.setSleepingPos(pos);
 		this.setDeltaMovement(Vec3.ZERO);
-		this.hasImpulse = true;
+		this.needsSync = true;
 	}
 
 	public boolean mayInteract(Player player) {

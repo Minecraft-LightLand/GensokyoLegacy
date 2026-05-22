@@ -1,17 +1,18 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;
 
-import dev.xkmc.danmakuapi.init.data.DanmakuDamageTypes;
-import dev.xkmc.gensokyolegacy.compat.touhoulittlemaid.TouhouConditionalSpawns;
+import com.geckolib.animatable.GeoAnimatable;
+import com.geckolib.animatable.GeoEntity;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
+import com.geckolib.animation.AnimationController;
+import com.geckolib.animation.RawAnimation;
+import com.geckolib.animation.object.PlayState;
+import com.geckolib.animation.state.AnimationTest;
+import com.geckolib.util.GeckoLibUtil;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 @SerialClass
 public class ReimuEntity extends MaidenEntity implements GeoEntity {
@@ -28,21 +29,13 @@ public class ReimuEntity extends MaidenEntity implements GeoEntity {
 		return YoukaiFeatureSet.MAIDEN;
 	}
 
-	@Override
-	protected void onKilledBy(LivingEntity le, DamageSource source) {
-		super.onKilledBy(le, source);
-		if (!source.is(DanmakuDamageTypes.DANMAKU_TYPE)) {
-			TouhouConditionalSpawns.triggetYukari(le, position());
-		}
-	}
-
-	protected <E extends ReimuEntity> PlayState idleAnimController(final AnimationState<E> event) {
+	protected <E extends GeoAnimatable> PlayState idleAnimController(final AnimationTest<E> event) {
 		return event.setAndContinue(IDLE);
 	}
 
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-		controllers.add(new AnimationController<>(this, "Flying", 5, this::idleAnimController));
+		controllers.add(new AnimationController<>( "Flying", 5, this::idleAnimController));
 	}
 
 	@Override

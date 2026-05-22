@@ -184,6 +184,15 @@ repositories {
         url = uri("https://maven.theillusivec4.top/")
         content { includeGroup "top.theillusivec4.curios" }
     }
+    maven {
+        url 'https://www.cursemaven.com'
+        content {includeGroup "curse.maven"}
+    }
+    maven {
+        name = 'GeckoLib'
+        url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+        content {includeGroup "com.geckolib"}
+    }
 }
 
 dependencies {
@@ -201,6 +210,10 @@ dependencies {
     // Curios
     implementation "top.theillusivec4.curios:curios-neoforge:${curios_version}"
     compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+
+    implementation "com.geckolib:geckolib-neoforge-26.1.2:${geckolib_ver}"
+    interfaceInjectionData "com.geckolib:geckolib-neoforge-26.1.2:${geckolib_ver}"
+    implementation "curse.maven:smartbrainlib-661293:8079477"
 
     testImplementation "com.mojang:datafixerupper:8.0.16"
     testImplementation "com.google.guava:guava:32.1.2-jre"
