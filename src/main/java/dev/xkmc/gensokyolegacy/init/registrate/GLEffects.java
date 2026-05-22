@@ -27,6 +27,10 @@ public class GLEffects {
 			() -> new EmptyEffect(MobEffectCategory.BENEFICIAL, 0xFF9AC0CD),
 			"You can float");
 
+	public static final LegacyHolder<MobEffect> LOOTING = genEffect("looting",
+			() -> new EmptyEffect(MobEffectCategory.BENEFICIAL, 0xFF9AC0CD),
+			"Higher chance to get rare drops");
+
 	private static <T extends MobEffect> LegacyHolder<MobEffect> genEffect(String name, NonNullSupplier<T> sup, String desc) {
 		return new SimpleEntry<>(GensokyoLegacy.REGISTRATE.effect(name, sup, desc).lang(MobEffect::getDescriptionId).register());
 	}
