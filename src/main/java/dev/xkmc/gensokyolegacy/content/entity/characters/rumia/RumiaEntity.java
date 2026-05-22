@@ -2,7 +2,7 @@ package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiUpdateTargetTask;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.TaskBoard;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.brain.TaskBoard;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFeatureSet;
@@ -23,14 +23,11 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.ai.behavior.FollowTemptation;
+import net.minecraft.world.entity.ai.sensing.TemptingSensor;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags;
-import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
 
 @SerialClass
 public class RumiaEntity extends SmartYoukaiEntity {
@@ -50,23 +47,19 @@ public class RumiaEntity extends SmartYoukaiEntity {
 	@Override
 	protected void constructTaskBoard(TaskBoard board) {
 		super.constructTaskBoard(board);
-		board.addExclusive(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addExclusive(50, new FollowTemptation(e -> 1f), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
 		board.addExclusive(0, new RumiaParalyzeGoal(), GLBrains.DOWN.get());
 
-		board.addSensor(new ItemTemptingSensor<RumiaEntity>().setRadius(16, 8)
-				.temptedWith((self, stack) -> stack.is(Tags.Items.FOODS_COOKED_MEAT))
-				.setScanRate(e -> 20));//TODO rumia food
+		board.addSensor(new TemptingSensor(stack -> stack.is(Tags.Items.FOODS_COOKED_MEAT)));
 
 		board.addPrioritizedActivity(GLBrains.DOWN.get(), GLBrains.MEM_DOWN.get(), -100);
 	}
 
-	@SuppressWarnings({"rawtypes", "unchecked", "unsafe"})
 	@Override
-	public BrainActivityGroup<? extends SmartYoukaiEntity> getFightTasks() {
-		return new BrainActivityGroup(Activity.FIGHT).priority(10).behaviours(
-				new YoukaiUpdateTargetTask(),
-				new RumiaAttackTask()
-		).onlyStartWithMemoryStatus(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT);
+	protected void addFightTasks(TaskBoard board) {
+		board.addAlways(new YoukaiUpdateTargetTask<>(), Activity.FIGHT);
+		board.addAlways(new RumiaAttackTask(), Activity.FIGHT);
+
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

@@ -7,18 +7,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.smartbrainlib.object.MemoryTest;
 
 import java.util.List;
+import java.util.Map;
 
 public class RumiaAttackTask extends YoukaiAttackTask<RumiaEntity> {
-
-	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(4)
-			.hasMemory(MemoryModuleType.ATTACK_TARGET)
-			.noMemory(GLBrains.MEM_DOWN.get())
-			.usesMemories(MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET);
 
 	private static final int BALL_RANGE = 10;
 	private static final int APPROACH_RANGE = 16;
@@ -27,7 +23,12 @@ public class RumiaAttackTask extends YoukaiAttackTask<RumiaEntity> {
 	private static final float SPEED = 0.64f, SPEED_VAR = 0.08f;
 
 	public RumiaAttackTask() {
-		super(APPROACH_RANGE);
+		super(Map.of(
+				MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT,
+				GLBrains.MEM_DOWN.get(), MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED,
+				MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED
+		), APPROACH_RANGE);
 	}
 
 	@Override
@@ -36,8 +37,8 @@ public class RumiaAttackTask extends YoukaiAttackTask<RumiaEntity> {
 	}
 
 	@Override
-	protected boolean shouldKeepRunning(RumiaEntity entity) {
-		return !entity.isBlocked() && super.shouldKeepRunning(entity);
+	protected boolean canStillUse(ServerLevel level, RumiaEntity entity, long gameTime) {
+		return !entity.isBlocked() && super.canStillUse(level, entity, gameTime);
 	}
 
 	@Override

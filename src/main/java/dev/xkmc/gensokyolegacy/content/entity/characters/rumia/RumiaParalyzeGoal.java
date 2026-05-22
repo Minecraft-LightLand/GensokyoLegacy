@@ -1,37 +1,34 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.rumia;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
-import net.tslat.smartbrainlib.object.MemoryTest;
-import net.tslat.smartbrainlib.util.BrainUtils;
 
-import java.util.List;
+import java.util.Map;
 
-public class RumiaParalyzeGoal extends ExtendedBehaviour<RumiaEntity> {
-
-	private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS = MemoryTest.builder(1)
-			.hasMemories(GLBrains.MEM_DOWN.get());
+public class RumiaParalyzeGoal extends Behavior<RumiaEntity> {
 
 	public RumiaParalyzeGoal() {
-		super();
-		noTimeout();
+		super(Map.of(
+				GLBrains.MEM_DOWN.get(), MemoryStatus.VALUE_PRESENT
+		));
 	}
 
 	@Override
-	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-		return MEMORY_REQUIREMENTS;
+	protected boolean timedOut(long gameTime) {
+		return false;
 	}
 
 	@Override
-	protected boolean shouldKeepRunning(RumiaEntity entity) {
+	protected boolean canStillUse(ServerLevel level, RumiaEntity entity, long gameTime) {
 		return entity.isBlocked();
 	}
 
 	@Override
-	protected void start(RumiaEntity entity) {
+	protected void start(ServerLevel level, RumiaEntity entity, long gameTime) {
 		BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);
 		BrainUtils.clearMemory(entity, MemoryModuleType.LOOK_TARGET);
 	}

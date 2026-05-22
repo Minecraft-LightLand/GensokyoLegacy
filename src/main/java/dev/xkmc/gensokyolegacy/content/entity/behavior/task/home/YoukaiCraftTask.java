@@ -1,9 +1,9 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.attachment.home.core.HomeSearchUtil;
 import dev.xkmc.gensokyolegacy.content.attachment.index.BedRefData;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
@@ -11,19 +11,11 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.item.ItemStack;
-import net.tslat.smartbrainlib.object.MemoryTest;
-import net.tslat.smartbrainlib.util.BrainUtils;
 
-import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class YoukaiCraftTask<E extends SmartYoukaiEntity> extends AbstractHomeHolderTask<E> {
-
-	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(4)
-			.noMemory(MemoryModuleType.WALK_TARGET)
-			.hasMemory(MemoryModuleType.HOME)
-			.noMemory(MemoryModuleType.ATTACK_TARGET)
-			.usesMemory(MemoryModuleType.LOOK_TARGET);
 
 	private BlockPos chest;
 
@@ -33,14 +25,15 @@ public class YoukaiCraftTask<E extends SmartYoukaiEntity> extends AbstractHomeHo
 	private long walkEnd, craftEnd, nextCraft;
 
 	public YoukaiCraftTask(Function<Boolean, ItemStack> doCraft, int craftDuration, int craftCoolDown) {
+		super(Map.of(
+				MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.HOME, MemoryStatus.VALUE_PRESENT,
+				MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED
+		));
 		this.doCraft = doCraft;
 		this.craftDuration = craftDuration;
 		this.craftCoolDown = craftCoolDown;
-	}
-
-	@Override
-	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-		return MEMORY_REQUIREMENTS;
 	}
 
 	@Override
@@ -63,7 +56,6 @@ public class YoukaiCraftTask<E extends SmartYoukaiEntity> extends AbstractHomeHo
 
 	@Override
 	protected boolean canStillUse(ServerLevel level, E entity, long gameTime) {
-		if (stopCondition.test(entity)) return false;
 		if (!home.isValid()) return false;
 		if (!HomeSearchUtil.isValidChest(level, chest)) return false;
 		if (craftEnd == 0) {
@@ -84,11 +76,11 @@ public class YoukaiCraftTask<E extends SmartYoukaiEntity> extends AbstractHomeHo
 	}
 
 	@Override
-	protected void stop(E entity) {
+	protected void stop(ServerLevel level, E entity, long gameTime) {
 		walkEnd = 0;
 		craftEnd = 0;
 		chest = null;
-		super.stop(entity);
+		super.stop(level, entity, gameTime);
 	}
 
 }

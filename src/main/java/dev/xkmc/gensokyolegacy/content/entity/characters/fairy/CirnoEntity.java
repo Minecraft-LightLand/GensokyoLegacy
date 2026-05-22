@@ -1,9 +1,10 @@
 package dev.xkmc.gensokyolegacy.content.entity.characters.fairy;
 
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.YoukaiCombatManager;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.sensor.NearbyItemsSensor;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.sensor.YoukaiFindPreySensor;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.YoukaiSearchTargetTask;
-import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.TaskBoard;
+import dev.xkmc.gensokyolegacy.content.entity.behavior.brain.TaskBoard;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.YoukaiCraftTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.play.ItemPickupTask;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.play.YoukaiHuntTask;
@@ -16,13 +17,12 @@ import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.behavior.FollowTemptation;
+import net.minecraft.world.entity.ai.sensing.TemptingSensor;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
-import net.tslat.smartbrainlib.api.core.sensor.custom.NearbyItemsSensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class CirnoEntity extends FairyEntity {
 	@Override
 	protected void constructTaskBoard(TaskBoard board) {
 		super.constructTaskBoard(board);
-		board.addExclusive(50, new FollowTemptation<>(), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
+		board.addExclusive(50, new FollowTemptation(e -> 1f), Activity.IDLE, Activity.PLAY, GLBrains.AT_HOME.get());
 		board.addExclusive(200, new ItemPickupTask(), Activity.IDLE, Activity.PLAY);
 		board.addExclusive(250, new YoukaiHuntTask(6), GLBrains.HUNT.get());
 
@@ -70,12 +70,10 @@ public class CirnoEntity extends FairyEntity {
 
 		board.addBehaviorActivity(YoukaiSearchTargetTask.class, GLBrains.HUNT.get());
 
-		board.addSensor(new ItemTemptingSensor<CirnoEntity>().setRadius(16, 8)
-				.temptedWith((self, stack) -> stack.is(Items.CAKE))//TODO cirno food
-				.setScanRate(e -> 20));
+		//TODO cirno food
+		board.addSensor(new TemptingSensor(stack -> stack.is(Items.CAKE)));
 
-		board.addSensor(new NearbyItemsSensor<CirnoEntity>().setRadius(18, 6)
-				.setScanRate(e -> e.playOrHunt() ? 20 : 60));
+		board.addSensor(new NearbyItemsSensor<CirnoEntity>().setRadius(18, 6).setScanRate(e -> e.playOrHunt() ? 20 : 60));
 		board.addSensor(new YoukaiFindPreySensor<>(CirnoEntity::playOrHunt));
 
 		board.addPrioritizedActivity(GLBrains.HUNT.get(), GLBrains.MEM_PREY.get(), 200);

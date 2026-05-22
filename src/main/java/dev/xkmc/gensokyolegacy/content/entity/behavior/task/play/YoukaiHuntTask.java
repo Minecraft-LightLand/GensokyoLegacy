@@ -1,25 +1,19 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.play;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
-import net.tslat.smartbrainlib.object.MemoryTest;
-import net.tslat.smartbrainlib.util.BrainUtils;
 
-import java.util.List;
+import java.util.Map;
 
-public class YoukaiHuntTask extends ExtendedBehaviour<SmartYoukaiEntity> {
-
-	private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS = MemoryTest.builder(3)
-			.hasMemory(GLBrains.MEM_PREY.get())
-			.usesMemories(MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET);
+public class YoukaiHuntTask extends Behavior<SmartYoukaiEntity> {
 
 	private final int distance;
 
@@ -28,17 +22,21 @@ public class YoukaiHuntTask extends ExtendedBehaviour<SmartYoukaiEntity> {
 	private int cooldown = 0;
 
 	public YoukaiHuntTask(int distance) {
+		super(Map.of(
+				MemoryModuleType.WALK_TARGET, MemoryStatus.REGISTERED,
+				GLBrains.MEM_PREY.get(), MemoryStatus.VALUE_PRESENT,
+				MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED
+		));
 		this.distance = distance;
-		noTimeout();
 	}
 
 	@Override
-	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-		return MEMORY_REQUIREMENTS;
+	protected boolean timedOut(long gameTime) {
+		return false;
 	}
 
 	@Override
-	protected boolean shouldKeepRunning(SmartYoukaiEntity entity) {
+	protected boolean canStillUse(ServerLevel level, SmartYoukaiEntity entity, long gameTime) {
 		if (target != null && entity.targets.isValidTarget(target)) {
 			return true;
 		}
@@ -47,7 +45,7 @@ public class YoukaiHuntTask extends ExtendedBehaviour<SmartYoukaiEntity> {
 	}
 
 	@Override
-	protected void start(SmartYoukaiEntity entity) {
+	protected void start(ServerLevel level, SmartYoukaiEntity entity, long gameTime) {
 		target = BrainUtils.getMemory(entity, GLBrains.MEM_PREY.get());
 		cooldown = 0;
 		if (target == null) return;
@@ -63,7 +61,7 @@ public class YoukaiHuntTask extends ExtendedBehaviour<SmartYoukaiEntity> {
 	}
 
 	@Override
-	protected void tick(SmartYoukaiEntity entity) {
+	protected void tick(ServerLevel level, SmartYoukaiEntity entity, long gameTime) {
 		if (target == null) return;
 		double dist = entity.distanceTo(target);
 		if (dist > distance * 1.5 && !BrainUtils.hasMemory(entity, MemoryModuleType.WALK_TARGET)) {

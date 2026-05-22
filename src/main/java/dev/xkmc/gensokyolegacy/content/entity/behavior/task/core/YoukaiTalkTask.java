@@ -1,38 +1,34 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.core;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.entity.module.TalkModule;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import net.tslat.smartbrainlib.api.core.behaviour.ExtendedBehaviour;
-import net.tslat.smartbrainlib.object.MemoryTest;
-import net.tslat.smartbrainlib.util.BrainUtils;
 
-import java.util.List;
+import java.util.Map;
 
-public class YoukaiTalkTask<E extends SmartYoukaiEntity> extends ExtendedBehaviour<E> {
-
-	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(3)
-			.noMemory(MemoryModuleType.WALK_TARGET)
-			.noMemory(MemoryModuleType.ATTACK_TARGET)
-			.hasMemory(GLBrains.MEM_TALK.get());
+public class YoukaiTalkTask<E extends SmartYoukaiEntity> extends Behavior<E> {
 
 	public YoukaiTalkTask() {
-		super();
-		noTimeout();
+		super(Map.of(
+				MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT,
+				GLBrains.MEM_TALK.get(), MemoryStatus.VALUE_PRESENT
+		));
 	}
 
 	@Override
-	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-		return MEMORY_REQUIREMENTS;
+	protected boolean timedOut(long gameTime) {
+		return false;
 	}
 
 	@Override
-	protected boolean shouldKeepRunning(E entity) {
+	protected boolean canStillUse(ServerLevel level, E entity, long gameTime) {
 		return BrainUtils.hasMemory(entity, GLBrains.MEM_TALK.get()) &&
 				!BrainUtils.hasMemory(entity, MemoryModuleType.ATTACK_TARGET);
 	}
@@ -45,9 +41,10 @@ public class YoukaiTalkTask<E extends SmartYoukaiEntity> extends ExtendedBehavio
 	}
 
 	@Override
-	protected void stop(E entity) {
+	protected void stop(ServerLevel level, E entity, long gameTime) {
 		BrainUtils.clearMemory(entity, MemoryModuleType.LOOK_TARGET);
 		BrainUtils.clearMemory(entity, GLBrains.MEM_TALK.get());
 		entity.getModule(TalkModule.class).ifPresent(TalkModule::stopTalking);
 	}
+
 }

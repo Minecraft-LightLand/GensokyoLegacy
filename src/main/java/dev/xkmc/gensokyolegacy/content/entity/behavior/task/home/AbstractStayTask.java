@@ -1,32 +1,28 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
-import com.mojang.datafixers.util.Pair;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
+import dev.xkmc.gensokyolegacy.util.BrainUtils;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.smartbrainlib.object.MemoryTest;
-import net.tslat.smartbrainlib.util.BrainUtils;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractStayTask<E extends SmartYoukaiEntity> extends AbstractHomeHolderTask<E> {
 
-	private static final MemoryTest MEMORY_REQUIREMENTS = MemoryTest.builder(3)
-			.noMemory(MemoryModuleType.WALK_TARGET)
-			.hasMemory(MemoryModuleType.HOME)
-			.noMemory(MemoryModuleType.ATTACK_TARGET);
-
 	public AbstractStayTask() {
+		super(Map.of(
+				MemoryModuleType.WALK_TARGET, MemoryStatus.VALUE_ABSENT,
+				MemoryModuleType.HOME, MemoryStatus.VALUE_PRESENT,
+				MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT
+		));
 	}
 
-	protected List<Pair<MemoryModuleType<?>, MemoryStatus>> getMemoryRequirements() {
-		return MEMORY_REQUIREMENTS;
-	}
-
-	protected void start(E entity) {
+	@Override
+	protected void start(ServerLevel level, E entity, long gameTime) {
 		Vec3 targetPos = this.getTargetPos(entity);
 		if (targetPos == null) {
 			BrainUtils.clearMemory(entity, MemoryModuleType.WALK_TARGET);

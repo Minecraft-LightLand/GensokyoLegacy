@@ -1,21 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.task.home;
 
-import dev.xkmc.gensokyolegacy.content.entity.youkai.SmartYoukaiEntity;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.level.block.DoorBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.move.InteractWithDoor;
-import net.tslat.smartbrainlib.util.BrainUtils;
-
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-
+/*
 public class YoukaiSmartDoorTask<E extends SmartYoukaiEntity> extends InteractWithDoor<E> {
 
 	@Override
@@ -74,3 +59,5 @@ public class YoukaiSmartDoorTask<E extends SmartYoukaiEntity> extends InteractWi
 	}
 
 }
+
+ */
