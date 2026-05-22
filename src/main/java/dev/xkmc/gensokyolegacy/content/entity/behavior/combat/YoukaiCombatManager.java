@@ -1,10 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 
-import dev.xkmc.danmakuapi.api.IDanmakuEntity;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.Nullable;
 
 public interface YoukaiCombatManager {
 
@@ -14,17 +11,21 @@ public interface YoukaiCombatManager {
 
 	boolean shouldHurtInnocent(LivingEntity le);
 
-	@Nullable
-	Identifier getSpellCircle();
-
-	float getCircleSize(float pTick);
+	int doPreyAttack(LivingEntity target);
 
 	void tick();
 
-	void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku);
+	/*
 
-	void onDanmakuImmune(LivingEntity e, IDanmakuEntity danmaku, DamageSource source);
+		@Nullable
+		Identifier getSpellCircle();
 
-	int doPreyAttack(LivingEntity target);
+		float getCircleSize(float pTick);
+
+		void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku);
+
+		void onDanmakuImmune(LivingEntity e, IDanmakuEntity danmaku, DamageSource source);
+
+	 */
 
 }

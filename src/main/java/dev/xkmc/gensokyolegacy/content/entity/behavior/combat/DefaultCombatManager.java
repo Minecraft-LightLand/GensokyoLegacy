@@ -1,14 +1,10 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 
-import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
-import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
 import net.minecraft.resources.Identifier;
-import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
 public class DefaultCombatManager implements YoukaiCombatManager {
@@ -56,6 +52,7 @@ public class DefaultCombatManager implements YoukaiCombatManager {
 		return le instanceof Enemy;
 	}
 
+	/*
 	@Override
 	public void onDanmakuHit(LivingEntity e, IDanmakuEntity danmaku) {
 		if (targetKind(e).noAdditionalEffect()) return;
@@ -91,7 +88,7 @@ public class DefaultCombatManager implements YoukaiCombatManager {
 	@Override
 	public float getCircleSize(float pTick) {
 		return tickAggressive == 0 ? 0 : Math.min(1, (tickAggressive + pTick) / 20f);
-	}
+	}*/
 
 	@Override
 	public int doPreyAttack(LivingEntity target) {
