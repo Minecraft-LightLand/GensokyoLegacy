@@ -4,7 +4,7 @@ import dev.xkmc.gensokyolegacy.init.data.GLLang;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -128,7 +128,7 @@ public class MiniFurnace1 extends Item implements InvClickItem {
 		}
 	}
 
-	public record Entry(ResourceLocation recipe, int time, int max) {
+	public record Entry(Identifier recipe, int time, int max) {
 
 		@Nullable
 		public Entry match(ServerPlayer sp, State state, int s0, int s1) {

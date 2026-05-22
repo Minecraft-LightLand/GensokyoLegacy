@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.content.entity.behavior.combat;
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.data.GLModConfig;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,11 +15,11 @@ public class DefaultCombatManager implements YoukaiCombatManager {
 
 	protected final YoukaiEntity self;
 	@Nullable
-	protected final ResourceLocation circle;
+	protected final Identifier circle;
 
 	private int tickAggressive;
 
-	public DefaultCombatManager(YoukaiEntity self, @Nullable ResourceLocation circle) {
+	public DefaultCombatManager(YoukaiEntity self, @Nullable Identifier circle) {
 		this.self = self;
 		this.circle = circle;
 	}
@@ -81,7 +81,7 @@ public class DefaultCombatManager implements YoukaiCombatManager {
 	}
 
 	@Override
-	public @Nullable ResourceLocation getSpellCircle() {
+	public @Nullable Identifier getSpellCircle() {
 		if (!shouldShowCircle()) {
 			return null;
 		}

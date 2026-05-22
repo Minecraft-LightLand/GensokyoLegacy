@@ -6,14 +6,14 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import org.jetbrains.annotations.Nullable;
 
 @SerialClass
 public class HomeModule extends AbstractYoukaiModule {
 
-	private static final ResourceLocation ID = GensokyoLegacy.loc("home");
+	private static final Identifier ID = GensokyoLegacy.loc("home");
 
 	@Nullable
 	@SerialField

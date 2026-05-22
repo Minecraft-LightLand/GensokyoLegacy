@@ -10,11 +10,11 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class BlackBallLayer<T extends RumiaEntity> extends RenderLayer<T, RumiaModel<T>> {
 
-	public static final ResourceLocation TEX = GensokyoLegacy.loc("textures/entity/black_ball.png");
+	public static final Identifier TEX = GensokyoLegacy.loc("textures/entity/black_ball.png");
 
 	private final BlackBallModel<T> model;
 
@@ -41,7 +41,7 @@ public class BlackBallLayer<T extends RumiaEntity> extends RenderLayer<T, RumiaM
 	}
 
 	@Override
-	protected ResourceLocation getTextureLocation(T pEntity) {
+	protected Identifier getTextureLocation(T pEntity) {
 		return TEX;
 	}
 }

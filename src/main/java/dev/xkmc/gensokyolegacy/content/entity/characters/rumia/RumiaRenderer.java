@@ -7,11 +7,11 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class RumiaRenderer extends MobRenderer<RumiaEntity, RumiaModel<RumiaEntity>> {
 
-	public static final ResourceLocation TEX = GensokyoLegacy.loc("textures/entity/rumia.png");
+	public static final Identifier TEX = GensokyoLegacy.loc("textures/entity/rumia.png");
 
 	public RumiaRenderer(EntityRendererProvider.Context context) {
 		super(context, new RumiaModel<>(context.bakeLayer(RumiaModel.LAYER_LOCATION)), 0.2F);
@@ -19,7 +19,7 @@ public class RumiaRenderer extends MobRenderer<RumiaEntity, RumiaModel<RumiaEnti
 		addLayer(new SpellCircleLayer<>(this));
 	}
 
-	public ResourceLocation getTextureLocation(RumiaEntity entity) {
+	public Identifier getTextureLocation(RumiaEntity entity) {
 		return TEX;
 	}
 

@@ -8,13 +8,13 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import org.jetbrains.annotations.Nullable;
 
 public record CharacterConfig(
-		ResourceLocation structure,
+		Identifier structure,
 		int discardTime, int respawnTime, int wanderRadius, int noPlayerVanishTime
 ) {
 
@@ -22,7 +22,7 @@ public record CharacterConfig(
 		return new CharacterConfig(GensokyoLegacy.loc("empty"), discardTime, respawnTime, wanderRadius, noPlayerVanishTime);
 	}
 
-	public CharacterConfig withId(ResourceLocation id) {
+	public CharacterConfig withId(Identifier id) {
 		return new CharacterConfig(id, discardTime, respawnTime, wanderRadius, noPlayerVanishTime);
 	}
 

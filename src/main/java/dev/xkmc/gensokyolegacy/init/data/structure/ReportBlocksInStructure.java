@@ -4,7 +4,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntLinkedOpenHashMap;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,11 +29,11 @@ public class ReportBlocksInStructure {
 	public static void report(String path) throws IOException {
 		File file = new File("../../src/main/resources/data/gensokyolegacy/structure/" + path);
 		var tag = NbtIo.readCompressed(new FileInputStream(file), NbtAccounter.unlimitedHeap());
-		Object2IntLinkedOpenHashMap<ResourceLocation> count = new Object2IntLinkedOpenHashMap<>();
+		Object2IntLinkedOpenHashMap<Identifier> count = new Object2IntLinkedOpenHashMap<>();
 		ListTag palette = tag.getList("palette", 10);
-		ResourceLocation[] ids = new ResourceLocation[palette.size()];
+		Identifier[] ids = new Identifier[palette.size()];
 		for (int i = 0; i < palette.size(); i++) {
-			ids[i] = ResourceLocation.parse(palette.getCompound(i).getString("Name"));
+			ids[i] = Identifier.parse(palette.getCompound(i).getString("Name"));
 		}
 		ListTag blocks = tag.getList("blocks", 10);
 		for (int i = 0; i < blocks.size(); i++) {

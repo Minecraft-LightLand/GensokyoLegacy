@@ -3,13 +3,13 @@ package dev.xkmc.gensokyolegacy.event;
 import dev.xkmc.gensokyolegacy.content.item.tool.InvClickItem;
 import dev.xkmc.l2menustacker.click.writable.ClickedPlayerSlotResult;
 import dev.xkmc.l2menustacker.click.writable.WritableStackClickHandler;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 
 public class GLClickHandler extends WritableStackClickHandler {
 
-	public GLClickHandler(ResourceLocation rl) {
+	public GLClickHandler(Identifier rl) {
 		super(rl);
 	}
 

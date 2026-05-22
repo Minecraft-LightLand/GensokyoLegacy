@@ -5,7 +5,7 @@ import dev.xkmc.danmakuapi.content.entity.ItemBulletEntity;
 import dev.xkmc.danmakuapi.content.item.DanmakuItem;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.combat.DefaultCombatManager;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,8 +14,8 @@ import org.jetbrains.annotations.Nullable;
 
 class RumiaCombatManager extends DefaultCombatManager {
 
-	private static final ResourceLocation SPELL_RUMIA = GensokyoLegacy.loc("rumia");
-	private static final ResourceLocation SPELL_EX_RUMIA = GensokyoLegacy.loc("ex_rumia");
+	private static final Identifier SPELL_RUMIA = GensokyoLegacy.loc("rumia");
+	private static final Identifier SPELL_EX_RUMIA = GensokyoLegacy.loc("ex_rumia");
 
 	private final RumiaEntity rumia;
 
@@ -30,7 +30,7 @@ class RumiaCombatManager extends DefaultCombatManager {
 	}
 
 	@Override
-	public @Nullable ResourceLocation getSpellCircle() {
+	public @Nullable Identifier getSpellCircle() {
 		if (!shouldShowCircle()) {
 			return null;
 		}

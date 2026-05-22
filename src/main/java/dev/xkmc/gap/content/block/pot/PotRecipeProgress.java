@@ -4,7 +4,7 @@ import dev.xkmc.gap.content.block.pot.recipe.PotRecipe;
 import dev.xkmc.gap.content.block.pot.recipe.RecipeProgressData;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.Nullable;
@@ -30,7 +30,7 @@ public class PotRecipeProgress {
 		this.data = data;
 	}
 
-	private void validateCache(ServerLevel level, ResourceLocation id) {
+	private void validateCache(ServerLevel level, Identifier id) {
 		if (recipeCache == null) {
 			var recipe = level.getRecipeManager().byKey(id);
 			if (recipe.isEmpty()) return;
@@ -39,7 +39,7 @@ public class PotRecipeProgress {
 		}
 	}
 
-	public boolean removeOnUpdate(ServerLevel level, PotBlockEntity be, ResourceLocation id) {
+	public boolean removeOnUpdate(ServerLevel level, PotBlockEntity be, Identifier id) {
 		validateCache(level, id);
 		if (recipeCache == null) return true;
 		if (!recipeCache.mayContinueUse(be.getHeat())) return false;

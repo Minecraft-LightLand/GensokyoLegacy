@@ -21,7 +21,7 @@ import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import dev.xkmc.l2core.init.reg.simple.DCReg;
 import dev.xkmc.l2core.init.reg.simple.DCVal;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.item.CreativeModeTab;
@@ -225,7 +225,7 @@ public class GLItems {
 					.tag(ItemTags.HEAD_ARMOR, GLTagGen.TOUHOU_HAT)
 					.register();
 
-			var back = ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", "back"));
+			var back = ItemTags.create(Identifier.fromNamespaceAndPath("curios", "back"));
 
 			CIRNO_WINGS = reg
 					.item("cirno_wings", p -> new CirnoWingsItem(p.rarity(Rarity.EPIC)))

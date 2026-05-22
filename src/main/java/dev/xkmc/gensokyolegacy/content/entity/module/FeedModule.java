@@ -8,7 +8,7 @@ import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -22,7 +22,7 @@ import net.minecraft.world.item.UseAnim;
 @SerialClass
 public class FeedModule extends AbstractYoukaiModule {
 
-	private static final ResourceLocation ID = GensokyoLegacy.loc("feed");
+	private static final Identifier ID = GensokyoLegacy.loc("feed");
 
 	@SerialField
 	private int feedCoolDown;

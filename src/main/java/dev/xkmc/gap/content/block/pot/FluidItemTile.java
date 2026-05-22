@@ -8,7 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -23,8 +23,8 @@ import org.jetbrains.annotations.Nullable;
 
 public interface FluidItemTile {
 
-	static ItemInteractionResult addFluidOrItem(FluidItemTile be, ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!be.mayModify()) return ItemInteractionResult.FAIL;
+	static InteractionResult addFluidOrItem(FluidItemTile be, ItemStack stack, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!be.mayModify()) return InteractionResult.FAIL;
 		// fill water from bottle
 		if (stack.is(Items.POTION)) {
 			var potion = stack.get(DataComponents.POTION_CONTENTS);
@@ -39,15 +39,15 @@ public interface FluidItemTile {
 						}
 						sl.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 0.7f, 1);
 					}
-					return ItemInteractionResult.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 			}
 		}
 		return addItem(be, stack, level, pos);
 	}
 
-	static ItemInteractionResult addItem(FluidItemTile be, ItemStack stack, Level level, BlockPos pos) {
-		if (!be.mayModify()) return ItemInteractionResult.FAIL;
+	static InteractionResult addItem(FluidItemTile be, ItemStack stack, Level level, BlockPos pos) {
+		if (!be.mayModify()) return InteractionResult.FAIL;
 		ItemStack copy = stack.copyWithCount(1);
 		if (be.getItemHandler().canAddItem(copy)) {
 			if (level instanceof ServerLevel sl) {
@@ -58,9 +58,9 @@ public interface FluidItemTile {
 					sl.playSound(null, pos, SoundEvents.WOOL_PLACE, SoundSource.BLOCKS, 0.7f, 1);
 				}
 			}
-			return ItemInteractionResult.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
-		return ItemInteractionResult.CONSUME;
+		return InteractionResult.CONSUME;
 	}
 
 	default boolean mayModify() {

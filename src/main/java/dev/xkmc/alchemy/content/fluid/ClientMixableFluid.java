@@ -1,6 +1,6 @@
 package dev.xkmc.alchemy.content.fluid;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 
 public record ClientMixableFluid(MixableFluidType type) implements IClientFluidTypeExtensions {
@@ -9,11 +9,11 @@ public record ClientMixableFluid(MixableFluidType type) implements IClientFluidT
 		this.type = type;
 	}
 
-	public ResourceLocation getStillTexture() {
+	public Identifier getStillTexture() {
 		return this.type.stillTexture;
 	}
 
-	public ResourceLocation getFlowingTexture() {
+	public Identifier getFlowingTexture() {
 		return this.type.flowingTexture;
 	}
 

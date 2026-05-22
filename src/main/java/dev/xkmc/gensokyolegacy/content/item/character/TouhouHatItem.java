@@ -2,7 +2,7 @@ package dev.xkmc.gensokyolegacy.content.item.character;
 
 import com.google.common.base.Suppliers;
 import dev.xkmc.danmakuapi.api.IDanmakuEntity;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -30,7 +30,7 @@ public class TouhouHatItem extends ArmorItem {
 		this.defaultModifiers = Suppliers.memoize(() -> {
 			ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
 			EquipmentSlotGroup group = EquipmentSlotGroup.bySlot(type.getSlot());
-			ResourceLocation id = ResourceLocation.withDefaultNamespace("armor." + type.getName());
+			Identifier id = Identifier.withDefaultNamespace("armor." + type.getName());
 			builder.add(Attributes.ARMOR, new AttributeModifier(id, material.value().getDefense(type),
 					AttributeModifier.Operation.ADD_VALUE), group);
 			builder.add(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(id, material.value().toughness(),

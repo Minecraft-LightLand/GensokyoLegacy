@@ -1,22 +1,22 @@
 package dev.xkmc.gensokyolegacy.content.entity.module;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 
 public class AbstractYoukaiModule {
 
-	private final ResourceLocation id;
+	private final Identifier id;
 	protected final YoukaiEntity self;
 
-	public AbstractYoukaiModule(ResourceLocation id, YoukaiEntity self) {
+	public AbstractYoukaiModule(Identifier id, YoukaiEntity self) {
 		this.id = id;
 		this.self = self;
 	}
 
-	public ResourceLocation getId() {
+	public Identifier getId() {
 		return id;
 	}
 

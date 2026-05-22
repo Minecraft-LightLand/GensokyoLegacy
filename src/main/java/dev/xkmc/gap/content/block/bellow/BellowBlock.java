@@ -2,7 +2,6 @@ package dev.xkmc.gap.content.block.bellow;
 
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
-import dev.xkmc.gap.content.block.pot.PotBlockEntity;
 import dev.xkmc.gap.init.registrate.GapRegistries;
 import dev.xkmc.l2modularblock.core.DelegateBlock;
 import dev.xkmc.l2modularblock.impl.BlockEntityBlockMethodImpl;

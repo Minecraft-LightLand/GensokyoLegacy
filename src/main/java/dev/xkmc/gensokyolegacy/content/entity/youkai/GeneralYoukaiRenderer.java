@@ -9,11 +9,11 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class GeneralYoukaiRenderer<T extends GeneralYoukaiEntity> extends MobRenderer<T, EntityModel<T>> {
 
-	public static final ResourceLocation TEX = GensokyoLegacy.loc("textures/entity/rumia.png");
+	public static final Identifier TEX = GensokyoLegacy.loc("textures/entity/rumia.png");
 
 	public GeneralYoukaiRenderer(EntityRendererProvider.Context ctx) {
 		super(ctx, new PlaceHolderModel<>(ctx.bakeLayer(RumiaModel.LAYER_LOCATION)), 0.2f);
@@ -29,7 +29,7 @@ public class GeneralYoukaiRenderer<T extends GeneralYoukaiEntity> extends MobRen
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(T pEntity) {
+	public Identifier getTextureLocation(T pEntity) {
 		return TEX;
 	}
 

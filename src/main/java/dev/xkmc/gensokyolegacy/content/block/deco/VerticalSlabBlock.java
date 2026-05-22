@@ -11,7 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -98,7 +98,7 @@ public class VerticalSlabBlock extends HorizontalLoggedBlock {
 	}
 
 	public static void buildBlockState(DataGenContext<Block, ? extends VerticalSlabBlock> ctx, RegistrateBlockstateProvider pvd,
-									   ResourceLocation top, ResourceLocation side) {
+									   Identifier top, Identifier side) {
 		var model = buildModel(ctx, pvd).texture("top", top).texture("side", side);
 		pvd.getVariantBuilder(ctx.get()).forAllStates((state) -> ConfiguredModel.builder().modelFile(model).uvLock(true)
 				.rotationY(((int) (state.getValue(BlockStateProperties.HORIZONTAL_FACING)).toYRot() + 180) % 360).build());

@@ -9,7 +9,7 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.GeneralYoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.spell.card.*;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.ModList;
@@ -47,7 +47,7 @@ public class TouhouSpellCards {
 		if (sup != null) e.spellCard.card = sup.get();
 		e.syncModel();
 		if (ModList.get().isLoaded(TouhouLittleMaid.MOD_ID)) {
-			var rl = ResourceLocation.parse(id);
+			var rl = Identifier.parse(id);
 			var name = Component.translatable(rl.toLanguageKey("model") + ".name");
 			var desc = Component.translatable(rl.toLanguageKey("model") + ".desc");
 			e.setCustomName(name.append(" - ").append(desc));

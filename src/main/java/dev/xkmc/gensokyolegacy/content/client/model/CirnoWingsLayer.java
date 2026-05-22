@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 
 public class CirnoWingsLayer<T extends LivingEntity, M extends HumanoidModel<T>> extends RenderLayer<T, M> {
@@ -58,7 +58,7 @@ public class CirnoWingsLayer<T extends LivingEntity, M extends HumanoidModel<T>>
 	}
 
 	@Override
-	protected ResourceLocation getTextureLocation(T pEntity) {
+	protected Identifier getTextureLocation(T pEntity) {
 		return CirnoRenderer.TEX;
 	}
 

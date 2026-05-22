@@ -2,7 +2,7 @@ package dev.xkmc.gensokyolegacy.content.attachment.datamap;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -16,9 +16,9 @@ public record StructureConfig(
 		LinkedHashSet<EntityType<?>> entities,
 		int xzRoomShrink, int topRoomShrink, int floorRoomShrink,
 		int xzHouseShrink, int topHouseShrink, int floorHouseShrink,
-		@Nullable ResourceLocation outsideBlock,
-		@Nullable ResourceLocation primaryFix,
-		@Nullable ResourceLocation wouldFix
+		@Nullable Identifier outsideBlock,
+		@Nullable Identifier primaryFix,
+		@Nullable Identifier wouldFix
 ) {
 
 	public static Builder builder() {
@@ -42,7 +42,7 @@ public record StructureConfig(
 		return is(wouldFix, state);
 	}
 
-	private boolean is(@Nullable ResourceLocation tag, BlockState state) {
+	private boolean is(@Nullable Identifier tag, BlockState state) {
 		if (tag == null) return false;
 		TagKey<Block> key = TagKey.create(Registries.BLOCK, tag);
 		return state.is(key);
@@ -53,7 +53,7 @@ public record StructureConfig(
 		int xzRoomShrink, topRoomShrink, floorRoomShrink;
 		int xzHouseShrink, topHouseShrink, floorHouseShrink;
 		@Nullable
-		ResourceLocation outSideBlock, primaryFix, wouldFix;
+		Identifier outSideBlock, primaryFix, wouldFix;
 
 		LinkedHashSet<EntityType<?>> entities = new LinkedHashSet<>();
 

@@ -5,12 +5,12 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLCriteriaTriggers;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.critereon.PlayerTrigger;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import java.util.Optional;
 
 public class GLAdvGen {
-	public static final ResourceLocation KOISHI_FIRST = GensokyoLegacy.loc("koishi_first");
+	public static final Identifier KOISHI_FIRST = GensokyoLegacy.loc("koishi_first");
 
 	public static void genAdv(RegistrateAdvancementProvider pvd) {
 		pvd.accept(Advancement.Builder.advancement().addCriterion("koishi_first",

@@ -6,16 +6,16 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.Structure;
 
 import java.util.Optional;
 
-public record StructureKey(ResourceLocation structure, ResourceLocation dim, BlockPos pos) {
+public record StructureKey(Identifier structure, Identifier dim, BlockPos pos) {
 
-	public static final ResourceLocation CUSTOM = GensokyoLegacy.loc("custom_structure");
+	public static final Identifier CUSTOM = GensokyoLegacy.loc("custom_structure");
 
 	public static StructureKey custom(ResourceKey<Level> dim, BlockPos pos) {
 		return new StructureKey(CUSTOM, dim.location(), pos);

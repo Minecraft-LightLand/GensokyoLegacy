@@ -13,7 +13,7 @@ import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -41,7 +41,7 @@ public class GLDecoBlocks {
 				e -> e.icon(() -> GLDecoBlocks.ICE_BRICK_SET.block.get().asItem().getDefaultInstance()));
 
 		SNOW_SET = new BrickSet(reg, "snow", BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK),
-				ResourceLocation.withDefaultNamespace("block/snow"), () -> Blocks.SNOW_BLOCK,
+				Identifier.withDefaultNamespace("block/snow"), () -> Blocks.SNOW_BLOCK,
 				BlockTags.MINEABLE_WITH_SHOVEL);
 		SNOW_BRICK_SET = new BrickSet(reg, "snow", BlockBehaviour.Properties.of().mapColor(MapColor.SNOW)
 				.requiresCorrectToolForDrops().strength(0.2F).sound(SoundType.SNOW),
@@ -49,7 +49,7 @@ public class GLDecoBlocks {
 						.pattern("XX").pattern("XX").define('X', Items.SNOW_BLOCK).save(pvd));
 
 		PACKED_ICE_SET = new BrickSet(reg, "packed_ice", BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE),
-				ResourceLocation.withDefaultNamespace("block/packed_ice"), () -> Blocks.PACKED_ICE,
+				Identifier.withDefaultNamespace("block/packed_ice"), () -> Blocks.PACKED_ICE,
 				BlockTags.MINEABLE_WITH_PICKAXE);
 
 		ICE_BRICK_SET = new BrickSet(reg, "ice", BlockBehaviour.Properties.of().mapColor(MapColor.ICE)
@@ -92,7 +92,7 @@ public class GLDecoBlocks {
 							.tag(tool).simpleItem().register(), tool);
 		}
 
-		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop, ResourceLocation side, Supplier<Block> base, TagKey<Block> tool) {
+		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop, Identifier side, Supplier<Block> base, TagKey<Block> tool) {
 			block = base;
 			stairs = reg.block(id + "_stairs", p ->
 							new StairBlock(block.get().defaultBlockState(), prop))

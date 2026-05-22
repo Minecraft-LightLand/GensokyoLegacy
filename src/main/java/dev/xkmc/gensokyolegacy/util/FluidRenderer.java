@@ -16,7 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Direction.AxisDirection;
 import net.minecraft.core.Vec3i;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.level.material.Fluid;
@@ -41,7 +41,7 @@ public class FluidRenderer {
 		renderFluidBox(fluidStack, xMin, yMin, zMin, xMax, yMax, zMax, getFluidBuilder(buffer), ms, light, renderBottom, colorOverride);
 	}
 
-	public static void renderFluidBox(ResourceLocation tex, float xMin, float yMin, float zMin, float xMax, float yMax, float zMax, MultiBufferSource buffer, PoseStack ms, int light, boolean renderBottom, int colorOverride) {
+	public static void renderFluidBox(Identifier tex, float xMin, float yMin, float zMin, float xMax, float yMax, float zMax, MultiBufferSource buffer, PoseStack ms, int light, boolean renderBottom, int colorOverride) {
 		renderFluidBox(tex, xMin, yMin, zMin, xMax, yMax, zMax, getFluidBuilder(buffer), ms, light, renderBottom, colorOverride);
 	}
 
@@ -59,7 +59,7 @@ public class FluidRenderer {
 		renderFluidBox(clientFluid.getStillTexture(fluidStack), xMin, yMin, zMin, xMax, yMax, zMax, builder, ms, light, renderBottom, color);
 	}
 
-	public static void renderFluidBox(ResourceLocation tex, float xMin, float yMin, float zMin, float xMax, float yMax, float zMax, VertexConsumer builder, PoseStack ms, int light, boolean renderBottom, int color) {
+	public static void renderFluidBox(Identifier tex, float xMin, float yMin, float zMin, float xMax, float yMax, float zMax, VertexConsumer builder, PoseStack ms, int light, boolean renderBottom, int color) {
 		TextureAtlasSprite fluidTexture = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(tex);
 		ms.pushPose();
 		for (Direction side : Direction.values()) {

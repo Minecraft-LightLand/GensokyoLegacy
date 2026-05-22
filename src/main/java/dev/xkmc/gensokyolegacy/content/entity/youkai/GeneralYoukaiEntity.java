@@ -9,7 +9,7 @@ import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -25,7 +25,7 @@ public class GeneralYoukaiEntity extends SmartYoukaiEntity {
 				.add(Attributes.FOLLOW_RANGE, 128);
 	}
 
-	public static final ResourceLocation SPELL = GensokyoLegacy.loc("ex_rumia");
+	public static final Identifier SPELL = GensokyoLegacy.loc("ex_rumia");
 
 	private static <T> EntityDataAccessor<T> defineId(EntityDataSerializer<T> ser) {
 		return SynchedEntityData.defineId(GeneralYoukaiEntity.class, ser);

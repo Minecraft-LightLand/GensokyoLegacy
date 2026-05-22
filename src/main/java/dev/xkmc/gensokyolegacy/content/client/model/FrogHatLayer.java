@@ -12,14 +12,14 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.animal.frog.Frog;
 
 import java.util.List;
 
 public class FrogHatLayer<T extends Frog> extends RenderLayer<T, FrogModel<T>> {
 
-	private static final ResourceLocation TEX = GensokyoLegacy.loc("textures/model/suwako_hat.png");
+	private static final Identifier TEX = GensokyoLegacy.loc("textures/model/suwako_hat.png");
 	private static final List<String> PART = List.of("body", "head", "hat");
 
 	private final ModelPart model;

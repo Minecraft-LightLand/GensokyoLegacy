@@ -6,18 +6,18 @@ import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class CirnoRenderer extends MobRenderer<CirnoEntity, CirnoModel<CirnoEntity>> {
 
-	public static final ResourceLocation TEX = GensokyoLegacy.loc("textures/entity/cirno.png");
+	public static final Identifier TEX = GensokyoLegacy.loc("textures/entity/cirno.png");
 
 	public CirnoRenderer(EntityRendererProvider.Context context) {
 		super(context, new CirnoModel<>(context.bakeLayer(CirnoModel.LAYER_LOCATION)), 0.2F);
 		addLayer(new SpellCircleLayer<>(this));
 	}
 
-	public ResourceLocation getTextureLocation(CirnoEntity entity) {
+	public Identifier getTextureLocation(CirnoEntity entity) {
 		return TEX;
 	}
 

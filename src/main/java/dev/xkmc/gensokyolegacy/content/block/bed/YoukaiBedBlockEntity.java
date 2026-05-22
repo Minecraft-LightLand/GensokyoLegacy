@@ -13,7 +13,7 @@ import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.BedBlock;
@@ -48,7 +48,7 @@ public class YoukaiBedBlockEntity extends LocatedBlockEntity implements IDebugIn
 		}
 	}
 
-	public ResourceLocation getTexture() {
+	public Identifier getTexture() {
 		return BuiltInRegistries.BLOCK.getKey(getBlockState().getBlock()).withPrefix("entity/bed/");
 	}
 

@@ -13,7 +13,7 @@ import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
@@ -36,7 +36,7 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
 public class RumiaEntity extends SmartYoukaiEntity {
 
 	private static final EntityDimensions FALL = EntityDimensions.scalable(1.7f, 0.4f);
-	private static final ResourceLocation EXRUMIA = GensokyoLegacy.loc("ex_rumia");
+	private static final Identifier EXRUMIA = GensokyoLegacy.loc("ex_rumia");
 
 	@SerialField
 	public final RumiaStateMachine state = new RumiaStateMachine(this);

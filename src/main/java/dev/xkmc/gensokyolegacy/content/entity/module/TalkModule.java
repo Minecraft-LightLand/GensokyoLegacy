@@ -4,7 +4,7 @@ import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 @SerialClass
 public class TalkModule extends AbstractYoukaiModule {
 
-	private static final ResourceLocation ID = GensokyoLegacy.loc("talk");
+	private static final Identifier ID = GensokyoLegacy.loc("talk");
 
 	private ServerPlayer talkTarget;
 
