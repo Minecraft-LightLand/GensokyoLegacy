@@ -18,6 +18,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -60,6 +61,27 @@ public class GLDecoBlocks {
 		DARKSTONE = new StoneAndBrickSet(reg, "darkstone", MapColor.COLOR_BLACK, 1F,
 				SoundType.DEEPSLATE, SoundType.DEEPSLATE_BRICKS);
 
+		new StoneAndBrickSet(reg, "darkstone", MapColor.COLOR_BLACK, 1F,
+				SoundType.DEEPSLATE, SoundType.DEEPSLATE_BRICKS);
+
+		var tiles = new DyeColor[]{DyeColor.CYAN, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.BROWN, DyeColor.BLUE, DyeColor.BLACK};
+		var strips = new DyeColor[]{DyeColor.BLUE};
+
+		for (DyeColor col : tiles) {
+			new BrickSet(reg, col.getName() + "_tiles",
+					BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE).mapColor(MapColor.byId(14 + col.getId())),
+					"tiles/", BlockTags.MINEABLE_WITH_PICKAXE);
+		}
+
+		for (DyeColor col : strips) {
+			reg.block(col.getName() + "_strips_terracota", Block::new)
+					.initialProperties(() -> Blocks.WHITE_GLAZED_TERRACOTTA)
+					.properties(p -> p.mapColor(MapColor.byId(14 + col.getId())))
+					.blockstate((ctx, pvd) ->
+							pvd.simpleBlock(ctx.get(), pvd.models().cubeAll(ctx.getName(), GensokyoLegacy.loc("block/strips/" + ctx.getName()))))
+					.tag(BlockTags.MINEABLE_WITH_PICKAXE).simpleItem().register();
+		}
+
 	}
 
 	public static void register() {
@@ -76,7 +98,7 @@ public class GLDecoBlocks {
 		private boolean suppressCraft;
 
 		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop,
-						NonNullBiConsumer<DataGenContext<Block, Block>, RegistrateRecipeProvider> recipe) {
+		                NonNullBiConsumer<DataGenContext<Block, Block>, RegistrateRecipeProvider> recipe) {
 			this(reg, id + "_brick", prop, GensokyoLegacy.loc("block/" + id + "_bricks"),
 					reg.block(id + "_bricks", p -> new Block(prop))
 							.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
@@ -89,6 +111,14 @@ public class GLDecoBlocks {
 			this(reg, id, prop, GensokyoLegacy.loc("block/" + id),
 					reg.block(id, p -> new Block(prop))
 							.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
+							.tag(tool).simpleItem().register(), tool);
+		}
+
+		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop, String prefix, TagKey<Block> tool) {
+			this(reg, id, prop, GensokyoLegacy.loc("block/" + prefix + id),
+					reg.block(id, p -> new Block(prop))
+							.blockstate((ctx, pvd) ->
+									pvd.simpleBlock(ctx.get(), pvd.models().cubeAll(ctx.getName(), GensokyoLegacy.loc("block/" + prefix + id))))
 							.tag(tool).simpleItem().register(), tool);
 		}
 

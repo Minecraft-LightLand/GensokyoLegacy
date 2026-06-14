@@ -1,0 +1,7 @@
+{
+  "parent": "gensokyolegacy:block/vertical_slab",
+  "textures": {
+    "side": "gensokyolegacy:block/tiles/cyan_tiles",
+    "top": "gensokyolegacy:block/tiles/cyan_tiles"
+  }
+}

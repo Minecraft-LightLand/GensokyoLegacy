@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "gensokyolegacy:yellow_tiles_slab_from_yellow_tiles_stonecutting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_yellow_tiles": {
+      "conditions": {
+        "items": [
+          {
+            "items": "gensokyolegacy:yellow_tiles"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_yellow_tiles"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "gensokyolegacy:yellow_tiles_slab_from_yellow_tiles_stonecutting"
+    ]
+  }
+}

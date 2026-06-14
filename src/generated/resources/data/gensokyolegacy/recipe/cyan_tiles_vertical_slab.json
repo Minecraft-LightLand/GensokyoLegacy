@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "item": "gensokyolegacy:cyan_tiles"
+    }
+  },
+  "pattern": [
+    "X",
+    "X",
+    "X"
+  ],
+  "result": {
+    "count": 6,
+    "id": "gensokyolegacy:cyan_tiles_vertical_slab"
+  }
+}

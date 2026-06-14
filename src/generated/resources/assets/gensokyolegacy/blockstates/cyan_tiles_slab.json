@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "gensokyolegacy:block/cyan_tiles_slab"
+    },
+    "type=double": {
+      "model": "gensokyolegacy:block/tiles/cyan_tiles"
+    },
+    "type=top": {
+      "model": "gensokyolegacy:block/cyan_tiles_slab_top"
+    }
+  }
+}

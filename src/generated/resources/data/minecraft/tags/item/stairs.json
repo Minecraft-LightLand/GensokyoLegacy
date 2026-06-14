@@ -5,6 +5,12 @@
     "gensokyolegacy:packed_ice_stairs",
     "gensokyolegacy:ice_brick_stairs",
     "gensokyolegacy:darkstone_stairs",
-    "gensokyolegacy:darkstone_brick_stairs"
+    "gensokyolegacy:darkstone_brick_stairs",
+    "gensokyolegacy:cyan_tiles_stairs",
+    "gensokyolegacy:orange_tiles_stairs",
+    "gensokyolegacy:yellow_tiles_stairs",
+    "gensokyolegacy:brown_tiles_stairs",
+    "gensokyolegacy:blue_tiles_stairs",
+    "gensokyolegacy:black_tiles_stairs"
   ]
 }
