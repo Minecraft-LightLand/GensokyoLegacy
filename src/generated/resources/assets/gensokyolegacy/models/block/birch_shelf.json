@@ -1,0 +1,6 @@
+{
+  "parent": "gensokyolegacy:custom/shelf",
+  "textures": {
+    "all": "gensokyolegacy:block/shelf/birch_shelf"
+  }
+}
