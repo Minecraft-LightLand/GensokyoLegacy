@@ -1,6 +1,5 @@
-package dev.xkmc.gensokyolegacy.content.entity.youkai.model;
+package dev.xkmc.gensokyolegacy.content.entity.characters.maiden;
 
-import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.MarisaEntity;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;

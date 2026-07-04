@@ -1,4 +1,5 @@
 {
+  "block.gensokyolegacy.birch_shelf": "ɟןǝɥS ɥɔɹıᗺ",
   "block.gensokyolegacy.black_tiles": "sǝןı⟘ ʞɔɐןᗺ",
   "block.gensokyolegacy.black_tiles_slab": "qɐןS sǝןı⟘ ʞɔɐןᗺ",
   "block.gensokyolegacy.black_tiles_stairs": "sɹıɐʇS sǝןı⟘ ʞɔɐןᗺ",
@@ -81,6 +82,7 @@
   "entity.gensokyolegacy.kochiya_sanae": "ǝɐuɐS ɐʎıɥɔoʞ",
   "entity.gensokyolegacy.komeiji_koishi": "ıɥsıoʞ ıظıǝɯoʞ",
   "entity.gensokyolegacy.luna_child": "pןıɥƆ ɐunꞀ",
+  "entity.gensokyolegacy.morichika_rinnosuke": "ǝʞnsouuıᴚ ɐʞıɥɔıɹoW",
   "entity.gensokyolegacy.mystia_lorelei": "ıǝןǝɹoꞀ ɐıʇsʎW",
   "entity.gensokyolegacy.rumia": "ɐıɯnᴚ",
   "entity.gensokyolegacy.star_sapphire": "ǝɹıɥddɐS ɹɐʇS",
@@ -207,6 +209,7 @@
   "item.gensokyolegacy.luna_child_spawn_egg": "bbƎ uʍɐdS pןıɥƆ ɐunꞀ",
   "item.gensokyolegacy.mermaid_pearl": "ןɹɐǝԀ s,pıɐɯɹǝW",
   "item.gensokyolegacy.mini_hakkero_prototype": "]ǝdʎʇoʇoɹԀ[ oɹǝʞʞɐH ıuıW",
+  "item.gensokyolegacy.morichika_rinnosuke_spawn_egg": "bbƎ uʍɐdS ǝʞnsouuıᴚ ɐʞıɥɔıɹoW",
   "item.gensokyolegacy.mystia_lorelei_spawn_egg": "bbƎ uʍɐdS ıǝןǝɹoꞀ ɐıʇsʎW",
   "item.gensokyolegacy.reimu_hairband": "puɐqɹıɐH nɯıǝᴚ",
   "item.gensokyolegacy.rumia_hairband": "puɐqɹıɐH ɐıɯnᴚ",

@@ -5,6 +5,8 @@ import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.FairyEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.*;
+import dev.xkmc.gensokyolegacy.content.entity.characters.merchant.MorichikaEntity;
+import dev.xkmc.gensokyolegacy.content.entity.characters.merchant.MorichikaRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.misc.FairyIce;
@@ -26,6 +28,7 @@ public class GLEntities {
 
 	public static final EntityEntry<MaidenEntity> SANAE;
 	public static final EntityEntry<MarisaEntity> MARISA;
+	public static final EntityEntry<MorichikaEntity> MORICHIKA;
 	public static final EntityEntry<GeneralYoukaiEntity> MYSTIA;
 	public static final EntityEntry<BossYoukaiEntity> YUKARI, KOISHI;
 	public static final EntityEntry<FairyEntity> SUNNY, LUNA, STAR;
@@ -102,6 +105,15 @@ public class GLEntities {
 					.renderer(() -> MarisaRenderer::new)
 					.spawnEgg(0x52403C, 0xFAF2EF).build()
 					.loot(EntityLootGen::marisa)
+					.register();
+
+			MORICHIKA = GensokyoLegacy.REGISTRATE
+					.entity("morichika_rinnosuke", MorichikaEntity::new, MobCategory.MONSTER)
+					.properties(e -> e.sized(0.4F, 1.8f).clientTrackingRange(10))
+					.attributes(GeneralYoukaiEntity::createAttributes)
+					.renderer(() -> MorichikaRenderer::new)
+					.spawnEgg(0x52403C, 0xFAF2EF).build()
+					.loot(EntityLootGen::noLoot)
 					.register();
 
 			MYSTIA = GensokyoLegacy.REGISTRATE

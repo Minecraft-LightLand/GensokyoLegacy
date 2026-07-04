@@ -1,4 +1,5 @@
 {
+  "block.gensokyolegacy.birch_shelf": "Birch Shelf",
   "block.gensokyolegacy.black_tiles": "Black Tiles",
   "block.gensokyolegacy.black_tiles_slab": "Black Tiles Slab",
   "block.gensokyolegacy.black_tiles_stairs": "Black Tiles Stairs",
@@ -81,6 +82,7 @@
   "entity.gensokyolegacy.kochiya_sanae": "Kochiya Sanae",
   "entity.gensokyolegacy.komeiji_koishi": "Komeiji Koishi",
   "entity.gensokyolegacy.luna_child": "Luna Child",
+  "entity.gensokyolegacy.morichika_rinnosuke": "Morichika Rinnosuke",
   "entity.gensokyolegacy.mystia_lorelei": "Mystia Lorelei",
   "entity.gensokyolegacy.rumia": "Rumia",
   "entity.gensokyolegacy.star_sapphire": "Star Sapphire",
@@ -207,6 +209,7 @@
   "item.gensokyolegacy.luna_child_spawn_egg": "Luna Child Spawn Egg",
   "item.gensokyolegacy.mermaid_pearl": "Mermaid's Pearl",
   "item.gensokyolegacy.mini_hakkero_prototype": "Mini Hakkero [Prototype]",
+  "item.gensokyolegacy.morichika_rinnosuke_spawn_egg": "Morichika Rinnosuke Spawn Egg",
   "item.gensokyolegacy.mystia_lorelei_spawn_egg": "Mystia Lorelei Spawn Egg",
   "item.gensokyolegacy.reimu_hairband": "Reimu Hairband",
   "item.gensokyolegacy.rumia_hairband": "Rumia Hairband",

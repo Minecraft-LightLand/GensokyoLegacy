@@ -49,7 +49,8 @@ public class YoukaiAttackTask<T extends YoukaiEntity> extends Behavior<T> {
 		meleeTime = 10;
 		shootTime = 20;
 		youkai.setAggressive(true);
-		youkai.navCtrl.setFlying();
+		if (youkai.mayFly())
+			youkai.navCtrl.setFlying();
 	}
 
 	@Override

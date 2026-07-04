@@ -97,6 +97,7 @@ public class YoukaiNavigationControl {
 
 	public boolean moveTo(CompoundPath path, float speedModifier) {
 		if (path.flying()) {
+			if (!self.mayFly()) return false;
 			if (!isFlying()) {
 				setFlying();
 				flyNav.tempFly = true;
@@ -134,6 +135,7 @@ public class YoukaiNavigationControl {
 				if (!(isDone() || isStuck())) return false;
 				if (!self.onGround() && leaveGroundTick < 20) return false;
 			}
+			if (!self.mayFly()) return false;
 			setFlying();
 			flyNav.tempFly = true;
 			return flyNav.moveTo(x, y, z, accuracy, speed);
@@ -147,6 +149,7 @@ public class YoukaiNavigationControl {
 				if (!(isDone() || isStuck())) return false;
 				if (entity.onGround() && !self.onGround() && leaveGroundTick < 20) return false;
 			}
+			if (!self.mayFly()) return false;
 			setFlying();
 			flyNav.tempFly = true;
 			return flyNav.moveTo(entity, speed);

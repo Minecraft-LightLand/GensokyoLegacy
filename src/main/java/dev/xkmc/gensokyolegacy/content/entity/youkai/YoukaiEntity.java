@@ -479,4 +479,8 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		lookAt(player, 30, 30);
 	}
 
+	public boolean mayFly() {
+		return true;
+	}
+
 }

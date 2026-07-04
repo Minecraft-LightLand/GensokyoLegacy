@@ -11,6 +11,9 @@ import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
 import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
+import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlock;
+import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlockEntity;
+import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfRenderer;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
@@ -18,6 +21,7 @@ import dev.xkmc.l2modularblock.core.DelegateBlock;
 import net.minecraft.core.Holder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.BedItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
@@ -60,6 +64,9 @@ public class GLBlocks {
 	public static final BlockEntry<DonationBoxBlock> DONATION_BOX;
 	public static final BlockEntityEntry<DonationBoxBlockEntity> DONATION_BOX_BE;
 
+	public static final BlockEntry<DelegateBlock> SHELF;
+	public static final BlockEntityEntry<ShelfBlockEntity> SHELF_BE;
+
 
 	public static final BlockEntry<DelegateBlock> BOOKS;
 
@@ -68,28 +75,45 @@ public class GLBlocks {
 
 	static {
 
-		DONATION_BOX = GensokyoLegacy.REGISTRATE.block("donation_box", p -> new DonationBoxBlock(
-						BlockBehaviour.Properties.of().noLootTable().strength(2.0F).sound(SoundType.WOOD)
-								.mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS),
-						BlockTemplates.HORIZONTAL, new DoubleBlockHorizontal(), new DonationShape(), DonationBoxBlock.TE
-				)).blockstate(DonationBoxBlock::buildStates)
-				.simpleItem()
-				.loot((pvd, block) -> pvd.add(block, LootTable.lootTable()))
-				.register();
+		{
 
-		DONATION_BOX_BE = GensokyoLegacy.REGISTRATE.blockEntity("donation_box", DonationBoxBlockEntity::new)
-				.validBlock(DONATION_BOX)
-				.register();
+			DONATION_BOX = GensokyoLegacy.REGISTRATE.block("donation_box", p -> new DonationBoxBlock(
+							BlockBehaviour.Properties.of().noLootTable().strength(2.0F).sound(SoundType.WOOD)
+									.mapColor(MapColor.DIRT).instrument(NoteBlockInstrument.BASS),
+							BlockTemplates.HORIZONTAL, new DoubleBlockHorizontal(), new DonationShape(), DonationBoxBlock.TE
+					)).blockstate(DonationBoxBlock::buildStates)
+					.simpleItem()
+					.loot((pvd, block) -> pvd.add(block, LootTable.lootTable()))
+					.register();
 
-		BOOKS = GensokyoLegacy.REGISTRATE.block("book_pile", p -> DelegateBlock.newBaseBlock(
-						BlockBehaviour.Properties.of().noOcclusion().strength(0F)
-								.mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)
-						, BlockTemplates.HORIZONTAL, new BooksBlock()))
-				.blockstate(BooksBlock::buildStates).loot(BooksBlock::buildLoot).simpleItem()
-				.recipe((ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapelessRecipeBuilder.shapeless(
-						RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
-				.register();
+			DONATION_BOX_BE = GensokyoLegacy.REGISTRATE.blockEntity("donation_box", DonationBoxBlockEntity::new)
+					.validBlock(DONATION_BOX)
+					.register();
 
+			SHELF = GensokyoLegacy.REGISTRATE.block("birch_shelf", p -> DelegateBlock.newBaseBlock(p,
+							BlockTemplates.HORIZONTAL, new ShelfBlock(), ShelfBlock.BE))
+					.initialProperties(() -> Blocks.BIRCH_TRAPDOOR)
+					.blockstate(ShelfBlock::buildStates)
+					.tag(BlockTags.MINEABLE_WITH_AXE)
+					.simpleItem().register();
+
+			SHELF_BE = GensokyoLegacy.REGISTRATE.blockEntity("shelf", ShelfBlockEntity::new)
+					.validBlock(SHELF)
+					.renderer(() -> ShelfRenderer::new)
+					.register();
+
+		}
+
+		{
+			BOOKS = GensokyoLegacy.REGISTRATE.block("book_pile", p -> DelegateBlock.newBaseBlock(
+							BlockBehaviour.Properties.of().noOcclusion().strength(0F)
+									.mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)
+							, BlockTemplates.HORIZONTAL, new BooksBlock()))
+					.blockstate(BooksBlock::buildStates).loot(BooksBlock::buildLoot).simpleItem()
+					.recipe((ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapelessRecipeBuilder.shapeless(
+							RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
+					.register();
+		}
 		BEDS = new BlockEntry[Beds.values().length];
 		for (var e : Beds.values()) {
 			String name = e.name().toLowerCase(Locale.ROOT);
