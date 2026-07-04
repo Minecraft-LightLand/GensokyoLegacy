@@ -1,6 +1,6 @@
 {
   "parent": "gensokyolegacy:custom/bed",
   "textures": {
-    "all": "gensokyolegacy:block/bed/rumia_bed"
+    "all": "gensokyolegacy:block/bed/morichika_bed"
   }
 }

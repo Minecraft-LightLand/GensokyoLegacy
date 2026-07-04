@@ -34,7 +34,7 @@ public class YoukaiBedBlock extends DelegateEntityBlockImpl {
 	public static final BlockMethod TE = new BlockEntityBlockMethodImpl<>(GLBlocks.BE_BED, YoukaiBedBlockEntity.class);
 
 	public YoukaiBedBlock(BlockBehaviour.Properties properties) {
-		super(properties, BlockTemplates.HORIZONTAL, new YoukaiBedMethods(), TE);
+		super(properties, BlockTemplates.HORIZONTAL, new FlatBedShape(), new YoukaiBedMethods(), TE);
 	}
 
 	public static Direction getNeighbourDirection(BedPart part, Direction direction) {

@@ -1,0 +1,6 @@
+{
+  "parent": "gensokyolegacy:custom/bed_foot",
+  "textures": {
+    "all": "gensokyolegacy:block/bed/morichika_bed"
+  }
+}

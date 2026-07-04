@@ -2,10 +2,9 @@ package dev.xkmc.gensokyolegacy.init.registrate;
 
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import dev.xkmc.gensokyolegacy.content.block.bed.GLBEWLR;
+import dev.xkmc.gensokyolegacy.content.block.bed.FlatBedShape;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlock;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
-import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedRenderer;
 import dev.xkmc.gensokyolegacy.content.block.deco.BooksBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
@@ -41,8 +40,9 @@ public class GLBlocks {
 
 	public enum Beds {
 		CIRNO(Blocks.BLUE_BED),
-		RUMIA(Blocks.BLUE_BED),
-		REIMU(Blocks.RED_BED);
+		RUMIA(Blocks.BLACK_BED),
+		REIMU(Blocks.RED_BED),
+		MORICHIKA(Blocks.LIGHT_BLUE_BED);
 
 		private final BedBlock template;
 		private final DyeColor wool;
@@ -119,17 +119,14 @@ public class GLBlocks {
 			String name = e.name().toLowerCase(Locale.ROOT);
 			BEDS[e.ordinal()] = GensokyoLegacy.REGISTRATE.block(name + "_bed", YoukaiBedBlock::new)
 					.initialProperties(() -> e.template)
-					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(), pvd.models().getExistingFile(pvd.mcLoc("block/bed"))))
+					.blockstate(FlatBedShape::buildStates)
 					.item(BedItem::new)
-					.model((ctx, pvd) -> pvd.withExistingParent(ctx.getName(), pvd.mcLoc("item/template_bed"))
-							.texture("particle", pvd.mcLoc("block/" + e.wool.getName() + "_wool")))
-					.clientExtension(() -> () -> GLBEWLR.EXTENSIONS)
+					.model(FlatBedShape::buildItemModel)
 					.build()
 					.loot(YoukaiBedBlock::buildLoot)
 					.register();
 		}
 		BE_BED = GensokyoLegacy.REGISTRATE.blockEntity("youkai_bed", YoukaiBedBlockEntity::new)
-				.renderer(() -> YoukaiBedRenderer::new)
 				.validBlocks(BEDS)
 				.register();
 	}

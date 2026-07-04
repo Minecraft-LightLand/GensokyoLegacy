@@ -1,0 +1,6 @@
+{
+  "parent": "gensokyolegacy:custom/bed_head",
+  "textures": {
+    "all": "gensokyolegacy:block/bed/morichika_bed"
+  }
+}
