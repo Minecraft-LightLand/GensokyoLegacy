@@ -10,6 +10,10 @@ import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
 import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
+import dev.xkmc.gensokyolegacy.content.block.portal.GapPortalBlock;
+import dev.xkmc.gensokyolegacy.content.block.portal.GapPortalBlockEntity;
+import dev.xkmc.gensokyolegacy.content.block.portal.GapPortalItem;
+import dev.xkmc.gensokyolegacy.content.block.portal.GapPortalRenderer;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlock;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfRenderer;
@@ -33,6 +37,7 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 
 import java.util.Locale;
 
@@ -67,6 +72,8 @@ public class GLBlocks {
 	public static final BlockEntry<DelegateBlock> SHELF;
 	public static final BlockEntityEntry<ShelfBlockEntity> SHELF_BE;
 
+	public static final BlockEntry<GapPortalBlock> GAP_PORTAL;
+	public static final BlockEntityEntry<GapPortalBlockEntity> GAP_BE;
 
 	public static final BlockEntry<DelegateBlock> BOOKS;
 
@@ -105,6 +112,22 @@ public class GLBlocks {
 		}
 
 		{
+			GAP_PORTAL = GensokyoLegacy.REGISTRATE.block("gap_portal", GapPortalBlock::new)
+					.initialProperties(() -> Blocks.END_PORTAL)
+					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(),
+							pvd.models().getBuilder(ctx.getName()).parent(new ModelFile.UncheckedModelFile("builtin/entity"))
+									.texture("particle", pvd.mcLoc("block/obsidian"))))
+					.item(GapPortalItem::new).model((ctx, pvd) ->
+							pvd.generated(ctx, pvd.modLoc("block/gap_portal"))).build()
+					.register();
+
+			GAP_BE = GensokyoLegacy.REGISTRATE.blockEntity("gap_portal", GapPortalBlockEntity::new)
+					.validBlock(GAP_PORTAL)
+					.renderer(() -> GapPortalRenderer::new)
+					.register();
+		}
+
+		{
 			BOOKS = GensokyoLegacy.REGISTRATE.block("book_pile", p -> DelegateBlock.newBaseBlock(
 							BlockBehaviour.Properties.of().noOcclusion().strength(0F)
 									.mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)
@@ -114,6 +137,7 @@ public class GLBlocks {
 							RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
 					.register();
 		}
+
 		BEDS = new BlockEntry[Beds.values().length];
 		for (var e : Beds.values()) {
 			String name = e.name().toLowerCase(Locale.ROOT);
