@@ -10,10 +10,7 @@ import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
 import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
-import dev.xkmc.gensokyolegacy.content.block.portal.GapPortalBlock;
-import dev.xkmc.gensokyolegacy.content.block.portal.GapPortalBlockEntity;
-import dev.xkmc.gensokyolegacy.content.block.portal.GapPortalItem;
-import dev.xkmc.gensokyolegacy.content.block.portal.GapPortalRenderer;
+import dev.xkmc.gensokyolegacy.content.block.portal.*;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlock;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfRenderer;
@@ -72,7 +69,7 @@ public class GLBlocks {
 	public static final BlockEntry<DelegateBlock> SHELF;
 	public static final BlockEntityEntry<ShelfBlockEntity> SHELF_BE;
 
-	public static final BlockEntry<GapPortalBlock> GAP_PORTAL;
+	public static final BlockEntry<BasePortalBlock> GAP_PORTAL;
 	public static final BlockEntityEntry<GapPortalBlockEntity> GAP_BE;
 
 	public static final BlockEntry<DelegateBlock> BOOKS;
@@ -112,8 +109,9 @@ public class GLBlocks {
 		}
 
 		{
-			GAP_PORTAL = GensokyoLegacy.REGISTRATE.block("gap_portal", GapPortalBlock::new)
+			GAP_PORTAL = GensokyoLegacy.REGISTRATE.block("gap_portal", GapPortalBlock::of)
 					.initialProperties(() -> Blocks.END_PORTAL)
+					.properties(p -> p.noLootTable())
 					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(),
 							pvd.models().getBuilder(ctx.getName()).parent(new ModelFile.UncheckedModelFile("builtin/entity"))
 									.texture("particle", pvd.mcLoc("block/obsidian"))))

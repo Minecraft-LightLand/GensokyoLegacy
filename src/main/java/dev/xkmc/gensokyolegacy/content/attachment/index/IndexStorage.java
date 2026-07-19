@@ -27,7 +27,7 @@ public class IndexStorage extends BaseSavedData<IndexStorage> {
 	private ServerLevel level;
 
 	@SerialField
-	private final Map<StructureKey, StructureRefData> structureData = new LinkedHashMap<>();
+	private final LinkedHashMap<StructureKey, StructureRefData> structureData = new LinkedHashMap<>();
 
 	public IndexStorage() {
 		super(IndexStorage.class);

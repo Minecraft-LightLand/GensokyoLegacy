@@ -5,11 +5,14 @@
 
 package dev.xkmc.gensokyolegacy.content.block.portal;
 
+import dev.xkmc.l2modularblock.core.DelegateEntityBlockImpl;
+import dev.xkmc.l2modularblock.one.EntityInsideBlockMethod;
+import dev.xkmc.l2modularblock.one.RenderShapeBlockMethod;
+import dev.xkmc.l2modularblock.type.BlockMethod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Portal;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,16 +20,25 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.portal.DimensionTransition;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class BasePortalBlock extends BaseEntityBlock implements Portal {
+public class BasePortalBlock extends DelegateEntityBlockImpl implements Portal {
 
-	public BasePortalBlock(Properties properties) {
-		super(properties);
+	public record PortalMethod() implements EntityInsideBlockMethod, RenderShapeBlockMethod {
+
+		public void entityInside(BlockState state, Level level, BlockPos pos, Entity e) {
+			if (e.canUsePortal(false) && state.getBlock() instanceof Portal portal) {
+				e.setAsInsidePortal(portal, pos);
+			}
+		}
+
+		@Override
+		public RenderShape getRenderShape(BlockState p_49232_) {
+			return RenderShape.ENTITYBLOCK_ANIMATED;
+		}
+
 	}
 
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity e) {
-		if (e.canUsePortal(false)) {
-			e.setAsInsidePortal(this, pos);
-		}
+	protected BasePortalBlock(Properties p, BlockMethod... impl) {
+		super(p, impl);
 	}
 
 	public @Nullable DimensionTransition getPortalDestination(ServerLevel level, Entity e, BlockPos pos) {
@@ -34,11 +46,6 @@ public abstract class BasePortalBlock extends BaseEntityBlock implements Portal 
 			return be.getPortalDestination(level, e, pos);
 		}
 		return null;
-	}
-
-	@Override
-	protected RenderShape getRenderShape(BlockState p_49232_) {
-		return RenderShape.ENTITYBLOCK_ANIMATED;
 	}
 
 	protected boolean canBeReplaced(BlockState state, Fluid fluid) {

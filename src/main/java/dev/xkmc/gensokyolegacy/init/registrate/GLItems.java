@@ -29,6 +29,8 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Rarity;
 
+import java.util.UUID;
+
 public class GLItems {
 
 	public static final SimpleEntry<CreativeModeTab> TAB;
@@ -58,6 +60,7 @@ public class GLItems {
 
 	private static final DCReg DC = DCReg.of(GensokyoLegacy.REG);
 	public static final DCVal<MiniFurnace1.Data> DC_FURNACE_1 = DC.reg("mini_furnace_1_data", MiniFurnace1.Data.class, false);
+	public static final DCVal<UUID> DC_UUID = DC.uuid("uuid");
 
 	static {
 		var reg = GensokyoLegacy.REGISTRATE;
