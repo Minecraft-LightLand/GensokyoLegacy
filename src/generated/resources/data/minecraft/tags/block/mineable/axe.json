@@ -1,5 +1,27 @@
 {
   "values": [
+    "gensokyolegacy:oak_dining_table",
+    "gensokyolegacy:oak_dining_chair",
+    "gensokyolegacy:birch_dining_table",
+    "gensokyolegacy:birch_dining_chair",
+    "gensokyolegacy:spruce_dining_table",
+    "gensokyolegacy:spruce_dining_chair",
+    "gensokyolegacy:jungle_dining_table",
+    "gensokyolegacy:jungle_dining_chair",
+    "gensokyolegacy:dark_oak_dining_table",
+    "gensokyolegacy:dark_oak_dining_chair",
+    "gensokyolegacy:acacia_dining_table",
+    "gensokyolegacy:acacia_dining_chair",
+    "gensokyolegacy:crimson_dining_table",
+    "gensokyolegacy:crimson_dining_chair",
+    "gensokyolegacy:warped_dining_table",
+    "gensokyolegacy:warped_dining_chair",
+    "gensokyolegacy:mangrove_dining_table",
+    "gensokyolegacy:mangrove_dining_chair",
+    "gensokyolegacy:cherry_dining_table",
+    "gensokyolegacy:cherry_dining_chair",
+    "gensokyolegacy:bamboo_dining_table",
+    "gensokyolegacy:bamboo_dining_chair",
     "gensokyolegacy:birch_shelf"
   ]
 }

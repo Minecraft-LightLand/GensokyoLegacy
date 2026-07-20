@@ -5,12 +5,16 @@ import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import dev.xkmc.gensokyolegacy.content.block.deco.IBlockSet;
 import dev.xkmc.gensokyolegacy.content.block.deco.VerticalSlabBlock;
+import dev.xkmc.gensokyolegacy.content.block.furniture.WoodChairBlock;
+import dev.xkmc.gensokyolegacy.content.block.furniture.WoodTableBlock;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
+import net.minecraft.core.Holder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -20,15 +24,93 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 
+import java.util.Locale;
 import java.util.function.Supplier;
 
 public class GLDecoBlocks {
+
+
+	public enum WoodType implements IBlockSet {
+		OAK(Blocks.OAK_PLANKS, Blocks.OAK_FENCE, Items.STRIPPED_OAK_WOOD, Blocks.OAK_SLAB, Blocks.OAK_STAIRS),
+		BIRCH(Blocks.BIRCH_PLANKS, Blocks.BIRCH_FENCE, Items.STRIPPED_BIRCH_WOOD, Blocks.BIRCH_SLAB, Blocks.BRICK_STAIRS),
+		SPRUCE(Blocks.SPRUCE_PLANKS, Blocks.SPRUCE_FENCE, Items.STRIPPED_SPRUCE_WOOD, Blocks.SPRUCE_SLAB, Blocks.SPRUCE_STAIRS),
+		JUNGLE(Blocks.JUNGLE_PLANKS, Blocks.JUNGLE_FENCE, Items.STRIPPED_JUNGLE_WOOD, Blocks.JUNGLE_SLAB, Blocks.JUNGLE_STAIRS),
+		DARK_OAK(Blocks.DARK_OAK_PLANKS, Blocks.DARK_OAK_FENCE, Items.STRIPPED_DARK_OAK_WOOD, Blocks.DARK_OAK_SLAB, Blocks.DARK_OAK_STAIRS),
+		ACACIA(Blocks.ACACIA_PLANKS, Blocks.ACACIA_FENCE, Items.STRIPPED_ACACIA_WOOD, Blocks.ACACIA_SLAB, Blocks.ACACIA_STAIRS),
+		CRIMSON(Blocks.CRIMSON_PLANKS, Blocks.CRIMSON_FENCE, Items.STRIPPED_CRIMSON_HYPHAE, Blocks.CRIMSON_SLAB, Blocks.CRIMSON_STAIRS),
+		WARPED(Blocks.WARPED_PLANKS, Blocks.WARPED_FENCE, Items.STRIPPED_WARPED_HYPHAE, Blocks.WARPED_SLAB, Blocks.WARPED_STAIRS),
+		MANGROVE(Blocks.MANGROVE_PLANKS, Blocks.MANGROVE_FENCE, Items.STRIPPED_MANGROVE_WOOD, Blocks.MANGROVE_SLAB, Blocks.MANGROVE_STAIRS),
+		CHERRY(Blocks.CHERRY_PLANKS, Blocks.CHERRY_FENCE, Items.STRIPPED_CHERRY_WOOD, Blocks.CHERRY_SLAB, Blocks.CHERRY_STAIRS),
+		BAMBOO(Blocks.BAMBOO_PLANKS, Blocks.BAMBOO_FENCE, Items.STRIPPED_BAMBOO_BLOCK, Blocks.BAMBOO_SLAB, Blocks.BAMBOO_STAIRS),
+		;
+
+		private final Block plankProp, fenceProp, slab, stairs;
+		private final String name;
+		private final ResourceLocation tex;
+		public final ItemLike plank, strippedWood;
+		public BlockEntry<WoodTableBlock> table;
+		public BlockEntry<WoodChairBlock> seat;
+		public BlockEntry<VerticalSlabBlock> vertical;
+
+		WoodType(Block plankProp, Block fenceProp, ItemLike strippedWood, Block slab, Block stairs) {
+			this.plankProp = plankProp;
+			this.fenceProp = fenceProp;
+			this.plank = plankProp;
+			this.strippedWood = strippedWood;
+			this.slab = slab;
+			this.stairs = stairs;
+			name = name().toLowerCase(Locale.ROOT);
+			tex = ResourceLocation.withDefaultNamespace("block/" + name + "_planks");
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		@Override
+		public BlockBehaviour.Properties prop() {
+			return BlockBehaviour.Properties.ofFullCopy(plankProp);
+		}
+
+		@Override
+		public Holder<Block> base() {
+			return plankProp.builtInRegistryHolder();
+		}
+
+		@Override
+		public Holder<Block> stairs() {
+			return stairs.builtInRegistryHolder();
+		}
+
+		@Override
+		public Holder<Block> slab() {
+			return slab.builtInRegistryHolder();
+		}
+
+		@Override
+		public Holder<Block> vertical() {
+			return vertical;
+		}
+
+		@Override
+		public ResourceLocation top() {
+			return tex;
+		}
+
+		@Override
+		public ResourceLocation side() {
+			return tex;
+		}
+
+	}
 
 	public static final SimpleEntry<CreativeModeTab> TAB;
 
@@ -80,6 +162,24 @@ public class GLDecoBlocks {
 					.blockstate((ctx, pvd) ->
 							pvd.simpleBlock(ctx.get(), pvd.models().cubeAll(ctx.getName(), GensokyoLegacy.loc("block/strips/" + ctx.getName()))))
 					.tag(BlockTags.MINEABLE_WITH_PICKAXE).simpleItem().register();
+		}
+
+		for (var e : WoodType.values()) {
+			String name = e.name().toLowerCase(Locale.ROOT);
+
+			e.table = reg.block(name + "_dining_table", p -> new WoodTableBlock(
+							BlockBehaviour.Properties.ofFullCopy(e.plankProp)))
+					.blockstate(WoodTableBlock::buildStates)
+					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
+					.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
+					.register();
+
+			e.seat = reg.block(name + "_dining_chair", p -> new WoodChairBlock(
+							BlockBehaviour.Properties.ofFullCopy(e.plankProp)))
+					.blockstate(WoodChairBlock::buildStates)
+					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
+					.recipe((ctx, pvd) -> WoodChairBlock.genRecipe(pvd, e, ctx))
+					.register();
 		}
 
 	}

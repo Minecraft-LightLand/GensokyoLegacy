@@ -1,6 +1,8 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
 import com.tterrag.registrate.util.entry.EntityEntry;
+import dev.xkmc.gensokyolegacy.content.block.furniture.ChairEntity;
+import dev.xkmc.gensokyolegacy.content.block.furniture.NothingRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.FairyEntity;
@@ -22,6 +24,8 @@ import net.minecraft.world.item.CreativeModeTabs;
 
 public class GLEntities {
 
+	public static final EntityEntry<ChairEntity> CHAIR;
+
 	public static final EntityEntry<RumiaEntity> RUMIA;
 	public static final EntityEntry<ReimuEntity> REIMU;
 	public static final EntityEntry<CirnoEntity> CIRNO;
@@ -39,6 +43,12 @@ public class GLEntities {
 	static {
 
 		GensokyoLegacy.REGISTRATE.defaultCreativeTab(CreativeModeTabs.OP_BLOCKS);
+
+		CHAIR = GensokyoLegacy.REGISTRATE
+				.<ChairEntity>entity("dining_chair", ChairEntity::new, MobCategory.MISC)
+				.properties(e -> e.sized(0.25f, 0.5f))
+				.renderer(() -> NothingRenderer::new)
+				.register();
 
 		{
 

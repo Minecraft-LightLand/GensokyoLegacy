@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "gensokyolegacy:gap_portal"
+          "name": "gensokyolegacy:spruce_dining_table"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "gensokyolegacy:blocks/gap_portal"
+  "random_sequence": "gensokyolegacy:blocks/spruce_dining_table"
 }
