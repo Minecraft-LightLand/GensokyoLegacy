@@ -1,0 +1,8 @@
+{
+  "parent": "gensokyolegacy:custom/cushion",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "all": "gensokyolegacy:block/cushion/magenta_cushion",
+    "particle": "minecraft:block/white_wool"
+  }
+}

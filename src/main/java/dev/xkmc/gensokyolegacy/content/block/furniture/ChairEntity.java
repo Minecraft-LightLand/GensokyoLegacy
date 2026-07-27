@@ -39,7 +39,7 @@ public class ChairEntity extends SimplifiedEntity {
 	public void tick() {
 		if (this.level().isClientSide) return;
 		boolean blockPresent = this.level().getBlockState(this.blockPosition())
-				.getBlock() instanceof WoodChairBlock;
+				.getBlock() instanceof SeatableBlock;
 		if (!this.isVehicle() || !blockPresent) {
 			this.discard();
 		}

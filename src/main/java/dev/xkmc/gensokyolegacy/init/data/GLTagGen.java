@@ -14,10 +14,7 @@ import net.minecraft.world.level.block.Block;
 
 public class GLTagGen {
 
-	public static final TagKey<Item> INCENSE_ITEM = item("incense_item");
-	public static final TagKey<Item> RAW_FLESH = item("raw_flesh");
-	public static final TagKey<Item> FLESH_FOOD = item("flesh_food");
-	public static final TagKey<Item> APPARENT_FLESH_FOOD = item("apparent_flesh_food");
+	public static final TagKey<Item> CUSHIONS = item("cushions");
 
 	public static final TagKey<Item> TOUHOU_HAT = item("touhou_hat");
 	public static final TagKey<Item> TOUHOU_WINGS = item("touhou_wings");

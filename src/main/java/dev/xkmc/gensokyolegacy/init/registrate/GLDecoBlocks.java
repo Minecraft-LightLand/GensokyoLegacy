@@ -7,6 +7,7 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.xkmc.gensokyolegacy.content.block.deco.IBlockSet;
 import dev.xkmc.gensokyolegacy.content.block.deco.VerticalSlabBlock;
+import dev.xkmc.gensokyolegacy.content.block.furniture.CushionBlock;
 import dev.xkmc.gensokyolegacy.content.block.furniture.WoodChairBlock;
 import dev.xkmc.gensokyolegacy.content.block.furniture.WoodTableBlock;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -29,6 +30,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 
 import java.util.Locale;
@@ -179,6 +181,19 @@ public class GLDecoBlocks {
 					.blockstate(WoodChairBlock::buildStates)
 					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
 					.recipe((ctx, pvd) -> WoodChairBlock.genRecipe(pvd, e, ctx))
+					.register();
+		}
+
+		reg.block("cushion", CushionBlock::new)
+				.properties(p -> p.mapColor(MapColor.SAND).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
+				.blockstate(CushionBlock::buildStates)
+				.item().tag(GLTagGen.CUSHIONS).build()
+				.register();
+		for (DyeColor col : DyeColor.values()) {
+			reg.block(col.getName() + "_cushion", CushionBlock::new)
+					.properties(p -> p.mapColor(MapColor.byId(14 + col.getId())).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
+					.blockstate(CushionBlock::buildStates)
+					.item().tag(GLTagGen.CUSHIONS).build()
 					.register();
 		}
 

@@ -46,7 +46,7 @@ public class GLEntities {
 
 		CHAIR = GensokyoLegacy.REGISTRATE
 				.<ChairEntity>entity("dining_chair", ChairEntity::new, MobCategory.MISC)
-				.properties(e -> e.sized(0.25f, 0.5f))
+				.properties(e -> e.sized(0f, 0f))
 				.renderer(() -> NothingRenderer::new)
 				.register();
 
