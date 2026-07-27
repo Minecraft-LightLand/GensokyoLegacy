@@ -188,7 +188,7 @@ public class GLDecoBlocks {
 		}
 
 		reg.block("tatami", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock()))
-				.properties(p -> p.mapColor(MapColor.SAND).strength(0.1F).sound(SoundType.WOOL))
+				.properties(p -> p.mapColor(MapColor.SAND).strength(0).sound(SoundType.WOOL))
 				.blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), state -> {
 					var kind = state.getValue(TatamiBlock.KIND);
 					var suffix = kind == TatamiBlock.Kind.SQUARE ? "" : "_" + kind.getSerializedName();

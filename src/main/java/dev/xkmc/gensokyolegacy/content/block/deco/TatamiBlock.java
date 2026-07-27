@@ -58,9 +58,10 @@ public class TatamiBlock implements CreateBlockStateBlockMethod, DefaultStateBlo
 			if (!canSurvive(current, level, pos)) return Blocks.AIR.defaultBlockState();
 		}
 		var half = current.getValue(KIND);
+		if (half == Kind.SQUARE) return current;
 		var facing = current.getValue(HORIZONTAL_FACING);
 		if (facing == dir && (!nstate.is(self) || nstate.getValue(HORIZONTAL_FACING) != facing.getOpposite() || nstate.getValue(KIND) != half.opposite()))
-			return Blocks.AIR.defaultBlockState();
+			return current.setValue(KIND, Kind.SQUARE);
 
 		return current;
 	}
@@ -80,14 +81,21 @@ public class TatamiBlock implements CreateBlockStateBlockMethod, DefaultStateBlo
 		Level level = context.getLevel();
 		var dir = state.getValue(HORIZONTAL_FACING).getOpposite();
 		state = state.setValue(HORIZONTAL_FACING, dir);
-		return level.getBlockState(blockpos.relative(dir)).canBeReplaced(context) ? state.setValue(KIND, Kind.FRONT) : state;
+		if (context.getPlayer() != null && context.getPlayer().getAbilities().instabuild || context.getItemInHand().getCount() > 1)
+			return level.getBlockState(blockpos.relative(dir)).canBeReplaced(context) ? state.setValue(KIND, Kind.FRONT) : state;
+		return state;
 	}
 
 	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity user, ItemStack stack) {
 		if (state.getValue(KIND) == Kind.SQUARE) return;
-		var dir = state.getValue(HORIZONTAL_FACING);
-		BlockPos blockpos = pos.relative(dir);
-		level.setBlock(blockpos, state.setValue(KIND, Kind.END).setValue(HORIZONTAL_FACING, dir.getOpposite()), 3);
+		var creative = user instanceof Player player && player.getAbilities().instabuild;
+		if (stack.getCount() > 1 || creative) {
+			if (!creative)
+				stack.shrink(1);
+			var dir = state.getValue(HORIZONTAL_FACING);
+			BlockPos blockpos = pos.relative(dir);
+			level.setBlock(blockpos, state.setValue(KIND, Kind.END).setValue(HORIZONTAL_FACING, dir.getOpposite()), 3);
+		}
 	}
 
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
@@ -108,16 +116,17 @@ public class TatamiBlock implements CreateBlockStateBlockMethod, DefaultStateBlo
 		return null;
 	}
 
-	public boolean playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @org.jetbrains.annotations.Nullable BlockEntity entity, ItemStack stack) {
+	@Override
+	public boolean playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity be, ItemStack stack) {
 		return true;
 	}
 
 	public static void preventDropFromBottomPart(Level level, BlockPos pos, BlockState state, Player player) {
 		var half = state.getValue(KIND);
-		if (half == Kind.SQUARE || half == Kind.END) return;
+		if (half == Kind.SQUARE) return;
 		BlockPos lo = pos.relative(state.getValue(HORIZONTAL_FACING));
 		BlockState bottom = level.getBlockState(lo);
-		if (bottom.is(state.getBlock()) && bottom.getValue(KIND) == Kind.END) {
+		if (bottom.is(state.getBlock())) {
 			level.setBlock(lo, Blocks.AIR.defaultBlockState(), 35);
 			level.levelEvent(player, 2001, lo, Block.getId(bottom));
 		}
