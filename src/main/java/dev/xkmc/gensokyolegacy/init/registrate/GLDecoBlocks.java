@@ -6,6 +6,7 @@ import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.xkmc.gensokyolegacy.content.block.deco.IBlockSet;
+import dev.xkmc.gensokyolegacy.content.block.deco.TatamiBlock;
 import dev.xkmc.gensokyolegacy.content.block.deco.VerticalSlabBlock;
 import dev.xkmc.gensokyolegacy.content.block.furniture.CushionBlock;
 import dev.xkmc.gensokyolegacy.content.block.furniture.WoodChairBlock;
@@ -15,6 +16,8 @@ import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
+import dev.xkmc.l2modularblock.core.BlockTemplates;
+import dev.xkmc.l2modularblock.core.DelegateBlock;
 import net.minecraft.core.Holder;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
@@ -183,6 +186,16 @@ public class GLDecoBlocks {
 					.recipe((ctx, pvd) -> WoodChairBlock.genRecipe(pvd, e, ctx))
 					.register();
 		}
+
+		reg.block("tatami", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock()))
+				.properties(p -> p.mapColor(MapColor.SAND).strength(0.1F).sound(SoundType.WOOL))
+				.blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), state -> {
+					var kind = state.getValue(TatamiBlock.KIND);
+					var suffix = kind == TatamiBlock.Kind.SQUARE ? "" : "_" + kind.getSerializedName();
+					return pvd.models().carpet(ctx.getName() + suffix, pvd.modLoc("block/tatami/tatami" + suffix));
+				}))
+				.simpleItem()
+				.register();
 
 		reg.block("cushion", CushionBlock::new)
 				.properties(p -> p.mapColor(MapColor.SAND).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
