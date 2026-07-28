@@ -132,7 +132,8 @@ public class TableClothImpl implements CreateBlockStateBlockMethod, DefaultState
 			String name = e == Color.BASE ? "tablecloth" : e.getSerializedName() + "_tablecloth";
 			pvd.models().getBuilder("block/" + name)
 					.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("custom/tablecloth")))
-					.texture("all", "block/table/" + name);
+					.texture("all", "block/table/" + name)
+					.renderType("cutout");
 		}
 	}
 
