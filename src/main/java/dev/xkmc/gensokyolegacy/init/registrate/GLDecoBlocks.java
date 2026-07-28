@@ -5,12 +5,9 @@ import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import dev.xkmc.gensokyolegacy.content.block.deco.IBlockSet;
-import dev.xkmc.gensokyolegacy.content.block.deco.TatamiBlock;
-import dev.xkmc.gensokyolegacy.content.block.deco.VerticalSlabBlock;
-import dev.xkmc.gensokyolegacy.content.block.furniture.CushionBlock;
-import dev.xkmc.gensokyolegacy.content.block.furniture.WoodChairBlock;
-import dev.xkmc.gensokyolegacy.content.block.furniture.WoodTableBlock;
+import dev.xkmc.gensokyolegacy.content.block.deco.*;
+import dev.xkmc.gensokyolegacy.content.block.seat.CushionBlock;
+import dev.xkmc.gensokyolegacy.content.block.seat.WoodChairBlock;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.data.GLRecipeGen;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
@@ -41,7 +38,6 @@ import java.util.function.Supplier;
 
 public class GLDecoBlocks {
 
-
 	public enum WoodType implements IBlockSet {
 		OAK(Blocks.OAK_PLANKS, Blocks.OAK_FENCE, Items.STRIPPED_OAK_WOOD, Blocks.OAK_SLAB, Blocks.OAK_STAIRS),
 		BIRCH(Blocks.BIRCH_PLANKS, Blocks.BIRCH_FENCE, Items.STRIPPED_BIRCH_WOOD, Blocks.BIRCH_SLAB, Blocks.BRICK_STAIRS),
@@ -60,7 +56,7 @@ public class GLDecoBlocks {
 		private final String name;
 		private final ResourceLocation tex;
 		public final ItemLike plank, strippedWood;
-		public BlockEntry<WoodTableBlock> table;
+		public BlockEntry<DelegateBlock> table;
 		public BlockEntry<WoodChairBlock> seat;
 		public BlockEntry<VerticalSlabBlock> vertical;
 
@@ -123,6 +119,8 @@ public class GLDecoBlocks {
 
 	public static final StoneAndBrickSet DARKSTONE;
 
+	public static final BlockEntry<DelegateBlock> TATAMI;
+
 	static {
 		var reg = GensokyoLegacy.REGISTRATE;
 		TAB = reg.buildModCreativeTab("building_blocks", "Gensokyo Legacy - Building Blocks",
@@ -172,11 +170,12 @@ public class GLDecoBlocks {
 		for (var e : WoodType.values()) {
 			String name = e.name().toLowerCase(Locale.ROOT);
 
-			e.table = reg.block(name + "_dining_table", p -> new WoodTableBlock(
-							BlockBehaviour.Properties.ofFullCopy(e.plankProp)))
+			e.table = reg.block(name + "_dining_table", p -> DelegateBlock.newBaseBlock(p, new WoodTableBlock(), new TableClothImpl()))
+					.initialProperties(() -> e.plankProp)
 					.blockstate(WoodTableBlock::buildStates)
 					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
 					.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
+					.loot(WoodTableBlock::genLoot)
 					.register();
 
 			e.seat = reg.block(name + "_dining_chair", p -> new WoodChairBlock(
@@ -185,9 +184,19 @@ public class GLDecoBlocks {
 					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
 					.recipe((ctx, pvd) -> WoodChairBlock.genRecipe(pvd, e, ctx))
 					.register();
+
+			if (e != WoodType.ACACIA && e != WoodType.MANGROVE)
+				reg.block(name + "_large_table", p -> DelegateBlock.newBaseBlock(p, new CompoundTableBlock(), new TableClothImpl()))
+						.initialProperties(() -> e.plankProp)
+						.blockstate(CompoundTableBlock::buildStates)
+						.tag(GLTagGen.LARGE_TABLE)
+						.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
+						//.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
+						.loot(CompoundTableBlock::genLoot)
+						.register();
 		}
 
-		reg.block("tatami", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock()))
+		TATAMI = reg.block("tatami", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock()))
 				.properties(p -> p.mapColor(MapColor.SAND).strength(0).sound(SoundType.WOOL))
 				.blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), state -> {
 					var kind = state.getValue(TatamiBlock.KIND);

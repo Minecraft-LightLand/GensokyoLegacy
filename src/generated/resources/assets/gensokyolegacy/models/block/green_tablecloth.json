@@ -1,0 +1,6 @@
+{
+  "parent": "gensokyolegacy:custom/tablecloth",
+  "textures": {
+    "all": "gensokyolegacy:block/table/green_tablecloth"
+  }
+}

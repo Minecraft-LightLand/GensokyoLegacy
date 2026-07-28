@@ -1,8 +1,8 @@
 package dev.xkmc.gensokyolegacy.init.registrate;
 
 import com.tterrag.registrate.util.entry.EntityEntry;
-import dev.xkmc.gensokyolegacy.content.block.furniture.ChairEntity;
-import dev.xkmc.gensokyolegacy.content.block.furniture.NothingRenderer;
+import dev.xkmc.gensokyolegacy.content.block.seat.ChairEntity;
+import dev.xkmc.gensokyolegacy.content.block.seat.NothingRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoEntity;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoRenderer;
 import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.FairyEntity;

@@ -1,7 +1,153 @@
 {
-  "variants": {
-    "": {
-      "model": "gensokyolegacy:block/acacia_dining_table"
+  "multipart": [
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/acacia_dining_table_stall"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/acacia_dining_table_top"
+      },
+      "when": {
+        "color": "none"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/tablecloth"
+      },
+      "when": {
+        "color": "base"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/white_tablecloth"
+      },
+      "when": {
+        "color": "white"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/orange_tablecloth"
+      },
+      "when": {
+        "color": "orange"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/magenta_tablecloth"
+      },
+      "when": {
+        "color": "magenta"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/light_blue_tablecloth"
+      },
+      "when": {
+        "color": "light_blue"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/yellow_tablecloth"
+      },
+      "when": {
+        "color": "yellow"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/lime_tablecloth"
+      },
+      "when": {
+        "color": "lime"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/pink_tablecloth"
+      },
+      "when": {
+        "color": "pink"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/gray_tablecloth"
+      },
+      "when": {
+        "color": "gray"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/light_gray_tablecloth"
+      },
+      "when": {
+        "color": "light_gray"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/cyan_tablecloth"
+      },
+      "when": {
+        "color": "cyan"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/purple_tablecloth"
+      },
+      "when": {
+        "color": "purple"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/blue_tablecloth"
+      },
+      "when": {
+        "color": "blue"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/brown_tablecloth"
+      },
+      "when": {
+        "color": "brown"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/green_tablecloth"
+      },
+      "when": {
+        "color": "green"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/red_tablecloth"
+      },
+      "when": {
+        "color": "red"
+      }
+    },
+    {
+      "apply": {
+        "model": "gensokyolegacy:block/black_tablecloth"
+      },
+      "when": {
+        "color": "black"
+      }
     }
-  }
+  ]
 }

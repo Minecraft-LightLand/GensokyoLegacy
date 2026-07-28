@@ -1,0 +1,339 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gensokyolegacy:crimson_large_table"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "base"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "gensokyolegacy:tatami"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "white"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:white_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "orange"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:orange_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "magenta"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:magenta_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "light_blue"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:light_blue_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "yellow"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:yellow_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "lime"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:lime_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "pink"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:pink_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "gray"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gray_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "light_gray"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:light_gray_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "cyan"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:cyan_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "purple"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:purple_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "blue"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:blue_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "brown"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:brown_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "green"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:green_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "red"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:red_carpet"
+        }
+      ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "block": "gensokyolegacy:crimson_large_table",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "color": "black"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:black_carpet"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "gensokyolegacy:blocks/crimson_large_table"
+}
