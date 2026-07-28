@@ -126,6 +126,59 @@ public class GLDecoBlocks {
 		TAB = reg.buildModCreativeTab("building_blocks", "Gensokyo Legacy - Building Blocks",
 				e -> e.icon(() -> GLDecoBlocks.ICE_BRICK_SET.block.get().asItem().getDefaultInstance()));
 
+		TATAMI = reg.block("tatami", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock()))
+				.properties(p -> p.mapColor(MapColor.SAND).strength(0).sound(SoundType.WOOL))
+				.blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), state -> {
+					var kind = state.getValue(TatamiBlock.KIND);
+					var suffix = kind == TatamiBlock.Kind.SQUARE ? "" : "_" + kind.getSerializedName();
+					return pvd.models().carpet(ctx.getName() + suffix, pvd.modLoc("block/tatami/tatami" + suffix));
+				}))
+				.simpleItem()
+				.register();
+
+		reg.block("cushion", CushionBlock::new)
+				.properties(p -> p.mapColor(MapColor.SAND).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
+				.blockstate(CushionBlock::buildStates)
+				.item().tag(GLTagGen.CUSHIONS).build()
+				.register();
+
+		for (DyeColor col : DyeColor.values()) {
+			reg.block(col.getName() + "_cushion", CushionBlock::new)
+					.properties(p -> p.mapColor(MapColor.byId(14 + col.getId())).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
+					.blockstate(CushionBlock::buildStates)
+					.item().tag(GLTagGen.CUSHIONS).build()
+					.register();
+		}
+
+		for (var e : WoodType.values()) {
+			String name = e.name().toLowerCase(Locale.ROOT);
+
+			e.table = reg.block(name + "_dining_table", p -> DelegateBlock.newBaseBlock(p, new WoodTableBlock(), new TableClothImpl()))
+					.initialProperties(() -> e.plankProp)
+					.blockstate(WoodTableBlock::buildStates)
+					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
+					.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
+					.loot(WoodTableBlock::genLoot)
+					.register();
+
+			e.seat = reg.block(name + "_dining_chair", p -> new WoodChairBlock(
+							BlockBehaviour.Properties.ofFullCopy(e.plankProp)))
+					.blockstate(WoodChairBlock::buildStates)
+					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
+					.recipe((ctx, pvd) -> WoodChairBlock.genRecipe(pvd, e, ctx))
+					.register();
+
+			if (e != WoodType.ACACIA && e != WoodType.MANGROVE)
+				reg.block(name + "_large_table", p -> DelegateBlock.newBaseBlock(p, new CompoundTableBlock(), new TableClothImpl()))
+						.initialProperties(() -> e.plankProp)
+						.blockstate(CompoundTableBlock::buildStates)
+						.tag(GLTagGen.LARGE_TABLE)
+						.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
+						//.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
+						.loot(CompoundTableBlock::genLoot)
+						.register();
+		}
+
 		SNOW_SET = new BrickSet(reg, "snow", BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK),
 				ResourceLocation.withDefaultNamespace("block/snow"), () -> Blocks.SNOW_BLOCK,
 				BlockTags.MINEABLE_WITH_SHOVEL);
@@ -164,58 +217,7 @@ public class GLDecoBlocks {
 					.tag(BlockTags.MINEABLE_WITH_PICKAXE).simpleItem().register();
 		}
 
-		for (var e : WoodType.values()) {
-			String name = e.name().toLowerCase(Locale.ROOT);
 
-			e.table = reg.block(name + "_dining_table", p -> DelegateBlock.newBaseBlock(p, new WoodTableBlock(), new TableClothImpl()))
-					.initialProperties(() -> e.plankProp)
-					.blockstate(WoodTableBlock::buildStates)
-					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
-					.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
-					.loot(WoodTableBlock::genLoot)
-					.register();
-
-			e.seat = reg.block(name + "_dining_chair", p -> new WoodChairBlock(
-							BlockBehaviour.Properties.ofFullCopy(e.plankProp)))
-					.blockstate(WoodChairBlock::buildStates)
-					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
-					.recipe((ctx, pvd) -> WoodChairBlock.genRecipe(pvd, e, ctx))
-					.register();
-
-			if (e != WoodType.ACACIA && e != WoodType.MANGROVE)
-				reg.block(name + "_large_table", p -> DelegateBlock.newBaseBlock(p, new CompoundTableBlock(), new TableClothImpl()))
-						.initialProperties(() -> e.plankProp)
-						.blockstate(CompoundTableBlock::buildStates)
-						.tag(GLTagGen.LARGE_TABLE)
-						.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
-						//.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
-						.loot(CompoundTableBlock::genLoot)
-						.register();
-		}
-
-		TATAMI = reg.block("tatami", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock()))
-				.properties(p -> p.mapColor(MapColor.SAND).strength(0).sound(SoundType.WOOL))
-				.blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), state -> {
-					var kind = state.getValue(TatamiBlock.KIND);
-					var suffix = kind == TatamiBlock.Kind.SQUARE ? "" : "_" + kind.getSerializedName();
-					return pvd.models().carpet(ctx.getName() + suffix, pvd.modLoc("block/tatami/tatami" + suffix));
-				}))
-				.simpleItem()
-				.register();
-
-		reg.block("cushion", CushionBlock::new)
-				.properties(p -> p.mapColor(MapColor.SAND).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
-				.blockstate(CushionBlock::buildStates)
-				.item().tag(GLTagGen.CUSHIONS).build()
-				.register();
-
-		for (DyeColor col : DyeColor.values()) {
-			reg.block(col.getName() + "_cushion", CushionBlock::new)
-					.properties(p -> p.mapColor(MapColor.byId(14 + col.getId())).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
-					.blockstate(CushionBlock::buildStates)
-					.item().tag(GLTagGen.CUSHIONS).build()
-					.register();
-		}
 
 	}
 
