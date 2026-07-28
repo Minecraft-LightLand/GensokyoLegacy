@@ -1,6 +1,6 @@
 {
-  "parent": "gensokyolegacy:custom/books_0",
+  "parent": "gensokyolegacy:custom/book/books_0",
   "textures": {
-    "books": "gensokyolegacy:block/books"
+    "books": "gensokyolegacy:block/book/pile"
   }
 }

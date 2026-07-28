@@ -102,9 +102,9 @@ public class TableClothImpl implements CreateBlockStateBlockMethod, DefaultState
 				var col = state.getValue(COLOR);
 				level.setBlockAndUpdate(pos, state.setValue(COLOR, Color.NONE));
 				if (!pl.getAbilities().instabuild) {
+					Block.popResource(level, pos, new ItemStack(col.item, 1));
 					stack.hurtAndBreak(1, pl, LivingEntity.getSlotForHand(hand));
 				}
-				Block.popResource(level, pos, new ItemStack(col.item, 1));
 			}
 			return ItemInteractionResult.SUCCESS;
 		}

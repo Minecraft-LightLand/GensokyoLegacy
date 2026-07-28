@@ -1,0 +1,7 @@
+{
+  "parent": "gensokyolegacy:custom/book/book_stack",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "books": "gensokyolegacy:block/book/tied_1"
+  }
+}

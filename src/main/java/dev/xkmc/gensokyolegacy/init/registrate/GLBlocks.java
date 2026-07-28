@@ -9,7 +9,8 @@ import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
 import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
-import dev.xkmc.gensokyolegacy.content.block.misc.BooksBlock;
+import dev.xkmc.gensokyolegacy.content.block.misc.BookPile;
+import dev.xkmc.gensokyolegacy.content.block.misc.BookStack;
 import dev.xkmc.gensokyolegacy.content.block.portal.*;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlock;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlockEntity;
@@ -72,7 +73,7 @@ public class GLBlocks {
 	public static final BlockEntry<BasePortalBlock> GAP_PORTAL;
 	public static final BlockEntityEntry<GapPortalBlockEntity> GAP_BE;
 
-	public static final BlockEntry<DelegateBlock> BOOKS, ALCHEMY_POT;
+	public static final BlockEntry<DelegateBlock> BOOK_PILE, BOOK_STACK, ALCHEMY_POT;
 
 	public static final BlockEntry<YoukaiBedBlock>[] BEDS;
 	public static final BlockEntityEntry<YoukaiBedBlockEntity> BE_BED;
@@ -126,11 +127,18 @@ public class GLBlocks {
 		}
 
 		{
-			BOOKS = GensokyoLegacy.REGISTRATE.block("book_pile", p -> DelegateBlock.newBaseBlock(
-							BlockBehaviour.Properties.of().noOcclusion().strength(0F)
-									.mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY)
-							, BlockTemplates.HORIZONTAL, new BooksBlock()))
-					.blockstate(BooksBlock::buildStates).loot(BooksBlock::buildLoot).simpleItem()
+			BOOK_PILE = GensokyoLegacy.REGISTRATE.block("book_pile", BookPile::create)
+					.properties(p -> p.noOcclusion().strength(0F).offsetType(BlockBehaviour.OffsetType.XZ)
+							.mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY).dynamicShape())
+					.blockstate(BookPile::buildStates).loot(BookPile::buildLoot).simpleItem()
+					.recipe((ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapelessRecipeBuilder.shapeless(
+							RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
+					.register();
+
+			BOOK_STACK = GensokyoLegacy.REGISTRATE.block("book_stack", BookStack::create)
+					.properties(p -> p.noOcclusion().strength(0F).offsetType(BlockBehaviour.OffsetType.XZ)
+							.mapColor(MapColor.WOOD).sound(SoundType.WOOD).pushReaction(PushReaction.DESTROY).dynamicShape())
+					.blockstate(BookStack::buildStates).loot(BookStack::buildLoot).simpleItem()
 					.recipe((ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapelessRecipeBuilder.shapeless(
 							RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
 					.register();
