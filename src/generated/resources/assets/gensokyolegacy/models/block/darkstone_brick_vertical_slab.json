@@ -1,7 +1,7 @@
 {
   "parent": "gensokyolegacy:block/vertical_slab",
   "textures": {
-    "side": "gensokyolegacy:block/darkstone_bricks",
-    "top": "gensokyolegacy:block/darkstone_bricks"
+    "side": "gensokyolegacy:block/deco/darkstone_bricks",
+    "top": "gensokyolegacy:block/deco/darkstone_bricks"
   }
 }

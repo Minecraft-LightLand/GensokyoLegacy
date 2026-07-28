@@ -116,7 +116,7 @@ public class GLBlocks {
 							pvd.models().getBuilder(ctx.getName()).parent(new ModelFile.UncheckedModelFile("builtin/entity"))
 									.texture("particle", pvd.mcLoc("block/obsidian"))))
 					.item(GapPortalItem::new).model((ctx, pvd) ->
-							pvd.generated(ctx, pvd.modLoc("block/gap_portal"))).build()
+							pvd.generated(ctx, pvd.modLoc("item/gap"))).build()
 					.register();
 
 			GAP_BE = GensokyoLegacy.REGISTRATE.blockEntity("gap_portal", GapPortalBlockEntity::new)

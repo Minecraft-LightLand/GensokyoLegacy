@@ -23,8 +23,8 @@ import net.neoforged.api.distmarker.OnlyIn;
 public class GapPortalRenderer implements BlockEntityRenderer<GapPortalBlockEntity> {
 	public static final ResourceLocation END_SKY_LOCATION = ResourceLocation.withDefaultNamespace("textures/environment/end_sky.png");
 	public static final ResourceLocation END_PORTAL_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/end_portal.png");
-	public static final ResourceLocation FRAME = GensokyoLegacy.loc("textures/block/gap_portal.png");
-	public static final ResourceLocation FRAME_BACK = GensokyoLegacy.loc("textures/block/gap_portal_back.png");
+	public static final ResourceLocation FRAME = GensokyoLegacy.loc("textures/block/utensil/gap_portal.png");
+	public static final ResourceLocation FRAME_BACK = GensokyoLegacy.loc("textures/block/utensil/gap_portal_back.png");
 
 	public GapPortalRenderer(BlockEntityRendererProvider.Context ctx) {
 	}

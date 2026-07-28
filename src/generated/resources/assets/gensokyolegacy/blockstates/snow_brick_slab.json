@@ -4,7 +4,7 @@
       "model": "gensokyolegacy:block/snow_brick_slab"
     },
     "type=double": {
-      "model": "gensokyolegacy:block/snow_bricks"
+      "model": "gensokyolegacy:block/deco/snow_bricks"
     },
     "type=top": {
       "model": "gensokyolegacy:block/snow_brick_slab_top"

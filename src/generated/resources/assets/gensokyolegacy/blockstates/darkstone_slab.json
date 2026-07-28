@@ -4,7 +4,7 @@
       "model": "gensokyolegacy:block/darkstone_slab"
     },
     "type=double": {
-      "model": "gensokyolegacy:block/darkstone"
+      "model": "gensokyolegacy:block/deco/darkstone"
     },
     "type=top": {
       "model": "gensokyolegacy:block/darkstone_slab_top"

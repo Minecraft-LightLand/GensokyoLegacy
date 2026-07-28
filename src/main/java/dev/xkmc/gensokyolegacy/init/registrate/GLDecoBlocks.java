@@ -146,9 +146,6 @@ public class GLDecoBlocks {
 		DARKSTONE = new StoneAndBrickSet(reg, "darkstone", MapColor.COLOR_BLACK, 1F,
 				SoundType.DEEPSLATE, SoundType.DEEPSLATE_BRICKS);
 
-		new StoneAndBrickSet(reg, "darkstone", MapColor.COLOR_BLACK, 1F,
-				SoundType.DEEPSLATE, SoundType.DEEPSLATE_BRICKS);
-
 		var tiles = new DyeColor[]{DyeColor.CYAN, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.BROWN, DyeColor.BLUE, DyeColor.BLACK};
 		var strips = new DyeColor[]{DyeColor.BLUE};
 
@@ -211,6 +208,7 @@ public class GLDecoBlocks {
 				.blockstate(CushionBlock::buildStates)
 				.item().tag(GLTagGen.CUSHIONS).build()
 				.register();
+
 		for (DyeColor col : DyeColor.values()) {
 			reg.block(col.getName() + "_cushion", CushionBlock::new)
 					.properties(p -> p.mapColor(MapColor.byId(14 + col.getId())).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
@@ -236,18 +234,20 @@ public class GLDecoBlocks {
 
 		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop,
 		                NonNullBiConsumer<DataGenContext<Block, Block>, RegistrateRecipeProvider> recipe) {
-			this(reg, id + "_brick", prop, GensokyoLegacy.loc("block/" + id + "_bricks"),
+			this(reg, id + "_brick", prop, GensokyoLegacy.loc("block/deco/" + id + "_bricks"),
 					reg.block(id + "_bricks", p -> new Block(prop))
-							.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
+							.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(),
+									pvd.models().cubeAll(ctx.getName(), pvd.modLoc("block/deco/" + ctx.getName()))))
 							.tag(BlockTags.MINEABLE_WITH_PICKAXE).recipe(recipe)
 							.simpleItem().register(),
 					BlockTags.MINEABLE_WITH_PICKAXE);
 		}
 
 		public BrickSet(L2Registrate reg, String id, BlockBehaviour.Properties prop, TagKey<Block> tool) {
-			this(reg, id, prop, GensokyoLegacy.loc("block/" + id),
+			this(reg, id, prop, GensokyoLegacy.loc("block/deco/" + id),
 					reg.block(id, p -> new Block(prop))
-							.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
+							.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(),
+									pvd.models().cubeAll(ctx.getName(), pvd.modLoc("block/deco/" + ctx.getName()))))
 							.tag(tool).simpleItem().register(), tool);
 		}
 
@@ -325,7 +325,9 @@ public class GLDecoBlocks {
 					.requiresCorrectToolForDrops().strength(strength).sound(brickSound);
 			brick = new BrickSet(reg, id, brickProp, this::brick);
 			chiseled = reg.block("chiseled_" + id + "_bricks", Block::new)
-					.properties(p -> brickProp).defaultBlockstate()
+					.properties(p -> brickProp)
+					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(),
+							pvd.models().cubeAll(ctx.getName(), pvd.modLoc("block/deco/" + ctx.getName()))))
 					.tag(BlockTags.MINEABLE_WITH_PICKAXE)
 					.simpleItem()
 					.recipe(this::chisel)

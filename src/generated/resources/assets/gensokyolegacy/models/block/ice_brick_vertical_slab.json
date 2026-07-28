@@ -1,7 +1,7 @@
 {
   "parent": "gensokyolegacy:block/vertical_slab",
   "textures": {
-    "side": "gensokyolegacy:block/ice_bricks",
-    "top": "gensokyolegacy:block/ice_bricks"
+    "side": "gensokyolegacy:block/deco/ice_bricks",
+    "top": "gensokyolegacy:block/deco/ice_bricks"
   }
 }

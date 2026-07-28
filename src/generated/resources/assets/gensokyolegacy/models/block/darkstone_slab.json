@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/slab",
   "textures": {
-    "bottom": "gensokyolegacy:block/darkstone",
-    "side": "gensokyolegacy:block/darkstone",
-    "top": "gensokyolegacy:block/darkstone"
+    "bottom": "gensokyolegacy:block/deco/darkstone",
+    "side": "gensokyolegacy:block/deco/darkstone",
+    "top": "gensokyolegacy:block/deco/darkstone"
   }
 }

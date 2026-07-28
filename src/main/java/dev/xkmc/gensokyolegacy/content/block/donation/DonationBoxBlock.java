@@ -30,13 +30,13 @@ public class DonationBoxBlock extends DelegateEntityBlockImpl implements ICustom
 
 	public static void buildStates(DataGenContext<Block, DonationBoxBlock> ctx, RegistrateBlockstateProvider pvd) {
 		pvd.horizontalBlock(ctx.get(), pvd.models().cube("block/" + ctx.getName(),
-				pvd.modLoc("block/" + ctx.getName() + "_down"),
-				pvd.modLoc("block/" + ctx.getName() + "_up"),
-				pvd.modLoc("block/" + ctx.getName() + "_end"),
-				pvd.modLoc("block/" + ctx.getName() + "_empty"),
-				pvd.modLoc("block/" + ctx.getName() + "_side"),
-				pvd.modLoc("block/" + ctx.getName() + "_side")
-		).texture("particle", pvd.modLoc("block/" + ctx.getName() + "_down")));
+				pvd.modLoc("block/utensil/" + ctx.getName() + "_down"),
+				pvd.modLoc("block/utensil/" + ctx.getName() + "_up"),
+				pvd.modLoc("block/utensil/" + ctx.getName() + "_end"),
+				pvd.modLoc("block/utensil/" + ctx.getName() + "_empty"),
+				pvd.modLoc("block/utensil/" + ctx.getName() + "_side"),
+				pvd.modLoc("block/utensil/" + ctx.getName() + "_side")
+		).texture("particle", pvd.modLoc("block/utensil/" + ctx.getName() + "_down")));
 	}
 
 
