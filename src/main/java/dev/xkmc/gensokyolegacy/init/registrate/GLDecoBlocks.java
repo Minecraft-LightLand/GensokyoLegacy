@@ -6,6 +6,7 @@ import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.xkmc.gensokyolegacy.content.block.deco.*;
+import dev.xkmc.gensokyolegacy.content.block.misc.TatamiBlock;
 import dev.xkmc.gensokyolegacy.content.block.seat.CushionBlock;
 import dev.xkmc.gensokyolegacy.content.block.seat.WoodChairBlock;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -169,13 +170,13 @@ public class GLDecoBlocks {
 					.register();
 
 			if (e != WoodType.ACACIA && e != WoodType.MANGROVE)
-				reg.block(name + "_large_table", p -> DelegateBlock.newBaseBlock(p, new CompoundTableBlock(), new TableClothImpl()))
+				reg.block(name + "_large_table", p -> DelegateBlock.newBaseBlock(p, new LargeTableBlock(), new TableClothImpl()))
 						.initialProperties(() -> e.plankProp)
-						.blockstate(CompoundTableBlock::buildStates)
+						.blockstate(LargeTableBlock::buildStates)
 						.tag(GLTagGen.LARGE_TABLE)
 						.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
 						//.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
-						.loot(CompoundTableBlock::genLoot)
+						.loot(LargeTableBlock::genLoot)
 						.register();
 		}
 

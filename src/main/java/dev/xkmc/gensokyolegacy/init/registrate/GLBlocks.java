@@ -5,11 +5,11 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.xkmc.gensokyolegacy.content.block.bed.FlatBedShape;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlock;
 import dev.xkmc.gensokyolegacy.content.block.bed.YoukaiBedBlockEntity;
-import dev.xkmc.gensokyolegacy.content.block.deco.BooksBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlock;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationBoxBlockEntity;
 import dev.xkmc.gensokyolegacy.content.block.donation.DonationShape;
 import dev.xkmc.gensokyolegacy.content.block.donation.DoubleBlockHorizontal;
+import dev.xkmc.gensokyolegacy.content.block.misc.BooksBlock;
 import dev.xkmc.gensokyolegacy.content.block.portal.*;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlock;
 import dev.xkmc.gensokyolegacy.content.block.shelf.ShelfBlockEntity;
@@ -72,7 +72,7 @@ public class GLBlocks {
 	public static final BlockEntry<BasePortalBlock> GAP_PORTAL;
 	public static final BlockEntityEntry<GapPortalBlockEntity> GAP_BE;
 
-	public static final BlockEntry<DelegateBlock> BOOKS;
+	public static final BlockEntry<DelegateBlock> BOOKS, ALCHEMY_POT;
 
 	public static final BlockEntry<YoukaiBedBlock>[] BEDS;
 	public static final BlockEntityEntry<YoukaiBedBlockEntity> BE_BED;
@@ -133,6 +133,17 @@ public class GLBlocks {
 					.blockstate(BooksBlock::buildStates).loot(BooksBlock::buildLoot).simpleItem()
 					.recipe((ctx, pvd) -> GLRecipeGen.unlock(pvd, ShapelessRecipeBuilder.shapeless(
 							RecipeCategory.DECORATIONS, ctx.get(), 1)::unlockedBy, Items.BOOK).requires(Items.BOOK, 5).save(pvd))
+					.register();
+
+			ALCHEMY_POT = GensokyoLegacy.REGISTRATE.block("alchemy_pot", p -> DelegateBlock.newBaseBlock(p))
+					.initialProperties(() -> Blocks.ANVIL)
+					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(),
+							pvd.models().getBuilder(ctx.getName())
+									.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("custom/utensil/" + ctx.getName())))
+									.texture("all", pvd.modLoc("block/utensil/" + ctx.getName()))
+									.renderType("cutout")
+					))
+					.simpleItem()
 					.register();
 		}
 

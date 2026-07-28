@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.block.deco;
+package dev.xkmc.gensokyolegacy.content.block.misc;
 
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;

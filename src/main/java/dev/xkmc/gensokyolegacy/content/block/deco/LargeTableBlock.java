@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.ATTACHED;
 
-public class CompoundTableBlock implements ShapeBlockMethod, CreateBlockStateBlockMethod, DefaultStateBlockMethod, ShapeUpdateBlockMethod, PlacementBlockMethod {
+public class LargeTableBlock implements ShapeBlockMethod, CreateBlockStateBlockMethod, DefaultStateBlockMethod, ShapeUpdateBlockMethod, PlacementBlockMethod {
 
 	public static final VoxelShape TOP = Block.box(0, 13, 0, 16, 16, 16);
 	public static final VoxelShape CLOTH = Block.box(0, 6, 0, 16, 16, 16);

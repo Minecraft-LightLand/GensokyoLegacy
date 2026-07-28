@@ -1,0 +1,7 @@
+{
+  "parent": "gensokyolegacy:custom/utensil/alchemy_pot",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "all": "gensokyolegacy:block/utensil/alchemy_pot"
+  }
+}
