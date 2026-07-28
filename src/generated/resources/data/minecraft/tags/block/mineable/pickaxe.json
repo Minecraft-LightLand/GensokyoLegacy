@@ -44,6 +44,10 @@
     "gensokyolegacy:black_tiles_stairs",
     "gensokyolegacy:black_tiles_slab",
     "gensokyolegacy:black_tiles_vertical_slab",
+    "gensokyolegacy:gray_tiles",
+    "gensokyolegacy:gray_tiles_stairs",
+    "gensokyolegacy:gray_tiles_slab",
+    "gensokyolegacy:gray_tiles_vertical_slab",
     "gensokyolegacy:blue_strips_terracota"
   ]
 }

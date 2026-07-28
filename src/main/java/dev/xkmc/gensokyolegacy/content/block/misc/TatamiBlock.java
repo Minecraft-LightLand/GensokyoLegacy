@@ -29,7 +29,7 @@ import java.util.Locale;
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
 
 public class TatamiBlock implements CreateBlockStateBlockMethod, DefaultStateBlockMethod, PlacementBlockMethod,
-		ShapeUpdateBlockMethod, SetPlacedByBlockMethod, SurviveBlockMethod, PlayerDestoryBlockMethod, ShapeBlockMethod {
+		ShapeUpdateBlockMethod, SetPlacedByBlockMethod, SurviveBlockMethod, PlayerDestoryBlockMethod {
 
 	public enum Kind implements StringRepresentable {
 		FRONT, END, SQUARE;
@@ -46,17 +46,18 @@ public class TatamiBlock implements CreateBlockStateBlockMethod, DefaultStateBlo
 
 	public static final EnumProperty<Kind> KIND = EnumProperty.create("kind", Kind.class, List.of(Kind.values()));
 
-	public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
+	public record Carpet() implements ShapeBlockMethod {
 
-	@Override
-	public @Nullable VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-		return SHAPE;
+		public static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 1, 16);
+
+		@Override
+		public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
+			return SHAPE;
+		}
+
 	}
 
 	public BlockState updateShape(Block self, BlockState current, BlockState state, Direction dir, BlockState nstate, LevelAccessor level, BlockPos pos, BlockPos npos) {
-		if (dir.getAxis() == Direction.Axis.Y) {
-			if (!canSurvive(current, level, pos)) return Blocks.AIR.defaultBlockState();
-		}
 		var half = current.getValue(KIND);
 		if (half == Kind.SQUARE) return current;
 		var facing = current.getValue(HORIZONTAL_FACING);
@@ -99,7 +100,6 @@ public class TatamiBlock implements CreateBlockStateBlockMethod, DefaultStateBlo
 	}
 
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-		if (level.isEmptyBlock(pos.below())) return false;
 		if (state.getValue(KIND) != Kind.END) return true;
 		BlockState other = level.getBlockState(pos.relative(state.getValue(HORIZONTAL_FACING)));
 		return other.is(state.getBlock()) && other.getValue(KIND) == state.getValue(KIND).opposite();

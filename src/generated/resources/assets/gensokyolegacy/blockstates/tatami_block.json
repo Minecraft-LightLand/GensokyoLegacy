@@ -1,0 +1,49 @@
+{
+  "variants": {
+    "facing=east,kind=end": {
+      "model": "gensokyolegacy:block/tatami_block_end",
+      "y": 90
+    },
+    "facing=east,kind=front": {
+      "model": "gensokyolegacy:block/tatami_block_front",
+      "y": 90
+    },
+    "facing=east,kind=square": {
+      "model": "gensokyolegacy:block/tatami_block",
+      "y": 90
+    },
+    "facing=north,kind=end": {
+      "model": "gensokyolegacy:block/tatami_block_end"
+    },
+    "facing=north,kind=front": {
+      "model": "gensokyolegacy:block/tatami_block_front"
+    },
+    "facing=north,kind=square": {
+      "model": "gensokyolegacy:block/tatami_block"
+    },
+    "facing=south,kind=end": {
+      "model": "gensokyolegacy:block/tatami_block_end",
+      "y": 180
+    },
+    "facing=south,kind=front": {
+      "model": "gensokyolegacy:block/tatami_block_front",
+      "y": 180
+    },
+    "facing=south,kind=square": {
+      "model": "gensokyolegacy:block/tatami_block",
+      "y": 180
+    },
+    "facing=west,kind=end": {
+      "model": "gensokyolegacy:block/tatami_block_end",
+      "y": 270
+    },
+    "facing=west,kind=front": {
+      "model": "gensokyolegacy:block/tatami_block_front",
+      "y": 270
+    },
+    "facing=west,kind=square": {
+      "model": "gensokyolegacy:block/tatami_block",
+      "y": 270
+    }
+  }
+}

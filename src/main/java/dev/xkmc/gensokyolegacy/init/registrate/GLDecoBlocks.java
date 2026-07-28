@@ -120,14 +120,14 @@ public class GLDecoBlocks {
 
 	public static final StoneAndBrickSet DARKSTONE;
 
-	public static final BlockEntry<DelegateBlock> TATAMI;
+	public static final BlockEntry<DelegateBlock> TATAMI, TATAMI_BLOCK;
 
 	static {
 		var reg = GensokyoLegacy.REGISTRATE;
 		TAB = reg.buildModCreativeTab("building_blocks", "Gensokyo Legacy - Building Blocks",
 				e -> e.icon(() -> GLDecoBlocks.ICE_BRICK_SET.block.get().asItem().getDefaultInstance()));
 
-		TATAMI = reg.block("tatami", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock()))
+		TATAMI = reg.block("tatami", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock(), new TatamiBlock.Carpet()))
 				.properties(p -> p.mapColor(MapColor.SAND).strength(0).sound(SoundType.WOOL))
 				.blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), state -> {
 					var kind = state.getValue(TatamiBlock.KIND);
@@ -136,6 +136,16 @@ public class GLDecoBlocks {
 				}))
 				.simpleItem()
 				.register();
+		TATAMI_BLOCK = reg.block("tatami_block", p -> DelegateBlock.newBaseBlock(p, BlockTemplates.HORIZONTAL, new TatamiBlock()))
+				.properties(p -> p.mapColor(MapColor.SAND).strength(0.2f).sound(SoundType.WOOL))
+				.blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), state -> {
+					var kind = state.getValue(TatamiBlock.KIND);
+					var suffix = kind == TatamiBlock.Kind.SQUARE ? "" : "_" + kind.getSerializedName();
+					return pvd.models().cubeTop(ctx.getName() + suffix, pvd.modLoc("block/tatami/tatami"), pvd.modLoc("block/tatami/tatami" + suffix));
+				}))
+				.simpleItem()
+				.register();
+
 
 		reg.block("cushion", CushionBlock::new)
 				.properties(p -> p.mapColor(MapColor.SAND).sound(SoundType.WOOL).pushReaction(PushReaction.DESTROY).noOcclusion().noCollission())
@@ -169,7 +179,7 @@ public class GLDecoBlocks {
 					.recipe((ctx, pvd) -> WoodChairBlock.genRecipe(pvd, e, ctx))
 					.register();
 
-			if (e != WoodType.ACACIA && e != WoodType.MANGROVE)
+			if (e != WoodType.MANGROVE)
 				reg.block(name + "_large_table", p -> DelegateBlock.newBaseBlock(p, new LargeTableBlock(), new TableClothImpl()))
 						.initialProperties(() -> e.plankProp)
 						.blockstate(LargeTableBlock::buildStates)
@@ -200,7 +210,7 @@ public class GLDecoBlocks {
 		DARKSTONE = new StoneAndBrickSet(reg, "darkstone", MapColor.COLOR_BLACK, 1F,
 				SoundType.DEEPSLATE, SoundType.DEEPSLATE_BRICKS);
 
-		var tiles = new DyeColor[]{DyeColor.CYAN, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.BROWN, DyeColor.BLUE, DyeColor.BLACK};
+		var tiles = new DyeColor[]{DyeColor.CYAN, DyeColor.ORANGE, DyeColor.YELLOW, DyeColor.BROWN, DyeColor.BLUE, DyeColor.BLACK, DyeColor.GRAY};
 		var strips = new DyeColor[]{DyeColor.BLUE};
 
 		for (DyeColor col : tiles) {
@@ -217,7 +227,6 @@ public class GLDecoBlocks {
 							pvd.simpleBlock(ctx.get(), pvd.models().cubeAll(ctx.getName(), GensokyoLegacy.loc("block/strips/" + ctx.getName()))))
 					.tag(BlockTags.MINEABLE_WITH_PICKAXE).simpleItem().register();
 		}
-
 
 
 	}

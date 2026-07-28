@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "gensokyolegacy:block/tiles/gray_tiles",
+    "side": "gensokyolegacy:block/tiles/gray_tiles",
+    "top": "gensokyolegacy:block/tiles/gray_tiles"
+  }
+}

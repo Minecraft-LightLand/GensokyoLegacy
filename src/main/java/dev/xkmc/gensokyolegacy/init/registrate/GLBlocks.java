@@ -137,6 +137,7 @@ public class GLBlocks {
 
 			ALCHEMY_POT = GensokyoLegacy.REGISTRATE.block("alchemy_pot", p -> DelegateBlock.newBaseBlock(p))
 					.initialProperties(() -> Blocks.ANVIL)
+					.properties(p -> p.noOcclusion())
 					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(),
 							pvd.models().getBuilder(ctx.getName())
 									.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("custom/utensil/" + ctx.getName())))
