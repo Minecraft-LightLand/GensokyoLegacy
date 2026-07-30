@@ -3,7 +3,7 @@ package dev.xkmc.gensokyolegacy.mixin;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import dev.xkmc.gensokyolegacy.event.GLGeneralEventHandlers;
+import dev.xkmc.gensokyolegacy.event.MixinHookHandlers;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEffects;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -37,17 +37,17 @@ public abstract class LivingEntityMixin {
 
 	@WrapOperation(method = "travel", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getGravity()D"))
 	public double gensokyoLegacy$gravity(LivingEntity instance, Operation<Double> original) {
-		return GLGeneralEventHandlers.getGravity(instance, original.call(instance));
+		return MixinHookHandlers.getGravity(instance, original.call(instance));
 	}
 
 	@WrapOperation(method = "getFrictionInfluencedSpeed", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;getFlyingSpeed()F"))
 	public float gensokyoLegacy$flyingSpeed(LivingEntity instance, Operation<Float> original) {
-		return GLGeneralEventHandlers.getFlyingSpeed(instance, original.call(instance));
+		return MixinHookHandlers.getFlyingSpeed(instance, original.call(instance));
 	}
 
 	@WrapOperation(method = "dropFromLootTable", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;JLjava/util/function/Consumer;)V"))
 	public void gensokyoLegacy$dropIncrease(LootTable instance, LootParams params, long seed, Consumer<ItemStack> output, Operation<Void> original, @Local(argsOnly = true) DamageSource source) {
-		GLGeneralEventHandlers.alterDrops(source, seed, output, (s, c) -> original.call(instance, params, s, c));
+		MixinHookHandlers.alterDrops(source, seed, output, (s, c) -> original.call(instance, params, s, c));
 	}
 
 }

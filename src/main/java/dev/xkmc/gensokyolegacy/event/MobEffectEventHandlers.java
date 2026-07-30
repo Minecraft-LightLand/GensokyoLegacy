@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 @EventBusSubscriber(modid = GensokyoLegacy.MODID)
-public class KoishiEventHandlers {
+public class MobEffectEventHandlers {
 
 
 	@SubscribeEvent

@@ -1,7 +1,5 @@
 package dev.xkmc.gensokyolegacy.event;
 
-import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaEntity;
-import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.gensokyolegacy.init.registrate.GLEffects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,9 +7,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.living.LivingShieldBlockEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -21,15 +16,8 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-@EventBusSubscriber(modid = GensokyoLegacy.MODID)
-public class GLGeneralEventHandlers {
+public class MixinHookHandlers {
 
-	@SubscribeEvent
-	public static void onShieldBlock(LivingShieldBlockEvent event) {
-		if (event.getBlocked() && event.getDamageSource().getDirectEntity() instanceof RumiaEntity rumia) {
-			rumia.state.onBlocked();
-		}
-	}
 
 	public static double getGravity(LivingEntity le, double original) {
 		var ins = le.getEffect(GLEffects.FLOATING);

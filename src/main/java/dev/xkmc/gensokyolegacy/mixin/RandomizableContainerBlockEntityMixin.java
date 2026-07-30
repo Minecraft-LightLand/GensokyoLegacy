@@ -1,6 +1,6 @@
 package dev.xkmc.gensokyolegacy.mixin;
 
-import dev.xkmc.gensokyolegacy.event.KoishiEventHandlers;
+import dev.xkmc.gensokyolegacy.event.MobEffectEventHandlers;
 import net.minecraft.world.RandomizableContainer;
 import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,7 +14,7 @@ public interface RandomizableContainerBlockEntityMixin {
 	@Inject(at = @At("HEAD"), method = "unpackLootTable")
 	default void gensokyolegacy$trayLoad(Player player, CallbackInfo ci) {
 		if (player != null) {
-			KoishiEventHandlers.removeKoishi(player);
+			MobEffectEventHandlers.removeKoishi(player);
 		}
 	}
 

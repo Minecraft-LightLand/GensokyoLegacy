@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.event;
 
 import dev.xkmc.danmakuapi.api.DanmakuDamageEvent;
 import dev.xkmc.gensokyolegacy.content.attachment.misc.FrogGodCapability;
+import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaEntity;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouHatItem;
 import dev.xkmc.gensokyolegacy.content.item.tool.CatBell;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
@@ -23,7 +24,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 @EventBusSubscriber(modid = GensokyoLegacy.MODID)
-public class GeneralEventHandlers {
+public class MiscEventHandlers {
 
 	@SubscribeEvent
 	public static void onShieldBlock(LivingShieldBlockEvent event) {
@@ -31,6 +32,9 @@ public class GeneralEventHandlers {
 			if (event.getEntity() instanceof Player player) {
 				GLMeta.KOISHI_ATTACK.type().getOrCreate(player).onBlock(player);
 			}
+		}
+		if (event.getBlocked() && event.getDamageSource().getDirectEntity() instanceof RumiaEntity rumia) {
+			rumia.state.onBlocked();
 		}
 	}
 

@@ -16,6 +16,6 @@ public record Dialog(
 			CodecRegistry.OPTION.codec().listOf().fieldOf("options").forGetter(Dialog::options)
 	).apply(i, Dialog::new));
 
-	public static final Codec<Holder<Dialog>> HOLDER = RegistryFileCodec.create(CodecRegistry.DIALOG, CODEC);
+	public static final Codec<Holder<Dialog>> HOLDER = RegistryFileCodec.create(CodecRegistry.DIALOG.key(), CODEC);
 
 }
