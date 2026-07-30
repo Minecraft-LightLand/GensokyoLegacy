@@ -15,13 +15,15 @@ import java.util.List;
 public record DialogStarter(
 		EntityType<?> character,
 		List<QuestCondition<?>> conditions,
+		String text,
 		Holder<Dialog> dialog
 ) implements GatedEntry {
 
 	public static final Codec<DialogStarter> CODEC = RecordCodecBuilder.create(i -> i.group(
 			BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("character").forGetter(DialogStarter::character),
 			CodecRegistry.CONDITION.codec().listOf().fieldOf("conditions").forGetter(DialogStarter::conditions),
-			Dialog.HOLDER.fieldOf("initialDialog").forGetter(DialogStarter::dialog)
+			Codec.STRING.fieldOf("text").forGetter(DialogStarter::text),
+			Dialog.HOLDER.fieldOf("dialog").forGetter(DialogStarter::dialog)
 	).apply(i, DialogStarter::new));
 
 	public static final Codec<Holder<DialogStarter>> HOLDER = RegistryFileCodec.create(CodecRegistry.STARTER.key(), CODEC);

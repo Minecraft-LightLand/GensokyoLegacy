@@ -162,6 +162,11 @@ public class SmartYoukaiEntity extends YoukaiEntity {
 	}
 
 	@Override
+	public boolean isTalkingTo(ServerPlayer sp) {
+		return BrainUtils.getMemory(this, GLBrains.MEM_TALK.get()) == sp;
+	}
+
+	@Override
 	public boolean isTarget(LivingEntity e) {
 		return targets.contains(e);
 	}

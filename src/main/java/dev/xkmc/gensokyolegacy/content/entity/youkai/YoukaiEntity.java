@@ -483,4 +483,8 @@ public abstract class YoukaiEntity extends DamageClampEntity implements SpellCir
 		return true;
 	}
 
+	public boolean isTalkingTo(ServerPlayer sp) {
+		return false;
+	}
+
 }
