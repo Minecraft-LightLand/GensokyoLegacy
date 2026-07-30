@@ -52,17 +52,12 @@ public class ServerCharacterDialogManager {
 		var questData = GLMeta.QUEST.type().getOrCreate(sp);
 		for (var e : quests) {
 			var data = questData.getData(e.unwrapKey().orElseThrow().location());
-			if (data != null) {
-				if (data.isCompletable(sp, e.value()))
-					ans.add(new QuestHandle(e, e.value().completionDialog()));
-				else if (data.hasStarted(e.value()))
-					ans.add(new QuestHandle(e, e.value().followUpDialog()));
-				else if (!data.canRestart(sp, e.value()))
-					continue;
-			}
-			if (e.value().match(sp, ch)) {
+			if (data.isCompletable(sp, e.value()))
+				ans.add(new QuestHandle(e, e.value().completionDialog()));
+			else if (data.hasStarted(e.value()))
+				ans.add(new QuestHandle(e, e.value().followUpDialog()));
+			else if (data.canStart(sp, e.value()) && e.value().match(sp, ch))
 				ans.add(new QuestHandle(e, e.value().initialDialog()));
-			}
 		}
 		return ans;
 	}

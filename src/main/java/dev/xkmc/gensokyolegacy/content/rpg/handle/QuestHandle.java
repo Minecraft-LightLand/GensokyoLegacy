@@ -3,10 +3,12 @@ package dev.xkmc.gensokyolegacy.content.rpg.handle;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.rpg.dialog.DialogOption;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.Quest;
-import dev.xkmc.gensokyolegacy.content.ui.SimpleDialogProvider;
+import dev.xkmc.gensokyolegacy.content.ui.dialog.SimpleDialogProvider;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+
+import java.util.Optional;
 
 public record QuestHandle(Holder<Quest> quest, DialogOption<?> dialog) implements IDialogHandle {
 
@@ -20,6 +22,11 @@ public record QuestHandle(Holder<Quest> quest, DialogOption<?> dialog) implement
 		var next = dialog.next();
 		if (next.isEmpty()) return;
 		new SimpleDialogProvider(sp, character, this, next.get()).open();
+	}
+
+	@Override
+	public Optional<Holder<Quest>> getQuest() {
+		return Optional.of(quest);
 	}
 
 }

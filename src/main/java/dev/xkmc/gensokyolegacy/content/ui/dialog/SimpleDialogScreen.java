@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.ui;
+package dev.xkmc.gensokyolegacy.content.ui.dialog;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;

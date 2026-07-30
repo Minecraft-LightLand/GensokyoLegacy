@@ -1,10 +1,13 @@
 package dev.xkmc.gensokyolegacy.content.rpg.quest;
 
+import dev.xkmc.gensokyolegacy.content.rpg.network.QuestStatusToClient;
+import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.capability.player.PlayerCapabilityTemplate;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.LinkedHashMap;
 
@@ -14,8 +17,30 @@ public class QuestAttachment extends PlayerCapabilityTemplate<QuestAttachment> {
 	@SerialField
 	public final LinkedHashMap<ResourceLocation, QuestData> data = new LinkedHashMap<>();
 
-	public @Nullable QuestData getData(ResourceLocation id) {
-		return data.get(id);
+	public QuestData getData(ResourceLocation id) {
+		return data.computeIfAbsent(id, k -> new QuestData());
+	}
+
+	public void start(ServerPlayer sp, Holder<Quest> quest) {
+		var id = quest.unwrapKey().orElseThrow().location();
+		var data = getData(id);
+		if (data.canStart(sp, quest.value())) {
+			data.start(sp);
+			GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(id, data), sp);
+		}
+	}
+
+	public void complete(ServerPlayer sp, Holder<Quest> quest) {
+		var id = quest.unwrapKey().orElseThrow().location();
+		var data = getData(id);
+		if (data.isCompletable(sp, quest.value())) {
+			data.complete(sp, quest.value());
+			GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(id, data), sp);
+		}
+	}
+
+	public void replace(ResourceLocation id, QuestData val) {
+		data.put(id, val);
 	}
 
 }

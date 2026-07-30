@@ -1,6 +1,7 @@
-package dev.xkmc.gensokyolegacy.content.ui;
+package dev.xkmc.gensokyolegacy.content.ui.dialog;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.content.rpg.action.ActionContext;
 import dev.xkmc.gensokyolegacy.content.rpg.core.CodecRegistry;
 import dev.xkmc.gensokyolegacy.content.rpg.dialog.Dialog;
 import dev.xkmc.gensokyolegacy.content.rpg.dialog.DialogOption;
@@ -68,7 +69,14 @@ public class SimpleDialogMenu extends DialogMenu {
 	public boolean clickMenuButton(Player pl, int index) {
 		if (options != null && index >= 0 && index <= options.size()) {
 			if (conditions.get(index)) {
-				var next = options.get(index).next();
+				var option = options.get(index);
+				if (pl instanceof ServerPlayer sp && character != null && handle != null) {
+					var context = new ActionContext(sp, character, handle.getQuest());
+					for (var e : option.actions()) {
+						e.execute(context);
+					}
+				}
+				var next = option.next();
 				if (next.isPresent()) {
 					setDialog(next.get());
 				} else if (!(pl instanceof ServerPlayer))

@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.ui;
+package dev.xkmc.gensokyolegacy.content.ui.trade;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

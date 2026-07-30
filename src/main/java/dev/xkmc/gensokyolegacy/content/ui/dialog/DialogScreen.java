@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.ui;
+package dev.xkmc.gensokyolegacy.content.ui.dialog;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;

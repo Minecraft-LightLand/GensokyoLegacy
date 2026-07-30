@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.ui;
+package dev.xkmc.gensokyolegacy.content.ui.dialog;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import net.minecraft.network.chat.Component;

@@ -36,13 +36,28 @@ public class QuestData {
 		return started;
 	}
 
-	public boolean canRestart(ServerPlayer sp, Quest quest) {
+	public boolean canStart(ServerPlayer sp, Quest quest) {
 		var opt = quest.recurrence();
 		if (opt.isEmpty()) {
 			return completed == 0;
 		}
 		long time = sp.level().getGameTime();
 		return time < lastCompletion || lastCompletion <= 0 || time > lastCompletion + opt.get().cooldown();
+	}
+
+	public void start(ServerPlayer sp) {
+		started = true;
+	}
+
+	public void complete(ServerPlayer sp, Quest quest) {
+		for (var e : quest.requirements().entrySet()) {
+			var req = e.getValue();
+			req.doComplete(sp);
+		}
+		progress.clear();
+		completed++;
+		lastCompletion = sp.level().getGameTime();
+		started = false;
 	}
 
 }

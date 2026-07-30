@@ -13,4 +13,8 @@ public interface QuestRequirement<T extends Record & QuestRequirement<T>> extend
 		return true;
 	}
 
+	default void doComplete(ServerPlayer sp) {
+
+	}
+
 }
