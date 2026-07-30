@@ -13,7 +13,6 @@ public class DialogScreen<T extends DialogMenu> extends AbstractContainerScreen<
 
 	@Override
 	protected void renderBg(GuiGraphics g, float pt, int mx, int my) {
-
 	}
 
 }
