@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.quest.core;
+package dev.xkmc.gensokyolegacy.content.rpg.core;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -14,13 +14,13 @@ import net.neoforged.neoforge.registries.RegistryBuilder;
 
 import java.util.function.Supplier;
 
-public record CodecRegistryInstance<T extends QuestElement<?>>(
+public record CodecRegistryInstance<T extends CodecElement<?>>(
 		ResourceKey<Registry<MapCodec<? extends T>>> key,
 		Supplier<Registry<MapCodec<? extends T>>> registry,
 		CdcReg<T> reg
 ) {
 
-	public static <T extends QuestElement<?>> CodecRegistryInstance<T> of(String id) {
+	public static <T extends CodecElement<?>> CodecRegistryInstance<T> of(String id) {
 		ResourceKey<Registry<MapCodec<? extends T>>> key = ResourceKey.createRegistryKey(GensokyoLegacy.loc(id));
 		RegistryBuilder<MapCodec<? extends T>> ans = new RegistryBuilder<>(key);
 		Registry<MapCodec<? extends T>> reg = ans.create();

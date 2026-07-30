@@ -1,9 +1,9 @@
-package dev.xkmc.gensokyolegacy.content.quest.condition;
+package dev.xkmc.gensokyolegacy.content.rpg.condition;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
-import dev.xkmc.gensokyolegacy.content.quest.core.QuestCondition;
+import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestCondition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 

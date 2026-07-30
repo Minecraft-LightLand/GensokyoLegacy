@@ -1,4 +1,4 @@
-package dev.xkmc.gensokyolegacy.content.quest.core;
+package dev.xkmc.gensokyolegacy.content.rpg.quest;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

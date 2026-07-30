@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.quest.reward;
+package dev.xkmc.gensokyolegacy.content.rpg.reward;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 

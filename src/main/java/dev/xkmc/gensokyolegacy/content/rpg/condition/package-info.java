@@ -1,7 +1,7 @@
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 
-package dev.xkmc.gensokyolegacy.content.quest.requirement;
+package dev.xkmc.gensokyolegacy.content.rpg.condition;
 
 import net.minecraft.MethodsReturnNonnullByDefault;
 
