@@ -1,0 +1,11 @@
+{
+  "options": [
+    {
+      "type": "gensokyolegacy:simple",
+      "actions": [],
+      "conditions": [],
+      "text": "gensokyolegacy/reimu/chat/option/bye"
+    }
+  ],
+  "text": "gensokyolegacy/reimu/chat/dialog/hi"
+}

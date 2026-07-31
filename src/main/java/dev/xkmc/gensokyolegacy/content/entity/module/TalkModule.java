@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.entity.module;
 
 import dev.xkmc.gensokyolegacy.content.attachment.character.ReputationState;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.content.ui.dialog.DialogMenu;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import net.minecraft.resources.ResourceLocation;
@@ -25,7 +26,7 @@ public class TalkModule extends AbstractYoukaiModule {
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
 		if (!self.mayInteract(player)) return InteractionResult.PASS;
-		if (self.getReputation(player) != ReputationState.FRIEND) return InteractionResult.PASS;
+		if (self.getReputation(player) == ReputationState.ENEMY) return InteractionResult.PASS;
 		ItemStack stack = player.getItemInHand(hand);
 		if (!stack.isEmpty()) return InteractionResult.PASS;
 		if (player instanceof ServerPlayer sp) {
@@ -39,7 +40,8 @@ public class TalkModule extends AbstractYoukaiModule {
 	public void tickServer() {
 		if (talkTarget != null) {
 			if (talkTarget.isRemoved() || !talkTarget.isAlive() || talkTarget.level() != self.level() ||
-					talkTarget.distanceTo(self) > 5 || talkTarget.containerMenu != talkTarget.inventoryMenu) {
+					talkTarget.distanceTo(self) > 5 || !(talkTarget.containerMenu instanceof DialogMenu menu) ||
+					menu.character != self) {
 				stopTalking();
 			}
 		}

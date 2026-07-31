@@ -1,0 +1,21 @@
+{
+  "options": [
+    {
+      "type": "gensokyolegacy:simple",
+      "actions": [],
+      "conditions": [],
+      "text": "gensokyolegacy/reimu/kill_zombie/option/start/reject"
+    },
+    {
+      "type": "gensokyolegacy:simple",
+      "actions": [
+        {
+          "type": "gensokyolegacy:start_quest"
+        }
+      ],
+      "conditions": [],
+      "text": "gensokyolegacy/reimu/kill_zombie/option/start/accept"
+    }
+  ],
+  "text": "gensokyolegacy/reimu/kill_zombie/dialog/start/dialog_1"
+}

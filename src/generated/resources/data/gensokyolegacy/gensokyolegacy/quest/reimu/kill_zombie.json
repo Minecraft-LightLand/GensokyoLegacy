@@ -1,0 +1,64 @@
+{
+  "character": "gensokyolegacy:hakurei_reimu",
+  "completionDialog": {
+    "type": "gensokyolegacy:simple",
+    "actions": [],
+    "conditions": [],
+    "next": "gensokyolegacy:complete/dialog_1",
+    "text": "gensokyolegacy/reimu/kill_zombie/option/complete"
+  },
+  "conditions": [
+    {
+      "type": "gensokyolegacy:self_reputation",
+      "reputation": -100
+    }
+  ],
+  "followUpDialog": {
+    "type": "gensokyolegacy:simple",
+    "actions": [],
+    "conditions": [],
+    "next": "gensokyolegacy:follow_up/dialog_1",
+    "text": "gensokyolegacy/reimu/kill_zombie/option/follow_up"
+  },
+  "initialDialog": {
+    "type": "gensokyolegacy:simple",
+    "actions": [],
+    "conditions": [],
+    "next": "gensokyolegacy:start/dialog_1",
+    "text": "gensokyolegacy/reimu/kill_zombie/option/start"
+  },
+  "recurrence": {
+    "cooldown": 1000
+  },
+  "requirements": {
+    "item": {
+      "type": "gensokyolegacy:submit_item",
+      "ingredients": [
+        {
+          "count": 10,
+          "item": "minecraft:rotten_flesh"
+        }
+      ]
+    },
+    "kill": {
+      "type": "gensokyolegacy:kill_tag",
+      "count": 10,
+      "tag": "minecraft:zombies"
+    }
+  },
+  "rewards": [
+    {
+      "type": "gensokyolegacy:exp",
+      "point": 100
+    },
+    {
+      "type": "gensokyolegacy:reputation",
+      "max": 200,
+      "reputation": 50
+    },
+    {
+      "type": "gensokyolegacy:loot_table",
+      "table": "gensokyolegacy:reimu/kill_zombie"
+    }
+  ]
+}

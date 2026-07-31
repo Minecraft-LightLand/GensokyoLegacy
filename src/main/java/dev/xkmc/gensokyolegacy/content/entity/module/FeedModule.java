@@ -84,7 +84,7 @@ public class FeedModule extends AbstractYoukaiModule {
 		else self.playSound(stack.getEatingSound());
 		if (!remain.isEmpty())
 			player.getInventory().placeItemBackInInventory(remain);
-		self.setTalkTo(sp, 30);
+		self.setTalkTo(sp, -1);
 		return InteractionResult.SUCCESS;
 	}
 

@@ -250,6 +250,7 @@
   "gensokyolegacy.tab.title": "Gensokyo Roles",
   "gensokyolegacy.title": "Gensokyo Legacy",
   "gensokyolegacy/reimu/chat/dialog/hi": "Hi!",
+  "gensokyolegacy/reimu/chat/option/bye": "Bye!",
   "gensokyolegacy/reimu/chat/starter/start": "Hi!",
   "gensokyolegacy/reimu/kill_zombie/dialog/complete/dialog_1": "Thanks! Do you have flesh with you?",
   "gensokyolegacy/reimu/kill_zombie/dialog/follow_up/dialog_1": "Thanks for your effort! I need more zombies killed",

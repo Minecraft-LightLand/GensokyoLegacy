@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 
 public abstract class DialogMenu extends AbstractContainerMenu {
 
@@ -23,6 +24,8 @@ public abstract class DialogMenu extends AbstractContainerMenu {
 	}
 
 	public abstract List<Component> getOptions();
+
+	public abstract Optional<Component> getBodyText();
 
 	@Override
 	public ItemStack quickMoveStack(Player player, int slot) {

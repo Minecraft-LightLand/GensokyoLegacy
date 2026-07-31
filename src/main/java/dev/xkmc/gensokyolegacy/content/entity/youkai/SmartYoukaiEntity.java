@@ -9,6 +9,7 @@ import dev.xkmc.gensokyolegacy.content.entity.behavior.sensor.YoukaiUpdateHomeSe
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.combat.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.core.*;
 import dev.xkmc.gensokyolegacy.content.entity.behavior.task.home.*;
+import dev.xkmc.gensokyolegacy.content.ui.dialog.FirstDialogProvider;
 import dev.xkmc.gensokyolegacy.init.registrate.GLBrains;
 import dev.xkmc.gensokyolegacy.util.BrainUtils;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
@@ -159,6 +160,7 @@ public class SmartYoukaiEntity extends YoukaiEntity {
 		if (time < 0)
 			BrainUtils.setMemory(this, GLBrains.MEM_TALK.get(), player);
 		else getBrain().setMemoryWithExpiry(GLBrains.MEM_TALK.get(), player, time);
+		FirstDialogProvider.open(player, this);
 	}
 
 	@Override

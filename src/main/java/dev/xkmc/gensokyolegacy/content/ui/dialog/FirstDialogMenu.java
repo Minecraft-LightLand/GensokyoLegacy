@@ -3,6 +3,8 @@ package dev.xkmc.gensokyolegacy.content.ui.dialog;
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.rpg.core.ServerCharacterDialogManager;
 import dev.xkmc.gensokyolegacy.content.rpg.handle.IDialogHandle;
+import dev.xkmc.l2menustacker.init.L2MenuStacker;
+import dev.xkmc.l2menustacker.screen.packets.CacheMouseToClient;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
@@ -14,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FirstDialogMenu extends DialogMenu {
 
@@ -61,8 +64,9 @@ public class FirstDialogMenu extends DialogMenu {
 
 	@Override
 	public boolean clickMenuButton(Player player, int index) {
-		if (index > 0 && index < options.size()) {
+		if (index >= 0 && index < options.size()) {
 			if (handles != null && character != null && player instanceof ServerPlayer sp && index < handles.size()) {
+				L2MenuStacker.PACKET_HANDLER.toClientPlayer(new CacheMouseToClient(), sp);
 				handles.get(index).openMenu(sp, character);
 			}
 			return true;
@@ -73,6 +77,11 @@ public class FirstDialogMenu extends DialogMenu {
 	@Override
 	public List<Component> getOptions() {
 		return options;
+	}
+
+	@Override
+	public Optional<Component> getBodyText() {
+		return Optional.empty();
 	}
 
 }

@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class SimpleDialogMenu extends DialogMenu {
 
@@ -79,7 +80,7 @@ public class SimpleDialogMenu extends DialogMenu {
 				var next = option.next();
 				if (next.isPresent()) {
 					setDialog(next.get());
-				} else if (!(pl instanceof ServerPlayer))
+				} else if (pl instanceof ServerPlayer)
 					pl.closeContainer();
 				return true;
 			}
@@ -96,6 +97,11 @@ public class SimpleDialogMenu extends DialogMenu {
 			}
 		}
 		return ans;
+	}
+
+	@Override
+	public Optional<Component> getBodyText() {
+		return Optional.ofNullable(dialog).map(e -> Component.translatable(e.value().text()));
 	}
 
 }

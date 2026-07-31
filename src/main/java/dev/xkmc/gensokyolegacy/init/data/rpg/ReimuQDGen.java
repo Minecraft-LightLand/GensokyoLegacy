@@ -27,7 +27,7 @@ public class ReimuQDGen extends QuestDialogData {
 		prefix("reimu/chat");
 		starter("reimu/chat", new DialogStarter(GLEntities.REIMU.get(), List.of(),
 				starterText("start", "Hi!"),
-				dialog("hi", "Hi!")
+				dialog("hi", "Hi!", option("bye","Bye!"))
 		));
 
 		prefix("reimu/kill_zombie");
