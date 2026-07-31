@@ -18,7 +18,7 @@ public record Quest(
 		EntityType<?> character,
 		List<QuestCondition<?>> conditions,
 		Optional<QuestRecurrence> recurrence,
-		Map<String, QuestRequirement<?>> requirements,
+		Map<String, QuestRequirement<?, ?>> requirements,
 		List<QuestReward<?>> rewards,
 		DialogOption<?> initialDialog,
 		DialogOption<?> followUpDialog,

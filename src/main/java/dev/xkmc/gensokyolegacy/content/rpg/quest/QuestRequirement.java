@@ -1,9 +1,13 @@
 package dev.xkmc.gensokyolegacy.content.rpg.quest;
 
 import dev.xkmc.gensokyolegacy.content.rpg.core.CodecElement;
+import dev.xkmc.gensokyolegacy.content.rpg.trigger.QuestTrigger;
 import net.minecraft.server.level.ServerPlayer;
 
-public interface QuestRequirement<T extends Record & QuestRequirement<T>> extends CodecElement<T> {
+public interface QuestRequirement<
+		E extends Record & QuestRequirement<E, T>,
+		T extends Record & QuestTrigger<T>
+		> extends CodecElement<E> {
 
 	default int getMaxProgress() {
 		return 0;
@@ -15,6 +19,12 @@ public interface QuestRequirement<T extends Record & QuestRequirement<T>> extend
 
 	default void doComplete(ServerPlayer sp) {
 
+	}
+
+	Class<T> getTrigger();
+
+	default boolean match(T trigger) {
+		return true;
 	}
 
 }

@@ -15,7 +15,6 @@ import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestCondition;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestRequirement;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestReward;
 import dev.xkmc.gensokyolegacy.content.rpg.requirement.KillMobRequirement;
-import dev.xkmc.gensokyolegacy.content.rpg.requirement.KillMobTagRequirement;
 import dev.xkmc.gensokyolegacy.content.rpg.requirement.SubmitItemRequirement;
 import dev.xkmc.gensokyolegacy.content.rpg.reward.ExpReward;
 import dev.xkmc.gensokyolegacy.content.rpg.reward.LootTableReward;
@@ -39,7 +38,7 @@ public class CodecRegistry {
 	public static final CodecRegistryInstance<DialogOption<?>> OPTION = CodecRegistryInstance.of("option");
 	public static final CodecRegistryInstance<DialogAction<?>> ACTION = CodecRegistryInstance.of("action");
 	public static final CodecRegistryInstance<QuestCondition<?>> CONDITION = CodecRegistryInstance.of("condition");
-	public static final CodecRegistryInstance<QuestRequirement<?>> REQUIREMENT = CodecRegistryInstance.of("requirement");
+	public static final CodecRegistryInstance<QuestRequirement<?, ?>> REQUIREMENT = CodecRegistryInstance.of("requirement");
 	public static final CodecRegistryInstance<QuestReward<?>> REWARD = CodecRegistryInstance.of("reward");
 
 	public static final DatapackReg<Dialog> DIALOG = GensokyoLegacy.REG.dataReg("dialog", Dialog.CODEC);
@@ -56,7 +55,6 @@ public class CodecRegistry {
 	public static final CdcVal<OtherReputationCondition> OTHER_REP = CONDITION.reg("other_reputation", OtherReputationCondition.CODEC);
 
 	public static final CdcVal<KillMobRequirement> KILL_MOB_REQ = REQUIREMENT.reg("kill_mob", KillMobRequirement.CODEC);
-	public static final CdcVal<KillMobTagRequirement> KILL_TAG_REQ = REQUIREMENT.reg("kill_tag", KillMobTagRequirement.CODEC);
 	public static final CdcVal<SubmitItemRequirement> SUBMIT_ITEM_REQ = REQUIREMENT.reg("submit_item", SubmitItemRequirement.CODEC);
 
 	public static final CdcVal<LootTableReward> LOOT_REWARD = REWARD.reg("loot_table", LootTableReward.CODEC);

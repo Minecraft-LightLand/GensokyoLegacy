@@ -6,7 +6,7 @@ import dev.xkmc.gensokyolegacy.content.rpg.condition.SelfReputationCondition;
 import dev.xkmc.gensokyolegacy.content.rpg.dialog.DialogStarter;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.Quest;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestRecurrence;
-import dev.xkmc.gensokyolegacy.content.rpg.requirement.KillMobTagRequirement;
+import dev.xkmc.gensokyolegacy.content.rpg.requirement.KillMobRequirement;
 import dev.xkmc.gensokyolegacy.content.rpg.requirement.SubmitItemRequirement;
 import dev.xkmc.gensokyolegacy.content.rpg.reward.ExpReward;
 import dev.xkmc.gensokyolegacy.content.rpg.reward.ReputationReward;
@@ -27,7 +27,7 @@ public class ReimuQDGen extends QuestDialogData {
 		prefix("reimu/chat");
 		starter("reimu/chat", new DialogStarter(GLEntities.REIMU.get(), List.of(),
 				starterText("start", "Hi!"),
-				dialog("hi", "Hi!", option("bye","Bye!"))
+				dialog("hi", "Hi!", option("bye", "Bye!"))
 		));
 
 		prefix("reimu/kill_zombie");
@@ -35,7 +35,7 @@ public class ReimuQDGen extends QuestDialogData {
 				List.of(new SelfReputationCondition(-100)),
 				Optional.of(new QuestRecurrence(1000)),
 				new TreeMap<>(Map.of(
-						"kill", new KillMobTagRequirement(EntityTypeTags.ZOMBIES.location(), 10),
+						"kill", new KillMobRequirement(EntityTypeTags.ZOMBIES, 10),
 						"item", new SubmitItemRequirement(List.of(item(Items.ROTTEN_FLESH, 10)))
 				)),
 				List.of(

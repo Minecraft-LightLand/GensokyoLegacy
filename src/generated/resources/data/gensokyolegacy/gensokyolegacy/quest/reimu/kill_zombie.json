@@ -41,9 +41,11 @@
       ]
     },
     "kill": {
-      "type": "gensokyolegacy:kill_tag",
+      "type": "gensokyolegacy:kill_mob",
       "count": 10,
-      "tag": "minecraft:zombies"
+      "target": {
+        "type": "#minecraft:zombies"
+      }
     }
   },
   "rewards": [

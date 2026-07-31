@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestRequirement;
+import dev.xkmc.gensokyolegacy.content.rpg.trigger.EmptyTrigger;
 import dev.xkmc.gensokyolegacy.util.Matcher;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public record SubmitItemRequirement(
 		List<IngredientEntry> ingredients
-) implements QuestRequirement<SubmitItemRequirement> {
+) implements QuestRequirement<SubmitItemRequirement, EmptyTrigger> {
 
 	public record IngredientEntry(Ingredient ingredient, int count) {
 
@@ -31,6 +32,11 @@ public record SubmitItemRequirement(
 	@Override
 	public MapCodec<SubmitItemRequirement> codec() {
 		return CODEC;
+	}
+
+	@Override
+	public Class<EmptyTrigger> getTrigger() {
+		return EmptyTrigger.class;
 	}
 
 	@Override
