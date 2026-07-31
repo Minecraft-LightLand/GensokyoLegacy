@@ -37,8 +37,8 @@ public record KillMobRequirement(
 	}
 
 	@Override
-	public boolean match(KillTrigger trigger) {
-		return target.matches(trigger.player(), trigger.target());
+	public int match(KillTrigger trigger) {
+		return target.matches(trigger.player(), trigger.target()) ? 1 : 0;
 	}
 
 	@Override

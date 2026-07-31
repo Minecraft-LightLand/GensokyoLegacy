@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.rpg.quest;
 
 import dev.xkmc.gensokyolegacy.content.rpg.core.CodecElement;
 import dev.xkmc.gensokyolegacy.content.rpg.trigger.QuestTrigger;
+import dev.xkmc.l2serial.util.Wrappers;
 import net.minecraft.server.level.ServerPlayer;
 
 public interface QuestRequirement<
@@ -23,8 +24,15 @@ public interface QuestRequirement<
 
 	Class<T> getTrigger();
 
-	default boolean match(T trigger) {
-		return true;
+	default int match(T trigger) {
+		return 0;
+	}
+
+	default int rawMatch(QuestTrigger<?> trigger) {
+		if (getTrigger().isInstance(trigger)) {
+			return match(Wrappers.cast(trigger));
+		}
+		return 0;
 	}
 
 }
