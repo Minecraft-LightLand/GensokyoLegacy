@@ -54,9 +54,13 @@ public class QuestAttachment extends PlayerCapabilityTemplate<QuestAttachment> {
 			var quest = opt.get().value();
 			boolean updated = false;
 			for (var req : quest.requirements().entrySet()) {
+				var prog = e.getValue().progress;
+				var key = req.getKey();
+				if (prog.getOrDefault(key, 0) >= req.getValue().getMaxProgress())
+					continue;
 				int add = req.getValue().rawMatch(trigger);
 				if (add > 0) {
-					e.getValue().progress.compute(req.getKey(), (k, v) -> (v == null ? 0 : v) + add);
+					prog.compute(key, (k, v) -> (v == null ? 0 : v) + add);
 					updated = true;
 				}
 			}

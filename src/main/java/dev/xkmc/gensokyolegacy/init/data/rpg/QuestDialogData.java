@@ -73,6 +73,18 @@ public class QuestDialogData {
 		return text("option", id, text);
 	}
 
+	public String reqText(String id, String text) {
+		return text("requirement", id, text);
+	}
+
+	public String questTitle(String text) {
+		return text("quest", "title", text);
+	}
+
+	public String questDesc(String text) {
+		return text("quest", "desc", text);
+	}
+
 	private String text(String type, String id, String text) {
 		String full = modid + "/" + prefix + "/" + type + "/" + id;
 		reg.addRawLang(full, text);
@@ -121,7 +133,7 @@ public class QuestDialogData {
 	}
 
 	public SubmitItemRequirement.IngredientEntry item(ItemLike item, int count) {
-		return new SubmitItemRequirement.IngredientEntry(Ingredient.of(item), count);
+		return new SubmitItemRequirement.IngredientEntry(Ingredient.of(item), count, Optional.empty());
 	}
 
 	public LootPool.Builder lootItem(ItemLike item, int count) {

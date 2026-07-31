@@ -33,10 +33,11 @@ public class ReimuQDGen extends QuestDialogData {
 		prefix("reimu/kill_zombie");
 		quest("reimu/kill_zombie", new Quest(GLEntities.REIMU.get(),
 				List.of(new SelfReputationCondition(-100)),
+				questTitle("Zombie Slayer"), questDesc("Kill some zombies and collect rotten flesh for Reimu"),
 				Optional.of(new QuestRecurrence(1000)),
 				new TreeMap<>(Map.of(
-						"kill", new KillMobRequirement(EntityTypeTags.ZOMBIES, 10),
-						"item", new SubmitItemRequirement(List.of(item(Items.ROTTEN_FLESH, 10)))
+						"a-kill", new KillMobRequirement(reqText("kill", "Kill zombies"), EntityTypeTags.ZOMBIES, 10),
+						"b-item", new SubmitItemRequirement(List.of(item(Items.ROTTEN_FLESH, 10)))
 				)),
 				List.of(
 						new ExpReward(100),

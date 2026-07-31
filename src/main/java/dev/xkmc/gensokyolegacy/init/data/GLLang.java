@@ -11,6 +11,9 @@ import java.util.Locale;
 
 public enum GLLang {
 
+	QUEST$ITEM_SUBMIT_PASS("All criteria are met", 0, ChatFormatting.GREEN),
+	QUEST$ITEM_SUBMIT_FAIL("Some criteria are not met or used overlapped items"),
+
 	INFO$LOADING("Loading..."),
 	INFO$BED_UNBOUND("This block is not linked to a structure"),
 	INFO$BED_PRESENT("Character is present at (%s, %s, %s)", 3),
@@ -24,9 +27,6 @@ public enum GLLang {
 	INFO$STRUCTURE_ABNORMAL("Found %s invalid blocks", 1),
 
 	MSG$RESET("Character reset"),
-	MSG$REIMU_FLESH("Reimu: You shall not eat it. Last warning.", 0, ChatFormatting.RED),
-	MSG$REIMU_WARN("Reimu: Drink some tea and keep your sanity. Last warning.", 0, ChatFormatting.RED),
-	MSG$KOISHI_REIMU("Reimu: ???", 0, ChatFormatting.RED),
 
 	TAB$TITLE("Gensokyo Roles", 0),
 	TAB$NO_ROLE("Regular Human (No Role)", 0),
@@ -35,12 +35,6 @@ public enum GLLang {
 
 	COMMAND$SUCCESS("Success"),
 	COMMAND$INVALID_ROLE("Error: invalid role id"),
-
-	FLESH$TASTE_HUMAN("Unappealing smell...", 0, ChatFormatting.GRAY),
-	FLESH$TASTE_HALF_YOUKAI("Strange flavor...", 0, ChatFormatting.GRAY),
-	FLESH$TASTE_YOUKAI("Delicious!", 0, ChatFormatting.GRAY),
-	FLESH$FLESH_HUMAN("Weird Meat", 0, null),
-	FLESH$FLESH_YOUKAI("Flesh", 0, null),
 
 	ITEM$WAND_BED("Click bed to reset character"),
 	ITEM$WAND_BLOCK("Click block to show structure bounds"),
@@ -55,8 +49,6 @@ public enum GLLang {
 	ITEM$UNKNOWN("???", 0, ChatFormatting.GRAY),
 	ITEM$USAGE("Usage: ", 0, ChatFormatting.GRAY),
 
-	ITEM$OBTAIN_FLESH("Kill human mobs with knife while being %s", 1, ChatFormatting.GRAY),
-	ITEM$OBTAIN_BLOOD("Kill human mobs with knife and have glass bottle in off hand wile being %s", 1, ChatFormatting.GRAY),
 	ITEM$OBTAIN_FAIRY_ICE("Crafted by Cirno.", 0, ChatFormatting.GRAY),
 	ITEM$USAGE_FAIRY_ICE("Throw to deal damage and freeze target.", 0, ChatFormatting.GRAY),
 	ITEM$OBTAIN_FROZEN_FROG("Dropped when Cirno freezes a frog.", 0, ChatFormatting.GRAY),

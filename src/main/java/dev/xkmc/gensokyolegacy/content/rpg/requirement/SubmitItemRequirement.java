@@ -5,24 +5,45 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestRequirement;
 import dev.xkmc.gensokyolegacy.content.rpg.trigger.EmptyTrigger;
-import dev.xkmc.gensokyolegacy.util.Matcher;
+import dev.xkmc.gensokyolegacy.init.data.GLLang;
+import dev.xkmc.gensokyolegacy.util.InventoryMapper;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public record SubmitItemRequirement(
 		List<IngredientEntry> ingredients
 ) implements QuestRequirement<SubmitItemRequirement, EmptyTrigger> {
 
-	public record IngredientEntry(Ingredient ingredient, int count) {
+	public record IngredientEntry(Ingredient ingredient, int count, Optional<String> text) {
 
 		public static final Codec<IngredientEntry> CODEC = RecordCodecBuilder.create(i -> i.group(
 				Ingredient.MAP_CODEC_NONEMPTY.forGetter(IngredientEntry::ingredient),
-				Codec.INT.fieldOf("count").forGetter(IngredientEntry::count)
+				Codec.INT.fieldOf("count").forGetter(IngredientEntry::count),
+				Codec.STRING.optionalFieldOf("text").forGetter(IngredientEntry::text)
 		).apply(i, IngredientEntry::new));
+
+		public Component getDesc(Player player) {
+			int has = 0;
+			for (var e : player.getInventory().items) {
+				if (e.isEmpty()) continue;
+				if (ingredient.test(e))
+					has += e.getCount();
+			}
+			if (has > count) has = count;
+			var item = text().map(Component::literal).orElse(ingredient.getItems()[0].getHoverName().copy());
+
+			return Component.literal("- ").append(item).append(": ")
+					.append(Component.literal("" + has).withStyle(has == count ? ChatFormatting.GREEN : ChatFormatting.RED))
+					.append("/").append(Component.literal("" + count).withStyle(ChatFormatting.AQUA));
+
+		}
 	}
 
 	public static final MapCodec<SubmitItemRequirement> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
@@ -41,7 +62,7 @@ public record SubmitItemRequirement(
 
 	@Override
 	public boolean canComplete(ServerPlayer sp) {
-		return new InventoryMapper(sp.getInventory().items, ingredients).test();
+		return InventoryMapper.testCached(sp, this);
 	}
 
 	@Override
@@ -51,83 +72,17 @@ public record SubmitItemRequirement(
 		ans.consume();
 	}
 
-	public static class InventoryMapper {
-
-		private static class Sink {
-
-			private final Ingredient ingredient;
-			private final int required;
-
-			public Sink(IngredientEntry entry) {
-				this.ingredient = entry.ingredient();
-				this.required = entry.count();
-			}
-
+	@Override
+	public List<Component> getDesc(Player player, int progress) {
+		List<Component> ans = new ArrayList<>();
+		for (var e : ingredients) {
+			ans.add(e.getDesc(player));
 		}
-
-		private static class Source {
-
-			private final ItemStack stack;
-			private final boolean[] map;
-
-			public Source(ItemStack input, boolean[] map) {
-				this.stack = input;
-				this.map = map;
-			}
+		if (ingredients.size() > 1) {
+			boolean pass = InventoryMapper.testCached(player, this);
+			ans.addFirst(pass ? GLLang.QUEST$ITEM_SUBMIT_PASS.get() : GLLang.QUEST$ITEM_SUBMIT_FAIL.get());
 		}
-
-		private final ItemStack[] inputs;
-		private final Sink[] sinks;
-
-		private Source[] source;
-		private int[][] ans;
-
-		public InventoryMapper(List<ItemStack> inputs, List<IngredientEntry> sinks) {
-			this.inputs = inputs.toArray(ItemStack[]::new);
-			this.sinks = new Sink[sinks.size()];
-			for (int i = 0; i < this.sinks.length; i++)
-				this.sinks[i] = new Sink(sinks.get(i));
-		}
-
-		public boolean test() {
-			List<Source> stacks = new ArrayList<>();
-			for (ItemStack input : inputs) {
-				if (input.isEmpty()) continue;
-				boolean[] map = new boolean[sinks.length];
-				int validUse = 0;
-				for (int j = 0; j < sinks.length; j++) {
-					map[j] = sinks[j].ingredient.test(input);
-					validUse++;
-				}
-				if (validUse > 0)
-					stacks.add(new Source(input, map));
-			}
-			source = stacks.toArray(Source[]::new);
-
-			int[] items = new int[source.length];
-			for (int i = 0; i < source.length; i++)
-				items[i] = source[i].stack.getCount();
-			Matcher.Req[] reqs = new Matcher.Req[sinks.length];
-			for (int i = 0; i < reqs.length; i++) {
-				boolean[] remap = new boolean[source.length];
-				for (int j = 0; j < source.length; j++)
-					remap[j] = source[j].map[i];
-				reqs[i] = new Matcher.Req(sinks[i].required, remap);
-			}
-			ans = Matcher.solve(items, reqs);
-			return ans != null;
-		}
-
-		public void consume() {
-			for (int i = 0; i < source.length; i++) {
-				int sum = 0;
-				for (int j = 0; j < sinks.length; j++) {
-					sum += ans[i][j];
-				}
-				source[i].stack.shrink(sum);
-			}
-		}
-
+		return ans;
 	}
 
 }

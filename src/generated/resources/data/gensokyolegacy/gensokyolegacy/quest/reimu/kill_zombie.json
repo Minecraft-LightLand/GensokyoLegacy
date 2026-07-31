@@ -13,6 +13,7 @@
       "reputation": -100
     }
   ],
+  "description": "gensokyolegacy/reimu/kill_zombie/quest/desc",
   "followUpDialog": {
     "type": "gensokyolegacy:simple",
     "actions": [],
@@ -31,7 +32,15 @@
     "cooldown": 1000
   },
   "requirements": {
-    "item": {
+    "a-kill": {
+      "type": "gensokyolegacy:kill_mob",
+      "count": 10,
+      "target": {
+        "type": "#minecraft:zombies"
+      },
+      "text": "gensokyolegacy/reimu/kill_zombie/requirement/kill"
+    },
+    "b-item": {
       "type": "gensokyolegacy:submit_item",
       "ingredients": [
         {
@@ -39,13 +48,6 @@
           "item": "minecraft:rotten_flesh"
         }
       ]
-    },
-    "kill": {
-      "type": "gensokyolegacy:kill_mob",
-      "count": 10,
-      "target": {
-        "type": "#minecraft:zombies"
-      }
     }
   },
   "rewards": [
@@ -62,5 +64,6 @@
       "type": "gensokyolegacy:loot_table",
       "table": "gensokyolegacy:reimu/kill_zombie"
     }
-  ]
+  ],
+  "title": "gensokyolegacy/reimu/kill_zombie/quest/title"
 }

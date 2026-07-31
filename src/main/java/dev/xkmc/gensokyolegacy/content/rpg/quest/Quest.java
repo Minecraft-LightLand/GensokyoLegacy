@@ -17,6 +17,8 @@ import java.util.Optional;
 public record Quest(
 		EntityType<?> character,
 		List<QuestCondition<?>> conditions,
+		String title,
+		String description,
 		Optional<QuestRecurrence> recurrence,
 		Map<String, QuestRequirement<?, ?>> requirements,
 		List<QuestReward<?>> rewards,
@@ -28,6 +30,8 @@ public record Quest(
 	public static final Codec<Quest> CODEC = RecordCodecBuilder.create(i -> i.group(
 			BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("character").forGetter(Quest::character),
 			CodecRegistry.CONDITION.codec().listOf().fieldOf("conditions").forGetter(Quest::conditions),
+			Codec.STRING.fieldOf("title").forGetter(Quest::title),
+			Codec.STRING.fieldOf("description").forGetter(Quest::description),
 			QuestRecurrence.CODEC.optionalFieldOf("recurrence").forGetter(Quest::recurrence),
 			Codec.unboundedMap(Codec.STRING, CodecRegistry.REQUIREMENT.codec()).fieldOf("requirements").forGetter(Quest::requirements),
 			CodecRegistry.REWARD.codec().listOf().fieldOf("rewards").forGetter(Quest::rewards),
