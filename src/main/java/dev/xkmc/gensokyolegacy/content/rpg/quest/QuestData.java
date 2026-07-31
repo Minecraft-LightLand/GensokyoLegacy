@@ -46,7 +46,7 @@ public class QuestData {
 		return time < lastCompletion || lastCompletion <= 0 || time > lastCompletion + opt.get().cooldown();
 	}
 
-	public void start(ServerPlayer sp) {
+	public void start(ServerPlayer sp, Quest quest) {
 		started = true;
 	}
 

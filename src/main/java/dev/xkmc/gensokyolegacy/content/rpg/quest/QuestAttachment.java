@@ -9,6 +9,7 @@ import dev.xkmc.l2core.capability.player.PlayerCapabilityTemplate;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,8 +30,9 @@ public class QuestAttachment extends PlayerCapabilityTemplate<QuestAttachment> {
 		var id = quest.unwrapKey().orElseThrow().location();
 		var data = getData(id);
 		if (data.canStart(sp, quest.value())) {
-			data.start(sp);
-			GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(id, data), sp);
+			data.start(sp, quest.value());
+			sp.sendSystemMessage(Component.translatable(quest.value().title()), true);
+			GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(id, data, QuestStatusToClient.Reason.START), sp);
 		}
 	}
 
@@ -39,7 +41,7 @@ public class QuestAttachment extends PlayerCapabilityTemplate<QuestAttachment> {
 		var data = getData(id);
 		if (data.isCompletable(sp, quest.value())) {
 			data.complete(sp, quest.value(), ch);
-			GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(id, data), sp);
+			GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(id, data, QuestStatusToClient.Reason.COMPLETE), sp);
 		}
 	}
 
@@ -65,7 +67,7 @@ public class QuestAttachment extends PlayerCapabilityTemplate<QuestAttachment> {
 				}
 			}
 			if (updated) {
-				GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(e.getKey(), e.getValue(), true), sp);
+				GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(e.getKey(), e.getValue(), QuestStatusToClient.Reason.UPDATE), sp);
 			}
 		}
 	}

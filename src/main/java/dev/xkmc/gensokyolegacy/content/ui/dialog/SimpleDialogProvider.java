@@ -29,6 +29,11 @@ public record SimpleDialogProvider(
 	private void write(RegistryFriendlyByteBuf buf) {
 		buf.writeVarInt(ch.getId());
 		buf.writeResourceKey(dialog.unwrapKey().orElseThrow());
+		var quest = handle.getQuest();
+		if (quest.isPresent()) {
+			buf.writeBoolean(true);
+			buf.writeResourceKey(quest.get().unwrapKey().orElseThrow());
+		} else buf.writeBoolean(false);
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import dev.xkmc.gensokyolegacy.content.entity.characters.fairy.CirnoModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.maiden.ReimuModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.BlackBallModel;
 import dev.xkmc.gensokyolegacy.content.entity.characters.rumia.RumiaModel;
+import dev.xkmc.gensokyolegacy.content.ui.quest.QuestOverlay;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -43,6 +44,7 @@ public class GLClient {
 	@SubscribeEvent
 	public static void addGuiLayer(RegisterGuiLayersEvent event) {
 		event.registerAbove(VanillaGuiLayers.CROSSHAIR, GensokyoLegacy.loc("debug"), new DebugOverlay());
+		event.registerAbove(VanillaGuiLayers.CROSSHAIR, GensokyoLegacy.loc("quest"), new QuestOverlay());
 	}
 
 	@SubscribeEvent

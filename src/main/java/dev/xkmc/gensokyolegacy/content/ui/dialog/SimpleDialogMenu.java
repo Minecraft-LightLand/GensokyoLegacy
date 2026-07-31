@@ -5,7 +5,9 @@ import dev.xkmc.gensokyolegacy.content.rpg.action.ActionContext;
 import dev.xkmc.gensokyolegacy.content.rpg.core.CodecRegistry;
 import dev.xkmc.gensokyolegacy.content.rpg.dialog.Dialog;
 import dev.xkmc.gensokyolegacy.content.rpg.dialog.DialogOption;
+import dev.xkmc.gensokyolegacy.content.rpg.handle.ClientHandle;
 import dev.xkmc.gensokyolegacy.content.rpg.handle.IDialogHandle;
+import dev.xkmc.gensokyolegacy.content.rpg.quest.Quest;
 import dev.xkmc.l2core.base.menu.data.BoolArrayDataSlot;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -27,26 +29,31 @@ public class SimpleDialogMenu extends DialogMenu {
 		YoukaiEntity ch = null;
 		var player = inv.player;
 		Holder<Dialog> dialog = null;
+		Optional<Holder<Quest>> quest = Optional.empty();
 		if (buf != null) {
 			int uid = buf.readVarInt();
 			var id = buf.readResourceLocation();
+			if (buf.readBoolean()) {
+				quest = player.level().registryAccess().holder(buf.readResourceKey(CodecRegistry.Keys.QUEST)).map(e -> e);
+			}
 			if (player.level().getEntity(uid) instanceof YoukaiEntity e) {
 				ch = e;
 			}
 			var opt = player.level().registryAccess().holder(ResourceKey.create(CodecRegistry.DIALOG.key(), id));
 			if (opt.isPresent())
 				dialog = opt.get();
+
 		}
-		return new SimpleDialogMenu(menu, wid, player, ch, null, dialog);
+		return new SimpleDialogMenu(menu, wid, player, ch, new ClientHandle(quest), dialog);
 	}
 
-	public final @Nullable IDialogHandle handle;
+	public final IDialogHandle handle;
 	private final BoolArrayDataSlot conditions;
 
 	protected @Nullable Holder<Dialog> dialog;
 	protected @Nullable List<DialogOption<?>> options;
 
-	protected SimpleDialogMenu(MenuType<?> menu, int wid, Player player, @Nullable YoukaiEntity ch, @Nullable IDialogHandle handle, @Nullable Holder<Dialog> dialog) {
+	protected SimpleDialogMenu(MenuType<?> menu, int wid, Player player, @Nullable YoukaiEntity ch, IDialogHandle handle, @Nullable Holder<Dialog> dialog) {
 		super(menu, wid, player, ch);
 		this.handle = handle;
 		conditions = new BoolArrayDataSlot(this, 16);
@@ -71,7 +78,7 @@ public class SimpleDialogMenu extends DialogMenu {
 		if (options != null && index >= 0 && index <= options.size()) {
 			if (conditions.get(index)) {
 				var option = options.get(index);
-				if (pl instanceof ServerPlayer sp && character != null && handle != null) {
+				if (pl instanceof ServerPlayer sp && character != null) {
 					var context = new ActionContext(sp, character, handle.getQuest());
 					for (var e : option.actions()) {
 						e.execute(context);

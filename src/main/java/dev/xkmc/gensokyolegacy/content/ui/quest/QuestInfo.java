@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.ui.quest;
 
 import dev.xkmc.gensokyolegacy.content.rpg.quest.Quest;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestData;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 
@@ -18,12 +19,9 @@ public class QuestInfo {
 		this.data = data;
 	}
 
-	public Component getTitle() {
-		return Component.translatable(quest.title());
-	}
-
 	public List<Component> getBody(Player player) {
 		List<Component> ans = new ArrayList<>();
+		ans.add(Component.translatable(quest.title()).withStyle(ChatFormatting.UNDERLINE));
 		ans.add(Component.translatable(quest.description()));
 		for (var e : quest.requirements().entrySet()) {
 			ans.addAll(e.getValue().getDesc(player, data.progress.getOrDefault(e.getKey(), 0)));
