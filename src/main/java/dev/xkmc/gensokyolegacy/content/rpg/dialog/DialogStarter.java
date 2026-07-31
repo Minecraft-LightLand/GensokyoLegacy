@@ -26,6 +26,6 @@ public record DialogStarter(
 			Dialog.HOLDER.fieldOf("dialog").forGetter(DialogStarter::dialog)
 	).apply(i, DialogStarter::new));
 
-	public static final Codec<Holder<DialogStarter>> HOLDER = RegistryFileCodec.create(CodecRegistry.STARTER.key(), CODEC);
+	public static final Codec<Holder<DialogStarter>> HOLDER = RegistryFileCodec.create(CodecRegistry.Keys.STARTER, CODEC);
 
 }

@@ -11,7 +11,7 @@ public record CompleteQuestAction() implements DialogAction<CompleteQuestAction>
 	public void execute(ActionContext context) {
 		var quest = context.quest();
 		if (quest.isEmpty()) return;
-		GLMeta.QUEST.type().getOrCreate(context.sp()).complete(context.sp(), quest.get());
+		GLMeta.QUEST.type().getOrCreate(context.sp()).complete(context.sp(), quest.get(), context.character());
 	}
 
 	@Override

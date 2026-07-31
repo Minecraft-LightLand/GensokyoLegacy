@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.rpg.quest;
 
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.rpg.network.QuestStatusToClient;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.capability.player.PlayerCapabilityTemplate;
@@ -30,11 +31,11 @@ public class QuestAttachment extends PlayerCapabilityTemplate<QuestAttachment> {
 		}
 	}
 
-	public void complete(ServerPlayer sp, Holder<Quest> quest) {
+	public void complete(ServerPlayer sp, Holder<Quest> quest, YoukaiEntity ch) {
 		var id = quest.unwrapKey().orElseThrow().location();
 		var data = getData(id);
 		if (data.isCompletable(sp, quest.value())) {
-			data.complete(sp, quest.value());
+			data.complete(sp, quest.value(), ch);
 			GensokyoLegacy.HANDLER.toClientPlayer(new QuestStatusToClient(id, data), sp);
 		}
 	}

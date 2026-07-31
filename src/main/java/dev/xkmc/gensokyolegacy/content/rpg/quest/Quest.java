@@ -16,26 +16,26 @@ import java.util.Optional;
 
 public record Quest(
 		EntityType<?> character,
-		DialogOption<?> initialDialog,
-		DialogOption<?> followUpDialog,
-		DialogOption<?> completionDialog,
 		List<QuestCondition<?>> conditions,
+		Optional<QuestRecurrence> recurrence,
 		Map<String, QuestRequirement<?>> requirements,
 		List<QuestReward<?>> rewards,
-		Optional<QuestRecurrence> recurrence
+		DialogOption<?> initialDialog,
+		DialogOption<?> followUpDialog,
+		DialogOption<?> completionDialog
 ) implements GatedEntry {
 
 	public static final Codec<Quest> CODEC = RecordCodecBuilder.create(i -> i.group(
 			BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("character").forGetter(Quest::character),
-			CodecRegistry.OPTION.codec().fieldOf("initialDialog").forGetter(Quest::initialDialog),
-			CodecRegistry.OPTION.codec().fieldOf("followUpDialog").forGetter(Quest::followUpDialog),
-			CodecRegistry.OPTION.codec().fieldOf("completionDialog").forGetter(Quest::completionDialog),
 			CodecRegistry.CONDITION.codec().listOf().fieldOf("conditions").forGetter(Quest::conditions),
+			QuestRecurrence.CODEC.optionalFieldOf("recurrence").forGetter(Quest::recurrence),
 			Codec.unboundedMap(Codec.STRING, CodecRegistry.REQUIREMENT.codec()).fieldOf("requirements").forGetter(Quest::requirements),
 			CodecRegistry.REWARD.codec().listOf().fieldOf("rewards").forGetter(Quest::rewards),
-			QuestRecurrence.CODEC.optionalFieldOf("recurrence").forGetter(Quest::recurrence)
+			CodecRegistry.OPTION.codec().fieldOf("initialDialog").forGetter(Quest::initialDialog),
+			CodecRegistry.OPTION.codec().fieldOf("followUpDialog").forGetter(Quest::followUpDialog),
+			CodecRegistry.OPTION.codec().fieldOf("completionDialog").forGetter(Quest::completionDialog)
 	).apply(i, Quest::new));
 
-	public static final Codec<Holder<Quest>> HOLDER = RegistryFileCodec.create(CodecRegistry.QUEST.key(), CODEC);
+	public static final Codec<Holder<Quest>> HOLDER = RegistryFileCodec.create(CodecRegistry.Keys.QUEST, CODEC);
 
 }

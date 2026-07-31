@@ -1,5 +1,6 @@
 package dev.xkmc.gensokyolegacy.content.rpg.quest;
 
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.server.level.ServerPlayer;
@@ -49,10 +50,13 @@ public class QuestData {
 		started = true;
 	}
 
-	public void complete(ServerPlayer sp, Quest quest) {
+	public void complete(ServerPlayer sp, Quest quest, YoukaiEntity ch) {
 		for (var e : quest.requirements().entrySet()) {
 			var req = e.getValue();
 			req.doComplete(sp);
+		}
+		for (var e : quest.rewards()) {
+			e.execute(sp, ch);
 		}
 		progress.clear();
 		completed++;

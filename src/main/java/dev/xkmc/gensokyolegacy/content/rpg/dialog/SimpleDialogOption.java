@@ -13,17 +13,17 @@ import java.util.List;
 import java.util.Optional;
 
 public record SimpleDialogOption(
-		String text,
 		List<QuestCondition<?>> conditions,
-		Optional<Holder<Dialog>> next,
-		List<DialogAction<?>> actions
+		String text,
+		List<DialogAction<?>> actions,
+		Optional<Holder<Dialog>> next
 ) implements DialogOption<SimpleDialogOption> {
 
 	public static final MapCodec<SimpleDialogOption> CODEC = RecordCodecBuilder.mapCodec(i -> i.group(
-			Codec.STRING.fieldOf("text").forGetter(SimpleDialogOption::text),
 			CodecRegistry.CONDITION.codec().listOf().fieldOf("conditions").forGetter(SimpleDialogOption::conditions),
-			Dialog.HOLDER.optionalFieldOf("next").forGetter(SimpleDialogOption::next),
-			CodecRegistry.ACTION.codec().listOf().fieldOf("actions").forGetter(SimpleDialogOption::actions)
+			Codec.STRING.fieldOf("text").forGetter(SimpleDialogOption::text),
+			CodecRegistry.ACTION.codec().listOf().fieldOf("actions").forGetter(SimpleDialogOption::actions),
+			Dialog.HOLDER.optionalFieldOf("next").forGetter(SimpleDialogOption::next)
 	).apply(i, SimpleDialogOption::new));
 
 	@Override

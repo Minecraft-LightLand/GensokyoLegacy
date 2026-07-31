@@ -9,13 +9,15 @@ import net.minecraft.resources.RegistryFileCodec;
 import java.util.List;
 
 public record Dialog(
+		String text,
 		List<DialogOption<?>> options
 ) {
 
 	public static final Codec<Dialog> CODEC = RecordCodecBuilder.create(i -> i.group(
+			Codec.STRING.fieldOf("text").forGetter(Dialog::text),
 			CodecRegistry.OPTION.codec().listOf().fieldOf("options").forGetter(Dialog::options)
 	).apply(i, Dialog::new));
 
-	public static final Codec<Holder<Dialog>> HOLDER = RegistryFileCodec.create(CodecRegistry.DIALOG.key(), CODEC);
+	public static final Codec<Holder<Dialog>> HOLDER = RegistryFileCodec.create(CodecRegistry.Keys.DIALOG, CODEC);
 
 }

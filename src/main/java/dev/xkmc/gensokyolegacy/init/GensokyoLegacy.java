@@ -18,11 +18,13 @@ import dev.xkmc.gensokyolegacy.content.entity.foundation.CombatToClient;
 import dev.xkmc.gensokyolegacy.content.item.character.TouhouMat;
 import dev.xkmc.gensokyolegacy.content.item.tool.CatBell;
 import dev.xkmc.gensokyolegacy.content.item.tool.Dowser;
+import dev.xkmc.gensokyolegacy.content.rpg.core.CodecRegistry;
 import dev.xkmc.gensokyolegacy.content.rpg.network.QuestStatusToClient;
 import dev.xkmc.gensokyolegacy.event.GLAttackListener;
 import dev.xkmc.gensokyolegacy.event.GLClickHandler;
 import dev.xkmc.gensokyolegacy.init.data.*;
 import dev.xkmc.gensokyolegacy.init.data.loot.GLGLMProvider;
+import dev.xkmc.gensokyolegacy.init.data.rpg.ReimuQDGen;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureGen;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureLootGen;
 import dev.xkmc.gensokyolegacy.init.data.structure.GLStructureTagGen;
@@ -89,6 +91,7 @@ public class GensokyoLegacy {
 		GLDecoBlocks.register();
 		GLItems.register();
 		GLEntities.register();
+		CodecRegistry.register();
 
 		GLRecipes.register();
 		TouhouMat.register();
@@ -141,6 +144,8 @@ public class GensokyoLegacy {
 
 		var gen = event.getGenerator();
 		gen.addProvider(event.includeServer(), new GLGLMProvider(gen.getPackOutput(), event.getLookupProvider()));
+
+		new ReimuQDGen();
 
 		ReportBlocksInStructure.report();
 	}
