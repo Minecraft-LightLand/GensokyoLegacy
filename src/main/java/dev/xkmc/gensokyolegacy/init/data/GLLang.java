@@ -11,6 +11,8 @@ import java.util.Locale;
 
 public enum GLLang {
 
+	QUEST$TAB("Active Quests"),
+	QUEST$CHARACTER("For %s", 1),
 	QUEST$ITEM_SUBMIT_PASS("All criteria are met", 0, ChatFormatting.GREEN),
 	QUEST$ITEM_SUBMIT_FAIL("Some criteria are not met or used overlapped items"),
 

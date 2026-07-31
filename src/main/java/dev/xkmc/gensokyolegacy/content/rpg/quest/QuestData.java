@@ -4,6 +4,7 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.l2serial.serialization.marker.SerialClass;
 import dev.xkmc.l2serial.serialization.marker.SerialField;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.TreeMap;
 
@@ -22,7 +23,7 @@ public class QuestData {
 	@SerialField
 	public final TreeMap<String, Integer> progress = new TreeMap<>();
 
-	public boolean isCompletable(ServerPlayer sp, Quest quest) {
+	public boolean isCompletable(Player sp, Quest quest) {
 		for (var e : quest.requirements().entrySet()) {
 			var req = e.getValue();
 			if (req.getMaxProgress() > progress.getOrDefault(e.getKey(), 0))
@@ -37,7 +38,7 @@ public class QuestData {
 		return started;
 	}
 
-	public boolean canStart(ServerPlayer sp, Quest quest) {
+	public boolean canStart(Player sp, Quest quest) {
 		var opt = quest.recurrence();
 		if (opt.isEmpty()) {
 			return completed == 0;

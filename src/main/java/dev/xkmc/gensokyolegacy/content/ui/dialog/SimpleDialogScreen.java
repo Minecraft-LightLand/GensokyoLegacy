@@ -22,7 +22,7 @@ public class SimpleDialogScreen extends DialogScreen<SimpleDialogMenu> {
 		if (!data.started) return;
 		var info = new QuestInfo(quest.get().value(), data);
 		new TextBox(g, 0, 1, 10, g.guiHeight() / 2, (int) (g.guiWidth() * 0.4f - 20))
-				.renderLongText(font, info.getBody(menu.player));
+				.renderLongText(font, info.getSideBarText(menu.player));
 	}
 
 }

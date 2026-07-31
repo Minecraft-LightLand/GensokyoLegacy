@@ -58,7 +58,7 @@ public class QuestOverlay extends InfoSideBar<QuestOverlay.QuestSignature> {
 		var data = GLMeta.QUEST.type().getOrCreate(player).getData(quest.unwrapKey().orElseThrow().location());
 		if (!data.started) return List.of();
 		var info = new QuestInfo(quest.value(), data);
-		return info.getBody(player);
+		return info.getSideBarText(player);
 	}
 
 }

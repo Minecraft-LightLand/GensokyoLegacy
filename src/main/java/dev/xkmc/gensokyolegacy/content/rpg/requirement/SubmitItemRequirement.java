@@ -61,8 +61,8 @@ public record SubmitItemRequirement(
 	}
 
 	@Override
-	public boolean canComplete(ServerPlayer sp) {
-		return InventoryMapper.testCached(sp, this);
+	public boolean canComplete(Player pl) {
+		return InventoryMapper.testCached(pl, this);
 	}
 
 	@Override

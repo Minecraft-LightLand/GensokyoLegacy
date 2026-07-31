@@ -18,7 +18,7 @@ public interface QuestRequirement<
 		return 0;
 	}
 
-	default boolean canComplete(ServerPlayer sp) {
+	default boolean canComplete(Player sp) {
 		return true;
 	}
 
