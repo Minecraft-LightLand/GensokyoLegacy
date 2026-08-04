@@ -8,11 +8,7 @@ import dev.xkmc.l2modularblock.core.BlockTemplates;
 import dev.xkmc.l2modularblock.core.DelegateBlock;
 import dev.xkmc.l2modularblock.core.VoxelBuilder;
 import dev.xkmc.l2modularblock.impl.DoubleBlockImpl;
-import dev.xkmc.l2modularblock.mult.CreateBlockStateBlockMethod;
-import dev.xkmc.l2modularblock.mult.DefaultStateBlockMethod;
-import dev.xkmc.l2modularblock.mult.PlacementBlockMethod;
-import dev.xkmc.l2modularblock.mult.UseItemOnBlockMethod;
-import dev.xkmc.l2modularblock.mult.UseWithoutItemBlockMethod;
+import dev.xkmc.l2modularblock.mult.*;
 import dev.xkmc.l2modularblock.one.ShapeBlockMethod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -33,17 +29,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DoorHingeSide;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.Half;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.*;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
@@ -88,12 +80,9 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	@Override
 	public @Nullable BlockState getStateForPlacement(BlockState def, BlockPlaceContext context) {
 		if (def == null) return null;
-		Direction facing = def.getValue(HORIZONTAL_FACING);
-		DoorHingeSide hinge = hingeFromNeighbors(context.getLevel(), context.getClickedPos(), def.getBlock(), facing);
-		if (hinge == null) {
-			hinge = hingeFromClick(context);
-		}
-		return def.setValue(HINGE, hinge);
+		Direction facing = def.getValue(HORIZONTAL_FACING).getOpposite();
+		DoorHingeSide hinge = hingeFromClick(context);
+		return def.setValue(HORIZONTAL_FACING, facing).setValue(HINGE, hinge);
 	}
 
 	@Override
@@ -101,12 +90,11 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 		if (level.isClientSide()) return InteractionResult.SUCCESS;
 		BlockPos bottom = bottom(level, pos);
 		BlockState bs = level.getBlockState(bottom);
-		Direction facing = bs.getValue(HORIZONTAL_FACING);
-		Axis axis = facing.getCounterClockWise().getAxis();
-		Vec3 click = result.getLocation();
-		double coord = axis.choose(click.x, click.y, click.z);
-		double center = axis.choose(bottom.getX() + 0.5, bottom.getY() + 0.5, bottom.getZ() + 0.5);
-		DoorHingeSide clickedHinge = coord < center ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
+		Direction left = bs.getValue(HORIZONTAL_FACING).getCounterClockWise();
+		Axis axis = left.getAxis();
+		Vec3 click = result.getLocation().subtract(bottom.getCenter());
+		double coord = axis.choose(click.x, click.y, click.z) * left.getAxisDirection().getStep();
+		DoorHingeSide clickedHinge = coord < 0 ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
 		if (clickedHinge == bs.getValue(HINGE)) {
 			open(level, bottom, bs);
 		} else {
@@ -185,40 +173,25 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 				SoundSource.BLOCKS, 1, 1);
 	}
 
-	private static @Nullable DoorHingeSide hingeFromNeighbors(Level level, BlockPos pos, Block block, Direction facing) {
-		boolean left = isConnectable(level.getBlockState(pos.relative(facing.getCounterClockWise())), block, facing, DoorHingeSide.LEFT);
-		boolean right = isConnectable(level.getBlockState(pos.relative(facing.getClockWise())), block, facing, DoorHingeSide.RIGHT);
-		if (left != right) {
-			return left ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
-		}
-		return null;
-	}
-
-	private static boolean isConnectable(BlockState state, Block block, Direction facing, DoorHingeSide hinge) {
-		return state.is(block) && state.getValue(HORIZONTAL_FACING) == facing && state.getValue(HINGE) == hinge;
-	}
-
 	private static DoorHingeSide hingeFromClick(BlockPlaceContext context) {
 		Direction left = context.getHorizontalDirection().getCounterClockWise();
 		Axis axis = left.getAxis();
-		BlockPos cell = context.getClickedPos().relative(context.getClickedFace());
-		Vec3 click = context.getClickLocation();
-		double coord = axis.choose(click.x, click.y, click.z);
-		double center = axis.choose(cell.getX() + 0.5, cell.getY() + 0.5, cell.getZ() + 0.5);
-		return coord < center ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
+		Vec3 click = context.getClickLocation().subtract(context.getClickedPos().getCenter());
+		double coord = axis.choose(click.x, click.y, click.z) * left.getAxisDirection().getStep();
+		return coord > 0 ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
 	}
 
 	private static final BlockModelBuilder[] BASE = new BlockModelBuilder[MAX];
 	private static final BlockModelBuilder[] BASE_R = new BlockModelBuilder[MAX];
 
 	public static void buildBlockState(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd,
-									   ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
+	                                   ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
 		pvd.getVariantBuilder(ctx.get()).forAllStates(state -> ConfiguredModel.builder().modelFile(model(ctx, pvd, state, top, bottom, side))
 				.rotationY(((int) (state.getValue(HORIZONTAL_FACING).toYRot() + 180)) % 360).uvLock(true).build());
 	}
 
 	private static BlockModelBuilder model(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd,
-										   BlockState state, ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
+	                                       BlockState state, ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
 		boolean right = state.getValue(HINGE) == DoorHingeSide.RIGHT;
 		int stack = state.getValue(STACK);
 		boolean topHalf = state.getValue(HALF) == Half.TOP;
@@ -243,7 +216,7 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	private static void cube(ModelBuilder<?> builder, int thickness, boolean right) {
 		var elem = builder.element();
 		elem.from(0, 0, 0).to(16, 16, thickness);
-		if (right) {
+		if (!right) {
 			elem.face(Direction.NORTH).uvs(16, 0, 0, 16).texture("#front").cullface(Direction.NORTH).end();
 			elem.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#front").end();
 			elem.face(Direction.WEST).uvs(0, 0, thickness, 16).texture("#side").end();
