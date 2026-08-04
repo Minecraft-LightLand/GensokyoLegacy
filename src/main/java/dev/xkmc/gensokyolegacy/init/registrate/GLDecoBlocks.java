@@ -6,6 +6,7 @@ import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import dev.xkmc.gensokyolegacy.content.block.deco.*;
+import dev.xkmc.gensokyolegacy.content.block.door.SlidingDoor;
 import dev.xkmc.gensokyolegacy.content.block.misc.TatamiBlock;
 import dev.xkmc.gensokyolegacy.content.block.seat.CushionBlock;
 import dev.xkmc.gensokyolegacy.content.block.seat.WoodChairBlock;
@@ -61,6 +62,7 @@ public class GLDecoBlocks {
 		public BlockEntry<WoodChairBlock> seat;
 		public BlockEntry<VerticalSlabBlock> vertical;
 		public BlockEntry<Block> wall;
+		public BlockEntry<DelegateBlock> door;
 
 		WoodType(Block plankProp, Block fenceProp, ItemLike strippedWood, Block slab, Block stairs) {
 			this.plankProp = plankProp;
@@ -195,6 +197,19 @@ public class GLDecoBlocks {
 							pvd.modLoc("block/wood/" + name + "_plank_wall"), e.top(), e.top())))
 					.tag(BlockTags.MINEABLE_WITH_AXE)
 					.simpleItem()
+					.register();
+
+			e.door = reg.block(name + "_sliding_door", p -> SlidingDoor.create(p))
+					.initialProperties(() -> e.plankProp)
+					.blockstate((ctx, pvd) -> SlidingDoor.buildBlockState(ctx, pvd,
+							pvd.modLoc("block/wood/" + name + "_sliding_door_top"),
+							pvd.modLoc("block/wood/" + name + "_sliding_door_bottom"),
+							pvd.modLoc("block/wood/" + name + "_sliding_door_side")))
+					.item().model((ctx, pvd) -> pvd.getBuilder(ctx.getName())
+							.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("block/" + ctx.getName() + "_top_s1"))))
+					.build()
+					.tag(BlockTags.MINEABLE_WITH_AXE)
+					.loot(SlidingDoor::genLoot)
 					.register();
 		}
 

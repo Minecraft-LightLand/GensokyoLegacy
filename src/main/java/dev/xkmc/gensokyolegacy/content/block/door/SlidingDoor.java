@@ -1,5 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.block.door;
 
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import dev.xkmc.l2core.serial.loot.LootHelper;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
@@ -15,6 +17,7 @@ import dev.xkmc.l2modularblock.one.ShapeBlockMethod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -41,6 +44,9 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HALF;
@@ -54,12 +60,14 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	public static final IntegerProperty STACK = IntegerProperty.create("stack", 1, MAX);
 	public static final EnumProperty<DoorHingeSide> HINGE = BlockStateProperties.DOOR_HINGE;
 
-	public static final VoxelShape[] SHAPES = new VoxelShape[4];
+	public static final VoxelShape[][] SHAPES = new VoxelShape[MAX][4];
 
 	static {
-		var builder = new VoxelBuilder(0, 0, 7, 16, 16, 9);
-		for (int i = 0; i < 4; i++) {
-			SHAPES[i] = builder.rotateFromNorth(Direction.from2DDataValue(i));
+		for (int stack = 1; stack <= MAX; stack++) {
+			var builder = new VoxelBuilder(0, 0, 0, 16, 16, stack + 1);
+			for (int i = 0; i < 4; i++) {
+				SHAPES[stack - 1][i] = builder.rotateFromNorth(Direction.from2DDataValue(i));
+			}
 		}
 	}
 
@@ -94,7 +102,7 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 		BlockPos bottom = bottom(level, pos);
 		BlockState bs = level.getBlockState(bottom);
 		Direction facing = bs.getValue(HORIZONTAL_FACING);
-		Axis axis = facing.getAxis();
+		Axis axis = facing.getCounterClockWise().getAxis();
 		Vec3 click = result.getLocation();
 		double coord = axis.choose(click.x, click.y, click.z);
 		double center = axis.choose(bottom.getX() + 0.5, bottom.getY() + 0.5, bottom.getZ() + 0.5);
@@ -125,7 +133,7 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 
 	@Override
 	public @Nullable VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext ctx) {
-		return SHAPES[state.getValue(HORIZONTAL_FACING).get2DDataValue()];
+		return SHAPES[state.getValue(STACK) - 1][state.getValue(HORIZONTAL_FACING).get2DDataValue()];
 	}
 
 	private static void open(Level level, BlockPos bottom, BlockState bs) {
@@ -198,6 +206,45 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 		double coord = axis.choose(click.x, click.y, click.z);
 		double center = axis.choose(cell.getX() + 0.5, cell.getY() + 0.5, cell.getZ() + 0.5);
 		return coord < center ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
+	}
+
+	private static final BlockModelBuilder[] BASE = new BlockModelBuilder[MAX];
+
+	public static void buildBlockState(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd,
+									   ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
+		pvd.getVariantBuilder(ctx.get()).forAllStates(state -> ConfiguredModel.builder().modelFile(model(ctx, pvd, state, top, bottom, side))
+				.rotationY(((int) (state.getValue(HORIZONTAL_FACING).toYRot() + 180)) % 360).uvLock(true).build());
+	}
+
+	private static BlockModelBuilder model(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd,
+										   BlockState state, ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
+		int stack = state.getValue(STACK);
+		boolean topHalf = state.getValue(HALF) == Half.TOP;
+		return pvd.models().getBuilder("block/" + ctx.getName() + (topHalf ? "_top" : "_bottom") + "_s" + stack)
+				.parent(base(pvd, stack))
+				.texture("front", topHalf ? top : bottom)
+				.texture("side", side)
+				.renderType("cutout");
+	}
+
+	private static BlockModelBuilder base(RegistrateBlockstateProvider pvd, int stack) {
+		if (BASE[stack - 1] == null) {
+			BASE[stack - 1] = pvd.models().withExistingParent("sliding_door_s" + stack, "block/block");
+			cube(BASE[stack - 1], stack + 1);
+			BASE[stack - 1].texture("particle", "#side");
+		}
+		return BASE[stack - 1];
+	}
+
+	private static void cube(ModelBuilder<?> builder, int thickness) {
+		var elem = builder.element();
+		elem.from(0, 0, 0).to(16, 16, thickness);
+		elem.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#front").cullface(Direction.NORTH).end();
+		elem.face(Direction.SOUTH).uvs(16, 0, 0, 16).texture("#front").end();
+		elem.face(Direction.WEST).uvs(thickness, 0, 0, 16).texture("#side").end();
+		elem.face(Direction.EAST).uvs(0, 0, thickness, 16).texture("#side").end();
+		elem.face(Direction.UP).uvs(0, 0, thickness, thickness).texture("#side").end();
+		elem.face(Direction.DOWN).uvs(0, 16 - thickness, thickness, 16).texture("#side").end();
 	}
 
 	public static void genLoot(RegistrateBlockLootTables pvd, DelegateBlock block) {

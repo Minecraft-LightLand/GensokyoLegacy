@@ -1,0 +1,8 @@
+{
+  "parent": "gensokyolegacy:block/sliding_door_s3",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "front": "gensokyolegacy:block/wood/mangrove_sliding_door_top",
+    "side": "gensokyolegacy:block/wood/mangrove_sliding_door_side"
+  }
+}

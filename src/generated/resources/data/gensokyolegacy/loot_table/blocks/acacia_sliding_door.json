@@ -1,0 +1,125 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "gensokyolegacy:acacia_sliding_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "stack": "1"
+              }
+            },
+            {
+              "block": "gensokyolegacy:acacia_sliding_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "bottom"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "gensokyolegacy:acacia_sliding_door"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "gensokyolegacy:acacia_sliding_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "stack": "2"
+              }
+            },
+            {
+              "block": "gensokyolegacy:acacia_sliding_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "bottom"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 2.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "gensokyolegacy:acacia_sliding_door"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "gensokyolegacy:acacia_sliding_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "stack": "3"
+              }
+            },
+            {
+              "block": "gensokyolegacy:acacia_sliding_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "bottom"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 3.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "gensokyolegacy:acacia_sliding_door"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "gensokyolegacy:acacia_sliding_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "stack": "4"
+              }
+            },
+            {
+              "block": "gensokyolegacy:acacia_sliding_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "bottom"
+              }
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 4.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "gensokyolegacy:acacia_sliding_door"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "gensokyolegacy:blocks/acacia_sliding_door"
+}
