@@ -84,7 +84,13 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 		if (level.isClientSide()) return InteractionResult.SUCCESS;
 		BlockPos bottom = bottom(level, pos);
 		BlockState bs = level.getBlockState(bottom);
-		if (isLeaf(level, bottom, bs)) {
+		Direction facing = bs.getValue(HORIZONTAL_FACING);
+		Axis axis = facing.getAxis();
+		Vec3 click = result.getLocation();
+		double coord = axis.choose(click.x, click.y, click.z);
+		double center = axis.choose(bottom.getX() + 0.5, bottom.getY() + 0.5, bottom.getZ() + 0.5);
+		DoorHingeSide clickedHinge = coord < center ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
+		if (clickedHinge == bs.getValue(HINGE)) {
 			open(level, bottom, bs);
 		} else {
 			close(level, bottom, bs);
@@ -116,8 +122,11 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	private static void open(Level level, BlockPos bottom, BlockState bs) {
 		BlockPos pocket = bottom.relative(hingeDir(bs));
 		BlockState pocketState = level.getBlockState(pocket);
-		int sum = bs.getValue(STACK) + pocketState.getValue(STACK);
-		if (sum <= MAX) {
+		if (pocketState.is(bs.getBlock())
+				&& pocketState.getValue(HORIZONTAL_FACING) == bs.getValue(HORIZONTAL_FACING)
+				&& pocketState.getValue(HINGE) == bs.getValue(HINGE)
+				&& pocketState.getValue(STACK) + bs.getValue(STACK) <= MAX) {
+			int sum = pocketState.getValue(STACK) + bs.getValue(STACK);
 			setStack(level, pocket, sum);
 			setAir(level, bottom);
 			playSound(level, bottom, true);
@@ -127,17 +136,12 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	private static void close(Level level, BlockPos bottom, BlockState bs) {
 		BlockPos leaf = bottom.relative(hingeDir(bs).getOpposite());
 		int move = bs.getValue(STACK) - 1;
-		if (move > 0 && level.getBlockState(leaf).isAir()) {
+		if (move > 0 && level.getBlockState(leaf).isAir() && level.getBlockState(leaf.above()).isAir()) {
 			level.setBlock(leaf, bs.setValue(STACK, move).setValue(HALF, Half.BOTTOM), 3);
 			level.setBlock(leaf.above(), bs.setValue(STACK, move).setValue(HALF, Half.TOP), 3);
 			setStack(level, bottom, 1);
 			playSound(level, bottom, false);
 		}
-	}
-
-	private static boolean isLeaf(Level level, BlockPos bottom, BlockState bs) {
-		BlockState pocket = level.getBlockState(bottom.relative(hingeDir(bs)));
-		return pocket.is(bs.getBlock()) && pocket.getValue(HORIZONTAL_FACING) == bs.getValue(HORIZONTAL_FACING);
 	}
 
 	private static BlockPos bottom(Level level, BlockPos pos) {
@@ -152,7 +156,6 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 
 	private static void setAir(Level level, BlockPos bottom) {
 		level.setBlock(bottom, Blocks.AIR.defaultBlockState(), 3);
-		level.setBlock(bottom.above(), Blocks.AIR.defaultBlockState(), 3);
 	}
 
 	private static Direction hingeDir(BlockState state) {
