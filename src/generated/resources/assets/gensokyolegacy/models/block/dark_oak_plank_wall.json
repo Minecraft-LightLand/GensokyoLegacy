@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/dark_oak_planks",
+    "side": "gensokyolegacy:block/wood/dark_oak_plank_wall",
+    "top": "minecraft:block/dark_oak_planks"
+  }
+}
