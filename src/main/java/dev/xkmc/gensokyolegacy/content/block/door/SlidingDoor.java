@@ -1,5 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.block.door;
 
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
+import dev.xkmc.l2core.serial.loot.LootHelper;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
 import dev.xkmc.l2modularblock.core.DelegateBlock;
 import dev.xkmc.l2modularblock.core.VoxelBuilder;
@@ -37,6 +39,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HALF;
@@ -76,7 +80,12 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	@Override
 	public @Nullable BlockState getStateForPlacement(BlockState def, BlockPlaceContext context) {
 		if (def == null) return null;
-		return def.setValue(HINGE, hingeFromClick(context));
+		Direction facing = def.getValue(HORIZONTAL_FACING);
+		DoorHingeSide hinge = hingeFromNeighbors(context.getLevel(), context.getClickedPos(), def.getBlock(), facing);
+		if (hinge == null) {
+			hinge = hingeFromClick(context);
+		}
+		return def.setValue(HINGE, hinge);
 	}
 
 	@Override
@@ -168,6 +177,19 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 				SoundSource.BLOCKS, 1, 1);
 	}
 
+	private static @Nullable DoorHingeSide hingeFromNeighbors(Level level, BlockPos pos, Block block, Direction facing) {
+		boolean left = isConnectable(level.getBlockState(pos.relative(facing.getCounterClockWise())), block, facing, DoorHingeSide.LEFT);
+		boolean right = isConnectable(level.getBlockState(pos.relative(facing.getClockWise())), block, facing, DoorHingeSide.RIGHT);
+		if (left != right) {
+			return left ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
+		}
+		return null;
+	}
+
+	private static boolean isConnectable(BlockState state, Block block, Direction facing, DoorHingeSide hinge) {
+		return state.is(block) && state.getValue(HORIZONTAL_FACING) == facing && state.getValue(HINGE) == hinge;
+	}
+
 	private static DoorHingeSide hingeFromClick(BlockPlaceContext context) {
 		Direction left = context.getHorizontalDirection().getCounterClockWise();
 		Axis axis = left.getAxis();
@@ -176,6 +198,17 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 		double coord = axis.choose(click.x, click.y, click.z);
 		double center = axis.choose(cell.getX() + 0.5, cell.getY() + 0.5, cell.getZ() + 0.5);
 		return coord < center ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
+	}
+
+	public static void genLoot(RegistrateBlockLootTables pvd, DelegateBlock block) {
+		var helper = new LootHelper(pvd);
+		var pool = LootPool.lootPool();
+		for (int i = 1; i <= MAX; i++) {
+			pool.add(helper.item(block.asItem(), i)
+					.when(helper.intState(block, STACK, i))
+					.when(helper.enumState(block, HALF, Half.BOTTOM)));
+		}
+		pvd.add(block, LootTable.lootTable().withPool(pvd.applyExplosionCondition(block, pool)));
 	}
 
 }
