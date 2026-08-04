@@ -60,6 +60,7 @@ public class GLDecoBlocks {
 		public BlockEntry<DelegateBlock> table;
 		public BlockEntry<WoodChairBlock> seat;
 		public BlockEntry<VerticalSlabBlock> vertical;
+		public BlockEntry<Block> wall;
 
 		WoodType(Block plankProp, Block fenceProp, ItemLike strippedWood, Block slab, Block stairs) {
 			this.plankProp = plankProp;
@@ -179,15 +180,22 @@ public class GLDecoBlocks {
 					.recipe((ctx, pvd) -> WoodChairBlock.genRecipe(pvd, e, ctx))
 					.register();
 
-			if (e != WoodType.MANGROVE)
-				reg.block(name + "_large_table", p -> DelegateBlock.newBaseBlock(p, new LargeTableBlock(), new TableClothImpl()))
-						.initialProperties(() -> e.plankProp)
-						.blockstate(LargeTableBlock::buildStates)
-						.tag(GLTagGen.LARGE_TABLE)
-						.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
-						//.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
-						.loot(LargeTableBlock::genLoot)
-						.register();
+			reg.block(name + "_large_table", p -> DelegateBlock.newBaseBlock(p, new LargeTableBlock(), new TableClothImpl()))
+					.initialProperties(() -> e.plankProp)
+					.blockstate(LargeTableBlock::buildStates)
+					.tag(GLTagGen.LARGE_TABLE)
+					.simpleItem().tag(BlockTags.MINEABLE_WITH_AXE)
+					//.recipe((ctx, pvd) -> WoodTableBlock.genRecipe(pvd, e, ctx))
+					.loot(LargeTableBlock::genLoot)
+					.register();
+
+			e.wall = reg.block(name + "_plank_wall", Block::new)
+					.initialProperties(() -> e.plankProp)
+					.blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(), pvd.models().cubeBottomTop(ctx.getName(),
+							pvd.modLoc("block/wood/" + name + "_plank_wall"), e.top(), e.top())))
+					.tag(BlockTags.MINEABLE_WITH_AXE)
+					.simpleItem()
+					.register();
 		}
 
 		SNOW_SET = new BrickSet(reg, "snow", BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK),
