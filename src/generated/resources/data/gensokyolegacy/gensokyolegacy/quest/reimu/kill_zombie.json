@@ -4,7 +4,7 @@
     "type": "gensokyolegacy:simple",
     "actions": [],
     "conditions": [],
-    "next": "gensokyolegacy:complete/dialog_1",
+    "next": "gensokyolegacy:reimu/kill_zombie/complete/dialog_1",
     "text": "gensokyolegacy/reimu/kill_zombie/option/complete"
   },
   "conditions": [
@@ -18,14 +18,14 @@
     "type": "gensokyolegacy:simple",
     "actions": [],
     "conditions": [],
-    "next": "gensokyolegacy:follow_up/dialog_1",
+    "next": "gensokyolegacy:reimu/kill_zombie/follow_up/dialog_1",
     "text": "gensokyolegacy/reimu/kill_zombie/option/follow_up"
   },
   "initialDialog": {
     "type": "gensokyolegacy:simple",
     "actions": [],
     "conditions": [],
-    "next": "gensokyolegacy:start/dialog_1",
+    "next": "gensokyolegacy:reimu/kill_zombie/start/dialog_1",
     "text": "gensokyolegacy/reimu/kill_zombie/option/start"
   },
   "recurrence": {

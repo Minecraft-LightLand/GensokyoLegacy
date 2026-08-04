@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.rpg.dialog;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.xkmc.gensokyolegacy.content.rpg.core.CharacterEntry;
 import dev.xkmc.gensokyolegacy.content.rpg.core.CodecRegistry;
 import dev.xkmc.gensokyolegacy.content.rpg.core.GatedEntry;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestCondition;
@@ -17,7 +18,7 @@ public record DialogStarter(
 		List<QuestCondition<?>> conditions,
 		String text,
 		Holder<Dialog> dialog
-) implements GatedEntry {
+) implements GatedEntry, CharacterEntry {
 
 	public static final Codec<DialogStarter> CODEC = RecordCodecBuilder.create(i -> i.group(
 			BuiltInRegistries.ENTITY_TYPE.byNameCodec().fieldOf("character").forGetter(DialogStarter::character),

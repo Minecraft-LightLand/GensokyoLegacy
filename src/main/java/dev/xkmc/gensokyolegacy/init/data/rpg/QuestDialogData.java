@@ -8,7 +8,7 @@ import dev.xkmc.gensokyolegacy.content.rpg.dialog.DialogOption;
 import dev.xkmc.gensokyolegacy.content.rpg.dialog.DialogStarter;
 import dev.xkmc.gensokyolegacy.content.rpg.dialog.SimpleDialogOption;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.Quest;
-import dev.xkmc.gensokyolegacy.content.rpg.requirement.SubmitItemRequirement;
+import dev.xkmc.gensokyolegacy.content.rpg.core.IngredientEntry;
 import dev.xkmc.gensokyolegacy.content.rpg.reward.LootTableReward;
 import dev.xkmc.gensokyolegacy.init.GensokyoLegacy;
 import dev.xkmc.l2core.init.reg.ench.DataGenHolder;
@@ -92,6 +92,7 @@ public class QuestDialogData {
 	}
 
 	public Holder<Dialog> dialog(String id, String text, DialogOption<?>... options) {
+		id = prefix + "/" + id;
 		var key = ResourceKey.create(CodecRegistry.DIALOG.key(), loc(id));
 		var holder = new DataGenHolder<>(key, new Dialog(text("dialog", id, text), List.of(options)));
 		dialogRegistry.put(key, holder);
@@ -132,8 +133,8 @@ public class QuestDialogData {
 		return new SimpleDialogOption(List.of(), optionText(id, text), List.of(), Optional.of(next));
 	}
 
-	public SubmitItemRequirement.IngredientEntry item(ItemLike item, int count) {
-		return new SubmitItemRequirement.IngredientEntry(Ingredient.of(item), count, Optional.empty());
+	public IngredientEntry item(ItemLike item, int count) {
+		return new IngredientEntry(Ingredient.of(item), count, Optional.empty());
 	}
 
 	public LootPool.Builder lootItem(ItemLike item, int count) {

@@ -1,7 +1,8 @@
 package dev.xkmc.gensokyolegacy.util;
 
 import com.mojang.datafixers.util.Pair;
-import dev.xkmc.gensokyolegacy.content.rpg.requirement.SubmitItemRequirement;
+import dev.xkmc.gensokyolegacy.content.rpg.core.IngredientEntry;
+import dev.xkmc.gensokyolegacy.content.rpg.core.IngredientList;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -15,7 +16,7 @@ public class InventoryMapper {
 
 	private static final LinkedHashMap<Pair<UUID, Object>, Pair<Long, Boolean>> CACHE = new LinkedHashMap<>();
 
-	public static boolean testCached(Player player, SubmitItemRequirement req) {
+	public static boolean testCached(Player player, IngredientList req) {
 		var uuid = player.getUUID();
 		Pair<UUID, Object> key = Pair.of(uuid, req);
 		var old = CACHE.get(key);
@@ -31,7 +32,7 @@ public class InventoryMapper {
 		private final Ingredient ingredient;
 		private final int required;
 
-		public Sink(SubmitItemRequirement.IngredientEntry entry) {
+		public Sink(IngredientEntry entry) {
 			this.ingredient = entry.ingredient();
 			this.required = entry.count();
 		}
@@ -55,7 +56,7 @@ public class InventoryMapper {
 	private Source[] source;
 	private int[][] ans;
 
-	public InventoryMapper(List<ItemStack> inputs, List<SubmitItemRequirement.IngredientEntry> sinks) {
+	public InventoryMapper(List<ItemStack> inputs, List<IngredientEntry> sinks) {
 		this.inputs = inputs.toArray(ItemStack[]::new);
 		this.sinks = new Sink[sinks.size()];
 		for (int i = 0; i < this.sinks.length; i++)
