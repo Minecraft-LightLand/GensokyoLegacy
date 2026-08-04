@@ -209,6 +209,7 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	}
 
 	private static final BlockModelBuilder[] BASE = new BlockModelBuilder[MAX];
+	private static final BlockModelBuilder[] BASE_R = new BlockModelBuilder[MAX];
 
 	public static void buildBlockState(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd,
 									   ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
@@ -218,33 +219,45 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 
 	private static BlockModelBuilder model(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd,
 										   BlockState state, ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
+		boolean right = state.getValue(HINGE) == DoorHingeSide.RIGHT;
 		int stack = state.getValue(STACK);
 		boolean topHalf = state.getValue(HALF) == Half.TOP;
-		return pvd.models().getBuilder("block/" + ctx.getName() + (topHalf ? "_top" : "_bottom") + "_s" + stack)
-				.parent(base(pvd, stack))
+		return pvd.models().getBuilder("block/" + ctx.getName() + (topHalf ? "_top" : "_bottom") + "_s" + stack
+						+ (right ? "_r" : ""))
+				.parent(base(pvd, stack, right))
 				.texture("front", topHalf ? top : bottom)
 				.texture("side", side)
 				.renderType("cutout");
 	}
 
-	private static BlockModelBuilder base(RegistrateBlockstateProvider pvd, int stack) {
-		if (BASE[stack - 1] == null) {
-			BASE[stack - 1] = pvd.models().withExistingParent("sliding_door_s" + stack, "block/block");
-			cube(BASE[stack - 1], stack + 1);
-			BASE[stack - 1].texture("particle", "#side");
+	private static BlockModelBuilder base(RegistrateBlockstateProvider pvd, int stack, boolean right) {
+		var cache = right ? BASE_R : BASE;
+		if (cache[stack - 1] == null) {
+			cache[stack - 1] = pvd.models().withExistingParent("sliding_door_s" + stack + (right ? "_r" : ""), "block/block");
+			cube(cache[stack - 1], stack + 1, right);
+			cache[stack - 1].texture("particle", "#side");
 		}
-		return BASE[stack - 1];
+		return cache[stack - 1];
 	}
 
-	private static void cube(ModelBuilder<?> builder, int thickness) {
+	private static void cube(ModelBuilder<?> builder, int thickness, boolean right) {
 		var elem = builder.element();
 		elem.from(0, 0, 0).to(16, 16, thickness);
-		elem.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#front").cullface(Direction.NORTH).end();
-		elem.face(Direction.SOUTH).uvs(16, 0, 0, 16).texture("#front").end();
-		elem.face(Direction.WEST).uvs(thickness, 0, 0, 16).texture("#side").end();
-		elem.face(Direction.EAST).uvs(0, 0, thickness, 16).texture("#side").end();
-		elem.face(Direction.UP).uvs(0, 0, thickness, thickness).texture("#side").end();
-		elem.face(Direction.DOWN).uvs(0, 16 - thickness, thickness, 16).texture("#side").end();
+		if (right) {
+			elem.face(Direction.NORTH).uvs(16, 0, 0, 16).texture("#front").cullface(Direction.NORTH).end();
+			elem.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#front").end();
+			elem.face(Direction.WEST).uvs(0, 0, thickness, 16).texture("#side").end();
+			elem.face(Direction.EAST).uvs(thickness, 0, 0, 16).texture("#side").end();
+			elem.face(Direction.UP).uvs(thickness, 0, 0, thickness).texture("#side").end();
+			elem.face(Direction.DOWN).uvs(thickness, 16 - thickness, 0, 16).texture("#side").end();
+		} else {
+			elem.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#front").cullface(Direction.NORTH).end();
+			elem.face(Direction.SOUTH).uvs(16, 0, 0, 16).texture("#front").end();
+			elem.face(Direction.WEST).uvs(thickness, 0, 0, 16).texture("#side").end();
+			elem.face(Direction.EAST).uvs(0, 0, thickness, 16).texture("#side").end();
+			elem.face(Direction.UP).uvs(0, 0, thickness, thickness).texture("#side").end();
+			elem.face(Direction.DOWN).uvs(0, 16 - thickness, thickness, 16).texture("#side").end();
+		}
 	}
 
 	public static void genLoot(RegistrateBlockLootTables pvd, DelegateBlock block) {
