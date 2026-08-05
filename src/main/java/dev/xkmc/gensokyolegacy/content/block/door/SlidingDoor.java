@@ -2,6 +2,7 @@ package dev.xkmc.gensokyolegacy.content.block.door;
 
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.providers.RegistrateItemModelProvider;
 import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import dev.xkmc.l2core.serial.loot.LootHelper;
 import dev.xkmc.l2modularblock.core.BlockTemplates;
@@ -20,6 +21,9 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -39,6 +43,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HALF;
@@ -300,6 +305,39 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 					.when(helper.enumState(block, HALF, Half.BOTTOM)));
 		}
 		pvd.add(block, LootTable.lootTable().withPool(pvd.applyExplosionCondition(block, pool)));
+	}
+
+	public static void genItemModel(DataGenContext<Item, BlockItem> ctx, RegistrateItemModelProvider pvd,
+	                                ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
+		var builder = pvd.getBuilder(ctx.getName())
+				.parent(new ModelFile.UncheckedModelFile("block/block"))
+				.texture("front_top", top)
+				.texture("front_bottom", bottom)
+				.texture("side", side)
+				.texture("particle", side)
+				.renderType("cutout");
+		panel(builder, 0, 16, "front_bottom", "side");
+		panel(builder, 16, 32, "front_top", "side");
+		builder.transforms()
+				.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 45, 0).translation(0, 2.5f, 0).scale(0.1875f).end()
+				.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(75, 45, 0).translation(0, 2.5f, 0).scale(0.1875f).end()
+				.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).scale(0.2f).end()
+				.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).scale(0.2f).end()
+				.transform(ItemDisplayContext.GROUND).translation(0, 3, 0).scale(0.125f).end()
+				.transform(ItemDisplayContext.GUI).rotation(30, 225, 0).scale(0.3125f).end()
+				.transform(ItemDisplayContext.FIXED).scale(0.25f).end();
+	}
+
+	private static void panel(ModelBuilder<?> builder, int y0, int y1, String front, String side) {
+		var elem = builder.element();
+		elem.from(0, y0, 0).to(16, y1, 2);
+		elem.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#" + front).end();
+		elem.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#" + front).end();
+		elem.face(Direction.WEST).uvs(0, 0, 2, 16).texture("#" + side).end();
+		elem.face(Direction.EAST).uvs(2, 0, 0, 16).texture("#" + side).end();
+		elem.face(Direction.UP).uvs(0, 0, 2, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#" + side).end();
+		elem.face(Direction.DOWN).uvs(0, 0, 2, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#" + side).end();
+		elem.end();
 	}
 
 }
