@@ -4,8 +4,10 @@ import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.rpg.core.ServerCharacterDialogManager;
 import dev.xkmc.gensokyolegacy.content.rpg.handle.ClientHandle;
 import dev.xkmc.gensokyolegacy.content.rpg.handle.IDialogHandle;
+import dev.xkmc.gensokyolegacy.content.rpg.quest.Quest;
 import dev.xkmc.l2menustacker.init.L2MenuStacker;
 import dev.xkmc.l2menustacker.screen.packets.CacheMouseToClient;
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -80,6 +82,12 @@ public class FirstDialogMenu extends DialogMenu {
 		for (var e : options)
 			ans.add(e.display());
 		return ans;
+	}
+
+	public Optional<Holder<Quest>> getQuest(int index) {
+		if (index >= 0 && index < options.size())
+			return options.get(index).getQuest();
+		return Optional.empty();
 	}
 
 	@Override
