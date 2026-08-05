@@ -20,6 +20,7 @@ import dev.xkmc.gensokyolegacy.content.item.tool.CatBell;
 import dev.xkmc.gensokyolegacy.content.item.tool.Dowser;
 import dev.xkmc.gensokyolegacy.content.rpg.core.CodecRegistry;
 import dev.xkmc.gensokyolegacy.content.rpg.network.QuestStatusToClient;
+import dev.xkmc.gensokyolegacy.content.rpg.network.TradeStatusToClient;
 import dev.xkmc.gensokyolegacy.event.GLAttackListener;
 import dev.xkmc.gensokyolegacy.event.GLClickHandler;
 import dev.xkmc.gensokyolegacy.init.data.*;
@@ -81,7 +82,8 @@ public class GensokyoLegacy {
 
 			e -> e.create(Dowser.DowserToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
 			e -> e.create(CatBell.MountToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
-			e -> e.create(QuestStatusToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
+			e -> e.create(QuestStatusToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT),
+			e -> e.create(TradeStatusToClient.class, PacketHandler.NetDir.PLAY_TO_CLIENT)
 	);
 
 	public GensokyoLegacy() {

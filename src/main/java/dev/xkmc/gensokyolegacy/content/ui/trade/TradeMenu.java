@@ -5,6 +5,7 @@ import dev.xkmc.gensokyolegacy.content.rpg.core.CodecRegistry;
 import dev.xkmc.gensokyolegacy.content.rpg.core.ServerCharacterDialogManager;
 import dev.xkmc.gensokyolegacy.content.rpg.trade.TradeOffer;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -122,9 +123,14 @@ public class TradeMenu extends AbstractContainerMenu {
 		var offer = CodecRegistry.TRADE.get(pl.level().registryAccess(), offerId);
 		if (offer == null) return false;
 		if (!offer.value().canTrade(pl)) return false;
+		if (pl.level().isClientSide()) {
+			GLMeta.TRADE.type().getOrCreate(pl).onTrade(pl, offer);
+			return true;
+		}
 		if (pl instanceof ServerPlayer sp && character != null) {
 			offer.value().doTrade(sp);
 			sp.getInventory().placeItemBackInInventory(offer.value().result().copy());
+			GLMeta.TRADE.type().getOrCreate(sp).onTradeAndSync(sp, offer);
 		}
 		return true;
 	}
