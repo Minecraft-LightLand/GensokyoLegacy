@@ -1,6 +1,7 @@
 package dev.xkmc.gensokyolegacy.content.entity.behavior.move;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiFlags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -44,6 +45,7 @@ public class YoukaiNavigationControl {
 		self.getNavigation().stop();
 		self.setControl(flyCtrl, flyNav);
 		isFlying = true;
+		self.setFlag(YoukaiFlags.FLYING, true);
 	}
 
 	public final void setWalking() {
@@ -57,6 +59,7 @@ public class YoukaiNavigationControl {
 		self.setControl(walkCtrl, walkNav);
 		isFlying = false;
 		leaveGroundTick = 0;
+		self.setFlag(YoukaiFlags.FLYING, false);
 	}
 
 	public final boolean isFlying() {
