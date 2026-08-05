@@ -6,10 +6,13 @@ import dev.xkmc.gensokyolegacy.content.rpg.core.*;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestCondition;
 import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
 import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
+import dev.xkmc.gensokyolegacy.util.InventoryMapper;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryFileCodec;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -37,6 +40,16 @@ public record TradeOffer(
 		var entry = ingredients.getFirst();
 		var ing = entry.ingredient().getItems();
 		return ing.length == 1 && ing[0].is(GLTagGen.CURRENCY) && entry.count() > result.getCount();
+	}
+
+	public boolean canTrade(Player pl) {
+		return InventoryMapper.testCached(pl, this);
+	}
+
+	public void doTrade(ServerPlayer sp) {
+		var ans = new InventoryMapper(sp.getInventory().items, ingredients);
+		ans.test();
+		ans.consume();
 	}
 
 	public static ItemStack toIcon(Holder<TradeOffer> offer) {

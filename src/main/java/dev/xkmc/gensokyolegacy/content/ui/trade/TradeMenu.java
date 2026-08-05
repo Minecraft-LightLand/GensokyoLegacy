@@ -1,8 +1,10 @@
 package dev.xkmc.gensokyolegacy.content.ui.trade;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
+import dev.xkmc.gensokyolegacy.content.rpg.core.CodecRegistry;
 import dev.xkmc.gensokyolegacy.content.rpg.core.ServerCharacterDialogManager;
 import dev.xkmc.gensokyolegacy.content.rpg.trade.TradeOffer;
+import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -95,6 +97,23 @@ public class TradeMenu extends AbstractContainerMenu {
 	@Override
 	public boolean stillValid(Player player) {
 		return character != null && character.isAlive();
+	}
+
+	@Override
+	public boolean clickMenuButton(Player pl, int id) {
+		if (id < 0 || id >= 15) return false;
+		ItemStack stack = slots[id].getItem();
+		if (stack.isEmpty()) return false;
+		var offerId = GLItems.DC_OFFER.get(stack);
+		if (offerId == null) return false;
+		var offer = CodecRegistry.TRADE.get(pl.level().registryAccess(), offerId);
+		if (offer == null) return false;
+		if (!offer.value().canTrade(pl)) return false;
+		if (pl instanceof ServerPlayer sp && character != null) {
+			offer.value().doTrade(sp);
+			sp.getInventory().placeItemBackInInventory(offer.value().result().copy());
+		}
+		return true;
 	}
 
 }
