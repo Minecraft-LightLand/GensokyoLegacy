@@ -79,7 +79,7 @@ public class DialogScreen<T extends DialogMenu> extends AbstractContainerScreen<
 			if (totalH > 0) totalH += sp;
 			totalH += box.h;
 		}
-		int y = (sh - totalH) / 2;
+		int y = body.isPresent() ? sh - 10 - (int) (sh * 0.25f) - 20 - totalH : (sh - totalH) / 2;
 		for (int i = 0; i < n; i++) {
 			var e = list.get(i);
 			var rect = e.draw(g, font, x0, y);
