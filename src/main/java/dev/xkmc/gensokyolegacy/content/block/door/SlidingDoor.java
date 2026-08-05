@@ -136,11 +136,12 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 
 	private static boolean canOpen(Level level, BlockPos bottom, BlockState bs) {
 		BlockPos pocket = bottom.relative(hingeDir(bs));
-		if (bs.getValue(STACK) == 1) {
+		if (bs.getValue(STACK) == 1 && !isConnected(level, bottom, bs)) {
 			return isAir(level, pocket);
 		}
 		BlockState pocketState = level.getBlockState(pocket);
-		return pocketState.is(bs.getBlock())
+		return !isConnected(level, bottom, bs, hingeDir(bs).getOpposite())
+				&& pocketState.is(bs.getBlock())
 				&& pocketState.getValue(HORIZONTAL_FACING) == bs.getValue(HORIZONTAL_FACING)
 				&& pocketState.getValue(HINGE) == bs.getValue(HINGE)
 				&& pocketState.getValue(STACK) + bs.getValue(STACK) <= MAX;
@@ -149,7 +150,7 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	private static void doOpen(Level level, BlockPos bottom, BlockState bs) {
 		if (!canOpen(level, bottom, bs)) return;
 		BlockPos pocket = bottom.relative(hingeDir(bs));
-		if (bs.getValue(STACK) == 1) {
+		if (bs.getValue(STACK) == 1 && !isConnected(level, bottom, bs)) {
 			place(level, pocket, bs);
 		} else {
 			BlockState pocketState = level.getBlockState(pocket);
@@ -162,7 +163,7 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 
 	private static boolean canClose(Level level, BlockPos bottom, BlockState bs) {
 		BlockPos leaf = bottom.relative(hingeDir(bs).getOpposite());
-		if (bs.getValue(STACK) == 1) {
+		if (bs.getValue(STACK) == 1 && !isConnected(level, bottom, bs)) {
 			return isAir(level, leaf);
 		}
 		return bs.getValue(STACK) > 1 && isAir(level, leaf);
@@ -171,7 +172,7 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	private static void doClose(Level level, BlockPos bottom, BlockState bs) {
 		if (!canClose(level, bottom, bs)) return;
 		BlockPos leaf = bottom.relative(hingeDir(bs).getOpposite());
-		if (bs.getValue(STACK) == 1) {
+		if (bs.getValue(STACK) == 1 && !isConnected(level, bottom, bs)) {
 			place(level, leaf, bs);
 			setAir(level, bottom);
 		} else {
@@ -203,7 +204,17 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	private static boolean isAir(Level level, BlockPos pos) {
 		return level.getBlockState(pos).isAir() && level.getBlockState(pos.above()).isAir();
 	}
+	private static boolean isConnected(Level level, BlockPos bottom, BlockState bs) {
+		return isConnected(level, bottom, bs, hingeDir(bs))
+				|| isConnected(level, bottom, bs, hingeDir(bs).getOpposite());
+	}
 
+	private static boolean isConnected(Level level, BlockPos bottom, BlockState bs, Direction dir) {
+		BlockState neighbor = level.getBlockState(bottom.relative(dir));
+		return neighbor.is(bs.getBlock())
+				&& neighbor.getValue(HORIZONTAL_FACING) == bs.getValue(HORIZONTAL_FACING)
+				&& neighbor.getValue(HINGE) == bs.getValue(HINGE);
+	}
 	private static void place(Level level, BlockPos bottom, BlockState bs) {
 		BlockState base = bs.setValue(STACK, 1);
 		level.setBlock(bottom, base.setValue(HALF, Half.BOTTOM), 3);
