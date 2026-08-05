@@ -187,7 +187,7 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 	public static void buildBlockState(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd,
 	                                   ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
 		pvd.getVariantBuilder(ctx.get()).forAllStates(state -> ConfiguredModel.builder().modelFile(model(ctx, pvd, state, top, bottom, side))
-				.rotationY(((int) (state.getValue(HORIZONTAL_FACING).toYRot() + 180)) % 360).uvLock(true).build());
+				.rotationY(((int) (state.getValue(HORIZONTAL_FACING).toYRot() + 180)) % 360).uvLock(false).build());
 	}
 
 	private static BlockModelBuilder model(DataGenContext<Block, DelegateBlock> ctx, RegistrateBlockstateProvider pvd,
@@ -221,15 +221,15 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 			elem.face(Direction.SOUTH).uvs(0, 0, 16, 16).texture("#front").end();
 			elem.face(Direction.WEST).uvs(0, 0, thickness, 16).texture("#side").end();
 			elem.face(Direction.EAST).uvs(thickness, 0, 0, 16).texture("#side").end();
-			elem.face(Direction.UP).uvs(thickness, 0, 0, thickness).texture("#side").end();
-			elem.face(Direction.DOWN).uvs(thickness, 16 - thickness, 0, 16).texture("#side").end();
+			elem.face(Direction.UP).uvs(0, 0, thickness, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#side").end();
+			elem.face(Direction.DOWN).uvs(0, 0, thickness, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#side").end();
 		} else {
 			elem.face(Direction.NORTH).uvs(0, 0, 16, 16).texture("#front").cullface(Direction.NORTH).end();
 			elem.face(Direction.SOUTH).uvs(16, 0, 0, 16).texture("#front").end();
 			elem.face(Direction.WEST).uvs(thickness, 0, 0, 16).texture("#side").end();
 			elem.face(Direction.EAST).uvs(0, 0, thickness, 16).texture("#side").end();
-			elem.face(Direction.UP).uvs(0, 0, thickness, thickness).texture("#side").end();
-			elem.face(Direction.DOWN).uvs(0, 16 - thickness, thickness, 16).texture("#side").end();
+			elem.face(Direction.UP).uvs(thickness, 0, 0, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#side").end();
+			elem.face(Direction.DOWN).uvs(thickness, 0, 0, 16).rotation(ModelBuilder.FaceRotation.CLOCKWISE_90).texture("#side").end();
 		}
 	}
 
