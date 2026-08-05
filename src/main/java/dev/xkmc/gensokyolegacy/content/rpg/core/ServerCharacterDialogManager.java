@@ -49,11 +49,11 @@ public class ServerCharacterDialogManager {
 		offers = getAllMatching(pvd, CodecRegistry.TRADE, character);
 	}
 
-	public List<TradeOffer> getTradeOffers(ServerPlayer sp, YoukaiEntity ch) {
-		List<TradeOffer> ans = new ArrayList<>();
+	public List<Holder<TradeOffer>> getTradeOffers(ServerPlayer sp, YoukaiEntity ch) {
+		List<Holder<TradeOffer>> ans = new ArrayList<>();
 		for (var e : offers) {
 			if (e.value().match(sp, ch)) {
-				ans.add(e.value());
+				ans.add(e);
 			}
 		}
 		return ans;

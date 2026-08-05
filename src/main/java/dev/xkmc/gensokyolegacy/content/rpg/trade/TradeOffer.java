@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.xkmc.gensokyolegacy.content.rpg.core.*;
 import dev.xkmc.gensokyolegacy.content.rpg.quest.QuestCondition;
+import dev.xkmc.gensokyolegacy.init.data.GLTagGen;
+import dev.xkmc.gensokyolegacy.init.registrate.GLItems;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.RegistryFileCodec;
@@ -29,5 +31,21 @@ public record TradeOffer(
 	).apply(i, TradeOffer::new));
 
 	public static final Codec<Holder<TradeOffer>> HOLDER = RegistryFileCodec.create(CodecRegistry.Keys.TRADE, CODEC);
+
+	public boolean isSellOffer() {
+		if (!result.is(GLTagGen.CURRENCY) || ingredients.size() != 1) return true;
+		var entry = ingredients.getFirst();
+		var ing = entry.ingredient().getItems();
+		return ing.length == 1 && ing[0].is(GLTagGen.CURRENCY) && entry.count() > result.getCount();
+	}
+
+	public static ItemStack toIcon(Holder<TradeOffer> offer) {
+		var id = offer.unwrapKey().orElseThrow().location();
+		ItemStack stack;
+		if (offer.value().isSellOffer()) {
+			stack = offer.value().result.copy();
+		} else stack = offer.value().ingredients().getFirst().ingredient().getItems()[0].copy();
+		return GLItems.DC_OFFER.set(stack, id);
+	}
 
 }

@@ -61,6 +61,7 @@ public class GLItems {
 	private static final DCReg DC = DCReg.of(GensokyoLegacy.REG);
 	public static final DCVal<MiniFurnace1.Data> DC_FURNACE_1 = DC.reg("mini_furnace_1_data", MiniFurnace1.Data.class, false);
 	public static final DCVal<UUID> DC_UUID = DC.uuid("uuid");
+	public static final DCVal<ResourceLocation> DC_OFFER = DC.loc("offer");
 
 	static {
 		var reg = GensokyoLegacy.REGISTRATE;

@@ -10,10 +10,12 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 
 public class GLTagGen {
 
+	public static final TagKey<Item> CURRENCY = item("currency");
 	public static final TagKey<Item> CUSHIONS = item("cushions");
 
 	public static final TagKey<Item> TOUHOU_HAT = item("touhou_hat");
@@ -37,7 +39,7 @@ public class GLTagGen {
 	}
 
 	public static void onItemTagGen(RegistrateItemTagsProvider pvd) {
-
+		pvd.addTag(CURRENCY).add(Items.EMERALD, Items.GOLD_INGOT);
 	}
 
 	public static void onEntityTagGen(RegistrateTagsProvider.IntrinsicImpl<EntityType<?>> pvd) {
