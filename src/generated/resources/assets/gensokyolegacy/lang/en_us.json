@@ -266,6 +266,8 @@
   "gensokyolegacy.tab.role_progress": "%s - %s",
   "gensokyolegacy.tab.title": "Gensokyo Roles",
   "gensokyolegacy.title": "Gensokyo Legacy",
+  "gensokyolegacy.trade.ingredients": "Ingredients:",
+  "gensokyolegacy.trade.stock": "Stock: %s/%s",
   "gensokyolegacy/reimu/chat/dialog/reimu/chat/hi": "Hi!",
   "gensokyolegacy/reimu/chat/option/bye": "Bye!",
   "gensokyolegacy/reimu/chat/starter/start": "Hi!",

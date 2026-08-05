@@ -199,14 +199,13 @@ public class GLDecoBlocks {
 					.simpleItem()
 					.register();
 
+			var doorTop = GensokyoLegacy.loc("block/wood/" + name + "_sliding_door_top");
+			var doorBottom = GensokyoLegacy.loc("block/wood/" + name + "_sliding_door_bottom");
+			var doorSide = GensokyoLegacy.loc("block/wood/" + name + "_sliding_door_side");
 			e.door = reg.block(name + "_sliding_door", p -> SlidingDoor.create(p))
 					.initialProperties(() -> e.plankProp)
-					.blockstate((ctx, pvd) -> SlidingDoor.buildBlockState(ctx, pvd,
-							pvd.modLoc("block/wood/" + name + "_sliding_door_top"),
-							pvd.modLoc("block/wood/" + name + "_sliding_door_bottom"),
-							pvd.modLoc("block/wood/" + name + "_sliding_door_side")))
-					.item().model((ctx, pvd) -> pvd.getBuilder(ctx.getName())
-							.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("block/" + ctx.getName() + "_top_s1"))))
+					.blockstate((ctx, pvd) -> SlidingDoor.buildBlockState(ctx, pvd, doorTop, doorBottom, doorSide))
+					.item().model((ctx, pvd) -> SlidingDoor.genItemModel(ctx, pvd, doorTop, doorBottom, doorSide))
 					.build()
 					.tag(BlockTags.MINEABLE_WITH_AXE)
 					.loot(SlidingDoor::genLoot)

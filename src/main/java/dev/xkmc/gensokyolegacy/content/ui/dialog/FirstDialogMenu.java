@@ -2,12 +2,14 @@ package dev.xkmc.gensokyolegacy.content.ui.dialog;
 
 import dev.xkmc.gensokyolegacy.content.entity.youkai.YoukaiEntity;
 import dev.xkmc.gensokyolegacy.content.rpg.core.ServerCharacterDialogManager;
+import dev.xkmc.gensokyolegacy.content.rpg.handle.ClientHandle;
 import dev.xkmc.gensokyolegacy.content.rpg.handle.IDialogHandle;
+import dev.xkmc.gensokyolegacy.content.rpg.quest.Quest;
 import dev.xkmc.l2menustacker.init.L2MenuStacker;
 import dev.xkmc.l2menustacker.screen.packets.CacheMouseToClient;
+import net.minecraft.core.Holder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +25,7 @@ public class FirstDialogMenu extends DialogMenu {
 	public static FirstDialogMenu fromNetwork(MenuType<?> menu, int wid, Inventory inv, @Nullable RegistryFriendlyByteBuf buf) {
 		YoukaiEntity ch = null;
 		var player = inv.player;
-		List<Component> options = new ArrayList<>();
+		List<ClientHandle> options = new ArrayList<>();
 		if (buf != null) {
 			int uid = buf.readVarInt();
 			int size = buf.readVarInt();
@@ -31,7 +33,7 @@ public class FirstDialogMenu extends DialogMenu {
 				ch = e;
 			}
 			for (int i = 0; i < size; i++) {
-				options.add(ComponentSerialization.STREAM_CODEC.decode(buf));
+				options.add(ClientHandle.STREAM_CODEC.decode(buf));
 			}
 		}
 		return new FirstDialogMenu(menu, wid, player, ch, options);
@@ -40,23 +42,23 @@ public class FirstDialogMenu extends DialogMenu {
 	public static FirstDialogMenu create(MenuType<?> menu, int wid, ServerPlayer sp, YoukaiEntity character) {
 		var data = ServerCharacterDialogManager.get(sp.serverLevel(), character.getType());
 		var handles = data.getInitialConversation(sp, character);
-		var options = new ArrayList<Component>();
+		var options = new ArrayList<ClientHandle>();
 		for (var e : handles)
-			options.add(e.display());
+			options.add(new ClientHandle(e.display(), e.getQuest()));
 		return new FirstDialogMenu(menu, wid, sp, character, handles, options);
 	}
 
-	private final List<Component> options;
+	private final List<ClientHandle> options;
 
 	private final @Nullable List<IDialogHandle> handles;
 
-	public FirstDialogMenu(MenuType<?> menu, int wid, ServerPlayer sp, YoukaiEntity character, List<IDialogHandle> handles, List<Component> options) {
+	public FirstDialogMenu(MenuType<?> menu, int wid, ServerPlayer sp, YoukaiEntity character, List<IDialogHandle> handles, List<ClientHandle> options) {
 		super(menu, wid, sp, character);
 		this.handles = handles;
 		this.options = options;
 	}
 
-	public FirstDialogMenu(MenuType<?> menu, int wid, Player player, @Nullable YoukaiEntity character, List<Component> options) {
+	public FirstDialogMenu(MenuType<?> menu, int wid, Player player, @Nullable YoukaiEntity character, List<ClientHandle> options) {
 		super(menu, wid, player, character);
 		this.options = options;
 		handles = null;
@@ -76,7 +78,16 @@ public class FirstDialogMenu extends DialogMenu {
 
 	@Override
 	public List<Component> getOptions() {
-		return options;
+		List<Component> ans = new ArrayList<>();
+		for (var e : options)
+			ans.add(e.display());
+		return ans;
+	}
+
+	public Optional<Holder<Quest>> getQuest(int index) {
+		if (index >= 0 && index < options.size())
+			return options.get(index).getQuest();
+		return Optional.empty();
 	}
 
 	@Override

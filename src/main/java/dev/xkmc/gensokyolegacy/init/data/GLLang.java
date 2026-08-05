@@ -70,7 +70,10 @@ public enum GLLang {
 	ITEM$FURNACE_1_LORE("A portable magical furnace that emits heat. Can slowly smelt adjacent items when placed in inventory.", 0, ChatFormatting.GRAY),
 	ITEM$FURNACE_1_USE("Right click the item in inventory to switch modes.", 0, ChatFormatting.GRAY),
 	ITEM$FURNACE_1_OFF("Mode: OFF", 0, ChatFormatting.GRAY),
-	ITEM$FURNACE_1_DESC("Mode: %s", 1, ChatFormatting.GRAY);
+	ITEM$FURNACE_1_DESC("Mode: %s", 1, ChatFormatting.GRAY),
+
+	TRADE$STOCK("Stock: %s/%s", 2),
+	TRADE$INGREDIENTS("Ingredients:", 0);
 
 	private final String def;
 	private final int argn;

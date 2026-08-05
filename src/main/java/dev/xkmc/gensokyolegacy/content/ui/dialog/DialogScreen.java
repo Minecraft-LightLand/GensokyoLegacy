@@ -1,5 +1,8 @@
 package dev.xkmc.gensokyolegacy.content.ui.dialog;
 
+import dev.xkmc.gensokyolegacy.content.rpg.quest.Quest;
+import dev.xkmc.gensokyolegacy.content.ui.quest.QuestInfo;
+import dev.xkmc.gensokyolegacy.init.registrate.GLMeta;
 import dev.xkmc.l2itemselector.overlay.TextBox;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -8,16 +11,18 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.client.renderer.Rect2i;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import org.joml.Vector2ic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class DialogScreen<T extends DialogMenu> extends AbstractContainerScreen<T> {
 
-	private int sel = -1;
+	protected int sel = -1;
 
 	public DialogScreen(T menu, Inventory inv, Component title) {
 		super(menu, inv, title);
@@ -74,7 +79,7 @@ public class DialogScreen<T extends DialogMenu> extends AbstractContainerScreen<
 			if (totalH > 0) totalH += sp;
 			totalH += box.h;
 		}
-		int y = (sh - totalH) / 2;
+		int y = body.isPresent() ? sh - 10 - (int) (sh * 0.25f) - 20 - totalH : (sh - totalH) / 2;
 		for (int i = 0; i < n; i++) {
 			var e = list.get(i);
 			var rect = e.draw(g, font, x0, y);
@@ -83,6 +88,15 @@ public class DialogScreen<T extends DialogMenu> extends AbstractContainerScreen<
 				sel = i;
 			}
 		}
+	}
+
+	protected void renderQuestInfo(GuiGraphics g, Optional<Holder<Quest>> quest) {
+		if (quest.isEmpty()) return;
+		var data = GLMeta.QUEST.type().getOrCreate(menu.player).getData(quest.get().unwrapKey().orElseThrow().location());
+		if (!data.started) return;
+		var info = new QuestInfo(quest.get().value(), data);
+		new TextBox(g, 0, 1, 10, g.guiHeight() / 2, (int) (g.guiWidth() * 0.4f - 20))
+				.renderLongText(font, info.getSideBarText(menu.player));
 	}
 
 	public static class DialogTextBox extends TextBox {

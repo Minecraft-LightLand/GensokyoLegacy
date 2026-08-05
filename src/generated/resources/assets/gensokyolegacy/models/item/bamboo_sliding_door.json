@@ -1,3 +1,8 @@
 {
-  "parent": "gensokyolegacy:block/bamboo_sliding_door_top_s1"
+  "parent": "gensokyolegacy:item/sliding_door",
+  "textures": {
+    "front_bottom": "gensokyolegacy:block/wood/bamboo_sliding_door_bottom",
+    "front_top": "gensokyolegacy:block/wood/bamboo_sliding_door_top",
+    "side": "gensokyolegacy:block/wood/bamboo_sliding_door_side"
+  }
 }
