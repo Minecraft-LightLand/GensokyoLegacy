@@ -42,6 +42,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import org.jetbrains.annotations.Nullable;
@@ -309,23 +310,34 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 
 	public static void genItemModel(DataGenContext<Item, BlockItem> ctx, RegistrateItemModelProvider pvd,
 	                                ResourceLocation top, ResourceLocation bottom, ResourceLocation side) {
-		var builder = pvd.getBuilder(ctx.getName())
-				.parent(new ModelFile.UncheckedModelFile("block/block"))
+		itemBase(pvd);
+		pvd.getBuilder(ctx.getName())
+				.parent(new ModelFile.UncheckedModelFile(pvd.modLoc("item/sliding_door")))
 				.texture("front_top", top)
 				.texture("front_bottom", bottom)
-				.texture("side", side)
-				.texture("particle", side)
-				.renderType("cutout");
-		panel(builder, 0, 16, "front_bottom", "side");
-		panel(builder, 16, 32, "front_top", "side");
-		builder.transforms()
-				.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 45, 0).translation(0, 2.5f, 0).scale(0.1875f).end()
-				.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(75, 45, 0).translation(0, 2.5f, 0).scale(0.1875f).end()
-				.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).scale(0.2f).end()
-				.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).scale(0.2f).end()
-				.transform(ItemDisplayContext.GROUND).translation(0, 3, 0).scale(0.125f).end()
-				.transform(ItemDisplayContext.GUI).rotation(30, 225, 0).scale(0.3125f).end()
-				.transform(ItemDisplayContext.FIXED).scale(0.25f).end();
+				.texture("side", side);
+	}
+
+	private static ItemModelBuilder ITEM_BASE;
+
+	private static ItemModelBuilder itemBase(RegistrateItemModelProvider pvd) {
+		if (ITEM_BASE == null) {
+			ITEM_BASE = pvd.getBuilder("sliding_door")
+					.parent(new ModelFile.UncheckedModelFile("block/block"))
+					.texture("particle", "#side")
+					.renderType("cutout");
+			panel(ITEM_BASE, 0, 16, "front_bottom", "side");
+			panel(ITEM_BASE, 16, 32, "front_top", "side");
+			ITEM_BASE.transforms()
+					.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75, 45, 0).translation(0, 2.5f, 0).scale(0.1875f).end()
+					.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(75, 45, 0).translation(0, 2.5f, 0).scale(0.1875f).end()
+					.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0, 45, 0).scale(0.2f).end()
+					.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0, 225, 0).scale(0.2f).end()
+					.transform(ItemDisplayContext.GROUND).translation(0, 3, 0).scale(0.125f).end()
+					.transform(ItemDisplayContext.GUI).rotation(30, 225, 0).scale(0.3125f).end()
+					.transform(ItemDisplayContext.FIXED).scale(0.25f).end();
+		}
+		return ITEM_BASE;
 	}
 
 	private static void panel(ModelBuilder<?> builder, int y0, int y1, String front, String side) {
