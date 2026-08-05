@@ -44,7 +44,7 @@ public class SimpleDialogMenu extends DialogMenu {
 				dialog = opt.get();
 
 		}
-		return new SimpleDialogMenu(menu, wid, player, ch, new ClientHandle(quest), dialog);
+		return new SimpleDialogMenu(menu, wid, player, ch, new ClientHandle(Component.empty(), quest), dialog);
 	}
 
 	public final IDialogHandle handle;
