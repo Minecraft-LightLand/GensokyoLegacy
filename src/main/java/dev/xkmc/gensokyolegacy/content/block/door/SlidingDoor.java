@@ -90,15 +90,25 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 		if (level.isClientSide()) return InteractionResult.SUCCESS;
 		BlockPos bottom = bottom(level, pos);
 		BlockState bs = level.getBlockState(bottom);
-		Direction left = bs.getValue(HORIZONTAL_FACING).getCounterClockWise();
-		Axis axis = left.getAxis();
-		Vec3 click = result.getLocation().subtract(bottom.getCenter());
-		double coord = axis.choose(click.x, click.y, click.z) * left.getAxisDirection().getStep();
-		DoorHingeSide clickedHinge = coord < 0 ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
-		if (clickedHinge == bs.getValue(HINGE)) {
-			open(level, bottom, bs);
+		boolean open = canOpen(level, bottom, bs);
+		boolean close = canClose(level, bottom, bs);
+		if (open && close) {
+			Direction left = bs.getValue(HORIZONTAL_FACING).getCounterClockWise();
+			Axis axis = left.getAxis();
+			Vec3 click = result.getLocation().subtract(bottom.getCenter());
+			double coord = axis.choose(click.x, click.y, click.z) * left.getAxisDirection().getStep();
+			DoorHingeSide clickedHinge = coord < 0 ? DoorHingeSide.LEFT : DoorHingeSide.RIGHT;
+			if (clickedHinge == bs.getValue(HINGE)) {
+				doOpen(level, bottom, bs);
+			} else {
+				doClose(level, bottom, bs);
+			}
+		} else if (open) {
+			doOpen(level, bottom, bs);
+		} else if (close) {
+			doClose(level, bottom, bs);
 		} else {
-			close(level, bottom, bs);
+			return InteractionResult.PASS;
 		}
 		return InteractionResult.SUCCESS;
 	}
@@ -124,29 +134,39 @@ public class SlidingDoor implements CreateBlockStateBlockMethod, DefaultStateBlo
 		return SHAPES[state.getValue(STACK) - 1][state.getValue(HORIZONTAL_FACING).get2DDataValue()];
 	}
 
-	private static void open(Level level, BlockPos bottom, BlockState bs) {
+	private static boolean canOpen(Level level, BlockPos bottom, BlockState bs) {
 		BlockPos pocket = bottom.relative(hingeDir(bs));
 		BlockState pocketState = level.getBlockState(pocket);
-		if (pocketState.is(bs.getBlock())
+		return pocketState.is(bs.getBlock())
 				&& pocketState.getValue(HORIZONTAL_FACING) == bs.getValue(HORIZONTAL_FACING)
 				&& pocketState.getValue(HINGE) == bs.getValue(HINGE)
-				&& pocketState.getValue(STACK) + bs.getValue(STACK) <= MAX) {
-			int sum = pocketState.getValue(STACK) + bs.getValue(STACK);
-			setStack(level, pocket, sum);
-			setAir(level, bottom);
-			playSound(level, bottom, true);
-		}
+				&& pocketState.getValue(STACK) + bs.getValue(STACK) <= MAX;
 	}
 
-	private static void close(Level level, BlockPos bottom, BlockState bs) {
+	private static void doOpen(Level level, BlockPos bottom, BlockState bs) {
+		if (!canOpen(level, bottom, bs)) return;
+		BlockPos pocket = bottom.relative(hingeDir(bs));
+		BlockState pocketState = level.getBlockState(pocket);
+		int sum = pocketState.getValue(STACK) + bs.getValue(STACK);
+		setStack(level, pocket, sum);
+		setAir(level, bottom);
+		playSound(level, bottom, true);
+	}
+
+	private static boolean canClose(Level level, BlockPos bottom, BlockState bs) {
 		BlockPos leaf = bottom.relative(hingeDir(bs).getOpposite());
 		int move = bs.getValue(STACK) - 1;
-		if (move > 0 && level.getBlockState(leaf).isAir() && level.getBlockState(leaf.above()).isAir()) {
-			level.setBlock(leaf, bs.setValue(STACK, move).setValue(HALF, Half.BOTTOM), 3);
-			level.setBlock(leaf.above(), bs.setValue(STACK, move).setValue(HALF, Half.TOP), 3);
-			setStack(level, bottom, 1);
-			playSound(level, bottom, false);
-		}
+		return move > 0 && level.getBlockState(leaf).isAir() && level.getBlockState(leaf.above()).isAir();
+	}
+
+	private static void doClose(Level level, BlockPos bottom, BlockState bs) {
+		if (!canClose(level, bottom, bs)) return;
+		BlockPos leaf = bottom.relative(hingeDir(bs).getOpposite());
+		int move = bs.getValue(STACK) - 1;
+		level.setBlock(leaf, bs.setValue(STACK, move).setValue(HALF, Half.BOTTOM), 3);
+		level.setBlock(leaf.above(), bs.setValue(STACK, move).setValue(HALF, Half.TOP), 3);
+		setStack(level, bottom, 1);
+		playSound(level, bottom, false);
 	}
 
 	private static BlockPos bottom(Level level, BlockPos pos) {
