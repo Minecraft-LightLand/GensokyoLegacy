@@ -46,12 +46,14 @@ public class TradeMenu extends AbstractContainerMenu {
 	private final TradeSlot[] slots = new TradeSlot[15];
 
 	private final DataSlot page;
+	private final DataSlot maxPage;
 
 	public TradeMenu(@Nullable MenuType<?> type, int wid, Player player, @Nullable YoukaiEntity character) {
 		super(type, wid);
 		this.player = player;
 		this.character = character;
 		page = addDataSlot(DataSlot.standalone());
+		maxPage = addDataSlot(DataSlot.standalone());
 		bindPlayerInventory(player.getInventory(), 8, 84);
 		for (int i = 0; i < 15; i++) {
 			addSlot(slots[i] = new TradeSlot(cont, i, -1 + i % 5 * 36, 10 + i / 5 * 36));
@@ -62,6 +64,8 @@ public class TradeMenu extends AbstractContainerMenu {
 
 	private void refreshOffers() {
 		var list = getOffers();
+		maxPage.set(Math.max(1, (list.size() + 14) / 15));
+		if (page.get() >= maxPage.get()) page.set(maxPage.get() - 1);
 		for (int i = 0; i < 15; i++) {
 			int index = page.get() * 15 + i;
 			if (index >= list.size()) {
@@ -101,6 +105,15 @@ public class TradeMenu extends AbstractContainerMenu {
 
 	@Override
 	public boolean clickMenuButton(Player pl, int id) {
+		if (id == -1 || id == -2) {
+			int target = page.get() + (id == -1 ? -1 : 1);
+			if (target < 0 || target >= maxPage.get()) return false;
+			if (pl instanceof ServerPlayer) {
+				page.set(target);
+				refreshOffers();
+			}
+			return true;
+		}
 		if (id < 0 || id >= 15) return false;
 		ItemStack stack = slots[id].getItem();
 		if (stack.isEmpty()) return false;
@@ -114,6 +127,14 @@ public class TradeMenu extends AbstractContainerMenu {
 			sp.getInventory().placeItemBackInInventory(offer.value().result().copy());
 		}
 		return true;
+	}
+
+	public int getPage() {
+		return page.get();
+	}
+
+	public int getMaxPage() {
+		return maxPage.get();
 	}
 
 }
